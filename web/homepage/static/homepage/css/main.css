@@ -1,0 +1,74 @@
+body {
+    color: white !important;
+}
+
+.navbar-brand>img {
+    height: 34px;
+}
+a {
+    color: white;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: rgba(212, 212, 212, 1) !important;
+}
+.bg {
+    position: absolute;
+    z-index: 0;
+    background-image: url("../img/bg.jpg");
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.bg::after {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: black;
+    content: " ";
+    opacity: 0.8;
+}
+
+.slogan {
+   text-align: center;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+h1 {
+    font-size: 88px;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px #333333;
+}
+
+h3 {
+    font-weight: 400;
+    text-shadow: 1px 1px #333333;
+}
+.social {
+    margin-top: 20px;
+}
+.social>a {
+
+    font-size: 34px;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.buttons {
+    margin: 40px 0;
+}
+.buttons>a {
+    text-decoration: none;
+    margin: 5px 10px;
+    font-weight: bold;
+}
