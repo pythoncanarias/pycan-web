@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load dateutils %}
+{% block content %}
+
+ <div class="jumbotron">
+     <h3>{{ event.title }}<h3>
+     <h4>{{ event.start_date|as_date }}</h4>
+ </div>
+
+{% endblock content %}

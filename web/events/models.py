@@ -11,6 +11,7 @@ class Event(models.Model):
     id = models.AutoField(primary_key=True)
     slug = models.SlugField(max_length=150)
     title = models.CharField(max_length=220)
+    active = models.BooleanField(default=False)
     start_date = models.DateField()
 
     def __str__(self):

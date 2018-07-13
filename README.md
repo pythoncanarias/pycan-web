@@ -5,11 +5,11 @@ Core apps for Python Canarias
 
 This projects uses pipenv. After you have cloned the repo, make:
 
-    pipenv install --three
+~~~console
+$ pipenv install --python 3.6
+~~~
 
-This will instal a virtual environment for the project, with python 3.x
-and Django
-
+This will install a virtual environment for the project, with Python 3.6, Django and all the rest dependencies.
 
 ## The app commons
 
