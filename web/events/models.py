@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import uuid
+from decimal import Decimal
 from django.db import models
 
 # Create your models here.
@@ -20,10 +21,15 @@ class Event(models.Model):
 
 class TicketType(models.Model):
     id = models.AutoField(primary_key=True)
-    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.PROTECT,
+        related_name='ticket_types',
+        )
     name = models.CharField(max_length=80)
     price = models.DecimalField(max_digits=9, decimal_places=2)
     stock = models.PositiveIntegerField()
+    release_at = models.DateTimeField(default=None, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -36,6 +42,15 @@ class TicketType(models.Model):
     def num_available_tickets(self):
         return self.stock - self.tickets.all().count()
 
+    def is_active(self):
+        return (
+            self.release_at is not None
+            and self.release_at.date() < self.event.start_date
+            )
+    is_active.boolean = True
+
+    def price_in_cents(self):
+        return int(self.price * Decimal('100.0'))
 
 class Ticket(models.Model):
     id = models.AutoField(primary_key=True)
