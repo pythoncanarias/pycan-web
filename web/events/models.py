@@ -4,8 +4,7 @@
 import uuid
 from decimal import Decimal
 from django.db import models
-
-# Create your models here.
+from django.db.models import Max
 
 
 class Event(models.Model):
@@ -42,6 +41,15 @@ class TicketType(models.Model):
     def num_available_tickets(self):
         return self.stock - self.tickets.all().count()
 
+    @property
+    def price_in_cents(self):
+        return int(self.price * Decimal('100.0'))
+
+    def next_number(self):
+        data = self.tickets.aggregate(Max('number'))
+        current_number = data.get('number__max', 0) or 0
+        return current_number + 1
+
     def is_active(self):
         return (
             self.release_at is not None
@@ -49,8 +57,6 @@ class TicketType(models.Model):
             )
     is_active.boolean = True
 
-    def price_in_cents(self):
-        return int(self.price * Decimal('100.0'))
 
 class Ticket(models.Model):
     id = models.AutoField(primary_key=True)
