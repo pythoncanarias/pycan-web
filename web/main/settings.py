@@ -126,3 +126,6 @@ STATIC_URL = '/static/'
 
 SITE_ID = 1
 
+# Stripe settings
+
+STRIPE_PUBLIC_KEY = 'pk_test_2wYiXpfpVdBY3moVGSOdnx3T'
