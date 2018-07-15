@@ -129,3 +129,4 @@ SITE_ID = 1
 # Stripe settings
 
 STRIPE_PUBLIC_KEY = 'pk_test_2wYiXpfpVdBY3moVGSOdnx3T'
+STRIPE_SECRET_KEY = 'sk_test_OIq1H5x0FqYTRSewYFd9tJCL'
