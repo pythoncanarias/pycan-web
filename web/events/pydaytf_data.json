@@ -1,0 +1,47 @@
+[
+{
+    "model": "events.event",
+    "pk": 1,
+    "fields": {
+        "slug": "pydaytf2018",
+        "title": "PyDay Tenerife 2018",
+        "active": true,
+        "start_date": "2018-11-17"
+    }
+},
+{
+    "model": "events.tickettype",
+    "pk": 1,
+    "fields": {
+        "event": 1,
+        "name": "Early Ticket",
+        "price": "10.00",
+        "stock": 20,
+        "release_at": "2018-07-14T22:30:20Z"
+    }
+},
+{
+    "model": "events.tickettype",
+    "pk": 2,
+    "fields": {
+        "event": 1,
+        "name": "Normal ticket",
+        "price": "12.00",
+        "stock": 120,
+        "release_at": null
+    }
+},
+{
+    "model": "events.ticket",
+    "pk": 1,
+    "fields": {
+        "ticket_type": 1,
+        "number": 1,
+        "keycode": "6e09b2e3-3483-4e03-a359-e59d18234171",
+        "name": "Juan Ignacio",
+        "surname": "Rodr\u00edguez de Le\u00f3n",
+        "email": "euribates@gmail.com",
+        "phone": "605 890 514"
+    }
+}
+]
