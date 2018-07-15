@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% load dateutils %}
+
+{% block content %}
+
+<h2>¡Felicidades! Ya has conseguido tu entrada!</h2>
+<h3>{{ event.title }}</h3>
+<h4>{{ event.start_date|as_date }} <small>{{ ticket_type.name }}</small></h4>
+
+<p>Tu ticket es: {{ ticket }}</p>
+<p>En breve te enviaremos a tu dirección de correo un pdf con
+el código QR de la entrada</p>
+
+{% endblock content %}
