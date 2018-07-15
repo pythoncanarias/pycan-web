@@ -33,15 +33,41 @@
 },
 {
     "model": "events.ticket",
-    "pk": 1,
+    "pk": 2,
     "fields": {
         "ticket_type": 1,
         "number": 1,
-        "keycode": "6e09b2e3-3483-4e03-a359-e59d18234171",
-        "name": "Juan Ignacio",
-        "surname": "Rodr\u00edguez de Le\u00f3n",
+        "keycode": "7b11e17e-7b1c-45e7-b2de-b5c79765f0cb",
+        "name": "ocho",
+        "surname": "ocho",
         "email": "euribates@gmail.com",
-        "phone": "605 890 514"
+        "phone": "605890514"
+    }
+},
+{
+    "model": "events.ticket",
+    "pk": 3,
+    "fields": {
+        "ticket_type": 1,
+        "number": 2,
+        "keycode": "834691e0-a5b5-4fa8-b41b-3bfba1cd647c",
+        "name": "nueve",
+        "surname": "nueve",
+        "email": "euribates@gmail.com",
+        "phone": ""
+    }
+},
+{
+    "model": "events.ticket",
+    "pk": 4,
+    "fields": {
+        "ticket_type": 1,
+        "number": 3,
+        "keycode": "ad984a81-e212-480e-88e6-99e1cdb07524",
+        "name": "Mar\u00eda Jes\u00fas",
+        "surname": "Su\u00e1rez Dorta",
+        "email": "susi.suarez@gmail.com",
+        "phone": "615866448"
     }
 }
 ]
