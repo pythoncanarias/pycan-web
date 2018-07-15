@@ -8,6 +8,7 @@
 <h4>{{ event.start_date|as_date }} <small>{{ ticket_type.name }}</small></h4>
 
 <form action="." method="POST">
+{% csrf_token %}
  <div class="form-group">
      <label>Precio: <b>{{ ticket_type.price }}€</b></label>
  </div>
@@ -21,6 +22,12 @@
      <input type="text" name="surname" size="32" class="form-control"
      placeholder="Apellidos">
  </div>
+ <div class="form-group col-6">
+     <label for="surname">Teléfono</label>
+     <input type="text" name="phone" size="32" class="form-control"
+     placeholder="Teléfono">
+     <small id="emailHelp" class="form-text text-muted">Opcional</small>
+  </div>
  <div class="form-group">
   <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
