@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from prettyconf import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,12 +21,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'u=@irm7qv0l5hgodx^gnco=dvk@a3d!^4)flnz+ondm+n0__d6'
+SECRET_KEY = config('SECRET_KEY', default="Don't forget to set this in a .env file.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', cast=config.boolean, default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    cast=config.list,
+    default='localhost, 127.0.0.1',
+    )
 
 
 # Application definition
@@ -110,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = config('TIME_ZONE', default='UTC')
 
 USE_I18N = True
 
@@ -128,5 +133,12 @@ SITE_ID = 1
 
 # Stripe settings
 
-STRIPE_PUBLIC_KEY = 'pk_test_2wYiXpfpVdBY3moVGSOdnx3T'
-STRIPE_SECRET_KEY = 'sk_test_OIq1H5x0FqYTRSewYFd9tJCL'
+STRIPE_PUBLIC_KEY = config(
+    'STRIPE_PUBLIC_KEY',
+    default='Set your Stripe api public key in .env file',
+    )
+
+STRIPE_SECRET_KEY = config(
+    'STRIPE_SECRET_KEY',
+    default='Set your Stripe api secret key in .env file',
+    )
