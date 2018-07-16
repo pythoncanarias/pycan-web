@@ -41,7 +41,8 @@
         "name": "ocho",
         "surname": "ocho",
         "email": "euribates@gmail.com",
-        "phone": "605890514"
+        "phone": "605890514",
+        "sold_at": "2018-07-16T16:19:53.571Z"
     }
 },
 {
@@ -54,7 +55,8 @@
         "name": "nueve",
         "surname": "nueve",
         "email": "euribates@gmail.com",
-        "phone": ""
+        "phone": "",
+        "sold_at": "2018-07-16T16:19:53.571Z"
     }
 },
 {
@@ -67,7 +69,22 @@
         "name": "Mar\u00eda Jes\u00fas",
         "surname": "Su\u00e1rez Dorta",
         "email": "susi.suarez@gmail.com",
-        "phone": "615866448"
+        "phone": "615866448",
+        "sold_at": "2018-07-16T16:19:53.571Z"
+    }
+},
+{
+    "model": "events.ticket",
+    "pk": 5,
+    "fields": {
+        "ticket_type": 1,
+        "number": 4,
+        "keycode": "4f09301b-9cc0-4c94-9b76-f9bb18a19c21",
+        "name": "Guido",
+        "surname": "VanRossum",
+        "email": "euribates@gmail.com",
+        "phone": "",
+        "sold_at": "2018-07-16T18:02:24.049Z"
     }
 }
 ]
