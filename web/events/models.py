@@ -5,6 +5,7 @@ import uuid
 from decimal import Decimal
 from django.db import models
 from django.db.models import Max
+from django.urls import reverse
 
 
 class Event(models.Model):
@@ -71,6 +72,7 @@ class Ticket(models.Model):
     surname = models.CharField(max_length=72)
     email = models.CharField(max_length=260)
     phone = models.CharField(max_length=14, blank=True)
+    sold_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}/{} {}, {}'.format(
@@ -79,3 +81,6 @@ class Ticket(models.Model):
             self.surname,
             self.name,
             )
+
+    def get_absolute_url(self):
+        return reverse('events:ticket_bought', args=(str(self.keycode),))

@@ -76,8 +76,7 @@ def buy_ticket(request, id_ticket_type):
                 phone=phone,
                 )
             ticket.save()
-            url = reverse('events:ticket_bought', args=(ticket.pk,))
-            return redirect(url)
+            return redirect(ticket.get_absolute_url())
         else:
             # Must implemente a proper response
             from django.http import HttpResponse
@@ -92,8 +91,8 @@ def buy_ticket(request, id_ticket_type):
             })
 
 
-def ticket_bought(request, id_ticket):
-    ticket = models.Ticket.objects.get(pk=id_ticket)
+def ticket_bought(request, keycode):
+    ticket = models.Ticket.objects.get(keycode=keycode)
     ticket_type = ticket.ticket_type
     event = ticket_type.event
     return render(request, 'events/ticket_bought.html', {
@@ -101,3 +100,12 @@ def ticket_bought(request, id_ticket):
         'ticket_type': ticket_type,
         'event': event,
         })
+
+
+def view_qr_code(request):
+    from django.http import HttpResponse
+    import qrcode
+    return HttpResponse(
+        qrcode.make('http://pythoncanarias.es/'),
+        content_type='image/png',
+        )
