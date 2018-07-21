@@ -1,5 +1,6 @@
-# core
-Core apps for Python Canarias
+# Web
+
+Web for Python Canarias
 
 ## Install
 
@@ -13,5 +14,4 @@ This will install a virtual environment for the project, with Python 3.6, Django
 
 ## The app commons
 
-This app includes all the common resources: statics, templateags, utils, etc...
-that the others app use or may use.
+This app includes all the common resources: statics, templateags, utils, etc... that the others app use or may use.
