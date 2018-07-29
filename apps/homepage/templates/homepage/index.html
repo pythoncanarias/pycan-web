@@ -1,0 +1,77 @@
+{% load static %}
+{% load utils %}
+
+<!doctype html>
+<html class="no-js" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Python Canarias</title>
+    <meta name="description" content="Python Canarias">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{{ assets|get_key:'commons/img/favicon.ico' }}" type="image/x-icon">
+    <link rel="icon" href="{{ assets|get_key:'commons/img/favicon.ico' }}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{{ assets|get_key:'commons/vendor.min.css' }}">
+    <link rel="stylesheet" href="{{ assets|get_key:'commons/custom.min.css' }}">
+    <link rel="stylesheet" href="{{ assets|get_key:'homepage/custom.min.css' }}">
+
+    <meta property="og:url" content="https://pythoncanarias.es" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Python Canarias" />
+    <meta property="og:description" content="Web de la asociación Python Canarias" />
+    <meta property="og:image" content="{% static 'homepage/img/logo.png' %}" />
+
+    <meta name="twitter:title" content="Python Canarias">
+    <meta name="twitter:description" content="Web de la asociación Python Canarias.">
+    <meta name="twitter:image" content="{% static 'homepage/img/logo.png' %}">
+    <meta name="twitter:card" content="summary_large_image">
+
+</head>
+<body>
+
+    <!--[if lte IE 9]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+
+    <div class="bg"></div>
+
+    <div class="slogan">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{{ assets|get_key:'homepage/img/logo_text.png' }}" class="img-fluid" alt="Python Canarias"/>
+                </div>
+            </div>
+
+        <div class="row">
+            <div class="col-sm-12 buttons">
+                <a href="https://pyday.pythoncanarias.es" target="_blank" class="btn btn-primary">PyDay TF 2018</a>
+                <a href="https://micropython.pythoncanarias.es/" target="_blank" class="btn btn-primary">MicroPython</a>
+            </div>
+        </div>
+        <h4>Para más noticias, pásate por nuestro <a href="https://medium.com/pythoncanarias" target="_blank">blog</a></h4>
+        <div class="social">
+            <a href="https://twitter.com/pythoncanarias"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/pythoncanarias/"><i class="fab fa-instagram"></i></a>
+            <a href="https://telegram.me/pythoncanarias"><i class="fab fa-telegram"></i></a>
+            <a href="https://www.youtube.com/channel/UCIH5U0UXk-NL1HdFSo__63A"><i class="fab fa-youtube"></i></a>
+            <a href="mailto:info@pythoncanarias.es"><i class="fas fa-envelope-open"></i></a>
+        </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+
+            </div>
+        </div>
+    </div>    
+
+    <script src="{{ assets|get_key:'commons/vendor.min.js' }}"></script>
+
+</body>
+</html>

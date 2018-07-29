@@ -1,0 +1,38 @@
+{
+  "name": "iespuertodelacruz.es",
+  "version": "1.0.0",
+  "description": "Web of Python Canarias",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pythoncanarias/web.git"
+  },
+  "author": "Python Canarias",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pythoncanarias/web/issues"
+  },
+  "homepage": "https://github.com/pythoncanarias/web#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.2.0",
+    "bootstrap": "^4.1.2",
+    "bulma": "^0.7.1",
+    "holderjs": "^2.9.4",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-replace": "^1.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.3.0",
+    "gulp-rev": "^8.1.1",
+    "gulp-rev-rewrite": "^1.1.1",
+    "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-uglifycss": "^1.1.0"
+  }
+}

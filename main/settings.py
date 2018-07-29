@@ -47,9 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'commons',
-    'homepage',
-    'events',
+    'apps.commons',
+    'apps.homepage',
+    'apps.events',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.commons.context_processors.glob'
             ],
         },
     },
@@ -136,7 +137,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = config('STATIC_ROOT', default='/path/to/your/statics')
+STATIC_ROOT = config('STATIC_ROOT', default="/path/to/your/statics/")
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 SITE_ID = 1
 

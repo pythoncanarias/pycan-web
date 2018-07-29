@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% load utils %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ assets|get_key:'events/vendor.min.css' }}">
+    <link rel="stylesheet" href="{{ assets|get_key:'events/custom.min.css' }}">
+{% endblock style %}
+
+{% block js %}
+    <script src="{{ assets|get_key:'events/vendor.min.js' }}"></script>
+    <script src="{{ assets|get_key:'events/custom.min.js' }}"></script>
+{% endblock js %}
