@@ -23,6 +23,10 @@ const VENDOR_JS = [
 
 gulp.task('default', ['make']);
 
+gulp.task('watch', ['make'], function() {
+    gulp.watch('apps/**/static/**/*.{scss,js}', ['build-custom', 'rev-files']);
+});
+
 gulp.task('make', ['build-vendor', 'build-custom', 'rev-files', 'move-fonts'])
 
 gulp.task('build-vendor', ['build-vendor-css', 'build-vendor-js']);
