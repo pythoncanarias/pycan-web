@@ -1,0 +1,15 @@
+{% extends "events/base.html" %}
+{% load utils %}
+
+{% block content %}
+    {% filter as_markdown %}
+
+# Hola
+
+## Que tal
+
+    {% endfilter %}
+    
+{% endblock content %}
+
+

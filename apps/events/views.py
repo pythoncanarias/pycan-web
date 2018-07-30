@@ -109,3 +109,8 @@ def view_qr_code(request):
         qrcode.make('http://pythoncanarias.es/'),
         content_type='image/png',
         )
+
+
+def coc(request):
+    return render(request, 'events/coc.html')
+

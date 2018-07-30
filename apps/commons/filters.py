@@ -3,6 +3,8 @@
 
 import os
 import datetime
+from markdown2 import markdown
+
 from django.conf import settings
 
 
@@ -34,5 +36,13 @@ def as_date(f):
 def get_key(dictionary, key):
     return dictionary.get(key, "")
 
+
 def get_asset_key(dictionary, key):
     return os.path.join(settings.STATIC_URL, dictionary.get(key, "") or key)
+
+
+def as_markdown(s):
+    result = markdown(s, extras=['tables', 'footnotes'])
+    if '<table' in result:
+        result = result.replace('<table', '<table class="table"')
+    return result

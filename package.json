@@ -26,12 +26,12 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-replace": "^1.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-replace": "^1.0.0",
     "gulp-rev": "^8.1.1",
     "gulp-rev-rewrite": "^1.1.1",
     "gulp-sass": "^4.0.1",
-    "gulp-uglify": "^3.0.0",
+    "gulp-uglify": "^3.0.1",
     "gulp-uglifycss": "^1.1.0"
   }
 }
