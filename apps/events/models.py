@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import uuid
 from decimal import Decimal
 from django.db import models

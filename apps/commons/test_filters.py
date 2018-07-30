@@ -1,13 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-
 import datetime
 import pytest
 
 from . import filters
 
 # as_date
+
 
 def test_as_date():
     d = datetime.date(2016, 4, 18)
@@ -17,11 +14,11 @@ def test_as_date():
 def test_as_date_current_year():
     today = datetime.date.today()
     d = datetime.date(today.year, 4, 18)
-    assert filters.as_date(d) =='18/abr'
-
+    assert filters.as_date(d) == '18/abr'
 
 
 # as_month
+
 
 def test_as_month():
     assert filters.as_month(1) == 'enero'
@@ -51,6 +48,9 @@ def test_as_month_three_letters():
     assert filters.as_month(10, 3) == 'oct'
     assert filters.as_month(11, 3) == 'nov'
     assert filters.as_month(12, 3) == 'dic'
+
+
+# test as_markdown
 
 
 def test_as_markdown_paragraph():
