@@ -1,6 +1,5 @@
 {% load static %}
 {% load utils %}
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -24,10 +23,8 @@
             <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/">Python
                     Canarias</a></h5>
           <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#">Features</a>
-            <a class="p-2 text-dark" href="#">Enterprise</a>
-            <a class="p-2 text-dark" href="#">Support</a>
-            <a class="p-2 text-dark" href="#">Pricing</a>
+            <a class="p-2 text-dark" href="{% url 'events:index' %}">Eventos</a>
+            <a class="p-2 text-dark" href="{% url 'events:coc' %}">Código de conducta</a>
           </nav>
           <a class="btn btn-outline-primary" href="#">Sign up</a>
         </div>

@@ -25,6 +25,7 @@
     "popper.js": "^1.14.3"
   },
   "devDependencies": {
+    "bootstrap": "^4.1.3",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-replace": "^1.0.0",
@@ -32,6 +33,8 @@
     "gulp-rev-rewrite": "^1.1.1",
     "gulp-sass": "^4.0.1",
     "gulp-uglify": "^3.0.1",
-    "gulp-uglifycss": "^1.1.0"
+    "gulp-uglifycss": "^1.1.0",
+    "jquery": "^3.3.1",
+    "popper": "^1.0.1"
   }
 }
