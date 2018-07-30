@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.urls import reverse
+import sys
+
 import stripe
+
 from . import models
 
 
@@ -98,10 +102,14 @@ def ticket_bought(request, keycode):
 
 def view_qr_code(request):
     from django.http import HttpResponse
-    import qrcode
+    import pyqrcode
+    import io
+    img = pyqrcode.create('http://pythoncanarias.es/')
+    buff = io.BytesIO()
+    img.svg(buff, scale=8)
     return HttpResponse(
-        qrcode.make('http://pythoncanarias.es/'),
-        content_type='image/png',
+        buff.getvalue(),
+        content_type='image/svg+xml',
         )
 
 
