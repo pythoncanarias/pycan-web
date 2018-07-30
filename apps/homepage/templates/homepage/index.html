@@ -11,12 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="{{ assets|get_key:'commons/img/favicon.ico' }}" type="image/x-icon">
-    <link rel="icon" href="{{ assets|get_key:'commons/img/favicon.ico' }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ assets|get_asset_key:'commons/img/favicon.ico' }}" type="image/x-icon">
+    <link rel="icon" href="{{ assets|get_asset_key:'commons/img/favicon.ico' }}" type="image/x-icon">
 
-    <link rel="stylesheet" href="{{ assets|get_key:'commons/vendor.min.css' }}">
-    <link rel="stylesheet" href="{{ assets|get_key:'commons/custom.min.css' }}">
-    <link rel="stylesheet" href="{{ assets|get_key:'homepage/custom.min.css' }}">
+    <link rel="stylesheet" href="{{ assets|get_asset_key:'commons/vendor.min.css' }}">
+    <link rel="stylesheet" href="{{ assets|get_asset_key:'commons/custom.min.css' }}">
+    <link rel="stylesheet" href="{{ assets|get_asset_key:'homepage/custom.min.css' }}">
 
     <meta property="og:url" content="https://pythoncanarias.es" />
     <meta property="og:type" content="website" />
@@ -42,7 +42,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <img src="{{ assets|get_key:'homepage/img/logo_text.png' }}" class="img-fluid" alt="Python Canarias"/>
+                    <img src="{{ assets|get_asset_key:'homepage/img/logo_text.png' }}" class="img-fluid" alt="Python Canarias"/>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@
         </div>
     </div>    
 
-    <script src="{{ assets|get_key:'commons/vendor.min.js' }}"></script>
+    <script src="{{ assets|get_asset_key:'commons/vendor.min.js' }}"></script>
 
 </body>
 </html>
