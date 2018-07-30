@@ -22,6 +22,12 @@ $ npm install
 
 ## Developing
 
+### EditorConfig
+
+Please install the corresponding extension of [EditorConfig](https://editorconfig.org/) in your favourite editor. Thus your editor will pick the settings stored in `.editorconfig`.
+
+This configuration avoids conflicts with a lot of settings, mainly with tabs widths.
+
 ### Customize your settings
 
 Feel free to change some of the settings creating a file called `.venv` on the root of the project.
