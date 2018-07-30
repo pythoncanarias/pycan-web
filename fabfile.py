@@ -10,6 +10,5 @@ def deploy():
         run("pipenv install")
         run("npm install")
         run("gulp")
-        run("pipenv run python manage.py collectstatic "
-            "-i commons -i events -i homepage --noinput --clear")
+        run("pipenv run python manage.py collectstatic --noinput --clear")
         run("supervisorctl restart web")
