@@ -3,17 +3,18 @@ var gulp = require('gulp'),
     uglifyjs = require('gulp-uglify'),
     uglifycss = require('gulp-uglifycss'),
     rev = require('gulp-rev'),
-    rename = require('gulp-rename'),
     sass = require('gulp-sass'),
     rewrite = require('gulp-rev-rewrite'),
     replace = require('gulp-replace');
 
-VENDOR_CSS = [
+const APPS = ['commons', 'events', 'homepage'];
+
+const VENDOR_CSS = [
     'node_modules/bootstrap/dist/css/bootstrap.css',
     'node_modules/@fortawesome/fontawesome-free/css/all.css'
 ]
 
-VENDOR_JS = [
+const VENDOR_JS = [
     'node_modules/jquery/dist/jquery.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
     'node_modules/popper.js/dist/umd/popper.js',
@@ -22,29 +23,42 @@ VENDOR_JS = [
 
 gulp.task('default', ['make']);
 
-gulp.task('make', ['build-vendor', 'build-custom', 'move-fonts'])
+gulp.task('make', ['build-vendor', 'build-custom', 'rev-files', 'move-fonts'])
 
-gulp.task('build-vendor', function() {
-    gulp.src(VENDOR_CSS)
-        .pipe(concat('vendor.css'))
+gulp.task('build-vendor', ['build-vendor-css', 'build-vendor-js']);
+
+gulp.task('build-vendor-css', function() {
+    return gulp.src(VENDOR_CSS)
+        .pipe(concat('vendor.min.css'))
         .pipe(replace('../webfonts', 'webfonts'))
         .pipe(uglifycss())
-        .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('static/.tmp/commons'));
+})
+
+gulp.task('build-vendor-js', function() {
     return gulp.src(VENDOR_JS)
-        .pipe(concat('vendor.js'))
+        .pipe(concat('vendor.min.js'))
         .pipe(uglifyjs())
-        .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('static/.tmp/commons'));
 })
 
 gulp.task('build-custom', async function() {
-    var apps = ['commons', 'events', 'homepage'];
-    for (let app of apps) {
-        await buildCustom(app);
-        await moveImages(app);
-        await revFiles(app);
+    for (let app of APPS) {
+        await Promise.all([
+            buildCustomCss(app),
+            buildCustomJs(app),
+            moveImages(app)
+        ])
     }
+})
+
+gulp.task('rev-files', ['build-vendor', 'build-custom'], function() {
+    return gulp.src('static/.tmp/**/*')
+        .pipe(rev())
+        .pipe(rewrite())
+        .pipe(gulp.dest('static/'))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('static/'))
 })
 
 gulp.task('move-fonts', function() {
@@ -52,44 +66,31 @@ gulp.task('move-fonts', function() {
         .pipe(gulp.dest('static/commons/webfonts'))
 })
 
-function buildCustom(app) {
-    return Promise.all([
-        new Promise(function(resolve) {
-            gulp.src('apps/**/static/' + app + '/css/**/*.scss')
-                .pipe(sass())
-                .pipe(concat('custom.css'))
-                .pipe(uglifycss())
-                .pipe(rename({ suffix: '.min' }))
-                .pipe(gulp.dest('static/.tmp/' + app))
-                .on('end', resolve)
-        }),
-        new Promise(function(resolve) {
-            gulp.src('apps/**/static/' + app + '/js/**/*.js')
-                .pipe(concat('custom.js'))
-                .pipe(uglifyjs())
-                .pipe(rename({ suffix: '.min' }))
-                .pipe(gulp.dest('static/.tmp/' + app))
-                .on('end', resolve)
-        })
-    ])
+function buildCustomCss(app) {
+    return new Promise(function(resolve) {
+        gulp.src(`apps/${app}/static/${app}/css/**/*.scss`)
+            .pipe(sass())
+            .pipe(concat('custom.min.css'))
+            .pipe(uglifycss())
+            .pipe(gulp.dest(`static/.tmp/${app}`))
+            .on('end', resolve)
+    })
+}
+
+function buildCustomJs(app) {
+    return new Promise(function(resolve) {
+        gulp.src(`apps/${app}/static/${app}/js/**/*.js`)
+            .pipe(concat('custom.min.js'))
+            .pipe(uglifyjs())
+            .pipe(gulp.dest(`static/.tmp/${app}`))
+            .on('end', resolve)
+    })
 }
 
 function moveImages(app) {
     return new Promise(function(resolve) {
-        gulp.src('apps/' + app + '/static/' + app + '/img/**/*')
-            .pipe(gulp.dest('static/.tmp/' + app + '/img'))
+        gulp.src(`apps/${app}/static/${app}/img/**/*`)
+            .pipe(gulp.dest(`static/.tmp/${app}/img`))
             .on('end', resolve)
-        })
-}
-
-function revFiles(app) {
-    return new Promise(function(resolve) {
-        gulp.src('static/.tmp/' + app + '/**/*')
-            .pipe(rev())
-            .pipe(rewrite())
-            .pipe(gulp.dest('static/' + app + '/'))
-            .pipe(rev.manifest())
-            .pipe(gulp.dest('static/' + app + '/'))
-            .on('end', resolve)
-        })
+    })
 }
