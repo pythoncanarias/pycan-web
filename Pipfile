@@ -5,6 +5,8 @@ url = "https://pypi.python.org/simple"
 
 [dev-packages]
 "flake8" = "*"
+pytest = "*"
+pytest-sugar = "*"
 ipython = "*"
 "fabric3" = "*"
 
@@ -13,8 +15,6 @@ python_version = "3.6"
 
 [packages]
 django = "*"
-pytest = "*"
-pytest-sugar = "*"
 stripe = "*"
 pillow = "*"
 qrcode = "*"
