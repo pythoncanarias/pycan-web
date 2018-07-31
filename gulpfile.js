@@ -25,7 +25,7 @@ const VENDOR_JS = [
 gulp.task('default', ['make']);
 
 gulp.task('watch', ['make'], function() {
-    gulp.watch('apps/**/static/**/*.{scss,js}', ['build-custom', 'rev-files']);
+    gulp.watch('apps/**/static/**/*.{scss,js}', ['build-custom', 'rev-files-on-watch']);
 });
 
 gulp.task('make', ['build-vendor', 'build-custom', 'move-resources', 'rev-files'])
@@ -72,12 +72,11 @@ gulp.task('move-fonts', function() {
 })
 
 gulp.task('rev-files', ['build-vendor', 'build-custom', 'move-images'], function() {
-    return gulp.src('static/.tmp/**/*')
-        .pipe(rev())
-        .pipe(rewrite())
-        .pipe(gulp.dest('static/'))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest('static/'))
+    return revFiles()
+})
+
+gulp.task('rev-files-on-watch', ['build-custom'], function() {
+    return revFiles()
 })
 
 
@@ -121,4 +120,13 @@ function buildCustomJs(app) {
             .pipe(gulp.dest(`static/.tmp/${app}`))
             .on('end', resolve)
     })
+}
+
+function revFiles() {
+    return gulp.src('static/.tmp/**/*')
+        .pipe(rev())
+        .pipe(rewrite())
+        .pipe(gulp.dest('static/'))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('static/'))
 }
