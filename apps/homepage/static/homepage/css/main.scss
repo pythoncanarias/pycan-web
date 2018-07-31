@@ -16,7 +16,7 @@ a:hover {
 .bg {
     position: absolute;
     z-index: 0;
-    background-image: url("img/bg.jpg");
+    background-image: url('./img/bg.jpg');
     background-position: center;
     background-size: cover;
     width: 100%;
