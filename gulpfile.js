@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     uglifycss = require('gulp-uglifycss'),
     rev = require('gulp-rev'),
     sass = require('gulp-sass'),
+    rename = require('gulp-rename'),
     rewrite = require('gulp-rev-rewrite'),
     replace = require('gulp-replace');
 
@@ -27,7 +28,7 @@ gulp.task('watch', ['make'], function() {
     gulp.watch('apps/**/static/**/*.{scss,js}', ['build-custom', 'rev-files']);
 });
 
-gulp.task('make', ['build-vendor', 'build-custom', 'rev-files', 'move-fonts'])
+gulp.task('make', ['build-vendor', 'build-custom', 'move-resources', 'rev-files'])
 
 gulp.task('build-vendor', ['build-vendor-css', 'build-vendor-js']);
 
@@ -50,13 +51,27 @@ gulp.task('build-custom', async function() {
     for (let app of APPS) {
         await Promise.all([
             buildCustomCss(app),
-            buildCustomJs(app),
-            moveImages(app)
+            buildCustomJs(app)
         ])
     }
 })
 
-gulp.task('rev-files', ['build-vendor', 'build-custom'], function() {
+gulp.task('move-resources', ['move-images', 'move-fonts']);
+
+gulp.task('move-images', function() {
+    return gulp.src(`apps/*/static/*/img/**/*`)
+        .pipe(rename(function(path) {
+            path.dirname = path.dirname.split('/static/')[1]
+        }))
+        .pipe(gulp.dest('static/.tmp'))
+})
+
+gulp.task('move-fonts', function() {
+    return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/**/*')
+        .pipe(gulp.dest('static/commons/webfonts'))
+})
+
+gulp.task('rev-files', ['build-vendor', 'build-custom', 'move-images'], function() {
     return gulp.src('static/.tmp/**/*')
         .pipe(rev())
         .pipe(rewrite())
@@ -65,10 +80,6 @@ gulp.task('rev-files', ['build-vendor', 'build-custom'], function() {
         .pipe(gulp.dest('static/'))
 })
 
-gulp.task('move-fonts', function() {
-    return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/**/*')
-        .pipe(gulp.dest('static/commons/webfonts'))
-})
 
 function buildCustomCss(app) {
     return new Promise(function(resolve) {
@@ -87,14 +98,6 @@ function buildCustomJs(app) {
             .pipe(concat('custom.min.js'))
             .pipe(uglifyjs())
             .pipe(gulp.dest(`static/.tmp/${app}`))
-            .on('end', resolve)
-    })
-}
-
-function moveImages(app) {
-    return new Promise(function(resolve) {
-        gulp.src(`apps/${app}/static/${app}/img/**/*`)
-            .pipe(gulp.dest(`static/.tmp/${app}/img`))
             .on('end', resolve)
     })
 }
