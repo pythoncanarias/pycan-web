@@ -1,4 +1,4 @@
-const replace = require('gulp-replace')
+import replace from 'gulp-replace'
 
 function modifyCustomCssUrlPath(app) {
     /*
@@ -20,4 +20,4 @@ function modifyCustomCssUrlPath(app) {
     })
 }
 
-module.exports = modifyCustomCssUrlPath
+export default modifyCustomCssUrlPath

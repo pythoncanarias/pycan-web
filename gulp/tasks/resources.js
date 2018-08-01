@@ -1,5 +1,5 @@
-const gulp = require('gulp'),
-    rename = require('gulp-rename')
+import gulp from 'gulp'
+import rename from 'gulp-rename'
 
 
 function moveResources(done) {
@@ -20,6 +20,6 @@ function moveFonts() {
 }
 
 
-module.exports =  {
+export {
     moveResources
 }

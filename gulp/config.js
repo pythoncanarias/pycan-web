@@ -19,7 +19,7 @@ const LIBS = {
     }
 }
 
-module.exports =  {
+export {
     APPS,
     LIBS
 }

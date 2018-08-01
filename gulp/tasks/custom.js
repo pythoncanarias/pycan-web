@@ -1,11 +1,11 @@
-const gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    uglifyjs = require('gulp-uglify'),
-    uglifycss = require('gulp-uglifycss'),
-    sass = require('gulp-sass')
+import gulp from 'gulp'
+import concat from 'gulp-concat'
+import uglifyjs from 'gulp-uglify'
+import uglifycss from 'gulp-uglifycss'
+import sass from 'gulp-sass'
 
-const { APPS } = require('../config')
-const modifyCustomCssUrlPath = require('./utils/custom_css_url_path')
+import { APPS } from '../config'
+import modifyCustomCssUrlPath from './utils/custom_css_url_path'
 
 
 function buildCustom() {
@@ -40,6 +40,6 @@ function getBuildCustomJsPromise(app) {
 }
 
 
-module.exports =  {
+export {
     buildCustom
 }
