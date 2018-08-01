@@ -17,23 +17,23 @@
   },
   "homepage": "https://github.com/pythoncanarias/web#readme",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.2.0",
-    "bootstrap": "^4.1.2",
-    "bulma": "^0.7.1",
-    "holderjs": "^2.9.4",
-    "jquery": "^3.3.1",
-    "popper.js": "^1.14.3"
+    "@fortawesome/fontawesome-free": "5.2.0",
+    "bootstrap": "4.1.2",
+    "bulma": "0.7.1",
+    "holderjs": "2.9.4",
+    "jquery": "3.3.1",
+    "popper.js": "1.14.3"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-noop": "^1.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-rev": "^8.1.1",
-    "gulp-rev-rewrite": "^1.1.1",
-    "gulp-sass": "^4.0.1",
-    "gulp-uglify": "^3.0.1",
-    "gulp-uglifycss": "^1.1.0"
+    "gulp": "3.9.1",
+    "gulp-concat": "2.6.1",
+    "gulp-noop": "1.0.0",
+    "gulp-rename": "1.4.0",
+    "gulp-replace": "1.0.0",
+    "gulp-rev": "8.1.1",
+    "gulp-rev-rewrite": "1.1.1",
+    "gulp-sass": "4.0.1",
+    "gulp-uglify": "3.0.1",
+    "gulp-uglifycss": "1.1.0"
   }
 }
