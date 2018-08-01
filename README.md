@@ -1,6 +1,6 @@
 # Web
 
-Web for Python Canarias
+Web for Python Canarias made in Django.
 
 ## Python dependencies
 
