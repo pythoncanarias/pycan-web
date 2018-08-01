@@ -1,11 +1,11 @@
-const gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    uglifyjs = require('gulp-uglify'),
-    uglifycss = require('gulp-uglifycss'),
-    replace = require('gulp-replace'),
-    noop = require('gulp-noop')
+import gulp from 'gulp'
+import concat from 'gulp-concat'
+import uglifyjs from 'gulp-uglify'
+import uglifycss from 'gulp-uglifycss'
+import replace from 'gulp-replace'
+import noop from 'gulp-noop'
 
-const { LIBS } = require('../config')
+import { LIBS } from '../config'
 
 
 function buildVendor(done) {
@@ -44,6 +44,6 @@ function getBuildVendorJsPromise(app) {
 }
 
 
-module.exports =  {
+export {
     buildVendor
 }

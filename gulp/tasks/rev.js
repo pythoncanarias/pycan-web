@@ -1,6 +1,6 @@
-const gulp = require('gulp'),
-    rev = require('gulp-rev'),
-    rewrite = require('gulp-rev-rewrite')
+import gulp from 'gulp'
+import rev from 'gulp-rev'
+import rewrite from 'gulp-rev-rewrite'
 
 
 function revFiles() {
@@ -13,6 +13,6 @@ function revFiles() {
 }
 
 
-module.exports =  {
+export {
     revFiles
 }
