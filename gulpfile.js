@@ -1,156 +1,23 @@
-var gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    uglifyjs = require('gulp-uglify'),
-    uglifycss = require('gulp-uglifycss'),
-    rev = require('gulp-rev'),
-    sass = require('gulp-sass'),
-    rename = require('gulp-rename'),
-    rewrite = require('gulp-rev-rewrite'),
-    replace = require('gulp-replace'),
-    noop = require('gulp-noop');
+const gulp = require('gulp')
 
-const APPS = ['commons', 'events', 'homepage'];
+const { buildVendor } = require('./gulp/tasks/vendor'),
+    { buildCustom } = require('./gulp/tasks/custom'),
+    { moveResources } = require('./gulp/tasks/resources'),
+    { revFiles } = require('./gulp/tasks/rev')
 
-const VENDOR_CSS = {
-    commons: [
-        'node_modules/@fortawesome/fontawesome-free/css/all.css'
-    ],
-    events: [
-        'node_modules/bootstrap/dist/css/bootstrap.css',
-    ]
+
+gulp.task('default', make)
+
+function make(done) {
+    return gulp.series(
+        gulp.parallel(buildVendor, buildCustom, moveResources),
+        revFiles
+    )(done)
 }
 
-const VENDOR_JS = {
-    commons: [
-        'node_modules/jquery/dist/jquery.js',
-        'node_modules/bootstrap/dist/js/bootstrap.js',
-        'node_modules/popper.js/dist/umd/popper.js',
-        'node_modules/holderjs/holder.js'
-    ]
-}
+gulp.task('watch', gulp.series(make, watch))
 
-gulp.task('default', ['make']);
-
-gulp.task('watch', ['make'], function() {
-    gulp.watch('apps/**/static/**/*.{scss,js}', ['build-custom', 'rev-files-on-watch']);
-});
-
-gulp.task('make', ['build-vendor', 'build-custom', 'move-resources', 'rev-files'])
-
-
-gulp.task('build-vendor', ['build-vendor-css', 'build-vendor-js']);
-
-gulp.task('build-vendor-css', async function() {
-    let tasks = Object.keys(VENDOR_CSS).map(app => buildVendorCss(app))
-    await Promise.all(tasks)
-})
-
-function buildVendorCss(app) {
-    return new Promise(function(resolve) {
-        gulp.src(VENDOR_CSS[app])
-            .pipe(concat('vendor.min.css'))
-            .pipe(app === 'commons' ? replace('../webfonts', 'webfonts') : noop())
-            .pipe(uglifycss())
-            .pipe(gulp.dest(`static/.tmp/${app}`))
-            .on('end', resolve)
-    })
-}
-
-gulp.task('build-vendor-js', async function() {
-    let tasks = Object.keys(VENDOR_JS).map(app => buildVendorJs(app))
-    await Promise.all(tasks)
-})
-
-function buildVendorJs(app) {
-    return new Promise(function(resolve) {
-        gulp.src(VENDOR_JS[app])
-            .pipe(concat('vendor.min.js'))
-            .pipe(uglifyjs())
-            .pipe(gulp.dest(`static/.tmp/${app}`))
-            .on('end', resolve)
-    })
-}
-
-gulp.task('build-custom', async function() {
-    for (let app of APPS) {
-        await Promise.all([
-            buildCustomCss(app),
-            buildCustomJs(app)
-        ])
-    }
-})
-
-gulp.task('move-resources', ['move-images', 'move-fonts']);
-
-gulp.task('move-images', function() {
-    return gulp.src('apps/*/static/*/img/**/*')
-        .pipe(rename(function(path) {
-            path.dirname = path.dirname.split('/static/')[1]
-        }))
-        .pipe(gulp.dest('static/.tmp'))
-})
-
-gulp.task('move-fonts', function() {
-    return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/**/*')
-        .pipe(gulp.dest('static/commons/webfonts'))
-})
-
-gulp.task('rev-files', ['build-vendor', 'build-custom', 'move-images'], function() {
-    return revFiles()
-})
-
-gulp.task('rev-files-on-watch', ['build-custom'], function() {
-    return revFiles()
-})
-
-
-function buildCustomCss(app) {
-    return new Promise(function(resolve) {
-        gulp.src(`apps/${app}/static/${app}/css/**/*.scss`)
-            .pipe(sass())
-            .pipe(concat('custom.min.css'))
-            .pipe(modifyCustomCssUrlPath(app))
-            .pipe(uglifycss())
-            .pipe(gulp.dest(`static/.tmp/${app}`))
-            .on('end', resolve)
-    })
-}
-
-function modifyCustomCssUrlPath(app) {
-    /*
-        Examples (from a css file on events app):
-        url(./img/keyboard.jpg) => url("/static/events/img/keyboard.jpg")
-        url(../commons/img/logo.jpg) => url("/static/commons/img/logo.jpg")
-        url(events/img/keyboard.jpg) => url("/static/events/img/keyboard.jpg")
-        url(/events/img/keyboard.jpg) => url("/static/events/img/keyboard.jpg")
-
-        External urls are not modified:
-        url(http://google.com/img.jpg)
-        url(https://google.com/img.jpg)
-
-        It works with singles quotes, with double quotes or without quotes.
-    */
-    return replace(/url\(["']?\/?([\w\/\-\.]+)["']?\)/ig, function(match, path) {
-        let absolute_path = path.replace('../', '').replace('./', `${app}/`);
-        return `url("/static/${absolute_path}")`
-    })
-}
-
-function buildCustomJs(app) {
-    return new Promise(function(resolve) {
-        gulp.src(`apps/${app}/static/${app}/js/**/*.js`)
-            .pipe(concat('custom.min.js'))
-            .pipe(uglifyjs())
-            .pipe(gulp.dest(`static/.tmp/${app}`))
-            .on('end', resolve)
-    })
-}
-
-function revFiles() {
-    return gulp.src('static/.tmp/**/*')
-        .pipe(rev())
-        .pipe(rewrite())
-        .pipe(gulp.dest('static/'))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest('static/'))
+function watch() {
+    return gulp.watch('apps/**/static/**/*.{scss,js}')
+        .on('change', gulp.series(buildCustom, revFiles))
 }
