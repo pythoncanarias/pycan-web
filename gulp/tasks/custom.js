@@ -4,7 +4,7 @@ const gulp = require('gulp'),
     uglifycss = require('gulp-uglifycss'),
     sass = require('gulp-sass')
 
-const { APPS } = require('../config'),
+const { APPS } = require('../config')
 const modifyCustomCssUrlPath = require('./utils/custom_css_url_path')
 
 
