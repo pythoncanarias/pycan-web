@@ -7,6 +7,9 @@ const LIBS = {
         ],
         events: [
             'node_modules/bootstrap/dist/css/bootstrap.css',
+        ],
+        homepage: [
+            'apps/homepage/static/homepage/css/vendor.scss'
         ]
     },
     JS: {

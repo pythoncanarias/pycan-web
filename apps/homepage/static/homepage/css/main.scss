@@ -1,5 +1,4 @@
-@import 'override.scss';
-@import 'node_modules/bulma/bulma.sass';
+@import 'variables';
 
 .hero {
     color: white;
@@ -39,7 +38,7 @@
         }
 
         .social {
-            margin-top: 20px;
+            margin-top: 1.6em;
 
             .button {
                 background-color: rgba(255, 255, 255, 0.07);

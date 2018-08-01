@@ -4,6 +4,7 @@ import uglifyjs from 'gulp-uglify'
 import uglifycss from 'gulp-uglifycss'
 import replace from 'gulp-replace'
 import noop from 'gulp-noop'
+import sass from 'gulp-sass'
 
 import { LIBS } from '../config'
 
@@ -25,6 +26,7 @@ function buildVendorJs() {
 function getBuildVendorCssPromise(app) {
     return new Promise(function(resolve) {
         gulp.src(LIBS.CSS[app])
+            .pipe(sass())
             .pipe(concat('vendor.min.css'))
             .pipe(app === 'commons' ? replace('../webfonts', 'webfonts') : noop())
             .pipe(uglifycss())
