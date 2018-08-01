@@ -3,5 +3,6 @@
 {% load utils %}
 
 {% block style %}
+    <link rel="stylesheet" href="{{ assets|get_asset_key:'events/vendor.min.css' }}">
     <link rel="stylesheet" href="{{ assets|get_asset_key:'events/custom.min.css' }}">
 {% endblock style %}

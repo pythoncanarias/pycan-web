@@ -6,21 +6,28 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     rename = require('gulp-rename'),
     rewrite = require('gulp-rev-rewrite'),
-    replace = require('gulp-replace');
+    replace = require('gulp-replace'),
+    noop = require('gulp-noop');
 
 const APPS = ['commons', 'events', 'homepage'];
 
-const VENDOR_CSS = [
-    'node_modules/bootstrap/dist/css/bootstrap.css',
-    'node_modules/@fortawesome/fontawesome-free/css/all.css'
-]
+const VENDOR_CSS = {
+    commons: [
+        'node_modules/@fortawesome/fontawesome-free/css/all.css'
+    ],
+    events: [
+        'node_modules/bootstrap/dist/css/bootstrap.css',
+    ]
+}
 
-const VENDOR_JS = [
-    'node_modules/jquery/dist/jquery.js',
-    'node_modules/bootstrap/dist/js/bootstrap.js',
-    'node_modules/popper.js/dist/umd/popper.js',
-    'node_modules/holderjs/holder.js'
-]
+const VENDOR_JS = {
+    commons: [
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/bootstrap/dist/js/bootstrap.js',
+        'node_modules/popper.js/dist/umd/popper.js',
+        'node_modules/holderjs/holder.js'
+    ]
+}
 
 gulp.task('default', ['make']);
 
@@ -30,22 +37,39 @@ gulp.task('watch', ['make'], function() {
 
 gulp.task('make', ['build-vendor', 'build-custom', 'move-resources', 'rev-files'])
 
+
 gulp.task('build-vendor', ['build-vendor-css', 'build-vendor-js']);
 
-gulp.task('build-vendor-css', function() {
-    return gulp.src(VENDOR_CSS)
-        .pipe(concat('vendor.min.css'))
-        .pipe(replace('../webfonts', 'webfonts'))
-        .pipe(uglifycss())
-        .pipe(gulp.dest('static/.tmp/commons'));
+gulp.task('build-vendor-css', async function() {
+    let tasks = Object.keys(VENDOR_CSS).map(app => buildVendorCss(app))
+    await Promise.all(tasks)
 })
 
-gulp.task('build-vendor-js', function() {
-    return gulp.src(VENDOR_JS)
-        .pipe(concat('vendor.min.js'))
-        .pipe(uglifyjs())
-        .pipe(gulp.dest('static/.tmp/commons'));
+function buildVendorCss(app) {
+    return new Promise(function(resolve) {
+        gulp.src(VENDOR_CSS[app])
+            .pipe(concat('vendor.min.css'))
+            .pipe(app === 'commons' ? replace('../webfonts', 'webfonts') : noop())
+            .pipe(uglifycss())
+            .pipe(gulp.dest(`static/.tmp/${app}`))
+            .on('end', resolve)
+    })
+}
+
+gulp.task('build-vendor-js', async function() {
+    let tasks = Object.keys(VENDOR_JS).map(app => buildVendorJs(app))
+    await Promise.all(tasks)
 })
+
+function buildVendorJs(app) {
+    return new Promise(function(resolve) {
+        gulp.src(VENDOR_JS[app])
+            .pipe(concat('vendor.min.js'))
+            .pipe(uglifyjs())
+            .pipe(gulp.dest(`static/.tmp/${app}`))
+            .on('end', resolve)
+    })
+}
 
 gulp.task('build-custom', async function() {
     for (let app of APPS) {
