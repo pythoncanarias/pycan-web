@@ -1,5 +1,6 @@
 import gulp from 'gulp'
 import concat from 'gulp-concat'
+import rename from 'gulp-rename'
 import uglifyjs from 'gulp-uglify'
 import uglifycss from 'gulp-uglifycss'
 import sass from 'gulp-sass'
@@ -19,9 +20,9 @@ function buildCustom() {
 
 function getBuildCustomCssPromise(app) {
     return new Promise(function(resolve) {
-        gulp.src(`apps/${app}/static/${app}/css/**/*.scss`)
+        gulp.src(`apps/${app}/static/${app}/css/main.scss`, {allowEmpty: true})
             .pipe(sass())
-            .pipe(concat('custom.min.css'))
+            .pipe(rename('custom.min.css'))
             .pipe(modifyCustomCssUrlPath(app))
             .pipe(uglifycss())
             .pipe(gulp.dest(`static/.tmp/${app}`))
