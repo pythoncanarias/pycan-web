@@ -43,7 +43,9 @@ class Report():
             RENDERED_TEMPLATES_DIR + str(uuid.uuid4()) + '.pdf'
 
         self.mapping['generation_time'] = datetime.datetime.now()
-        self.mapping['base_dir'] = RENDERED_TEMPLATES_DIR
+        self.mapping['base_dir'] = os.path.dirname(
+            os.path.abspath(self.template.filename)
+        )
         self.rendered_template = self.template.render(self.mapping)
 
         p = Popen(['prince', '-', self.output_filename], stdin=PIPE)
