@@ -1,0 +1,32 @@
+@page {
+    size: A4;
+    margin-left: 2cm;
+    margin-right: 2cm;
+    margin-top: 3cm;
+    margin-bottom: 3cm;
+
+    @top-left {
+        content: element(header);
+    }
+
+    @bottom-center {
+        content: element(bottom);
+    }
+}
+
+.header {
+    position: running(header);
+    border-bottom: .1mm solid rgb(190, 190, 190);
+}
+
+.header img {
+    width: 4cm;
+}
+
+.bottom {
+    position: running(bottom);
+    border-top: .1mm solid rgb(190, 190, 190);
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+}

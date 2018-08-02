@@ -1,0 +1,18 @@
+{% extends "commons/base.j2" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ my_base_dir }}/ticket.css">
+{% endblock %}
+
+{% block content %}
+    <ul>
+        <li>Asistente: {{ ticket.surname }}, {{ ticket.name }}</li>
+        <li>Correo: {{ ticket.email }}</li>
+        <li>Evento: {{ ticket.ticket_type.event }}</li>
+        <li>Fecha: {{ ticket.ticket_type.event.start_date.strftime('%d/%m/%Y') }}</li>
+        <li>Tipo de entrada: {{ ticket.ticket_type.name }}</li>
+        <li>Precio: {{ ticket.ticket_type.price }} €</li>
+        <img src="http://127.0.0.1:8000/events/ticket/test/" alt="Keycode of the ticket">
+    </ul>
+{% endblock %}

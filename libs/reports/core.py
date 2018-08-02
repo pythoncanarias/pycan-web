@@ -1,6 +1,5 @@
 from django.conf import settings
 from jinja2 import Environment, FileSystemLoader
-from subprocess import Popen, PIPE
 import uuid
 import os
 import datetime
@@ -39,19 +38,26 @@ class Report():
         Returns:
             If http_response is True, returns a Django like HttpResponse.
         """
-        self.output_filename = output_filename or \
-            RENDERED_TEMPLATES_DIR + str(uuid.uuid4()) + '.pdf'
+        self.output_filename = output_filename or os.path.join(
+            RENDERED_TEMPLATES_DIR, str(uuid.uuid4()) + '.pdf'
+        )
+        rendered_tmpl_filename = os.path.join(
+            RENDERED_TEMPLATES_DIR, str(uuid.uuid4()) + '.html'
+        )
 
         self.mapping['generation_time'] = datetime.datetime.now()
-        self.mapping['base_dir'] = os.path.dirname(
+        self.mapping['commons_dir'] = os.path.join(
+            settings.BASE_DIR, 'apps/commons/reports/commons'
+        )
+        self.mapping['my_base_dir'] = os.path.dirname(
             os.path.abspath(self.template.filename)
         )
-        self.rendered_template = self.template.render(self.mapping)
+        rendered_template = self.template.render(self.mapping)
+        with open(rendered_tmpl_filename, 'wb') as f:
+            f.write(rendered_template.encode('utf-8'))
 
-        p = Popen(['prince', '-', self.output_filename], stdin=PIPE)
-        p.stdin.write(self.rendered_template.encode('utf-8'))
-        p.stdin.close()
-        p.communicate()
+        os.system(f'prince {rendered_tmpl_filename} -o {self.output_filename}')
+        os.remove(rendered_tmpl_filename)
 
         if http_response:
             from django.http import HttpResponse

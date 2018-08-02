@@ -10,4 +10,5 @@ urlpatterns = [
     path('<slug:slug>', views.detail_event, name='detail_event'),
     path('ticket/<uuid:keycode>/', views.ticket_bought, name='ticket_bought'),
     path('ticket/test/', views.view_qr_code, name='qr_code'),
+    path('ticket/<uuid:keycode>/pdf/', views.ticket_pdf, name='ticket_pdf'),
 ]
