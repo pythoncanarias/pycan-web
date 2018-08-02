@@ -13,18 +13,18 @@ gulp.task('watch', gulp.series(make, watch))
 
 
 function make(done) {
-    return gulp.series(
-        clean,
-        gulp.parallel(buildVendor, buildCustom, moveResources),
-        revFiles
-    )(done)
+  return gulp.series(
+    clean,
+    gulp.parallel(buildVendor, buildCustom, moveResources),
+    revFiles
+  )(done)
 }
 
 function clean() {
-    return del(['./static/*'], { dot: true })
+  return del(['./static/*'], { dot: true })
 }
 
 function watch() {
-    return gulp.watch('apps/**/static/**/*.{scss,js}')
-        .on('all', gulp.series(buildCustom, revFiles))
+  return gulp.watch('apps/**/static/**/*.{scss,js}')
+    .on('all', gulp.series(buildCustom, revFiles))
 }
