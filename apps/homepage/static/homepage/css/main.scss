@@ -31,7 +31,9 @@
         color: $yellow;
         background-color: rgba(255, 255, 255, 0.07);
 
-        &:hover, &:focus, &:active {
+        &:hover,
+        &:focus,
+        &:active {
           background-color: rgba(255, 255, 255, 0.12);
         }
       }
@@ -45,7 +47,9 @@
         border-color: transparent;
         color: white;
 
-        &:hover, &:focus, &:active {
+        &:hover,
+        &:focus,
+        &:active {
           background-color: rgba(255, 255, 255, 0.12);
         }
       }

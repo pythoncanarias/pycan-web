@@ -14,6 +14,8 @@ function modifyCustomCssUrlPath(app) {
    *
    * It works with singles quotes, with double quotes or without quotes.
    */
+
+  // eslint-disable-next-line no-useless-escape
   return replace(/url\(["']?\/?([\w\/\-\.]+)["']?\)/ig, function (match, path) {
     let absolute_path = path.replace('../', '').replace('./', `${app}/`)
     return `url("/static/${absolute_path}")`
