@@ -1,4 +1,5 @@
 import gulp from 'gulp'
+import del from 'del'
 
 import { buildVendor } from './gulp/tasks/vendor'
 import { buildCustom } from './gulp/tasks/custom'
@@ -8,14 +9,20 @@ import { revFiles } from './gulp/tasks/rev'
 
 gulp.task('default', make)
 
+gulp.task('watch', gulp.series(make, watch))
+
+
 function make(done) {
     return gulp.series(
+        clean,
         gulp.parallel(buildVendor, buildCustom, moveResources),
         revFiles
     )(done)
 }
 
-gulp.task('watch', gulp.series(make, watch))
+function clean() {
+    return del(['./static/*'], { dot: true })
+}
 
 function watch() {
     return gulp.watch('apps/**/static/**/*.{scss,js}')
