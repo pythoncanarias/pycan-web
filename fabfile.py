@@ -8,7 +8,7 @@ def deploy():
     with cd("~/web"):
         run("git pull")
         run("pipenv install")
-        run("npm install --production --no-save")
+        run("npm install --no-save")
         run("gulp")
         run("pipenv run python manage.py collectstatic --noinput --clear")
         run("supervisorctl restart web")
