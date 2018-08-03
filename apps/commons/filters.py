@@ -26,6 +26,9 @@ def as_month(f, num_letters=0):
 
 
 def as_date(f):
+    if not isinstance(f, datetime.date):
+        return f
+
     today = datetime.date.today()
     if f.year == today.year:
         return '{}/{}'.format(f.day, as_month(f, 3))

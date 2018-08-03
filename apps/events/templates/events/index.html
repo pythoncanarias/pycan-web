@@ -2,34 +2,40 @@
 
 {% block content %}
 
-<div class="container">
-  <div class="card-deck mb-3 text-center">
-    <div class="card mb-6 box-shadow">
+<div class="columns">
+  <div class="column">
+    <div class="card">
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Early</h4>
+        <p class="card-header-title is-centered">
+          Early
+        </p>
       </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">10€</h1>
-        <ul class="list-unstyled mt-3 mb-4">
+      <div class="card-content has-text-centered">
+        <h1 class="title">10€</h1>
+        <ul class="subtitle">
           <li>A la venta el próximo dd/mm/yyyy</li>
-          <li>20 entradas d compra adelantada</li>
+          <li>20 entradas de compra adelantada</li>
           <li>Descuento por compra anticipada</li>
         </ul>
-        <button type="button" class="btn btn-lg btn-block disabled btn-primary">Comprar ticket</button>
+        <button type="button" class="button is-link is-fullwidth is-medium">Comprar ticket</button>
       </div>
     </div>
-    <div class="card mb-6 box-shadow">
+  </div>
+  <div class="column">
+    <div class="card">
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Normal</h4>
+        <p class="card-header-title is-centered">
+          Normal
+        </p>
       </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">12€</h1>
-        <ul class="list-unstyled mt-3 mb-4">
+      <div class="card-content has-text-centered">
+        <h1 class="title">12€</h1>
+        <ul class="subtitle">
           <li>A la venta el dd/mm/yyyy</li>
           <li>100 entradas</li>
-          <li>Precion normal</li>
+          <li>Precio normal</li>
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-primary disabled">Comprar ticket</button>
+        <button type="button" class="button is-link is-fullwidth is-medium">Comprar ticket</button>
       </div>
     </div>
   </div>

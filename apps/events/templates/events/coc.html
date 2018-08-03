@@ -2,7 +2,10 @@
 {% load utils %}
 
 {% block content %}
-    {% filter as_markdown %}
+
+<div class="content">
+
+  {% filter as_markdown %}
 
 # Code of Conduct
 
@@ -13,9 +16,9 @@ of all our events to follow this code of conduct (CoC).
 
 
 If you have questions regarding this CoC, please see our CoC FAQ below or
-contact the Pyton Canarias group in this email: 
+contact the Pyton Canarias group in this email:
 <a href="mailto::info@pythoncanarias.es">info@pythoncanarias.es</a>. Your
-questions will only be seen by the members of the core workgroup 
+questions will only be seen by the members of the core workgroup
 and CoC workgroup, and treated confidentially.
 
 ## Be nice to each other
@@ -53,7 +56,7 @@ bullying behavior are expected to comply immediately.
 ## Be professional and don’t spam
 
 We consider our events a great setting to showcase the work of the community and
-would like to encourage networking and business related discussions, as well as 
+would like to encourage networking and business related discussions, as well as
 keep the conference presentations meaningful and interesting for everyone.
 
 We therefore:
@@ -96,11 +99,13 @@ following actions relating to a complaint:
 
 This document is based on the
 [EuroPython 2018 Code of Conduct](https://ep2018.europython.eu/en/coc/)
-and released under a 
+and released under a
 [creative commons license](http://creativecommons.org/licenses/by-nc-sa/3.0/).
 
     {% endfilter %}
-    
+
+</div>
+
 {% endblock content %}
 
 

@@ -1,7 +1,8 @@
 module.exports = {
   'extends': ['eslint:recommended'],
   'env': {
-    'es6': true
+    'es6': true,
+    'browser': true
   },
   'parserOptions': {
     'sourceType': 'module',
@@ -12,5 +13,6 @@ module.exports = {
     'quotes': ['error', 'single'],
     'multiline-comment-style': ['error', 'starred-block'],
     'no-var': 'error',
+    'semi': ['error', 'never']
   }
 }

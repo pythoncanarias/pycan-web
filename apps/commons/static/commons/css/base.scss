@@ -1,0 +1,24 @@
+@import './variables';
+@import './override';
+
+.header-page {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 1.7rem;
+}
+
+.content-page {
+  max-width: 59rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.footer-page {
+  margin-top: 1.7rem;
+  padding: 2rem;
+  border-top: 1px solid #e5e5e5;
+
+  .title {
+    margin-bottom: 0.4rem;
+  }
+}
