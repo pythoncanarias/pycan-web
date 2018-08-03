@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import Max
 from django.urls import reverse
 
+from . import links
 
 class Event(models.Model):
     id = models.AutoField(primary_key=True)
@@ -80,7 +81,7 @@ class Ticket(models.Model):
             )
 
     def get_qrcode_url(self):
-
+        return links.qr_code(self.pk)
 
     def get_absolute_url(self):
         return reverse('events:ticket_bought', args=(str(self.keycode),))

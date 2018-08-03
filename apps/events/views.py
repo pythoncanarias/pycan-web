@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.urls import reverse
@@ -79,7 +80,6 @@ def buy_ticket(request, id_ticket_type):
             return redirect(ticket.get_absolute_url())
         else:
             # Must implemente a proper response
-            from django.http import HttpResponse
             return HttpResponse(
                 'Nope. Algo fallo en el pago: charge:{}'.format(charge)
                 )
@@ -102,9 +102,9 @@ def ticket_bought(request, keycode):
         })
 
 
-def ticket_qr_code(request, id_ticket):
-    ticket = Ticket.objects.get(pk=id_ticket)
-    img = pyqrcode.create(ticket.keycode)
+def ticket_qrcode(request, pk):
+    ticket = models.Ticket.objects.get(pk=pk)
+    img = pyqrcode.create(str(ticket.keycode))
     buff = io.BytesIO()
     img.svg(buff, scale=8)
     return HttpResponse(
