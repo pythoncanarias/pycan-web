@@ -20,14 +20,6 @@
                 <i class="far fa-envelope"></i>
                 {{ ticket.email }}
             </td>
-            <td class="qr" rowspan="4">
-                <img src="http://127.0.0.1:8000/events/ticket/test/" alt="Keycode of the ticket">
-                <br>
-                <div class="keycode">
-                    <i class="fas fa-key"></i>
-                    {{ ticket.keycode }}
-                </div>
-            </td>
         </tr>
         <tr>
             <td class="field">
@@ -37,7 +29,15 @@
             <td>
                 {{ ticket.ticket_type.event.get_long_start_date() }}
             </td>
-            <td></td>
+        </tr>
+        <tr>
+            <td class="field">
+                <i class="far fa-clock"></i>
+                HORA:
+            </td>
+            <td>
+                9:00h
+            </td>
         </tr>
         <tr>
             <td class="field">
@@ -45,7 +45,6 @@
                 TIPO DE ENTRADA:
             </td>
             <td>{{ ticket.ticket_type.name }}</td>
-            <td></td>
         </tr>
         <tr>
             <td class="field">
@@ -53,7 +52,28 @@
                 PRECIO DE LA ENTRADA:
             </td>
             <td>{{ ticket.ticket_type.price }} €</td>
-            <td></td>
+        </tr>
+        <tr>
+            <td class="field">
+                <i class="fas fa-map-marker-alt"></i>
+                LOCALIZACIÓN:
+            </td>
+            <td>
+                Edificio de Física y Matemáticas (ULL)
+                <div class="address">
+                    C/ Astrofísico Francisco Sánchez s/n
+                    San Cristóbal de La Laguna, S.C. de Tenerife 38206 España]
+                </div>
+            </td>
         </tr>
     </table>
+
+    <div class="qr">
+        <img src="http://127.0.0.1:8000/events/ticket/test/" alt="Keycode of the ticket">
+        <br>
+        <div class="keycode">
+            <i class="fas fa-key"></i>
+            {{ ticket.keycode }}
+        </div>
+    </div>
 {% endblock %}

@@ -4,10 +4,11 @@ h1 {
 
 .qr {
     text-align: right;
+    margin-top: 8cm;
 }
 
 .qr img {
-    width: 4cm;
+    width: 5cm;
 }
 
 table {
@@ -22,6 +23,7 @@ tr {
 
 .field {
     font-family: 'Fine';
+    width: 55mm;
 }
 
 .field i {
@@ -32,4 +34,9 @@ tr {
 .keycode {
     font-family: 'Fine';
     font-size: 8pt;
+}
+
+.address {
+    font-family: 'Fine';
+    font-size: 11pt;
 }
