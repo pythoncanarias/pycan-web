@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.db import models
 from django.db.models import Max
 from django.urls import reverse
+import locale
 
 
 class Event(models.Model):
@@ -14,6 +15,11 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def long_start_date(self, to_locale="es_ES"):
+        locale.setlocale(locale.LC_TIME, to_locale)
+        return self.start_date.strftime('%A %d de %B de %Y').capitalize()
 
 
 class TicketType(models.Model):
