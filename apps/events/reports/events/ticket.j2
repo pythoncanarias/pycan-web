@@ -10,32 +10,48 @@
 
     <table>
         <tr>
-            <td class="field">ASISTENTE:</td>
+            <td class="field">
+                <i class="fas fa-user"></i>
+                ASISTENTE:
+            </td>
             <td>
                 {{ ticket.surname }}, {{ ticket.name }}
                 <br>
+                <i class="far fa-envelope"></i>
                 {{ ticket.email }}
             </td>
             <td class="qr" rowspan="4">
                 <img src="http://127.0.0.1:8000/events/ticket/test/" alt="Keycode of the ticket">
                 <br>
-                <div class="keycode">{{ ticket.keycode }}</div>
+                <div class="keycode">
+                    <i class="fas fa-key"></i>
+                    {{ ticket.keycode }}
+                </div>
             </td>
         </tr>
         <tr>
-            <td class="field">FECHA:</td>
+            <td class="field">
+                <i class="far fa-calendar-alt"></i>
+                FECHA:
+            </td>
             <td>
                 {{ ticket.ticket_type.event.start_date.strftime('%d/%m/%Y') }}
             </td>
             <td></td>
         </tr>
         <tr>
-            <td class="field">TIPO DE ENTRADA:</td>
+            <td class="field">
+                <i class="fas fa-ticket-alt"></i>
+                TIPO DE ENTRADA:
+            </td>
             <td>{{ ticket.ticket_type.name }}</td>
             <td></td>
         </tr>
         <tr>
-            <td class="field">PRECIO DE LA ENTRADA:</td>
+            <td class="field">
+                <i class="far fa-money-bill-alt"></i>
+                PRECIO DE LA ENTRADA:
+            </td>
             <td>{{ ticket.ticket_type.price }} €</td>
             <td></td>
         </tr>

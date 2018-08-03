@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     {% block head %}
+        <link rel="stylesheet" href="{{ commons_dir }}/vendor/fontawesome/css/all.min.css">
         <link rel="stylesheet" href="{{ commons_dir }}/css/main.css">
         <link rel="stylesheet" href="{{ commons_dir }}/css/fonts.css">
     {% endblock %}
@@ -14,8 +15,14 @@
     {% block content %}{% endblock %}
 
     <div class="bottom">
-        <div>pythoncanarias.es</div>
-        <div>Timestamp: <span class="timestamp">{{ timestamp }}</span></div>
+        <div>
+            <i class="fas fa-cloud"></i>
+            pythoncanarias.es
+        </div>
+        <div>
+            <i class="far fa-clock"></i>
+            <span class="timestamp">{{ timestamp }}</span>
+        </div>
     </div>
 </body>
 </html>

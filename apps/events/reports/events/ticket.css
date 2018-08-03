@@ -24,6 +24,11 @@ tr {
     font-family: 'Fine';
 }
 
+.field i {
+    color: rgb(85, 85, 85);
+    width: 5mm;
+}
+
 .keycode {
     font-family: 'Fine';
     font-size: 8pt;
