@@ -45,7 +45,7 @@ class Report():
             RENDERED_TEMPLATES_DIR, str(uuid.uuid4()) + '.html'
         )
 
-        self.mapping['generation_time'] = datetime.datetime.now()
+        self.mapping['timestamp'] = datetime.datetime.now()
         self.mapping['commons_dir'] = os.path.join(
             settings.BASE_DIR, 'apps/commons/reports/commons'
         )

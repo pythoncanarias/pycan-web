@@ -3,6 +3,7 @@
 <head>
     {% block head %}
         <link rel="stylesheet" href="{{ commons_dir }}/css/main.css">
+        <link rel="stylesheet" href="{{ commons_dir }}/css/fonts.css">
     {% endblock %}
 </head>
 <body>
@@ -13,9 +14,8 @@
     {% block content %}{% endblock %}
 
     <div class="bottom">
-        <div>Python Canarias</div>
         <div>pythoncanarias.es</div>
-        <div>Longa vita Draconibus</div>
+        <div>Timestamp: <span class="timestamp">{{ timestamp }}</span></div>
     </div>
 </body>
 </html>

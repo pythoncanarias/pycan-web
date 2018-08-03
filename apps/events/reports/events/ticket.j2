@@ -6,13 +6,38 @@
 {% endblock %}
 
 {% block content %}
-    <ul>
-        <li>Asistente: {{ ticket.surname }}, {{ ticket.name }}</li>
-        <li>Correo: {{ ticket.email }}</li>
-        <li>Evento: {{ ticket.ticket_type.event }}</li>
-        <li>Fecha: {{ ticket.ticket_type.event.start_date.strftime('%d/%m/%Y') }}</li>
-        <li>Tipo de entrada: {{ ticket.ticket_type.name }}</li>
-        <li>Precio: {{ ticket.ticket_type.price }} €</li>
-        <img src="http://127.0.0.1:8000/events/ticket/test/" alt="Keycode of the ticket">
-    </ul>
+    <h1>{{ ticket.ticket_type.event }}</h1>
+
+    <table>
+        <tr>
+            <td class="field">ASISTENTE:</td>
+            <td>
+                {{ ticket.surname }}, {{ ticket.name }}
+                <br>
+                {{ ticket.email }}
+            </td>
+            <td class="qr" rowspan="4">
+                <img src="http://127.0.0.1:8000/events/ticket/test/" alt="Keycode of the ticket">
+                <br>
+                <div class="keycode">{{ ticket.keycode }}</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="field">FECHA:</td>
+            <td>
+                {{ ticket.ticket_type.event.start_date.strftime('%d/%m/%Y') }}
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="field">TIPO DE ENTRADA:</td>
+            <td>{{ ticket.ticket_type.name }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="field">PRECIO DE LA ENTRADA:</td>
+            <td>{{ ticket.ticket_type.price }} €</td>
+            <td></td>
+        </tr>
+    </table>
 {% endblock %}

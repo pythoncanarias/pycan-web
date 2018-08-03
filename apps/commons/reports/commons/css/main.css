@@ -1,3 +1,7 @@
+body {
+    font-family: 'Body';
+}
+
 @page {
     size: A4;
     margin-left: 2cm;
@@ -16,7 +20,7 @@
 
 .header {
     position: running(header);
-    border-bottom: .1mm solid rgb(190, 190, 190);
+    border-bottom: .2mm solid rgb(61, 61, 61);
 }
 
 .header img {
@@ -25,8 +29,16 @@
 
 .bottom {
     position: running(bottom);
-    border-top: .1mm solid rgb(190, 190, 190);
+    border-top: .2mm solid rgb(61, 61, 61);
+    padding-top: 3mm;
     display: flex;
     justify-content: space-between;
+    font-family: 'Body';
     font-style: italic;
+    font-size: 10pt;
+    color: rgb(78, 78, 78);
+}
+
+.timestamp {
+    font-family: 'Fine';
 }

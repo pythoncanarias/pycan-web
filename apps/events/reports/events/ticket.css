@@ -1,3 +1,30 @@
-body {
-    color: rgb(63, 63, 63);
+h1 {
+    font-family: 'Subject';
+}
+
+.qr {
+    text-align: right;
+}
+
+.qr img {
+    width: 4cm;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tr {
+    height: 1cm;
+}
+
+.field {
+    font-family: 'Fine';
+}
+
+.keycode {
+    font-family: 'Fine';
+    font-size: 8pt;
 }
