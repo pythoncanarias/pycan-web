@@ -1,9 +1,12 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.urls import reverse
 import sys
 
 import stripe
+import pyqrcode
+import io
 
 from . import models
 
@@ -77,7 +80,6 @@ def buy_ticket(request, id_ticket_type):
             return redirect(ticket.get_absolute_url())
         else:
             # Must implemente a proper response
-            from django.http import HttpResponse
             return HttpResponse(
                 'Nope. Algo fallo en el pago: charge:{}'.format(charge)
                 )
@@ -100,11 +102,9 @@ def ticket_bought(request, keycode):
         })
 
 
-def view_qr_code(request):
-    from django.http import HttpResponse
-    import pyqrcode
-    import io
-    img = pyqrcode.create('http://pythoncanarias.es/')
+def ticket_qrcode(request, pk):
+    ticket = models.Ticket.objects.get(pk=pk)
+    img = pyqrcode.create(str(ticket.keycode))
     buff = io.BytesIO()
     img.svg(buff, scale=8)
     return HttpResponse(
