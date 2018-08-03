@@ -4,6 +4,8 @@ from django.urls import reverse
 import sys
 
 import stripe
+import pyqrcode
+import io
 
 from . import models
 
@@ -100,11 +102,9 @@ def ticket_bought(request, keycode):
         })
 
 
-def view_qr_code(request):
-    from django.http import HttpResponse
-    import pyqrcode
-    import io
-    img = pyqrcode.create('http://pythoncanarias.es/')
+def ticket_qr_code(request, id_ticket):
+    ticket = Ticket.objects.get(pk=id_ticket)
+    img = pyqrcode.create(ticket.keycode)
     buff = io.BytesIO()
     img.svg(buff, scale=8)
     return HttpResponse(

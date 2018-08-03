@@ -79,5 +79,8 @@ class Ticket(models.Model):
             self.name,
             )
 
+    def get_qrcode_url(self):
+
+
     def get_absolute_url(self):
         return reverse('events:ticket_bought', args=(str(self.keycode),))
