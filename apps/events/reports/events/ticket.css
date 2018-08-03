@@ -23,7 +23,9 @@ tr {
 
 .field {
     font-family: 'Fine';
-    width: 55mm;
+    width: 60mm;
+    border-left: 2mm solid rgb(184, 184, 184);
+    padding-left: 5mm;
 }
 
 .field i {
@@ -39,4 +41,9 @@ tr {
 .address {
     font-family: 'Fine';
     font-size: 11pt;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }

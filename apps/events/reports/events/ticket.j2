@@ -41,14 +41,14 @@
         </tr>
         <tr>
             <td class="field">
-                <i class="fas fa-ticket-alt"></i>
+                <i class="far fa-clone"></i>
                 TIPO DE ENTRADA:
             </td>
             <td>{{ ticket.ticket_type.name }}</td>
         </tr>
         <tr>
             <td class="field">
-                <i class="far fa-money-bill-alt"></i>
+                <i class="fas fa-euro-sign"></i>
                 PRECIO DE LA ENTRADA:
             </td>
             <td>{{ ticket.ticket_type.price }} €</td>
@@ -62,7 +62,7 @@
                 Edificio de Física y Matemáticas (ULL)
                 <div class="address">
                     C/ Astrofísico Francisco Sánchez s/n
-                    San Cristóbal de La Laguna, S.C. de Tenerife 38206 España]
+                    San Cristóbal de La Laguna, S.C. de Tenerife 38206 España
                 </div>
             </td>
         </tr>
@@ -73,7 +73,7 @@
         <br>
         <div class="keycode">
             <i class="fas fa-key"></i>
-            {{ ticket.keycode }}
+            <a href="">{{ ticket.keycode }}</a>
         </div>
     </div>
 {% endblock %}
