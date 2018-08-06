@@ -116,5 +116,11 @@ def coc(request):
 
 def ticket_pdf(request, keycode):
     ticket = models.Ticket.objects.get(keycode=keycode)
-    r = Report('events/ticket.j2', {'ticket': ticket})
+    r = Report(
+        'events/ticket.j2',
+        {
+            'ticket': ticket,
+            'qrcode_url': request.build_absolute_uri(ticket.get_qrcode_url())
+        }
+    )
     return r.render()

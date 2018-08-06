@@ -3,6 +3,7 @@ from jinja2 import Environment, FileSystemLoader
 import uuid
 import os
 import datetime
+import pdfkit
 
 
 TEMPLATES_DIRS = [os.path.join(settings.BASE_DIR, *app.split('.'), 'reports')
@@ -45,6 +46,7 @@ class Report():
             RENDERED_TEMPLATES_DIR, str(uuid.uuid4()) + '.html'
         )
 
+        # add custom mappings to the template
         self.mapping['timestamp'] = datetime.datetime.now()
         self.mapping['commons_dir'] = os.path.join(
             settings.BASE_DIR, 'apps/commons/reports/commons'
@@ -52,11 +54,20 @@ class Report():
         self.mapping['my_base_dir'] = os.path.dirname(
             os.path.abspath(self.template.filename)
         )
+
         rendered_template = self.template.render(self.mapping)
         with open(rendered_tmpl_filename, 'wb') as f:
             f.write(rendered_template.encode('utf-8'))
 
-        os.system(f'prince {rendered_tmpl_filename} -o {self.output_filename}')
+        options = {
+            'encoding': 'UTF-8',
+            'disable-smart-shrinking': None
+        }
+        pdfkit.from_file(
+            rendered_tmpl_filename,
+            self.output_filename,
+            options=options
+        )
         os.remove(rendered_tmpl_filename)
 
         if http_response:
