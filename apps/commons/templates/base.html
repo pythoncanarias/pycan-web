@@ -2,44 +2,30 @@
 {% load utils %}
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-        <link rel="icon" href="{{ assets|get_asset_key:'commons/img/favicon.ico' }}">
+  <link rel="icon" href="{{ assets|get_asset_key:'commons/img/favicon.ico' }}">
 
-        <title>{% block title %}{{ title }}{% endblock title %}</title>
+  <title>{% block title %}{{ title }}{% endblock title %}</title>
 
-        <link rel="stylesheet" href="{{ assets|get_asset_key:'commons/vendor.min.css' }}">
+  <link rel="stylesheet" href="{{ assets|get_asset_key:'commons/vendor.min.css' }}"> {% block style %}{% endblock %}
+</head>
+<body>
 
-        {% block style %}{% endblock %}
-    </head>
+  {% include "header.html" %}
 
-    <body>
+  <div class="container content-page">
+    {% block content %} {% endblock content %}
+  </div>
 
-        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-            <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/">Python
-                    Canarias</a></h5>
-          <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="{% url 'events:index' %}">Eventos</a>
-            <a class="p-2 text-dark" href="{% url 'events:coc' %}">Código de conducta</a>
-          </nav>
-          <a class="btn btn-outline-primary" href="#">Sign up</a>
-        </div>
+  {% include "footer.html" %}
 
-        <div class="container">
-        {% block content %}
 
-        {% endblock content %}
-        </div>
+  {% block js %}{% endblock %}
 
-        {% include "footer.html" %}
-
-        <script src="{{ assets|get_asset_key:'commons/vendor.min.js' }}"></script>
-
-        {% block js %}{% endblock %}
-
-    </body>
+</body>
 </html>

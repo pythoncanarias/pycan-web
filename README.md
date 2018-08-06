@@ -14,7 +14,7 @@ This will install a virtual environment for the project, with Python 3.6, Django
 
 ## Node.js dependencies
 
-It's essential to use `npm >= 6.0.0` in order to update properly the `package-lock.json`.
+It's essential to use `npm >= 6.0.0` and `node >= 10.0.0` in order to update properly the `package-lock.json`.
 
 There are some libraries (*css, js*) used on either the *frontend* or the *development phase*. To install them, make:
 

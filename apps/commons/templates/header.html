@@ -1,0 +1,30 @@
+<nav class="header-page navbar is-paddingless">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      Python Canarias
+    </a>
+
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div class="navbar-menu" id="navMenu">
+    <div class="navbar-end has-text-centered">
+      <a class="navbar-item" href="{% url 'events:index' %}">
+        Eventos
+      </a>
+      <a class="navbar-item" href="{% url 'events:coc' %}">
+        Código de conducta
+      </a>
+
+      <div class="navbar-item">
+        <a class="button is-outlined is-link" href="#">
+          Sign up
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

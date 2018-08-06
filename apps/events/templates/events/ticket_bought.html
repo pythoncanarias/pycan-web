@@ -5,17 +5,18 @@
 
 {% block content %}
 
-<h2>¡Felicidades! Ya has conseguido tu entrada!</h2>
-<h3>{{ event.title }}</h3>
-<h4>{{ event.start_date|as_date }} <small>{{ ticket_type.name }}</small></h4>
+<div class="content">
+  <h1>¡Felicidades! Ya has conseguido tu entrada!</h1>
+  <h2>{{ event.title }}</h2>
+  <h3>{{ event.start_date|as_date }} <small>{{ ticket_type.name }}</small></h3>
 
-<p>Tu ticket es: {{ ticket }}</p>
-<p>En breve te enviaremos a tu dirección de correo un pdf con
-el código QR de la entrada</p>
+  <p>Tu ticket es: {{ ticket }}</p>
+  <p>En breve te enviaremos a tu dirección de correo un pdf con
+  el código QR de la entrada</p>
 
-<p>La URL de esta entrada es {{ ticket.get_absolute_url }}. Mantenla en
-secreto!</p>
+  <p>La URL de esta entrada es {{ ticket.get_absolute_url }}. Mantenla en
+  secreto!</p>
 
-<p>Descarga tu entrada desde aquí: <a href="{% url 'events:ticket_pdf' ticket.keycode %}">Entrada en PDF</a></p>
-
+  <p>Descarga tu entrada desde aquí: <a href="{% url 'events:ticket_pdf' ticket.keycode %}">Entrada en PDF</a></p>
+</div>
 {% endblock content %}

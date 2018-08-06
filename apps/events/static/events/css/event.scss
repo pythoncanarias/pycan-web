@@ -1,0 +1,26 @@
+.event-description {
+  padding: 4rem 3rem;
+  margin-bottom: 1.7rem;
+  background-color: #f5f6ff;
+  background-image: url('./img/keyboard.jpg');
+  border-radius: $radius;
+  text-align: center;
+
+  & > .inner {
+    border-radius: $radius;
+    padding: 1.5rem 0.7rem;
+    background: #dfdfff;
+    opacity: 0.7;
+
+    .title,
+    .subtitle {
+      color: black;
+    }
+  }
+}
+
+
+.ticket-types {
+  max-width: 40rem;
+  margin: 0 auto;
+}

@@ -1,9 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import stripe
 from . import models
 from libs.reports.core import Report
-from django.http import HttpResponse
 import pyqrcode
 import io
 
@@ -99,8 +99,9 @@ def ticket_bought(request, keycode):
         })
 
 
-def view_qr_code(request):
-    img = pyqrcode.create('http://pythoncanarias.es/')
+def ticket_qrcode(request, pk):
+    ticket = models.Ticket.objects.get(pk=pk)
+    img = pyqrcode.create(str(ticket.keycode))
     buff = io.BytesIO()
     img.svg(buff, scale=8)
     return HttpResponse(

@@ -1,54 +1,58 @@
 @import 'variables';
 
 .hero {
-    color: white;
-    min-height: 100vh;
-    background-image: url('./img/bg.jpg');
-    background-position: center;
-    background-size: cover;
+  color: white;
+  min-height: 100vh;
+  background-image: url('./img/bg.jpg');
+  background-position: center;
+  background-size: cover;
 
-    .hero-body {
-        background-color: rgba(12, 15, 24, 0.85);
-        display: flex;
-        align-items: center;
+  .hero-body {
+    background-color: rgba(12, 15, 24, 0.85);
+    display: flex;
+    align-items: center;
 
-        .links {
-            margin-top: 1.5em;
-            margin-bottom: 2.1em;
+    .links {
+      margin-top: 1.5em;
+      margin-bottom: 2.1em;
 
-            & > .link {
-                text-decoration: none;
-                margin: 0.5em 1em;
-            }
-        }
-
-        .blog-message {
-            font-size: 1.1em;
-
-            .blog-link {
-                padding: 0.14em 0.2em;
-                border-radius: $radius;
-                color: $yellow;
-                background-color: rgba(255, 255, 255, 0.07);
-
-                &:hover, &:focus, &:active {
-                    background-color: rgba(255, 255, 255, 0.12);
-                }
-            }
-        }
-
-        .social {
-            margin-top: 1.6em;
-
-            .button {
-                background-color: rgba(255, 255, 255, 0.07);
-                border-color: transparent;
-                color: white;
-
-                &:hover, &:focus, &:active {
-                    background-color: rgba(255, 255, 255, 0.12);
-                }
-            }
-        }
+      & > .link {
+        text-decoration: none;
+        margin: 0.5em 1em;
+      }
     }
+
+    .blog-message {
+      font-size: 1.1em;
+
+      .blog-link {
+        padding: 0.14em 0.2em;
+        border-radius: $radius;
+        color: $yellow;
+        background-color: rgba(255, 255, 255, 0.07);
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: rgba(255, 255, 255, 0.12);
+        }
+      }
+    }
+
+    .social {
+      margin-top: 1.6em;
+
+      .button {
+        background-color: rgba(255, 255, 255, 0.07);
+        border-color: transparent;
+        color: white;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: rgba(255, 255, 255, 0.12);
+        }
+      }
+    }
+  }
 }
