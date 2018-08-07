@@ -1,14 +1,10 @@
-h1 {
-    font-family: 'Subject';
-}
-
 .qr {
     text-align: right;
     margin-top: 8cm;
 }
 
 .qr img {
-    width: 4cm;
+    width: 45mm;
 }
 
 table {
