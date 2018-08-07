@@ -42,19 +42,6 @@
     </tr>
     <tr>
         <td class="field">
-            <i class="fas fa-map-marker-alt"></i>
-            LOCALIZACIÓN:
-        </td>
-        <td>
-            Edificio de Física y Matemáticas (ULL)
-            <div class="address">
-                C/ Astrofísico Francisco Sánchez s/n
-                San Cristóbal de La Laguna, S.C. de Tenerife 38206 España
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="field">
             <i class="far fa-clone"></i>
             TIPO DE ENTRADA:
         </td>
@@ -72,7 +59,20 @@
             <i class="far fa-bookmark"></i>
             FECHA DE COMPRA:
         </td>
-        <td>{{ ticket.sold_at.strftime("%d/%m/%Y") }}</td>
+        <td>{{ ticket.sold_at.strftime("%d/%m/%Y @ %H:%Mh") }}</td>
+    </tr>
+    <tr>
+        <td class="field">
+            <i class="fas fa-map-marker-alt"></i>
+            LOCALIZACIÓN:
+        </td>
+        <td>
+            Edificio de Física y Matemáticas (ULL)
+            <div class="address">
+                C/ Astrofísico Francisco Sánchez s/n
+                San Cristóbal de La Laguna, S.C. de Tenerife 38206 España
+            </div>
+        </td>
     </tr>
 </table>
 
