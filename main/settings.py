@@ -194,3 +194,5 @@ LOGGING = {
         },
     },
 }
+
+LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')

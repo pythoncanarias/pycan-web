@@ -5,6 +5,7 @@ from django.db.models import Max
 from django.urls import reverse
 import locale
 from . import links
+from django.conf import settings
 
 
 class Event(models.Model):
@@ -17,7 +18,7 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
-    def get_long_start_date(self, to_locale="es_ES.utf8"):
+    def get_long_start_date(self, to_locale=settings.LC_TIME_SPANISH_LOCALE):
         locale.setlocale(locale.LC_TIME, to_locale)
         return self.start_date.strftime('%A %d de %B de %Y').capitalize()
 
