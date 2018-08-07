@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% block head %}
-            {% if load_fonts %}
-                <link rel="stylesheet" href="{{ commons_dir }}/vendor/fontawesome/css/all.css">
-                <link rel="stylesheet" href="{{ commons_dir }}/css/fonts.css">
-            {% endif %}
-            <link rel="stylesheet" href="{{ commons_dir }}/css/base.css">
-        {% endblock %}
+        {% if load_fonts %}
+            <link rel="stylesheet" href="{{ commons_dir }}/vendor/fontawesome/css/all.css">
+            <link rel="stylesheet" href="{{ commons_dir }}/css/fonts.css">
+        {% endif %}
+        <link rel="stylesheet" href="{{ commons_dir }}/css/base.css">
+        {% block styles %}{% endblock %}
     </head>
     <body>
         {% block content %}{% endblock %}
