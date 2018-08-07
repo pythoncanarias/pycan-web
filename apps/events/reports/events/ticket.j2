@@ -1,0 +1,88 @@
+{% extends "commons/base.j2" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ mybase_dir }}/ticket.css">
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ ticket.ticket_type.event }}</h1>
+
+<table>
+    <tr>
+        <td class="field">
+            <i class="fas fa-user"></i>
+            ASISTENTE:
+        </td>
+        <td>
+            {{ ticket.surname }}, {{ ticket.name }}
+            <br>
+            <i class="far fa-envelope"></i>
+            {{ ticket.email }}
+        </td>
+    </tr>
+    <tr>
+        <td class="field">
+            <i class="far fa-calendar-alt"></i>
+            FECHA:
+        </td>
+        <td>
+            {{ ticket.ticket_type.event.get_long_start_date() }}
+        </td>
+    </tr>
+    <tr>
+        <td class="field">
+            <i class="far fa-clock"></i>
+            HORA:
+        </td>
+        <td>
+            9:00h
+        </td>
+    </tr>
+    <tr>
+        <td class="field">
+            <i class="fas fa-map-marker-alt"></i>
+            LOCALIZACIÓN:
+        </td>
+        <td>
+            Edificio de Física y Matemáticas (ULL)
+            <div class="address">
+                C/ Astrofísico Francisco Sánchez s/n
+                San Cristóbal de La Laguna, S.C. de Tenerife 38206 España
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="field">
+            <i class="far fa-clone"></i>
+            TIPO DE ENTRADA:
+        </td>
+        <td>{{ ticket.ticket_type.name }}</td>
+    </tr>
+    <tr>
+        <td class="field">
+            <i class="fas fa-euro-sign"></i>
+            PRECIO DE LA ENTRADA:
+        </td>
+        <td>{{ ticket.ticket_type.price }} €</td>
+    </tr>
+    <tr>
+        <td class="field">
+            <i class="far fa-bookmark"></i>
+            FECHA DE COMPRA:
+        </td>
+        <td>{{ ticket.sold_at.strftime("%d/%m/%Y") }}</td>
+    </tr>
+</table>
+
+<div class="qr">
+    <img src="{{ qrcode_url }}" alt="Keycode of the ticket">
+    <br>
+    <div class="keycode">
+        <i class="fas fa-key"></i>
+        {{ ticket.keycode }}
+    </div>
+</div>
+
+{% endblock %}

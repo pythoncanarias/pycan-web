@@ -1,14 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
-from django.urls import reverse
-import sys
-
 import stripe
+from . import models
+from libs.reports.core import Report
 import pyqrcode
 import io
-
-from . import models
 
 
 def index(request):
@@ -116,3 +113,16 @@ def ticket_qrcode(request, pk):
 def coc(request):
     return render(request, 'events/coc.html')
 
+
+def ticket_pdf(request, keycode):
+    ticket = models.Ticket.objects.get(keycode=keycode)
+    r = Report(
+        'events/ticket.j2',
+        {
+            'ticket': ticket,
+            'qrcode_url': request.build_absolute_uri(ticket.get_qrcode_url())
+        },
+        header_path='commons/header.j2',
+        footer_path='commons/footer.j2',
+    )
+    return r.render()

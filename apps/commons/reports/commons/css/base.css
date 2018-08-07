@@ -1,0 +1,44 @@
+body {
+    font-family: 'Body';
+    font-size: 12pt;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Subject';
+}
+
+header {
+    padding-bottom: 2mm;
+    border-bottom: 1px solid black;
+}
+
+.logo img {
+    width: 45mm;
+}
+
+footer {
+    padding-top: 2mm;
+    font-family: 'Body';
+    font-style: italic;
+    font-size: .8rem;
+    color: rgb(78, 78, 78);
+    border-top: 1px solid black;
+}
+
+footer table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+footer table td {
+    padding: 0;
+    margin: 0;
+}
+
+footer .footer__left {
+    text-align: left;
+}
+
+footer .footer__right {
+    text-align: right;
+}

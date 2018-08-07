@@ -154,3 +154,9 @@ STRIPE_SECRET_KEY = config(
     'STRIPE_SECRET_KEY',
     default='Set your Stripe api secret key in .env file',
     )
+
+LOAD_FONTS_IN_REPORTS = config(
+    'LOAD_FONTS_IN_REPORTS',
+    default=True,
+    cast=config.boolean
+)

@@ -11,4 +11,3 @@ def qr_code(id_ticket):
     '''Returns link to the qr_code image of a ticket.
     '''
     return reverse('events:ticket_qrcode', kwargs={'pk': id_ticket})
-

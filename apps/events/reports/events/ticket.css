@@ -1,0 +1,45 @@
+.qr {
+    text-align: right;
+    margin-top: 8cm;
+}
+
+.qr img {
+    width: 45mm;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+tr {
+    height: 1cm;
+}
+
+.field {
+    font-family: 'Fine';
+    width: 55mm;
+    border-left: 2mm solid rgb(184, 184, 184);
+    padding-left: 5mm;
+}
+
+.field i {
+    color: rgb(85, 85, 85);
+    width: 5mm;
+}
+
+.keycode {
+    font-family: 'Fine';
+    font-size: .6rem;
+}
+
+.address {
+    font-family: 'Fine';
+    font-size: .9rem;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

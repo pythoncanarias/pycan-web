@@ -16,5 +16,7 @@
 
   <p>La URL de esta entrada es {{ ticket.get_absolute_url }}. Mantenla en
   secreto!</p>
+
+  <p>Descarga tu entrada desde aquí: <a href="{% url 'events:ticket_pdf' ticket.keycode %}">Entrada en PDF</a></p>
 </div>
 {% endblock content %}
