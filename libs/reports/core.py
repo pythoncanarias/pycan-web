@@ -51,7 +51,10 @@ class Report():
         self.mapping['commons_dir'] = os.path.join(
             settings.BASE_DIR, 'apps/commons/reports/commons'
         )
-        self.mapping['my_base_dir'] = os.path.dirname(
+        self.mapping['nodemodules_dir'] = os.path.join(
+            settings.BASE_DIR, 'node_modules'
+        )
+        self.mapping['mybase_dir'] = os.path.dirname(
             os.path.abspath(self.template.filename)
         )
 
