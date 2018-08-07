@@ -160,3 +160,37 @@ LOAD_FONTS_IN_REPORTS = config(
     default=True,
     cast=config.boolean
 )
+
+LOGFILE_NAME = os.path.join(BASE_DIR, "web.log")
+LOGFILE_SIZE = 1 * 1024 * 1024
+LOGFILE_COUNT = 3
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)s %(asctime)s %(module)s \
+%(process)d %(thread)d %(message)s",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+        },
+    },
+    "handlers": {
+        # Log to a text file that can be rotated by logrotate
+        "logfile": {
+            "level": "ERROR",
+            "formatter": "verbose",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOGFILE_NAME,
+            "maxBytes": LOGFILE_SIZE,
+            "backupCount": LOGFILE_COUNT,
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["logfile"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
+}
