@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     {% block head %}
-        <link rel="stylesheet" href="{{ commons_dir }}/vendor/fontawesome/css/all.css">
+        {% if load_fonts %}
+            <link rel="stylesheet" href="{{ commons_dir }}/vendor/fontawesome/css/all.css">
+            <link rel="stylesheet" href="{{ commons_dir }}/css/fonts.css">
+        {% endif %}
         <link rel="stylesheet" href="{{ commons_dir }}/css/main.css">
-        <link rel="stylesheet" href="{{ commons_dir }}/css/fonts.css">
     {% endblock %}
 </head>
 <body>

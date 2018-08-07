@@ -57,6 +57,7 @@ class Report():
         self.mapping['mybase_dir'] = os.path.dirname(
             os.path.abspath(self.template.filename)
         )
+        self.mapping['load_fonts'] = settings.LOAD_FONTS_IN_REPORTS
 
         rendered_template = self.template.render(self.mapping)
         with open(rendered_tmpl_filename, 'wb') as f:
