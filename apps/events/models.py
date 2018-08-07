@@ -17,7 +17,7 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
-    def get_long_start_date(self, to_locale="es_ES"):
+    def get_long_start_date(self, to_locale="es_ES.utf8"):
         locale.setlocale(locale.LC_TIME, to_locale)
         return self.start_date.strftime('%A %d de %B de %Y').capitalize()
 
