@@ -121,6 +121,8 @@ def ticket_pdf(request, keycode):
         {
             'ticket': ticket,
             'qrcode_url': request.build_absolute_uri(ticket.get_qrcode_url())
-        }
+        },
+        header_path='commons/header.j2',
+        footer_path='commons/footer.j2',
     )
     return r.render()

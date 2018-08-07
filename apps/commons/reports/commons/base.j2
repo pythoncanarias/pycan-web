@@ -1,30 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html lang="en">
-<head>
-    {% block head %}
-        {% if load_fonts %}
-            <link rel="stylesheet" href="{{ commons_dir }}/vendor/fontawesome/css/all.css">
-            <link rel="stylesheet" href="{{ commons_dir }}/css/fonts.css">
-        {% endif %}
-        <link rel="stylesheet" href="{{ commons_dir }}/css/main.css">
-    {% endblock %}
-</head>
-<body>
-    <div class="header">
-        <img src="{{ commons_dir }}/img/logo_python_canarias.jpg" alt="Logo Python Canarias">
-    </div>
-
-    {% block content %}{% endblock %}
-
-    <div class="bottom">
-        <div>
-            <i class="fas fa-cloud"></i>
-            pythoncanarias.es
-        </div>
-        <div>
-            <i class="fas fa-bullseye"></i>
-            <span class="timestamp">{{ timestamp }}</span>
-        </div>
-    </div>
-</body>
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            {% if load_fonts %}
+                <link rel="stylesheet" href="{{ commons_dir }}/vendor/fontawesome/css/all.css">
+                <link rel="stylesheet" href="{{ commons_dir }}/css/fonts.css">
+            {% endif %}
+            <link rel="stylesheet" href="{{ commons_dir }}/css/base.css">
+        {% endblock %}
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
 </html>

@@ -8,7 +8,7 @@ h1 {
 }
 
 .qr img {
-    width: 5cm;
+    width: 4cm;
 }
 
 table {
@@ -23,7 +23,7 @@ tr {
 
 .field {
     font-family: 'Fine';
-    width: 60mm;
+    width: 55mm;
     border-left: 2mm solid rgb(184, 184, 184);
     padding-left: 5mm;
 }
@@ -35,12 +35,12 @@ tr {
 
 .keycode {
     font-family: 'Fine';
-    font-size: 8pt;
+    font-size: .6rem;
 }
 
 .address {
     font-family: 'Fine';
-    font-size: 11pt;
+    font-size: .9rem;
 }
 
 a {
