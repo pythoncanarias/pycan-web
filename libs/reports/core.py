@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.http import HttpResponse
 from jinja2 import Environment, FileSystemLoader
 import os
 import datetime
@@ -89,6 +90,9 @@ class Report():
         Args:
             http_response: True if you want to return an instance of
                 django.http.HttpResponse (optional).
+                If set to True the temporary files will be deleted. Otherwise,
+                If set to False, the rendered template will remain accessible
+                using the attribute self.template.name (path to the file).
 
         Returns:
             If http_response is True, returns a Django like HttpResponse.
@@ -112,9 +116,17 @@ class Report():
         )
 
         if http_response:
-            from django.http import HttpResponse
             response = HttpResponse(open(self.template_pdf.name, 'rb'))
             response['Content-Type'] = 'application/pdf'
             response['Content-Disposition'] = \
                 'attachment; filename="ticket.pdf"'
+            self._delete_tempfiles()
             return response
+
+    def _delete_tempfiles(self):
+        os.remove(self.template_html.name)
+        os.remove(self.template_pdf.name)
+        if self.header:
+            os.remove(self.header_html.name)
+        if self.footer:
+            os.remove(self.footer_html.name)
