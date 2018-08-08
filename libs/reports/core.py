@@ -10,8 +10,6 @@ import tempfile
 TEMPLATES_DIRS = [os.path.join(settings.BASE_DIR, *app.split('.'), 'reports')
                   for app in settings.INSTALLED_APPS if app.startswith('apps')]
 
-RENDERED_TEMPLATES_DIR = "/tmp/"
-
 ENV = Environment(loader=FileSystemLoader(TEMPLATES_DIRS))
 
 PDFKIT_OPTIONS = {
@@ -38,35 +36,28 @@ class Report():
             mapping: dictionary with keys-values to render with.
             pdfkit_options: dictionary with pdfkit options (optional).
         """
-        self.template = ENV.get_template(template_path)
-        self.template_html = tempfile.NamedTemporaryFile(
-            delete=False,
-            suffix='.html'
-        )
-        self.template_pdf = tempfile.NamedTemporaryFile(delete=False)
-
         # override pdfkit options with arguments (in case)
         self.options = {
             k: v for k, v in
             list(PDFKIT_OPTIONS.items()) + list(pdfkit_options.items())
         }
+
+        self.template, self.template_html = \
+            Report._create_template_handlers(template_path)
+        self.template_pdf = tempfile.NamedTemporaryFile(delete=False)
+
         header_html = self.options.get('header-html')
         if header_html:
-            self.header = ENV.get_template(header_html)
-            self.header_html = tempfile.NamedTemporaryFile(
-                delete=False,
-                suffix='.html'
-            )
+            self.header, self.header_html = \
+                Report._create_template_handlers(header_html)
             self.options['header-html'] = self.header_html.name
         else:
             self.header = None
+
         footer_html = self.options.get('footer-html')
         if footer_html:
-            self.footer = ENV.get_template(footer_html)
-            self.footer_html = tempfile.NamedTemporaryFile(
-                delete=False,
-                suffix='.html'
-            )
+            self.footer, self.footer_html = \
+                Report._create_template_handlers(footer_html)
             self.options['footer-html'] = self.footer_html.name
         else:
             self.footer = None
@@ -97,17 +88,17 @@ class Report():
         Returns:
             If http_response is True, returns a Django like HttpResponse.
         """
-        rendered_template = self.template.render(self.mapping)
-        with self.template_html as f:
-            f.write(rendered_template.encode('utf-8'))
+        Report._render_template(self.template,
+                                self.template_html,
+                                self.mapping)
         if self.header:
-            rendered_template = self.header.render(self.mapping)
-            with self.header_html as f:
-                f.write(rendered_template.encode('utf-8'))
+            Report._render_template(self.header,
+                                    self.header_html,
+                                    self.mapping)
         if self.footer:
-            rendered_template = self.footer.render(self.mapping)
-            with self.footer_html as f:
-                f.write(rendered_template.encode('utf-8'))
+            Report._render_template(self.footer,
+                                    self.footer_html,
+                                    self.mapping)
 
         pdfkit.from_file(
             self.template_html.name,
@@ -130,3 +121,18 @@ class Report():
             os.remove(self.header_html.name)
         if self.footer:
             os.remove(self.footer_html.name)
+
+    @staticmethod
+    def _create_template_handlers(template_path):
+        template = ENV.get_template(template_path)
+        template_html = tempfile.NamedTemporaryFile(
+            delete=False,
+            suffix='.html'
+        )
+        return template, template_html
+
+    @staticmethod
+    def _render_template(template, output_file_handler, mapping):
+        rendered_template = template.render(mapping)
+        with output_file_handler as f:
+            f.write(rendered_template.encode('utf-8'))
