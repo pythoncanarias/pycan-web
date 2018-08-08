@@ -21,26 +21,21 @@ PDFKIT_OPTIONS = {
     'margin-left': '2cm',
     'margin-right': '2cm',
     'header-spacing': '10',
-    'footer-spacing': '10'
+    'footer-spacing': '10',
+    'header-html': 'commons/header.j2',
+    'footer-html': 'commons/footer.j2'
 }
 
 
 class Report():
-    def __init__(
-        self,
-        template_path,
-        mapping,
-        header_path=None,
-        footer_path=None
-    ):
+    def __init__(self, template_path, mapping, pdfkit_options={}):
         """
         Constructor of the class.
 
         Args:
             template_path: path to the template.
             mapping: dictionary with keys-values to render with.
-            header_path: path to the header (optional).
-            footer_path: path to the footer (optional).
+            pdfkit_options: dictionary with pdfkit options (optional).
         """
         self.template = ENV.get_template(template_path)
         self.template_html = tempfile.NamedTemporaryFile(
@@ -48,9 +43,15 @@ class Report():
             suffix='.html'
         )
         self.template_pdf = tempfile.NamedTemporaryFile(delete=False)
-        self.options = PDFKIT_OPTIONS
-        if header_path:
-            self.header = ENV.get_template(header_path)
+
+        # override pdfkit options with arguments (in case)
+        self.options = {
+            k: v for k, v in
+            list(PDFKIT_OPTIONS.items()) + list(pdfkit_options.items())
+        }
+        header_html = self.options.get('header-html')
+        if header_html:
+            self.header = ENV.get_template(header_html)
             self.header_html = tempfile.NamedTemporaryFile(
                 delete=False,
                 suffix='.html'
@@ -58,8 +59,9 @@ class Report():
             self.options['header-html'] = self.header_html.name
         else:
             self.header = None
-        if footer_path:
-            self.footer = ENV.get_template(footer_path)
+        footer_html = self.options.get('footer-html')
+        if footer_html:
+            self.footer = ENV.get_template(footer_html)
             self.footer_html = tempfile.NamedTemporaryFile(
                 delete=False,
                 suffix='.html'
