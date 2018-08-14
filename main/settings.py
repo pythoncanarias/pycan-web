@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     'apps.commons',
     'apps.homepage',
     'apps.events',
+    'apps.sponsors',
+    'apps.talks',
+    'apps.locations',
 ]
 
 MIDDLEWARE = [
