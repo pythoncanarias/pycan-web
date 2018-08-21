@@ -1,0 +1,48 @@
+[
+    {
+        "title": "Gold",
+        "sponsors": [
+            {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }, {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }, {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }
+        ]
+    }, {
+        "title": "Silver",
+        "sponsors": [
+            {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }, {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }, {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }, {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }, {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }
+        ]
+    }, {
+        "title": "Bronze",
+        "sponsors": [
+            {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }, {
+                "url": "",
+                "image_url": "https://via.placeholder.com/350x150"
+            }
+        ]
+    }
+]
