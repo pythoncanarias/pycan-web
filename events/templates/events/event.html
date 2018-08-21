@@ -3,39 +3,150 @@
 {% load static %}
 {% load utils %}
 
+{% block body_class %}event-page{% endblock %}
+{% block content_class %}{% endblock %}
+
 {% block content %}
-
-<div class="event-description">
-  <div class="inner">
-    <h1 class="title is-1">{{ event.title }}</h1>
-    <h2 class="subtitle is-4">{{ event.start_date|as_date }}</h2>
-  </div>
-</div>
-
-
-<div class="ticket-types">
-  {% for ticket_type in event.ticket_types.all %}
-    <div class="card">
-      <div class="card-header">
-        <p class="card-header-title is-centered">
-          {{ ticket_type.name }}
-        </p>
+<div>
+  <div class="event-header">
+    <div class="inner">
+      <h1 class="title is-1">{{ event.title }}</h1>
+      <div class="subtitle is-4">
+        <span class="event-header-when">
+          <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
+        </span>
+        <span class="event-header-where">
+          <i class="fas fa-map-marker-alt"></i> Universidad de la Laguna
+        </span>
       </div>
+      <a href="" class="button is-white">Comprar entrada</a>
+    </div>
+  </div>
 
-      <div class="card-content has-text-centered">
-        <h1 class="title">{{ ticket_type.price }}€</h1>
-        <h2 class="subtitle">{% if ticket_type.is_active %}¡Ya a la venta!{% else %}Proximamente a la venta{% endif %}</h2>
+  <nav class="event-menu">
+    <a class="event-menu-item" href="#event">Event</a>
+    <a class="event-menu-item" href="#speakers">Speakers</a>
+    <a class="event-menu-item" href="#schedule">Schedule</a>
+    <a class="event-menu-item" href="#location">Location</a>
+    <a class="event-menu-item" href="#sponsors">Sponsors</a>
+  </nav>
 
-        {% if ticket_type.is_active %}
-          <a role="button" class="button is-link is-fullwidth is-medium" href="{% url 'events:buy_ticket' ticket_type.pk %}">
-            Comprar
-          </a>
-        {% else %}
-          <button type="button" class="button is-static is-fullwidth is-medium">Comprar</button>
-        {% endif %}
+  <section id="event" class="section event">
+    <div class="container">
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+      <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+    </div>
+  </section>
+
+  <section id="speakers" class="section speakers gray-section">
+    <div class="container">
+      <h1 class="title section-title">Speakers</h1>
+      <div class="columns is-multiline is-mobile">
+        {% for i in "12345678" %}
+          <div class="column is-6-mobile is-4-tablet is-3-desktop">
+            <div class="speaker-card">
+              <img class="speaker-photo" src="{{ assets|get_asset_key:"events/img/speakers/"|add:i|add:".jpg" }}" />
+              <h2 class="speaker-name">John Doe</h2>
+              <p class="speaker-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+              <div class="speaker-socials">
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-facebook"></i>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
       </div>
     </div>
-  {% endfor %}
+  </section>
+
+  <section id="schedule" class="section schedule">
+    <div class="container">
+      <h1 class="title section-title">Schedule</h1>
+
+      <div class="schedule-table">
+        {% for row in data.schedule %}
+          {% if row.type == 'tracks' %}
+            <div class="schedule-tracks columns is-gapless is-hidden-mobile">
+              {% for track in row.tracks %}
+                <div class="column">
+                  <div class="schedule-title">
+                    {{ track.title }}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% elif row.type == 'talk' or row.type == 'break' %}
+            <div class="schedule-row columns is-gapless">
+              <div class="column is-12">
+                <div class="schedule-{{ row.type }} ">
+                  <div class="talk-title">{{ row.title }}</div>
+                  <div class="talk-hours">{{ row.hours }}</div>
+                </div>
+              </div>
+            </div>
+          {% elif row.type == 'talks' %}
+            <div class="schedule-columns columns is-gapless">
+              {% for track in row.tracks %}
+                <div class="schedule-title is-hidden-tablet">{{ track.title }}</div>
+                <div class="schedule-column column is-12-mobile">
+                  {% for talk in track.talks %}
+                    <div class="schedule-talk size-{{talk.size}}">
+                      <div class="talk-title">{{ talk.title }}</div>
+                      <div class="talk-hours">{{ talk.hours }}</div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section id="location" class="section location gray-section">
+    <div class="container">
+      <h1 class="title section-title">Location</h1>
+      <div>
+        <div class="columns is-multiline">
+          <div class="column is-12-tablet is-6-desktop">
+            <div style="background: #07073a42; height: 20em;">
+            </div>
+          </div>
+          <div class="column is-12-tablet is-6-desktop">
+            <strong>
+              <i class="fa fa-location-arrow "></i> <span class="font-weight-bold">Dirección:</span>
+            </strong>
+            <address>
+              <div class="street-address">Address</div>
+              <span class="postal-code">38180</span>,
+              <span class="locality">Locality</span><br>
+              <span class="region">Santa Cruz de Tenerife - Tenerife</span>
+            </address>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sponsors" class="section sponsors">
+    <div class="container">
+      <h1 class="title section-title">Sponsors</h1>
+
+      {% for sponsorship in data.sponsorships %}
+        <h2 class="title is-5 has-text-centered">{{ sponsorship.title }}</h2>
+        <div class="columns is-mobile is-multiline is-centered">
+          {% for sponsor in sponsorship.sponsors %}
+            <a class="column is-6-mobile is-3-tablet is-2-desktop">
+              <img src="{{ sponsor.image_url }}"/>
+            </a>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
 </div>
 
 {% endblock content %}
