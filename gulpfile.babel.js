@@ -25,6 +25,6 @@ function clean() {
 }
 
 function watch() {
-  return gulp.watch('apps/**/static/**/*.{scss,js}')
+  return gulp.watch('**/static/**/*.{scss,js}')
     .on('all', gulp.series(buildCustom, revFiles))
 }

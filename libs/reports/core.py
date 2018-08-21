@@ -67,7 +67,7 @@ class Report():
         # add custom mappings to the template
         self.mapping['timestamp'] = datetime.datetime.now()
         self.mapping['commons_dir'] = os.path.join(
-            settings.BASE_DIR, 'apps/commons/reports/commons'
+            settings.BASE_DIR, 'commons/reports/commons'
         )
         self.mapping['mybase_dir'] = os.path.dirname(
             os.path.abspath(self.template.filename)

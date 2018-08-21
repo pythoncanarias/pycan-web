@@ -21,7 +21,7 @@ function buildCustom() {
 
 function getBuildCustomCssPromise(app) {
   return new Promise(function (resolve) {
-    gulp.src(`apps/${app}/static/${app}/css/main.scss`, { allowEmpty: true })
+    gulp.src(`${app}/static/${app}/css/main.scss`, { allowEmpty: true })
       .pipe(sass())
       .pipe(rename('custom.min.css'))
       .pipe(modifyCustomCssUrlPath(app))
@@ -33,7 +33,7 @@ function getBuildCustomCssPromise(app) {
 
 function getBuildCustomJsPromise(app) {
   return new Promise(function (resolve) {
-    gulp.src(`apps/${app}/static/${app}/js/**/*.js`)
+    gulp.src(`${app}/static/${app}/js/**/*.js`)
       .pipe(babel())
       .pipe(concat('custom.min.js'))
       .pipe(uglifyjs())

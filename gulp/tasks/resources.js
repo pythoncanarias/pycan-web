@@ -7,7 +7,7 @@ function moveResources(done) {
 }
 
 function moveImages() {
-  return gulp.src('apps/*/static/*/img/**/*')
+  return gulp.src('*/static/*/img/**/*')
     .pipe(rename(function (path) {
       path.dirname = path.dirname.split('/static/')[1]
     }))
