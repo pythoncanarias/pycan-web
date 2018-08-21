@@ -22,11 +22,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Python Canarias" />
   <meta property="og:description" content="Web de la asociación Python Canarias" />
-  <meta property="og:image" content="{% static 'homepage/img/logo.png' %}" />
+  <meta property="og:image" content="{% static 'commons/img/logo.png' %}" />
 
   <meta name="twitter:title" content="Python Canarias">
   <meta name="twitter:description" content="Web de la asociación Python Canarias.">
-  <meta name="twitter:image" content="{% static 'homepage/img/logo.png' %}">
+  <meta name="twitter:image" content="{% static 'commons/img/logo.png' %}">
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
@@ -38,7 +38,7 @@
     <div class="hero-body">
       <div class="container has-text-centered">
 
-        <img src="{{ assets|get_asset_key:'homepage/img/logo_text.png' }}" alt="Python Canarias" />
+        <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias" />
 
         <div class="links buttons is-centered">
           <a href="https://pyday.pythoncanarias.es" target="_blank" class="link button is-link is-medium">PyDay TF 2018</a>
