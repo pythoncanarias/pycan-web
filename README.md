@@ -47,6 +47,36 @@ This configuration avoids conflicts with a lot of settings, mainly with tabs wid
 
 Feel free to change some of the settings creating a file called `.venv` on the root of the project.
 
+### Database
+
+We are using **PostgreSQL** as *database management system*. In order to configure the project correctly it is important to follow some indications:
+
+#### Approach A
+
+1. Install [PostgreSQL](https://www.postgresql.org/download/).
+2. Create a *database* and a *user/password* with full access to that database.
+3. Set the following keys in the `.env` file: `DATABASE_NAME`, `DATABASE_USER` and `DATABASE_PASSWORD`.
+
+#### Approach B
+
+1. Install [Docker](https://docs.docker.com/install/).
+2. Use the following `Dockerfile`:
+
+~~~docker
+postgres:
+  image: "postgres:10.4"
+  environment:
+    POSTGRES_DB: "my_db"
+  ports:
+    - 5432:5432
+~~~
+
+Afterwards, in both cases, you can apply migrations with:
+
+~~~console
+$ pipenv run python manage.py migrate
+~~~
+
 ### Launching services
 
 In order to develop, you have to launch the following services:
