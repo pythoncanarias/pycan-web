@@ -4,7 +4,26 @@ Web for Python Canarias made in Django.
 
 ## Python dependencies
 
-This projects uses `pipenv`. After you have cloned the repo, make:
+### Pipenv
+
+This projects uses [Pipenv](https://pipenv.readthedocs.io/en/latest/).
+
+> Pipenv is a tool that aims to bring the best of all packaging worlds (bundler, composer, npm, cargo, yarn, etc.) to the Python world.
+
+Some of its great features are:
+
+- Enables truly deterministic builds, while easily specifying only what you want.
+- Generates and checks file hashes for locked dependencies.
+- Automatically install required Pythons, if pyenv is available.
+- Automatically finds your project home, recursively, by looking for a Pipfile.
+- Automatically generates a Pipfile, if one doesn’t exist.
+- Automatically creates a virtualenv in a standard location.
+- Automatically adds/removes packages to a Pipfile when they are un/installed.
+- Automatically loads .env files, if they exist.
+
+#### Proceed
+
+After you have cloned the repo, make:
 
 ~~~console
 $ pipenv install --python 3.6
@@ -82,8 +101,7 @@ $ pipenv run python manage.py migrate
 In order to develop, you have to launch the following services:
 
 ~~~console
-$ pipenv shell
-$ python manage.py runserver # on one terminal
+$ pipenv run python manage.py runserver # on one terminal
 $ gulp watch                 # on another terminal
 ~~~
 
@@ -94,6 +112,5 @@ The changes made both in Python files or static files will be detected by the se
 ### Model graphs
 
 ~~~console
-$ pipenv shell
-$ python manage.py graph_models events sponsors locations talks tickets -g -S -o graph.png
+$ pipenv run python manage.py graph_models events sponsors locations talks tickets -g -S -o graph.png
 ~~~
