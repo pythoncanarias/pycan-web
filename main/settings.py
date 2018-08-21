@@ -47,12 +47,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'apps.commons',
-    'apps.homepage',
-    'apps.events',
-    'apps.sponsors',
-    'apps.talks',
-    'apps.locations',
+    'django_extensions',
+    'commons',
+    'homepage',
+    'events',
+    'tickets',
+    'locations',
+    'sponsors',
+    'talks',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'apps.commons.context_processors.glob'
+                'commons.context_processors.glob'
             ],
         },
     },
@@ -92,8 +94,10 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD')
     }
 }
 
@@ -139,8 +143,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
-STATIC_ROOT = config('STATIC_ROOT', default="/path/to/your/statics/")
+STATIC_ROOT = config('STATIC_ROOT', default='/path/to/your/statics/')
+MEDIA_ROOT = config('MEDIA_ROOT', default='/path/to/your/media/')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 

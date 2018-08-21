@@ -90,3 +90,4 @@ db.sqlite3
 node_modules
 /static/
 .vscode
+/media/

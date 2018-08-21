@@ -1,7 +1,8 @@
 from django import template
 from django.utils.safestring import mark_safe
 
-from apps.commons import filters
+from commons import filters
+
 
 def compose2(f, g):
     return lambda x: f(g(x))

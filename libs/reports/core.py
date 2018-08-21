@@ -7,8 +7,8 @@ import pdfkit
 import tempfile
 
 
-TEMPLATES_DIRS = [os.path.join(settings.BASE_DIR, *app.split('.'), 'reports')
-                  for app in settings.INSTALLED_APPS if app.startswith('apps')]
+TEMPLATES_DIRS = [os.path.join(settings.BASE_DIR, app, 'reports')
+                  for app in settings.INSTALLED_APPS]
 
 ENV = Environment(loader=FileSystemLoader(TEMPLATES_DIRS))
 
