@@ -12,6 +12,10 @@
     display: flex;
     align-items: center;
 
+    .logo {
+      max-width: 29rem;
+    }
+
     .links {
       margin-top: 1.5em;
       margin-bottom: 2.1em;
