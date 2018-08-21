@@ -22,8 +22,8 @@ def index(request):
             })
 
 
-def detail_event(request, slug):
-    event = models.Event.objects.get(slug=slug)
+def detail_event(request, slug1, slug2):
+    event = models.Event.objects.get(slug1=slug1, slug2=slug2)
     return _view_event(request, event)
 
 
