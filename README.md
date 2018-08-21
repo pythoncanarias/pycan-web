@@ -64,8 +64,6 @@ The changes made both in Python files or static files will be detected by the se
 ### Model graphs
 
 ~~~console
-$ pip install django\_extensions
-$ pip install pydotplus
-$ # add 'django\_extensions' to settings.py INSTALLED\_APPS
-$ ./manage.py graph\_models events homepage sponsors locations talks -g -S -o graph.png
+$ pipenv shell
+$ python manage.py graph_models events sponsors locations talks tickets -g -S -o graph.png
 ~~~
