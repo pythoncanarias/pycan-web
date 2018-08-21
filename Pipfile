@@ -9,7 +9,6 @@ pytest = "*"
 pytest-sugar = "*"
 ipython = "*"
 "fabric3" = "*"
-django-extensions = "*"
 pydotplus = "*"
 
 [requires]
@@ -24,4 +23,5 @@ pyqrcode = "*"
 "markdown2" = "*"
 "jinja2" = "*"
 pdfkit = "*"
+django-extensions = "*"
 "psycopg2-binary" = "*"
