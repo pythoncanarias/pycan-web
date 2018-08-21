@@ -28,13 +28,21 @@ def detail_event(request, slug1, slug2):
 
 
 def _view_event(request, event):
+    import json
+    schedule = open('events/samples/schedule.json')
+    sponsorships = open('events/samples/sponsorships.json')
+
     ticket_types = event.ticket_types.all().order_by('release_at')
     num_options = ticket_types.count()
     return render(request, 'events/event.html', {
         'event': event,
         'ticket_types': ticket_types,
         'num_options': num_options,
-        })
+        'data': {
+            'schedule': json.load(schedule),
+            'sponsorships': json.load(sponsorships)
+        },
+    })
 
 
 def buy_ticket(request, id_ticket_type):

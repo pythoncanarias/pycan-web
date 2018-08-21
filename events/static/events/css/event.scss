@@ -1,26 +1,192 @@
-.event-description {
-  padding: 4rem 3rem;
-  margin-bottom: 1.7rem;
-  background-color: #f5f6ff;
-  background-image: url('./img/keyboard.jpg');
-  border-radius: $radius;
-  text-align: center;
+$blue-text: #2673b5;
+$blue-bg: #2a77b7;
+$yellow-text: #dcb029;
+$yellow-bg: #e6bc3d;
+$light-gray-bg: #f9f9fb;
 
-  & > .inner {
-    border-radius: $radius;
-    padding: 1.5rem 0.7rem;
-    background: #dfdfff;
-    opacity: 0.7;
+.event-page {
+  .event-header {
+    background-color: #000d19b8;
+    background-image: url('./img/keyboard.jpg');
+    background-size: cover;
+    background-position: 50% 50%;
+    text-align: center;
 
-    .title,
-    .subtitle {
-      color: black;
+    & > .inner {
+      padding: 5rem 1.5rem;
+      background: #000d19b8;
+
+      .title,
+      .subtitle {
+        margin: 0;
+        color: #fff;
+      }
+
+      .title {
+        font-weight: 400;
+      }
+
+      .subtitle {
+        margin: 0.8rem 0.5rem;
+        font-weight: 300;
+
+        .event-header-when,
+        .event-header-where {
+          display: inline-block;
+          margin: 0.4em 0.7em;
+        }
+
+        i {
+          color: $yellow-bg;
+          margin-right: 0.3em;
+        }
+      }
+
+      .button {
+        margin-top: 1rem;
+        background-color: $yellow-bg;
+        font-size: 1.1em;
+      }
     }
   }
-}
+
+  .event-menu {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: $blue-bg;
+
+    .event-menu-item {
+      padding: 0.9rem 1.5rem;
+      color: #ffffffe8;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: #ffffff13;
+      }
+    }
+  }
+
+  .section {
+    &.gray-section {
+      background-color: $light-gray-bg;
+    }
+
+    & .section-title {
+      font-weight: 400;
+      color: $blue-text;
+      text-align: center;
+      margin-bottom: 2.1rem;
+    }
+  }
+
+  .section.speakers {
+    .speaker-card {
+      text-align: center;
+      padding: 1em;
+      box-shadow: 0 0.055rem 0.025rem #0a0a1d17, 0 -0.01rem 0.02rem #0a0a1d17;
+      border-radius: $radius;
+      background-color: #fff;
+
+      .speaker-photo {
+        max-width: 6.5em;
+        border-radius: 10em;
+      }
+
+      .speaker-name {
+        font-size: 1.1em;
+        font-weight: 500;
+        margin-top: 0.5em;
+        color: $yellow-text;
+      }
+
+      .speaker-description {
+        margin: 0.5em 0;
+        color: #6e7075;
+      }
+
+      .speaker-socials {
+        color: #808286;
+
+        i {
+          padding: 0.5em;
+        }
+      }
+    }
+  }
+
+  .section.schedule {
+    .schedule-table {
+      display: flex;
+      flex-direction: column;
+
+      .columns.is-gapless {
+        margin-bottom: 0.8rem; // override
+
+        @include from($tablet) {
+          margin-bottom: 0; // override
+        }
+      }
+
+      $talk-padding: 0.5rem;
+      $cell-margin: 1px;
+      $min-height-talk: 6rem;
+
+      .schedule-title {
+        background-color: $blue-bg;
+        color: #fff;
+        padding: 1rem;
+        margin: $cell-margin;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .schedule-talk,
+      .schedule-break {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        overflow: scroll;
+        padding: $talk-padding;
+        margin: $cell-margin;
+      }
+
+      .schedule-talk {
+        background-color: #f2f2f3;
+      }
+
+      .schedule-break {
+        background-color: #fdebd1;
+      }
 
 
-.ticket-types {
-  max-width: 40rem;
-  margin: 0 auto;
+      .schedule-columns {
+        .schedule-column {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+        }
+
+        .schedule-talk {
+          flex: 0 0 6rem;
+
+          &.size-2 {
+            flex-basis: calc(#{$min-height-talk} * 2 + #{$cell-margin} * 2);
+          }
+
+          &.size-3 {
+            flex-basis: calc(#{$min-height-talk} * 3 + #{$cell-margin} * 4);
+          }
+
+          &.size-4 {
+            flex-basis: calc(#{$min-height-talk} * 4 + #{$cell-margin} * 6);
+          }
+        }
+      }
+    }
+  }
 }
