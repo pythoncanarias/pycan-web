@@ -2,6 +2,18 @@
 @import 'node_modules/bulma/bulma.sass';
 @import './override';
 
+
+html {
+  // source: https://stackoverflow.com/q/46463338
+  -webkit-font-feature-settings: 'liga' 0, 'clig' 0;
+  -moz-font-feature-settings: 'liga' 0, 'clig' 0;
+  font-feature-settings: 'liga' 0, 'clig' 0;
+}
+
+body {
+  font-size: 1.03rem;
+}
+
 .header-page {
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid #e5e5e5;
@@ -10,6 +22,10 @@
 .content-page {
   max-width: 59rem;
   padding: 2rem 1rem;
+
+  &.is-narrow {
+    max-width: 47rem;
+  }
 }
 
 .footer-page {

@@ -4,7 +4,7 @@
 {% load utils %}
 
 {% block body_class %}event-page{% endblock %}
-{% block content_class %}{% endblock %}
+{% block default_content_class %}{% endblock %}
 
 {% block content %}
 <div>
@@ -12,11 +12,11 @@
     <div class="inner">
       <h1 class="title is-1">{{ event.title }}</h1>
       <div class="subtitle is-4">
-        <span class="event-header-when">
+        <span class="event-header-date">
           <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
         </span>
-        <span class="event-header-where">
-          <i class="fas fa-map-marker-alt"></i> Universidad de la Laguna
+        <span class="event-header-location">
+          <i class="fas fa-map-marker-alt"></i> Universidad de La Laguna
         </span>
       </div>
       <a href="" class="button is-white">Comprar entrada</a>
@@ -31,7 +31,7 @@
     <a class="event-menu-item" href="#sponsors">Sponsors</a>
   </nav>
 
-  <section id="event" class="section event">
+  <section id="event" class="section event has-background-white">
     <div class="container">
       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
       <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
@@ -39,13 +39,13 @@
     </div>
   </section>
 
-  <section id="speakers" class="section speakers gray-section">
+  <section id="speakers" class="section speakers">
     <div class="container">
       <h1 class="title section-title">Speakers</h1>
       <div class="columns is-multiline is-mobile">
         {% for i in "12345678" %}
           <div class="column is-6-mobile is-4-tablet is-3-desktop">
-            <div class="speaker-card">
+            <div class="box speaker-box">
               <img class="speaker-photo" src="{{ assets|get_asset_key:"events/img/speakers/"|add:i|add:".jpg" }}" />
               <h2 class="speaker-name">John Doe</h2>
               <p class="speaker-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
@@ -60,7 +60,7 @@
     </div>
   </section>
 
-  <section id="schedule" class="section schedule">
+  <section id="schedule" class="section schedule has-background-white">
     <div class="container">
       <h1 class="title section-title">Schedule</h1>
 
@@ -105,7 +105,7 @@
     </div>
   </section>
 
-  <section id="location" class="section location gray-section">
+  <section id="location" class="section location">
     <div class="container">
       <h1 class="title section-title">Location</h1>
       <div>
@@ -130,7 +130,7 @@
     </div>
   </section>
 
-  <section id="sponsors" class="section sponsors">
+  <section id="sponsors" class="section sponsors has-background-white">
     <div class="container">
       <h1 class="title section-title">Sponsors</h1>
 
