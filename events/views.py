@@ -15,7 +15,7 @@ def index(request):
         return render(request, 'events/no-events.html')
     if num_events == 1:
         event = events.first()
-        return _view_event(request, event)
+        return redirect('events:detail_event', slug1=event.slug1, slug2=event.slug2)
     else:
         return render(request, 'events/list_events.html', {
             'events': events.all()
@@ -24,10 +24,7 @@ def index(request):
 
 def detail_event(request, slug1, slug2):
     event = models.Event.objects.get(slug1=slug1, slug2=slug2)
-    return _view_event(request, event)
 
-
-def _view_event(request, event):
     import json
     schedule = open('events/samples/schedule.json')
     sponsorships = open('events/samples/sponsorships.json')
