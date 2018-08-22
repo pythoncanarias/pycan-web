@@ -17,7 +17,7 @@ def index(request):
         event = events.first()
         return _view_event(request, event)
     else:
-        return render(request, 'events/list-events.html', {
+        return render(request, 'events/list_events.html', {
             'events': events.all()
             })
 

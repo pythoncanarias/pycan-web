@@ -1,20 +1,44 @@
-.event-description {
-  padding: 4rem 3rem;
-  margin-bottom: 1.7rem;
-  background-color: #f5f6ff;
-  background-image: url('./img/keyboard.jpg');
-  border-radius: $radius;
-  text-align: center;
+@import 'commons/static/commons/css/variables';
 
-  & > .inner {
-    border-radius: $radius;
-    padding: 1.5rem 0.7rem;
-    background: #dfdfff;
-    opacity: 0.7;
+.list-events-page {
+  .title-list-events {
+    color: $blue-text;
+    text-align: center;
+  }
 
-    .title,
-    .subtitle {
-      color: black;
+  .event-box {
+    display: block;
+    margin-top: 1rem;
+
+    &:first-child {
+      margin-top: 0;
     }
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: #ffffff8a;
+
+      .title {
+        color: $blue-text;
+      }
+    }
+
+    .title {
+      margin-bottom: 0.4em;
+    }
+
+    .event-date,
+    .event-location {
+      display: inline-block;
+      margin-bottom: 0.4em;
+      margin-right: 1em;
+
+      i {
+        color: $yellow-bg;
+        margin-right: 0.3em;
+      }
+    }
+
   }
 }
