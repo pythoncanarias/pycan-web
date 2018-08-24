@@ -49,12 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django_extensions',
     'commons',
-    'homepage',
     'events',
-    'tickets',
+    'homepage',
     'locations',
     'organizations',
     'schedule',
+    'speakers',
+    'tickets',
 ]
 
 MIDDLEWARE = [
