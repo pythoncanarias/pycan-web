@@ -4,7 +4,7 @@ from .models import TicketCategory, Article, Ticket
 
 @admin.register(TicketCategory)
 class TicketCategoryAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'slug': ('name', ), }
 
 
 @admin.register(Article)
@@ -14,4 +14,4 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name', ), }
+    pass
