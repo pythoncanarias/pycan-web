@@ -35,7 +35,7 @@ class Event(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return self.name
 
     def get_long_start_date(self, to_locale=settings.LC_TIME_SPANISH_LOCALE):
         locale.setlocale(locale.LC_TIME, to_locale)
