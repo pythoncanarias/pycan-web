@@ -14,7 +14,7 @@ class Organization(models.Model):
         return self.name
 
 
-class OrganizationSubcategory(models.Model):
+class OrganizationRole(models.Model):
     # Jade, Zafiro, Diamante, ...
     name = models.CharField(max_length=256)
     order = models.PositiveIntegerField(
@@ -28,9 +28,6 @@ class OrganizationSubcategory(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
-        verbose_name_plural = "organization subcategories"
-
 
 class OrganizationCategory(models.Model):
     # Sponsor, Collaborator, Organizer, ...
@@ -40,8 +37,8 @@ class OrganizationCategory(models.Model):
         default=PRIORITY.MEDIUM
     )
     code = models.CharField(max_length=16, unique=True)
-    subcategory = models.ForeignKey(
-        OrganizationSubcategory,
+    role = models.ForeignKey(
+        OrganizationRole,
         on_delete=models.PROTECT,
         related_name='organization_categories',
         null=True,

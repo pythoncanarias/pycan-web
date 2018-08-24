@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Organization, OrganizationSubcategory, \
+from .models import Organization, OrganizationRole, \
     OrganizationCategory, Membership
 
 
@@ -14,8 +14,8 @@ class OrganizationAdmin(admin.ModelAdmin):
     inlines = [MembershipInline]
 
 
-@admin.register(OrganizationSubcategory)
-class OrganizationSubcategoryAdmin(admin.ModelAdmin):
+@admin.register(OrganizationRole)
+class OrganizationRoleAdmin(admin.ModelAdmin):
     prepopulated_fields = {'code': ('name', ), }
 
 
