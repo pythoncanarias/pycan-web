@@ -1,34 +1,13 @@
 from django.contrib import admin
 
-from .models import Track, TalkTag, TalkLevel, Talk, Speaker
+from .models import Social, Speaker, Contact
 
 
-class TrackAdmin(admin.ModelAdmin):
+class SocialAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Track, TrackAdmin)
-
-
-class TalkTagAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(TalkTag, TalkTagAdmin)
-
-
-class TalkLevelAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(TalkLevel, TalkLevelAdmin)
-
-
-class TalkAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(Talk, TalkAdmin)
+admin.site.register(Social, SocialAdmin)
 
 
 class SpeakerAdmin(admin.ModelAdmin):
@@ -36,3 +15,10 @@ class SpeakerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Speaker, SpeakerAdmin)
+
+
+class ContactAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Contact, ContactAdmin)

@@ -1,6 +1,35 @@
 from django.contrib import admin
 
-from .models import Track, TalkTag, TalkLevel, Talk, Speaker
+from .models import SlotCategory, SlotTag, SlotLevel, Slot, \
+    Track, Schedule
+
+
+class SlotCategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(SlotCategory, SlotCategoryAdmin)
+
+
+class SlotTagAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(SlotTag, SlotTagAdmin)
+
+
+class SlotLevelAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(SlotLevel, SlotLevelAdmin)
+
+
+class SlotAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Slot, SlotAdmin)
 
 
 class TrackAdmin(admin.ModelAdmin):
@@ -10,29 +39,8 @@ class TrackAdmin(admin.ModelAdmin):
 admin.site.register(Track, TrackAdmin)
 
 
-class TalkTagAdmin(admin.ModelAdmin):
+class ScheduleAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(TalkTag, TalkTagAdmin)
-
-
-class TalkLevelAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(TalkLevel, TalkLevelAdmin)
-
-
-class TalkAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(Talk, TalkAdmin)
-
-
-class SpeakerAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(Speaker, SpeakerAdmin)
+admin.site.register(Schedule, ScheduleAdmin)
