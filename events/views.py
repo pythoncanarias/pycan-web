@@ -117,9 +117,9 @@ def ticket_qrcode(request, pk):
 
 def coc(request, language):
     if language:
-        template = f'coc_{language}.html'
+        template = 'coc_{}.html'.format(language)
     else:
-        template = f'coc.html'
+        template = 'coc.html'
     template_path = 'events/' + template
     return render(request, template_path)
 
