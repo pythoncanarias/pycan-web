@@ -5,9 +5,7 @@ from commons.constants import PRIORITY
 
 class Organization(models.Model):
     name = models.CharField(max_length=256)
-    logo = models.ImageField(
-        upload_to='organizations/sponsor/',
-    )
+    logo = models.FileField(upload_to='organizations/sponsor/')
     url = models.URLField()
     email = models.EmailField(blank=True)
     management_email = models.EmailField(blank=True)
@@ -25,10 +23,7 @@ class OrganizationSubcategory(models.Model):
     )
     code = models.CharField(max_length=16, unique=True)
     description = models.TextField(blank=True)
-    logo = models.ImageField(
-        upload_to='organizations/group/',
-        blank=True
-    )
+    logo = models.FileField(upload_to='organizations/group/', blank=True)
 
     def __str__(self):
         return self.name
