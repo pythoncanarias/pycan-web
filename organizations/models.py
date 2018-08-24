@@ -75,4 +75,4 @@ class Membership(models.Model):
     )
 
     def __str__(self):
-        return self.amount
+        return "{} {} {}".format(self.organization, self.category, self.amount)
