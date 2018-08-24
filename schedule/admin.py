@@ -7,6 +7,7 @@ from .models import SlotCategory, SlotTag, SlotLevel, Slot, \
 class ScheduleInline(admin.StackedInline):
     model = Schedule
     min_num = 1
+    autocomplete_fields = ['speaker']
 
 
 @admin.register(SlotCategory)

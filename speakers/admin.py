@@ -17,3 +17,4 @@ class SocialAdmin(admin.ModelAdmin):
 class SpeakerAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', ), }
     inlines = [ContactInline]
+    search_fields = ['name', 'surname']
