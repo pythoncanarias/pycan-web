@@ -23,6 +23,7 @@ class OrganizationSubcategory(models.Model):
         choices=PRIORITY.CHOICES,
         default=PRIORITY.MEDIUM
     )
+    code = models.CharField(max_length=16, unique=True)
     description = models.TextField(blank=True)
     logo = models.ImageField(
         upload_to='organizations/group/',
