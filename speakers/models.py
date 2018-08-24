@@ -9,6 +9,10 @@ class Social(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'social network'
+        verbose_name_plural = 'social networks'
+
 
 class Speaker(models.Model):
     name = models.CharField(max_length=256)

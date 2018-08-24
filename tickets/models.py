@@ -42,6 +42,9 @@ class TicketCategory(models.Model):
             )
     is_active.boolean = True
 
+    class Meta:
+        verbose_name_plural = 'ticket categories'
+
 
 class Article(models.Model):
     event = models.ForeignKey(
