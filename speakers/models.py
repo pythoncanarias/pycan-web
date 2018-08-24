@@ -15,7 +15,7 @@ class Speaker(models.Model):
     surname = models.CharField(max_length=256)
     slug = models.SlugField(unique=True)
     bio = models.TextField()
-    email = models.EmailField(max_length=256, blank=True)
+    email = models.EmailField(blank=True)
     phone = models.CharField(max_length=32, blank=True)
     photo = models.ImageField(
         upload_to='speakers/speaker/',

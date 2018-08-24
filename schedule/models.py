@@ -3,6 +3,7 @@ from django.db import models
 from locations.models import Location
 from events.models import Event
 from speakers.models import Speaker
+from commons.constants import PRIORITY
 
 
 class SlotCategory(models.Model):
@@ -56,7 +57,6 @@ class Slot(models.Model):
     )
     tags = models.ManyToManyField(
         SlotTag,
-        on_delete=models.PROTECT,
         related_name='slots',
         blank=True
     )

@@ -67,7 +67,7 @@ class Ticket(models.Model):
         help_text='Consecutive number within event'
     )
     keycode = models.UUIDField(default=uuid.uuid4)
-    customer_email = models.EmailField(max_length=256)
+    customer_email = models.EmailField()
     sold_at = models.DateTimeField(auto_now_add=True)
     payment_id = models.CharField(max_length=128, blank=True)
     article = models.ForeignKey(
