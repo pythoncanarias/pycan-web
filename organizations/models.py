@@ -33,6 +33,9 @@ class OrganizationSubcategory(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "organization subcategories"
+
 
 class OrganizationCategory(models.Model):
     # Sponsor, Collaborator, Organizer, ...
@@ -53,6 +56,9 @@ class OrganizationCategory(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "organization categories"
 
 
 class Membership(models.Model):

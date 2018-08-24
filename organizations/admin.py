@@ -4,29 +4,21 @@ from .models import Organization, OrganizationSubcategory, \
     OrganizationCategory, Membership
 
 
+@admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Organization, OrganizationAdmin)
-
-
+@admin.register(OrganizationSubcategory)
 class OrganizationSubcategoryAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(OrganizationSubcategory, OrganizationSubcategoryAdmin)
-
-
+@admin.register(OrganizationCategory)
 class OrganizationCategoryAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(OrganizationCategory, OrganizationCategoryAdmin)
-
-
+@admin.register(Membership)
 class MembershipAdmin(admin.ModelAdmin):
     pass
-
-
-admin.site.register(Membership, MembershipAdmin)
