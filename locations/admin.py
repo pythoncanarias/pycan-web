@@ -10,5 +10,9 @@ class LocationInline(admin.StackedInline):
 
 @admin.register(Venue)
 class VenueAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug', 'locations')
     prepopulated_fields = {'slug': ('name', ), }
     inlines = [LocationInline]
+
+    def locations(self, obj):
+        return ", ".join(obj.locations.values_list('name', flat=True))
