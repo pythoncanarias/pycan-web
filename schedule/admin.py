@@ -4,43 +4,31 @@ from .models import SlotCategory, SlotTag, SlotLevel, Slot, \
     Track, Schedule
 
 
+@admin.register(SlotCategory)
 class SlotCategoryAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(SlotCategory, SlotCategoryAdmin)
-
-
+@admin.register(SlotTag)
 class SlotTagAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(SlotTag, SlotTagAdmin)
-
-
+@admin.register(SlotLevel)
 class SlotLevelAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(SlotLevel, SlotLevelAdmin)
-
-
+@admin.register(Slot)
 class SlotAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Slot, SlotAdmin)
-
-
+@admin.register(Track)
 class TrackAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Track, TrackAdmin)
-
-
+@admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     pass
-
-
-admin.site.register(Schedule, ScheduleAdmin)
