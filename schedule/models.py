@@ -127,4 +127,4 @@ class Schedule(models.Model):
     )
 
     def __str__(self):
-        return self.start
+        return "{} {}-{}".format(self.start.date(), self.start.time(), self.end.time())
