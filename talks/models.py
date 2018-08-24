@@ -91,4 +91,4 @@ class Speaker(models.Model):
     medium = models.URLField(blank=True)
 
     def __str__(self):
-        return f'{self.name} {self.surname}'
+        return '{} {}'.format(self.name, self.surname)
