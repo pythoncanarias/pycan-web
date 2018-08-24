@@ -3,6 +3,11 @@ from django.contrib import admin
 from .models import Social, Speaker, Contact
 
 
+class ContactInline(admin.TabularInline):
+    model = Contact
+    extra = 1
+
+
 @admin.register(Social)
 class SocialAdmin(admin.ModelAdmin):
     prepopulated_fields = {'code': ('name', ), }
@@ -11,8 +16,4 @@ class SocialAdmin(admin.ModelAdmin):
 @admin.register(Speaker)
 class SpeakerAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', ), }
-
-
-@admin.register(Contact)
-class ContactAdmin(admin.ModelAdmin):
-    pass
+    inlines = [ContactInline]
