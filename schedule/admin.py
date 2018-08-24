@@ -6,7 +6,7 @@ from .models import SlotCategory, SlotTag, SlotLevel, Slot, \
 
 class ScheduleInline(admin.StackedInline):
     model = Schedule
-    extra = 0
+    min_num = 1
 
 
 @admin.register(SlotCategory)
