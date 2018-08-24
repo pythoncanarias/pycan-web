@@ -53,8 +53,8 @@ INSTALLED_APPS = [
     'events',
     'tickets',
     'locations',
-    'sponsors',
-    'talks',
+    'organizations',
+    'schedule',
 ]
 
 MIDDLEWARE = [

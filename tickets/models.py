@@ -9,17 +9,11 @@ from . import links
 from events.models import Event
 
 
-class TicketType(models.Model):
-    event = models.ForeignKey(
-        Event,
-        on_delete=models.PROTECT,
-        related_name='ticket_types',
-    )
-    name = models.CharField(max_length=80)
-    price = models.DecimalField(max_digits=9, decimal_places=2)
-    stock = models.PositiveIntegerField()
-    slug = models.SlugField(max_length=150, blank=True)
-    release_at = models.DateTimeField(default=None, blank=True, null=True)
+class TicketCategory(models.Model):
+    # Twin, Early, Normal, ...
+    name = models.CharField(max_length=256)
+    slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
@@ -49,19 +43,41 @@ class TicketType(models.Model):
     is_active.boolean = True
 
 
-class Ticket(models.Model):
-    ticket_type = models.ForeignKey(
-        TicketType,
+class Article(models.Model):
+    event = models.ForeignKey(
+        Event,
         on_delete=models.PROTECT,
-        related_name='tickets',
+        related_name='articles'
     )
-    number = models.PositiveIntegerField()
+    category = models.ForeignKey(
+        TicketCategory,
+        on_delete=models.PROTECT,
+        related_name='articles'
+    )
+    price = models.DecimalField(max_digits=9, decimal_places=2)
+    stock = models.PositiveIntegerField()
+    release_at = models.DateTimeField()
+
+    def __str__(self):
+        return self.price
+
+
+class Ticket(models.Model):
+    number = models.PositiveIntegerField(
+        help_text='Consecutive number within event'
+    )
     keycode = models.UUIDField(default=uuid.uuid4)
-    name = models.CharField(max_length=48)
-    surname = models.CharField(max_length=72)
-    email = models.CharField(max_length=260)
-    phone = models.CharField(max_length=14, blank=True)
+    customer_email = models.EmailField(max_length=256)
     sold_at = models.DateTimeField(auto_now_add=True)
+    payment_id = models.CharField(max_length=128, blank=True)
+    article = models.ForeignKey(
+        Article,
+        on_delete=models.PROTECT,
+        related_name='tickets'
+    )
+    customer_name = models.CharField(max_length=256, blank=True)
+    customer_surname = models.CharField(max_length=256, blank=True)
+    customer_phone = models.CharField(max_length=32, blank=True)
 
     def __str__(self):
         return '{}/{} {}, {}'.format(
