@@ -11,12 +11,12 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(OrganizationSubcategory)
 class OrganizationSubcategoryAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'code': ('name', ), }
 
 
 @admin.register(OrganizationCategory)
 class OrganizationCategoryAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'code': ('name', ), }
 
 
 @admin.register(Membership)

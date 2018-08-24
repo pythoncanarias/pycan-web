@@ -6,12 +6,12 @@ from .models import SlotCategory, SlotTag, SlotLevel, Slot, \
 
 @admin.register(SlotCategory)
 class SlotCategoryAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'code': ('name', ), }
 
 
 @admin.register(SlotTag)
 class SlotTagAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'slug': ('name', ), }
 
 
 @admin.register(SlotLevel)

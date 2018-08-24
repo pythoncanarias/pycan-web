@@ -14,4 +14,4 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'slug': ('name', ), }

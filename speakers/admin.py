@@ -5,12 +5,12 @@ from .models import Social, Speaker, Contact
 
 @admin.register(Social)
 class SocialAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'code': ('name', ), }
 
 
 @admin.register(Speaker)
 class SpeakerAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'slug': ('name', ), }
 
 
 @admin.register(Contact)
