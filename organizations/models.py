@@ -15,7 +15,7 @@ class Organization(models.Model):
 
 
 class OrganizationRole(models.Model):
-    # Jade, Zafiro, Diamante, ...
+    # Sponsor, Collaborator, Organizer, ...
     name = models.CharField(max_length=256)
     order = models.PositiveIntegerField(
         choices=PRIORITY.CHOICES,
@@ -30,7 +30,7 @@ class OrganizationRole(models.Model):
 
 
 class OrganizationCategory(models.Model):
-    # Sponsor, Collaborator, Organizer, ...
+    # Jade sponsor, Zafiro sponsor, Diamante sponsor, organizer, ...
     name = models.CharField(max_length=256)
     order = models.PositiveIntegerField(
         choices=PRIORITY.CHOICES,
@@ -40,9 +40,7 @@ class OrganizationCategory(models.Model):
     role = models.ForeignKey(
         OrganizationRole,
         on_delete=models.PROTECT,
-        related_name='organization_categories',
-        null=True,
-        blank=True
+        related_name='organization_categories'
     )
     description = models.TextField(blank=True)
 
