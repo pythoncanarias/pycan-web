@@ -6,7 +6,7 @@ from .models import SlotCategory, SlotTag, SlotLevel, Slot, \
 
 class ScheduleInline(admin.StackedInline):
     model = Schedule
-    min_num = 1
+    extra = 0
     autocomplete_fields = ['speaker']
 
 
