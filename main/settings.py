@@ -99,9 +99,9 @@ DATABASES = {
             'DATABASE_ENGINE',
             default='django.db.backends.postgresql'
         ),
-        'NAME': config('DATABASE_NAME'),
-        'USER': config('DATABASE_USER'),
-        'PASSWORD': config('DATABASE_PASSWORD'),
+        'NAME': config('DATABASE_NAME', default='pythoncanarias'),
+        'USER': config('DATABASE_USER', default='pythoncanarias'),
+        'PASSWORD': config('DATABASE_PASSWORD', default='pythoncanarias'),
         'HOST': config('DATABASE_HOST', default='127.0.0.1')
     }
 }

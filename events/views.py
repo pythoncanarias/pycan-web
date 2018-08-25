@@ -111,13 +111,9 @@ def ticket_qrcode(request, pk):
         )
 
 
-def coc(request, language):
-    if language:
-        template = 'coc_{}.html'.format(language)
-    else:
-        template = 'coc.html'
-    template_path = 'events/' + template
-    return render(request, template_path)
+def coc(request, language='es'):
+    template = 'events/coc_{}.html'.format(language)
+    return render(request, template)
 
 
 def ticket_pdf(request, keycode):
