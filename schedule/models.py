@@ -56,7 +56,8 @@ class Slot(models.Model):
         SlotLevel,
         on_delete=models.PROTECT,
         related_name='slots',
-        blank=True
+        blank=True,
+        null=True
     )
     tags = models.ManyToManyField(
         SlotTag,
