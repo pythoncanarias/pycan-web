@@ -49,12 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django_extensions',
     'commons',
-    'homepage',
     'events',
-    'tickets',
+    'homepage',
     'locations',
-    'sponsors',
-    'talks',
+    'organizations',
+    'schedule',
+    'speakers',
+    'tickets',
 ]
 
 MIDDLEWARE = [
@@ -149,8 +150,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = config('STATIC_ROOT', default='/path/to/your/statics/')
-MEDIA_ROOT = config('MEDIA_ROOT', default='/path/to/your/media/')
+STATIC_ROOT = config('STATIC_ROOT', default=os.path.join(BASE_DIR, ".static"))
+MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, ".media"))
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 

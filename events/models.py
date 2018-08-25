@@ -5,22 +5,37 @@ from django.conf import settings
 
 
 class Event(models.Model):
-    title = models.CharField(max_length=220)
-    # url of the event is built with: /events/<slug1>/<slug2>/
-    slug1 = models.SlugField(max_length=150)
-    slug2 = models.SlugField(max_length=150)
-    # indicates if the current event is shown in the events page
-    active = models.BooleanField(default=False)
+    name = models.CharField(max_length=256)
+    # url of the event is /events/<slug>
+    slug = models.SlugField(unique=True)
+    active = models.BooleanField(
+        help_text='The current event is shown in the events page',
+        default=False
+    )
     opened_ticket_sales = models.BooleanField(default=False)
     start_date = models.DateField()
-    description = models.TextField(blank=True)
-    photo = models.ImageField(
+    # 50 minutes as default duration for each slot
+    default_slot_duration = models.DurationField(default=50 * 60)
+    short_description = models.TextField(blank=True)
+    description = models.TextField(
+        blank=True,
+        help_text='Markdown is allowed'
+    )
+    cover = models.ImageField(
+        upload_to='events/event/',
+        blank=True
+    )
+    poster = models.FileField(
+        upload_to='events/event/',
+        blank=True
+    )
+    sponsorship_brochure = models.FileField(
         upload_to='events/event/',
         blank=True
     )
 
     def __str__(self):
-        return self.title
+        return self.name
 
     def get_long_start_date(self, to_locale=settings.LC_TIME_SPANISH_LOCALE):
         locale.setlocale(locale.LC_TIME, to_locale)
