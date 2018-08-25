@@ -8,7 +8,6 @@ class Organization(models.Model):
     logo = models.FileField(upload_to='organizations/sponsor/')
     url = models.URLField()
     email = models.EmailField(blank=True)
-    management_email = models.EmailField(blank=True)
 
     def __str__(self):
         return self.name
@@ -72,6 +71,10 @@ class Membership(models.Model):
     order = models.PositiveIntegerField(
         choices=PRIORITY.CHOICES,
         default=PRIORITY.MEDIUM
+    )
+    mgmt_email = models.EmailField(
+        blank=True,
+        help_text='Management email of the organization used during the event'
     )
 
     def __str__(self):
