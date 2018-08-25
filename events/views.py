@@ -15,26 +15,22 @@ def index(request):
         return render(request, 'events/no-events.html')
     if num_events == 1:
         event = events.first()
-        return redirect('events:detail_event', slug1=event.slug1, slug2=event.slug2)
+        return redirect('events:detail_event', slug=event.slug)
     else:
         return render(request, 'events/list_events.html', {
             'events': events.all()
             })
 
 
-def detail_event(request, slug1, slug2):
-    event = models.Event.objects.get(slug1=slug1, slug2=slug2)
+def detail_event(request, slug):
+    event = models.Event.objects.get(slug=slug)
 
     import json
     schedule = open('events/samples/schedule.json')
     sponsorships = open('events/samples/sponsorships.json')
 
-    ticket_types = event.ticket_types.all().order_by('release_at')
-    num_options = ticket_types.count()
     return render(request, 'events/event.html', {
         'event': event,
-        'ticket_types': ticket_types,
-        'num_options': num_options,
         'data': {
             'schedule': json.load(schedule),
             'sponsorships': json.load(sponsorships)
