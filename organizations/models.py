@@ -72,7 +72,7 @@ class Membership(models.Model):
         choices=PRIORITY.CHOICES,
         default=PRIORITY.MEDIUM
     )
-    mgmt_email = models.EmailField(
+    management_email = models.EmailField(
         blank=True,
         help_text='Management email of the organization used during the event'
     )
