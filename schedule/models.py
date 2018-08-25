@@ -9,7 +9,7 @@ from commons.constants import PRIORITY
 class SlotCategory(models.Model):
     # Workshop, Talk, Organization, Coffee, Meal, ...
     name = models.CharField(max_length=256)
-    code = models.CharField(max_length=16, unique=True)
+    code = models.CharField(max_length=32, unique=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
@@ -127,4 +127,8 @@ class Schedule(models.Model):
     )
 
     def __str__(self):
-        return "{} {}-{}".format(self.start.date(), self.start.time(), self.end.time())
+        return "{} {}-{}".format(
+            self.start.date(),
+            self.start.time(),
+            self.end.time()
+        )

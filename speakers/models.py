@@ -3,7 +3,7 @@ from django.db import models
 
 class Social(models.Model):
     name = models.CharField(max_length=256)
-    code = models.CharField(max_length=16, unique=True)
+    code = models.CharField(max_length=32, unique=True)
     base_url = models.CharField(max_length=128)
 
     def __str__(self):

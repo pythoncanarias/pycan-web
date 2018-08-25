@@ -20,7 +20,7 @@ class OrganizationRole(models.Model):
         choices=PRIORITY.CHOICES,
         default=PRIORITY.MEDIUM
     )
-    code = models.CharField(max_length=16, unique=True)
+    code = models.CharField(max_length=32, unique=True)
     description = models.TextField(blank=True)
     logo = models.FileField(upload_to='organizations/group/', blank=True)
 
@@ -35,7 +35,7 @@ class OrganizationCategory(models.Model):
         choices=PRIORITY.CHOICES,
         default=PRIORITY.MEDIUM
     )
-    code = models.CharField(max_length=16, unique=True)
+    code = models.CharField(max_length=32, unique=True)
     role = models.ForeignKey(
         OrganizationRole,
         on_delete=models.PROTECT,
