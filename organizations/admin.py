@@ -10,6 +10,11 @@ class MembershipInline(admin.StackedInline):
     autocomplete_fields = ['organization']
 
 
+class OrganizationCategoryInline(admin.StackedInline):
+    model = OrganizationCategory
+    extra = 0
+
+
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     inlines = [MembershipInline]
@@ -19,14 +24,17 @@ class OrganizationAdmin(admin.ModelAdmin):
 
     def memberships(self, obj):
         return (', '.join('[{}] {}'.format(x.event, x.category)
-                for x in obj.memberships.all()))
+                          for x in obj.memberships.all()))
 
 
 @admin.register(OrganizationRole)
 class OrganizationRoleAdmin(admin.ModelAdmin):
+    inlines = [OrganizationCategoryInline]
     prepopulated_fields = {'code': ('name', ), }
+    list_display = ('name', 'code')
 
 
 @admin.register(OrganizationCategory)
 class OrganizationCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'code': ('name', ), }
+    list_display = ('name', 'role', 'code')
