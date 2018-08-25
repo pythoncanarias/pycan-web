@@ -18,7 +18,8 @@ class OrganizationAdmin(admin.ModelAdmin):
     list_filter = ('memberships__event', )
 
     def memberships(self, obj):
-        return ", ".join("[{}] {}".format(x.event, x.category) for x in obj.memberships.all())
+        return (', '.join('[{}] {}'.format(x.event, x.category)
+                for x in obj.memberships.all()))
 
 
 @admin.register(OrganizationRole)
