@@ -62,7 +62,7 @@ class Article(models.Model):
     release_at = models.DateTimeField()
 
     def __str__(self):
-        return self.price
+        return '{} [{}]'.format(self.category, self.event)
 
 
 class Ticket(models.Model):
@@ -83,11 +83,10 @@ class Ticket(models.Model):
     customer_phone = models.CharField(max_length=32, blank=True)
 
     def __str__(self):
-        return '{}/{} {}, {}'.format(
+        return '{}/{} [{}]'.format(
             self.number,
-            self.ticket_type.event.title,
-            self.surname,
-            self.name,
+            self.article.event,
+            self.customer_email
         )
 
     def get_qrcode_url(self):
