@@ -16,3 +16,8 @@ class VenueAdmin(admin.ModelAdmin):
 
     def locations(self, obj):
         return ", ".join(obj.locations.values_list('name', flat=True))
+
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'capacity', 'venue')

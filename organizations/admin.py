@@ -38,3 +38,8 @@ class OrganizationRoleAdmin(admin.ModelAdmin):
 class OrganizationCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'code': ('name', ), }
     list_display = ('name', 'role', 'code')
+
+
+@admin.register(Membership)
+class MembershipAdmin(admin.ModelAdmin):
+    list_display = ('event', 'organization', 'category', 'amount', 'order')
