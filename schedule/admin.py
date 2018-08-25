@@ -39,3 +39,11 @@ class SlotAdmin(admin.ModelAdmin):
 @admin.register(Track)
 class TrackAdmin(admin.ModelAdmin):
     list_display = ('name', 'order')
+
+
+@admin.register(Schedule)
+class ScheduleAdmin(admin.ModelAdmin):
+    search_fields = ['event__name', 'location__name',
+                     'track__name', 'speaker__name', 'speaker__surname']
+    list_display = ('event', 'location', 'track', 'speaker',
+                    'slot', 'start', 'end', 'language')
