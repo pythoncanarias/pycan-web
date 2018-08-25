@@ -10,3 +10,5 @@ from tickets.admin import ArticleInline
 class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', ), }
     inlines = [MembershipInline, ScheduleInline, ArticleInline]
+    list_display = ('name', 'slug', 'active',
+                    'opened_ticket_sales', 'start_date')
