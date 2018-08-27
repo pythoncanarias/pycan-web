@@ -20,3 +20,10 @@ class SpeakerAdmin(admin.ModelAdmin):
     inlines = [ContactInline]
     search_fields = ['name', 'surname']
     list_display = ('name', 'surname', 'email')
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('speaker', 'social', 'href')
+    list_filter = ['social']
+    search_fields = ['speaker__name', 'speaker__surname']

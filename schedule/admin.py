@@ -31,6 +31,7 @@ class SlotLevelAdmin(admin.ModelAdmin):
 class SlotAdmin(admin.ModelAdmin):
     inlines = [ScheduleInline]
     list_display = ('name', 'category', 'level', '_tags')
+    search_fields = ['name']
 
     def _tags(self, obj):
         return ', '.join(tag.name for tag in obj.tags.all())
@@ -45,5 +46,5 @@ class TrackAdmin(admin.ModelAdmin):
 class ScheduleAdmin(admin.ModelAdmin):
     search_fields = ['event__name', 'location__name',
                      'track__name', 'speaker__name', 'speaker__surname']
-    list_display = ('event', 'location', 'track', 'speaker',
-                    'slot', 'start', 'end', 'language')
+    list_display = ('slot', 'event', 'location', 'speaker', 'start')
+    autocomplete_fields = ['speaker', 'slot']

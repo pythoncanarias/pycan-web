@@ -1,3 +1,5 @@
+from urllib.parse import urljoin
+
 from django.db import models
 
 
@@ -44,4 +46,7 @@ class Contact(models.Model):
     identifier = models.CharField(max_length=128)
 
     def __str__(self):
-        return self.identifier
+        return self.href()
+
+    def href(self):
+        return urljoin(self.social.base_url, self.identifier)
