@@ -13,7 +13,7 @@ class Venue(models.Model):
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
     photo = models.ImageField(
-        upload_to='events/locations/venue/',
+        upload_to='locations/venue/',
         blank=True
     )
 
@@ -31,7 +31,7 @@ class Location(models.Model):
     description = models.TextField(blank=True)
     capacity = models.PositiveSmallIntegerField(blank=True, null=True)
     photo = models.ImageField(
-        upload_to='events/locations/location/',
+        upload_to='locations/location/',
         blank=True
     )
 
