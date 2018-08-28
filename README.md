@@ -112,5 +112,5 @@ The changes made both in Python files or static files will be detected by the se
 ### Model graphs
 
 ~~~console
-$ pipenv run python manage.py graph_models events sponsors locations talks tickets -g -S -o graph.png
+$ pipenv run python manage.py graph_models events organizations locations speakers tickets schedule -g -S -o models.png
 ~~~
