@@ -59,11 +59,12 @@ class OrganizationCategory(models.Model):
     class Meta:
         verbose_name_plural = "organization categories"
 
-    def organizations(self, joint_organization=False):
+    def organizations(self, exclude_joint_organizations=True):
         memberships = self.memberships.order_by(
             '-amount', 'order', 'organization__name')
-        return [m.organization for m in memberships.filter(
-            joint_organization__isnull=not joint_organization)]
+        if exclude_joint_organizations:
+            memberships = memberships.exclude(joint_organization__isnull=False)
+        return [m.organization for m in memberships]
 
 
 class Membership(models.Model):
