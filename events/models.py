@@ -3,6 +3,9 @@ import locale
 from django.db import models
 from django.conf import settings
 
+from speakers.models import Speaker
+import organizations
+
 
 class Event(models.Model):
     name = models.CharField(max_length=256)
@@ -33,6 +36,10 @@ class Event(models.Model):
         upload_to='events/event/',
         blank=True
     )
+    hero = models.ImageField(
+        upload_to='events/event/',
+        blank=True
+    )
 
     def __str__(self):
         return self.name
@@ -40,3 +47,47 @@ class Event(models.Model):
     def get_long_start_date(self, to_locale=settings.LC_TIME_SPANISH_LOCALE):
         locale.setlocale(locale.LC_TIME, to_locale)
         return self.start_date.strftime('%A %d de %B de %Y').capitalize()
+
+    @property
+    def speakers(self):
+        speaker_ids = self.schedule.values_list('speaker').distinct()
+        return Speaker.objects.filter(pk__in=speaker_ids)\
+            .order_by('name', 'surname')
+
+    @property
+    def venue(self):
+        return self.schedule.filter(location__isnull=False).\
+            first().location.venue
+
+    @property
+    def organization_roles(self):
+        org_roles_ids = self.memberships.values_list(
+            'category__role').distinct()
+        org_roles = organizations.models.OrganizationRole.objects.filter(
+            pk__in=org_roles_ids).order_by('order')
+        return org_roles
+
+    @property
+    def memberships_for_display(self):
+        result = {}
+        for role in self.organization_roles:
+            r = {}
+            org_categories = organizations.models.OrganizationCategory.\
+                objects.filter(role=role).order_by('order')
+            for cat in org_categories:
+                orgs = []
+                memberships = self.memberships.filter(category=cat).order_by(
+                    '-amount', 'order', 'organization__name')
+                orgs = [m.organization for m in memberships.filter(
+                    joint_organization__isnull=True)]
+                # insert joint organizations next to its reference
+                for i, org in enumerate(orgs):
+                    joint_orgs = [
+                        o.organization for o in org.joint_memberships.all().
+                        order_by('-amount', 'order', 'organization__name')
+                    ]
+                    for jorg in reversed(joint_orgs):
+                        orgs.insert(i + 1, jorg)
+                r[cat] = orgs
+            result[role] = r
+        return result

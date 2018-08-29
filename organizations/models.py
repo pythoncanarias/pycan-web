@@ -1,4 +1,5 @@
 from django.db import models
+
 from events.models import Event
 from commons.constants import PRIORITY
 
@@ -78,6 +79,14 @@ class Membership(models.Model):
     management_email = models.EmailField(
         blank=True,
         help_text='Management email of the organization used during the event'
+    )
+    joint_organization = models.ForeignKey(
+        Organization,
+        on_delete=models.PROTECT,
+        related_name='joint_memberships',
+        help_text='Organizations joint with other organizations',
+        blank=True,
+        null=True
     )
 
     def __str__(self):
