@@ -1,6 +1,5 @@
 from django.db import models
 
-from events.models import Event
 from commons.constants import PRIORITY
 
 
@@ -69,7 +68,7 @@ class OrganizationCategory(models.Model):
 
 class Membership(models.Model):
     event = models.ForeignKey(
-        Event,
+        'events.Event',
         on_delete=models.PROTECT,
         related_name='memberships'
     )

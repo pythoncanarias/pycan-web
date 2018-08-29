@@ -4,7 +4,7 @@ from django.db import models
 from django.conf import settings
 
 from speakers.models import Speaker
-import organizations
+from organizations.models import OrganizationRole
 
 
 class Event(models.Model):
@@ -51,8 +51,8 @@ class Event(models.Model):
     @property
     def speakers(self):
         speaker_ids = self.schedule.values_list('speaker').distinct()
-        return Speaker.objects.filter(pk__in=speaker_ids)\
-            .order_by('name', 'surname')
+        return Speaker.objects.filter(pk__in=speaker_ids).\
+            order_by('name', 'surname')
 
     @property
     def venue(self):
@@ -63,9 +63,8 @@ class Event(models.Model):
     def organization_roles(self):
         org_roles_ids = self.memberships.values_list(
             'category__role').distinct()
-        org_roles = organizations.models.OrganizationRole.objects.filter(
-            pk__in=org_roles_ids).order_by('order')
-        return org_roles
+        return OrganizationRole.objects.filter(pk__in=org_roles_ids).\
+            order_by('order', 'name')
 
     @property
     def memberships_for_display(self):
