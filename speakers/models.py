@@ -34,7 +34,7 @@ class Speaker(models.Model):
     @property
     def socials_for_display(self):
         return [{'code': c.social.code, 'href': c.href()}
-                for c in self.contacts.all().order_by('social__name')]
+                for c in self.contacts.order_by('social__name')]
 
 
 class Contact(models.Model):

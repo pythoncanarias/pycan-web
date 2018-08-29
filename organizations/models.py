@@ -13,6 +13,13 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def joint_organizations(self):
+        return [
+            m.organization for m in self.joint_memberships.
+            order_by('-amount', 'order', 'organization__name')
+        ]
+
 
 class OrganizationRole(models.Model):
     # Sponsor, Collaborator, Organizer, ...
@@ -52,6 +59,12 @@ class OrganizationCategory(models.Model):
 
     class Meta:
         verbose_name_plural = "organization categories"
+
+    def organizations(self, joint_organization=False):
+        memberships = self.memberships.order_by(
+            '-amount', 'order', 'organization__name')
+        return [m.organization for m in memberships.filter(
+            joint_organization__isnull=not joint_organization)]
 
 
 class Membership(models.Model):
