@@ -31,9 +31,8 @@ class Speaker(models.Model):
     def __str__(self):
         return '{} {}'.format(self.name, self.surname)
 
-    @property
     def socials_for_display(self):
-        return [{'code': c.social.code, 'href': c.href()}
+        return [{'code': c.social.code, 'href': c.href}
                 for c in self.contacts.order_by('social__name')]
 
 
@@ -53,5 +52,6 @@ class Contact(models.Model):
     def __str__(self):
         return self.href()
 
+    @property
     def href(self):
         return urljoin(self.social.base_url, self.identifier)

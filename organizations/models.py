@@ -12,7 +12,6 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
-    @property
     def joint_organizations(self):
         return [
             m.organization for m in self.joint_memberships.
