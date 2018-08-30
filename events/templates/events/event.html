@@ -7,16 +7,17 @@
 {% block default_content_class %}{% endblock %}
 
 {% block content %}
+
 <div>
-  <div class="event-header">
+  <div class="event-header" {% if event.hero %} style="background-image: url('/media/{{ event.hero }}');" {% endif %}>
     <div class="inner">
-      <h1 class="title is-1">{{ event.title }}</h1>
+      <h1 class="title is-1">{{ event.name }}</h1>
       <div class="subtitle is-4">
         <span class="event-header-date">
           <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
         </span>
         <span class="event-header-location">
-          <i class="fas fa-map-marker-alt"></i> Universidad de La Laguna
+          <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
         </span>
       </div>
       <a href="" class="button is-white">Comprar entrada</a>
@@ -33,9 +34,7 @@
 
   <section id="event" class="section event has-background-white">
     <div class="container">
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-      <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+      {% filter as_markdown %} {{ event.description }} {% endfilter %}
     </div>
   </section>
 
@@ -43,15 +42,16 @@
     <div class="container">
       <h1 class="title section-title">Speakers</h1>
       <div class="columns is-multiline is-mobile">
-        {% for i in "12345678" %}
+        {% for speaker in event.speakers %}
           <div class="column is-6-mobile is-4-tablet is-3-desktop">
             <div class="box speaker-box">
-              <img class="speaker-photo" src="{{ assets|get_asset_key:"events/img/speakers/"|add:i|add:".jpg" }}" />
-              <h2 class="speaker-name">John Doe</h2>
-              <p class="speaker-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+              <img class="speaker-photo" src="/media/{{ speaker.photo.name }}" />
+              <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
+              <p class="speaker-description">{{ speaker.bio }}</p>
               <div class="speaker-socials">
-                <i class="fab fa-twitter"></i>
-                <i class="fab fa-facebook"></i>
+                {% for social in speaker.socials_for_display %}
+                  <a href="{{ social.href }}"><i class="fab fa-{{ social.code }}"></i></a>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -65,35 +65,38 @@
       <h1 class="title section-title">Schedule</h1>
 
       <div class="schedule-table">
-        {% for row in data.schedule %}
+        {% for row in event.schedule_for_display %}
           {% if row.type == 'tracks' %}
             <div class="schedule-tracks columns is-gapless is-hidden-mobile">
               {% for track in row.tracks %}
                 <div class="column">
                   <div class="schedule-title">
-                    {{ track.title }}
+                    {{ track.name }}
                   </div>
                 </div>
               {% endfor %}
             </div>
-          {% elif row.type == 'talk' or row.type == 'break' %}
+          {% elif row.type == 'plenary_scheduled_item' %}
             <div class="schedule-row columns is-gapless">
               <div class="column is-12">
-                <div class="schedule-{{ row.type }} ">
-                  <div class="talk-title">{{ row.title }}</div>
-                  <div class="talk-hours">{{ row.hours }}</div>
+                <div class="schedule-slot schedule-slot-plenary schedule-slot-{{ row.schedule.slot.category.code }}">
+                  <div class="slot-title">{{ row.schedule.slot.name }}</div>
+                  <div class="slot-hours">{{ row.schedule.when_for_display }}</div>
+                  <div class="">{{ row.schedule.location.name }}</div>
                 </div>
               </div>
             </div>
-          {% elif row.type == 'talks' %}
+          {% elif row.type == 'scheduled_items' %}
             <div class="schedule-columns columns is-gapless">
               {% for track in row.tracks %}
-                <div class="schedule-title is-hidden-tablet">{{ track.title }}</div>
+                {% if track.scheduled_items|length %}
+                  <div class="schedule-title is-hidden-tablet">{{ track.track.name }}</div>
+                {% endif %}
                 <div class="schedule-column column is-12-mobile">
-                  {% for talk in track.talks %}
-                    <div class="schedule-talk size-{{talk.size}}">
-                      <div class="talk-title">{{ talk.title }}</div>
-                      <div class="talk-hours">{{ talk.hours }}</div>
+                  {% for scheduled_item in track.scheduled_items %}
+                    <div class="schedule-slot size-{{ scheduled_item.size_for_display }}">
+                      <div class="slot-title">{{ scheduled_item.slot.name }}</div>
+                      <div class="slot-hours">{{ scheduled_item.when_for_display }}</div>
                     </div>
                   {% endfor %}
                 </div>
@@ -107,7 +110,7 @@
 
   <section id="location" class="section location">
     <div class="container">
-      <h1 class="title section-title">Location</h1>
+      <h1 class="title section-title">Venue</h1>
       <div>
         <div class="columns is-multiline">
           <div class="column is-12-tablet is-6-desktop">
@@ -116,13 +119,11 @@
           </div>
           <div class="column is-12-tablet is-6-desktop">
             <strong>
-              <i class="fa fa-location-arrow "></i> <span class="font-weight-bold">Dirección:</span>
+              <i class="fa fa-location-arrow "></i> <span class="font-weight-bold">{{ event.venue.name }}</span>
             </strong>
             <address>
-              <div class="street-address">Address</div>
-              <span class="postal-code">38180</span>,
-              <span class="locality">Locality</span><br>
-              <span class="region">Santa Cruz de Tenerife - Tenerife</span>
+              <p>{{ event.venue.address }}</p>
+              <p>{{ event.venue.description }}</p>
             </address>
           </div>
         </div>
@@ -133,16 +134,20 @@
   <section id="sponsors" class="section sponsors has-background-white">
     <div class="container">
       <h1 class="title section-title">Sponsors</h1>
-
-      {% for sponsorship in data.sponsorships %}
-        <h2 class="title is-5 has-text-centered">{{ sponsorship.title }}</h2>
-        <div class="columns is-mobile is-multiline is-centered">
-          {% for sponsor in sponsorship.sponsors %}
-            <a class="column is-6-mobile is-3-tablet is-2-desktop">
-              <img src="{{ sponsor.image_url }}"/>
-            </a>
-          {% endfor %}
-        </div>
+      {% for role, categories in event.memberships_for_display.items %}
+        <h1 class="title is-4 has-text-centered">{{ role.name }}</h1>
+        {% for category, organizations in categories.items %}
+          {% if category.name != role.name %}
+            <h2 class="title is-5 has-text-centered">{{ category.name }}</h2>
+          {% endif %}
+          <div class="columns is-mobile is-multiline is-centered">
+            {% for organization in organizations %}
+              <a href="{{ organization.url }}" title="{{ organization.name }}" class="column is-6-mobile is-3-tablet is-2-desktop">
+                <img src="/media/{{ organization.logo }}"/>
+              </a>
+            {% endfor %}
+          </div>
+        {% endfor %}
       {% endfor %}
     </div>
   </section>

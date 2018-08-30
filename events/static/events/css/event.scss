@@ -1,7 +1,7 @@
 .event-page {
   .event-header {
     background-color: #000d19b8;
-    background-image: url('./img/keyboard.jpg');
+    background-image: url('./img/default-event-hero.jpg');
     background-size: cover;
     background-position: 50% 50%;
     text-align: center;
@@ -113,8 +113,8 @@
       }
 
       $cell-margin: 1px;
-      $talk-padding: 0.5rem;
-      $min-height-talk: 6rem;
+      $slot-padding: 0.5rem;
+      $min-height-slot: 7rem;
 
       .schedule-title {
         background-color: $blue-bg;
@@ -127,23 +127,32 @@
         flex-direction: column;
       }
 
-      .schedule-talk,
-      .schedule-break {
+      .schedule-slot {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         overflow: scroll;
-        padding: $talk-padding;
+        padding: $slot-padding;
         margin: $cell-margin;
-      }
-
-      .schedule-talk {
         background-color: #f2f2f3;
       }
 
-      .schedule-break {
+      .schedule-slot-plenary {
+        padding: calc(#{$slot-padding} + 0.3rem);
+      }
+
+      .schedule-slot-organizing {
+        background-color: #d9eff7;
+      }
+
+      .schedule-slot-coffee,
+      .schedule-slot-meal {
         background-color: #fdebd1;
+      }
+
+      .slot-title {
+        text-align: center;
       }
 
       .schedule-columns {
@@ -153,19 +162,19 @@
           flex-direction: column;
         }
 
-        .schedule-talk {
-          flex: 0 0 6rem;
+        .schedule-slot {
+          flex: 0 0 $min-height-slot;
 
           &.size-2 {
-            flex-basis: calc(#{$min-height-talk} * 2 + #{$cell-margin} * 2);
+            flex-basis: calc(#{$min-height-slot} * 2 + #{$cell-margin} * 2);
           }
 
           &.size-3 {
-            flex-basis: calc(#{$min-height-talk} * 3 + #{$cell-margin} * 4);
+            flex-basis: calc(#{$min-height-slot} * 3 + #{$cell-margin} * 4);
           }
 
           &.size-4 {
-            flex-basis: calc(#{$min-height-talk} * 4 + #{$cell-margin} * 6);
+            flex-basis: calc(#{$min-height-slot} * 4 + #{$cell-margin} * 6);
           }
         }
       }
