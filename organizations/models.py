@@ -1,5 +1,5 @@
 from django.db import models
-from events.models import Event
+
 from commons.constants import PRIORITY
 
 
@@ -11,6 +11,12 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name
+
+    def joint_organizations(self):
+        return [
+            m.organization for m in self.joint_memberships.
+            order_by('-amount', 'order', 'organization__name')
+        ]
 
 
 class OrganizationRole(models.Model):
@@ -52,10 +58,17 @@ class OrganizationCategory(models.Model):
     class Meta:
         verbose_name_plural = "organization categories"
 
+    def organizations(self, exclude_joint_organizations=True):
+        memberships = self.memberships.order_by(
+            '-amount', 'order', 'organization__name')
+        if exclude_joint_organizations:
+            memberships = memberships.exclude(joint_organization__isnull=False)
+        return [m.organization for m in memberships]
+
 
 class Membership(models.Model):
     event = models.ForeignKey(
-        Event,
+        'events.Event',
         on_delete=models.PROTECT,
         related_name='memberships'
     )
@@ -78,6 +91,14 @@ class Membership(models.Model):
     management_email = models.EmailField(
         blank=True,
         help_text='Management email of the organization used during the event'
+    )
+    joint_organization = models.ForeignKey(
+        Organization,
+        on_delete=models.PROTECT,
+        related_name='joint_memberships',
+        help_text='Organizations joint with other organizations',
+        blank=True,
+        null=True
     )
 
     def __str__(self):

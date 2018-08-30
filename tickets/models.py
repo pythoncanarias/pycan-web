@@ -6,7 +6,6 @@ from django.db.models import Max
 from django.urls import reverse
 
 from . import links
-from events.models import Event
 
 
 class TicketCategory(models.Model):
@@ -48,7 +47,7 @@ class TicketCategory(models.Model):
 
 class Article(models.Model):
     event = models.ForeignKey(
-        Event,
+        'events.Event',
         on_delete=models.PROTECT,
         related_name='articles'
     )

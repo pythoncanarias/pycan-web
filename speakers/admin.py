@@ -20,6 +20,7 @@ class SpeakerAdmin(admin.ModelAdmin):
     inlines = [ContactInline]
     search_fields = ['name', 'surname']
     list_display = ('name', 'surname', 'email')
+    ordering = ['name', 'surname']
 
 
 @admin.register(Contact)

@@ -8,6 +8,7 @@ class MembershipInline(admin.StackedInline):
     model = Membership
     extra = 0
     autocomplete_fields = ['organization']
+    fk_name = 'organization'
 
 
 class OrganizationCategoryInline(admin.StackedInline):
@@ -43,3 +44,6 @@ class OrganizationCategoryAdmin(admin.ModelAdmin):
 @admin.register(Membership)
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ('event', 'organization', 'category', 'amount', 'order')
+    list_filter = ('category__name',)
+    search_fields = ['organization__name']
+    autocomplete_fields = ['organization', 'joint_organization']

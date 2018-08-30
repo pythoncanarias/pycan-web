@@ -25,16 +25,8 @@ def index(request):
 def detail_event(request, slug):
     event = models.Event.objects.get(slug=slug)
 
-    import json
-    schedule = open('events/samples/schedule.json')
-    sponsorships = open('events/samples/sponsorships.json')
-
     return render(request, 'events/event.html', {
         'event': event,
-        'data': {
-            'schedule': json.load(schedule),
-            'sponsorships': json.load(sponsorships)
-        },
     })
 
 

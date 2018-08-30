@@ -1,8 +1,5 @@
 from django.db import models
 
-from locations.models import Location
-from events.models import Event
-from speakers.models import Speaker
 from commons.constants import PRIORITY
 
 
@@ -80,6 +77,17 @@ class Track(models.Model):
     def __str__(self):
         return self.name
 
+    def schedule_in_range(self, start=None, end=None):
+        if start and end:
+            schedule = self.schedule.filter(start__gte=start, end__lte=end)
+        elif start and not end:
+            schedule = self.schedule.filter(start__gte=start)
+        elif not start and end:
+            schedule = self.schedule.filter(end__lte=end)
+        else:
+            schedule = self.schedule.all()
+        return schedule.order_by('start')
+
 
 class Schedule(models.Model):
     SPANISH = 'ES'
@@ -90,12 +98,12 @@ class Schedule(models.Model):
     )
 
     event = models.ForeignKey(
-        Event,
+        'events.Event',
         on_delete=models.PROTECT,
         related_name='schedule'
     )
     location = models.ForeignKey(
-        Location,
+        'locations.Location',
         on_delete=models.PROTECT,
         related_name='schedule'
     )
@@ -107,11 +115,9 @@ class Schedule(models.Model):
         null=True,
         blank=True
     )
-    speaker = models.ForeignKey(
-        Speaker,
-        on_delete=models.PROTECT,
+    speakers = models.ManyToManyField(
+        'speakers.Speaker',
         related_name='schedule',
-        null=True,
         blank=True
     )
     slot = models.ForeignKey(
@@ -132,4 +138,16 @@ class Schedule(models.Model):
             self.start.date(),
             self.start.time(),
             self.end.time()
+        )
+
+    @property
+    def size_for_display(self):
+        t = round((self.end - self.start) / self.event.default_slot_duration)
+        return t if t > 0 else 1
+
+    @property
+    def when_for_display(self):
+        return '{} - {}'.format(
+            self.start.strftime('%H:%M'),
+            self.end.strftime('%H:%M')
         )
