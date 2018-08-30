@@ -7,7 +7,7 @@ from .models import SlotCategory, SlotTag, SlotLevel, Slot, \
 class ScheduleInline(admin.StackedInline):
     model = Schedule
     extra = 0
-    autocomplete_fields = ['speaker']
+    autocomplete_fields = ['speakers']
 
 
 @admin.register(SlotCategory)
@@ -44,7 +44,7 @@ class TrackAdmin(admin.ModelAdmin):
 
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
-    search_fields = ['event__name', 'location__name',
-                     'track__name', 'speaker__name', 'speaker__surname']
-    list_display = ('slot', 'event', 'location', 'speaker', 'start')
-    autocomplete_fields = ['speaker', 'slot']
+    search_fields = ['event__name', 'location__name', 'slot__name',
+                     'track__name', 'speakers__name', 'speakers__surname']
+    list_display = ('slot', 'event', 'location', 'start')
+    autocomplete_fields = ['speakers', 'slot']

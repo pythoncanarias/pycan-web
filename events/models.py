@@ -52,7 +52,7 @@ class Event(models.Model):
         return self.start_date.strftime('%A %d de %B de %Y').capitalize()
 
     def speakers(self):
-        speaker_ids = self.schedule.values_list('speaker').distinct()
+        speaker_ids = self.schedule.values_list('speakers').distinct()
         return Speaker.objects.filter(pk__in=speaker_ids).\
             order_by('name', 'surname')
 

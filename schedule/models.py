@@ -115,11 +115,9 @@ class Schedule(models.Model):
         null=True,
         blank=True
     )
-    speaker = models.ForeignKey(
+    speakers = models.ManyToManyField(
         'speakers.Speaker',
-        on_delete=models.PROTECT,
         related_name='schedule',
-        null=True,
         blank=True
     )
     slot = models.ForeignKey(
