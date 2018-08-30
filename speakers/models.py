@@ -25,7 +25,8 @@ class Speaker(models.Model):
     phone = models.CharField(max_length=32, blank=True)
     photo = models.ImageField(
         upload_to='speakers/speaker/',
-        blank=True
+        blank=True,
+        default='speakers/speaker/noavatar.png'
     )
 
     def __str__(self):

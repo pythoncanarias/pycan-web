@@ -9,7 +9,7 @@
 {% block content %}
 
 <div>
-  <div class="event-header" {% if event.hero %} style="background-image: url('/media/{{ event.hero }}');" {% endif %}>
+  <div class="event-header" {% if event.hero %} style="background-image: url('{{ event.hero.url }}');" {% endif %}>
     <div class="inner">
       <h1 class="title is-1">{{ event.name }}</h1>
       <div class="subtitle is-4">
@@ -45,7 +45,7 @@
         {% for speaker in event.speakers %}
           <div class="column is-6-mobile is-4-tablet is-3-desktop">
             <div class="box speaker-box">
-              <img class="speaker-photo" src="/media/{{ speaker.photo.name }}" />
+              <img class="speaker-photo" src="{{ speaker.photo.url }}" />
               <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
               <p class="speaker-description">{{ speaker.bio }}</p>
               <div class="speaker-socials">
@@ -143,7 +143,7 @@
           <div class="columns is-mobile is-multiline is-centered">
             {% for organization in organizations %}
               <a href="{{ organization.url }}" title="{{ organization.name }}" class="column is-6-mobile is-3-tablet is-2-desktop">
-                <img src="/media/{{ organization.logo }}"/>
+                <img src="{{ organization.logo.url }}"/>
               </a>
             {% endfor %}
           </div>
