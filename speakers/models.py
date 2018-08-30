@@ -1,6 +1,7 @@
 from urllib.parse import urljoin
 
 from django.db import models
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 class Social(models.Model):
@@ -26,7 +27,6 @@ class Speaker(models.Model):
     photo = models.ImageField(
         upload_to='speakers/speaker/',
         blank=True,
-        default='speakers/speaker/noavatar.png'
     )
 
     def __str__(self):
@@ -35,6 +35,13 @@ class Speaker(models.Model):
     def socials_for_display(self):
         return [{'code': c.social.code, 'href': c.href}
                 for c in self.contacts.order_by('social__name')]
+
+    @property
+    def photo_url(self):
+        if self.photo:
+            return self.photo.url
+        else:
+            return static('speakers/img/noavatar.png')
 
 
 class Contact(models.Model):
