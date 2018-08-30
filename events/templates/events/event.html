@@ -9,7 +9,7 @@
 {% block content %}
 
 <div>
-  <div class="event-header">
+  <div class="event-header" {% if event.hero %} style="background-image: url('/media/{{ event.hero }}');" {% endif %}>
     <div class="inner">
       <h1 class="title is-1">{{ event.name }}</h1>
       <div class="subtitle is-4">
