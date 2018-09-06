@@ -7,7 +7,7 @@
     text-align: center;
 
     & > .inner {
-      padding: 5rem 1.5rem;
+      padding: 5rem 1rem;
       background-color: #000d19b8;
 
       .title,
@@ -51,10 +51,29 @@
       padding: 0.9rem 1.5rem;
       color: #ffffffe8;
 
+      @include until($tablet) {
+        width: 50%;
+        border: 0 solid #1a6caf;
+        text-align: center;
+
+        &:nth-child(1) {
+          border-right-width: 1px;
+          border-bottom-width: 1px;
+        }
+
+        &:nth-child(2) {
+          border-bottom-width: 1px;
+        }
+
+        &:nth-child(3) {
+          border-right-width: 1px;
+        }
+      }
+
       &:hover,
       &:active,
       &:focus {
-        background-color: #ffffff13;
+        background-color: #ffffff0e;
       }
     }
   }
@@ -75,7 +94,7 @@
       height: 100%;
       text-align: center;
       padding: 0;
-      padding-top: 1em;
+      padding-top: 1.2em;
       overflow: hidden;
 
       .speaker-photo {
