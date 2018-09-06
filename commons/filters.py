@@ -46,3 +46,6 @@ def as_markdown(s):
     if '<table' in result:
         result = result.replace('<table', '<table class="table"')
     return result
+
+def sum_float(first_number, second_number):
+    return float(first_number) + float(second_number)

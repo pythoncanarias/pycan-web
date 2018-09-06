@@ -16,7 +16,7 @@
         <span class="event-header-date">
           <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
         </span>
-        <span class="event-header-location">
+        <span class="event-header-venue">
           <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
         </span>
       </div>
@@ -27,7 +27,7 @@
   <nav class="event-menu">
     <a class="event-menu-item" href="#speakers">Ponentes</a>
     <a class="event-menu-item" href="#schedule">Agenda</a>
-    <a class="event-menu-item" href="#location">Localización</a>
+    <a class="event-menu-item" href="#venue">Localización</a>
     <a class="event-menu-item" href="#sponsors">Entidades</a>
   </nav>
 
@@ -108,23 +108,28 @@
     </div>
   </section>
 
-  <section id="location" class="section location">
+  <section id="venue" class="section venue">
     <div class="container">
       <h1 class="title section-title">Localización</h1>
       <div>
         <div class="columns is-multiline">
           <div class="column is-12-tablet is-6-desktop">
-            <div style="background: #07073a42; height: 20em;">
+            <div class="map-wrapper">
+              <iframe class="map" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                src="https://www.openstreetmap.org/export/embed.html?bbox={{ event.venue.longitude|sum_float:-0.0017 }}%2C{{ event.venue.latitude|sum_float:0.0008 }}%2C{{ event.venue.longitude|sum_float:0.0017 }}%2C{{ event.venue.latitude|sum_float:-0.0008 }}&amp;layer=mapnik&amp;marker={{ event.venue.latitude }}%2C{{ event.venue.longitude }}">
+              </iframe>
+              <a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
             </div>
           </div>
           <div class="column is-12-tablet is-6-desktop">
-            <strong>
-              <i class="fa fa-location-arrow "></i> <span class="font-weight-bold">{{ event.venue.name }}</span>
+            <strong class="venue-name">
+              <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
             </strong>
             <address>
-              <p>{{ event.venue.address }}</p>
-              <p>{{ event.venue.description }}</p>
+              <p class="venue-address">{{ event.venue.address }}</p>
             </address>
+            <hr/>
+            <p class="venue-description">{{ event.venue.description }}</p>
           </div>
         </div>
       </div>
