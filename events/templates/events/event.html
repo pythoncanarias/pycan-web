@@ -25,11 +25,10 @@
   </div>
 
   <nav class="event-menu">
-    <a class="event-menu-item" href="#event">Event</a>
-    <a class="event-menu-item" href="#speakers">Speakers</a>
-    <a class="event-menu-item" href="#schedule">Schedule</a>
-    <a class="event-menu-item" href="#location">Location</a>
-    <a class="event-menu-item" href="#sponsors">Sponsors</a>
+    <a class="event-menu-item" href="#speakers">Ponentes</a>
+    <a class="event-menu-item" href="#schedule">Agenda</a>
+    <a class="event-menu-item" href="#location">Localización</a>
+    <a class="event-menu-item" href="#sponsors">Entidades</a>
   </nav>
 
   <section id="event" class="section event has-background-white">
@@ -40,7 +39,7 @@
 
   <section id="speakers" class="section speakers">
     <div class="container">
-      <h1 class="title section-title">Speakers</h1>
+      <h1 class="title section-title">Ponentes</h1>
       <div class="columns is-multiline is-mobile">
         {% for speaker in event.speakers %}
           <div class="column is-6-mobile is-4-tablet is-3-desktop">
@@ -62,7 +61,7 @@
 
   <section id="schedule" class="section schedule has-background-white">
     <div class="container">
-      <h1 class="title section-title">Schedule</h1>
+      <h1 class="title section-title">Agenda</h1>
 
       <div class="schedule-table">
         {% for row in event.schedule_for_display %}
@@ -110,7 +109,7 @@
 
   <section id="location" class="section location">
     <div class="container">
-      <h1 class="title section-title">Venue</h1>
+      <h1 class="title section-title">Localización</h1>
       <div>
         <div class="columns is-multiline">
           <div class="column is-12-tablet is-6-desktop">
@@ -133,7 +132,7 @@
 
   <section id="sponsors" class="section sponsors has-background-white">
     <div class="container">
-      <h1 class="title section-title">Sponsors</h1>
+      <h1 class="title section-title">Entidades</h1>
       {% for role, categories in event.memberships_for_display.items %}
         <h1 class="title is-4 has-text-centered">{{ role.name }}</h1>
         {% for category, organizations in categories.items %}
