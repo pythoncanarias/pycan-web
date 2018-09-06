@@ -86,6 +86,12 @@
     }
   }
 
+  .section.event {
+    .container {
+      max-width: 53em;
+    }
+  }
+
   .section.speakers {
     .speaker-box {
       display: flex;
@@ -166,8 +172,8 @@
       }
 
       $cell-margin: 1px;
-      $slot-padding: 0.5rem;
-      $min-height-slot: 7rem;
+      $slot-padding: 0.8rem;
+      $min-height-slot: 8rem;
 
       .schedule-title {
         background-color: $blue-bg;
@@ -185,7 +191,6 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        overflow: scroll;
         padding: $slot-padding;
         margin: $cell-margin;
         background-color: #f2f2f3;
@@ -204,8 +209,19 @@
         background-color: #fdebd1;
       }
 
+      .slot-hours {
+        font-style: italic;
+        font-size: 0.9em;
+      }
+
       .slot-title {
         text-align: center;
+        font-weight: 600;
+        margin: 0.2em 0;
+      }
+
+      .slot-location {
+        font-size: 0.9em;
       }
 
       .schedule-columns {
@@ -216,7 +232,8 @@
         }
 
         .schedule-slot {
-          flex: 0 0 $min-height-slot;
+          flex: 1 0 auto;
+          min-height: $min-height-slot;
 
           &.size-2 {
             flex-basis: calc(#{$min-height-slot} * 2 + #{$cell-margin} * 2);

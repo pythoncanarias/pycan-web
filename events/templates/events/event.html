@@ -79,9 +79,9 @@
             <div class="schedule-row columns is-gapless">
               <div class="column is-12">
                 <div class="schedule-slot schedule-slot-plenary schedule-slot-{{ row.schedule.slot.category.code }}">
-                  <div class="slot-title">{{ row.schedule.slot.name }}</div>
                   <div class="slot-hours">{{ row.schedule.when_for_display }}</div>
-                  <div class="">{{ row.schedule.location.name }}</div>
+                  <div class="slot-title">{{ row.schedule.slot.name }}</div>
+                  <div class="slot-location">{{ row.schedule.location.name }}</div>
                 </div>
               </div>
             </div>
@@ -94,8 +94,9 @@
                 <div class="schedule-column column is-12-mobile">
                   {% for scheduled_item in track.scheduled_items %}
                     <div class="schedule-slot size-{{ scheduled_item.size_for_display }}">
-                      <div class="slot-title">{{ scheduled_item.slot.name }}</div>
                       <div class="slot-hours">{{ scheduled_item.when_for_display }}</div>
+                      <div class="slot-title">{{ scheduled_item.slot.name }}</div>
+                      <div class="slot-location">{{ scheduled_item.location.name }}</div>
                     </div>
                   {% endfor %}
                 </div>
