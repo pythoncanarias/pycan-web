@@ -142,9 +142,11 @@
           {% endif %}
           <div class="columns is-mobile is-multiline is-centered">
             {% for organization in organizations %}
-              <a href="{{ organization.url }}" title="{{ organization.name }}" class="column is-6-mobile is-3-tablet is-2-desktop">
-                <img src="{{ organization.logo.url }}"/>
-              </a>
+              <div class="column is-6-mobile is-3-tablet">
+                <a class="organization-box" href="{{ organization.url }}" title="{{ organization.name }}" target="_blank">
+                  <img src="{{ organization.logo.url }}"/>
+                </a>
+              </div>
             {% endfor %}
           </div>
         {% endfor %}
