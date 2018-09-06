@@ -45,9 +45,9 @@
         {% for speaker in event.speakers %}
           <div class="column is-6-mobile is-4-tablet is-3-desktop">
             <div class="box speaker-box">
-              <img class="speaker-photo" src="{{ speaker.photo_url }}" />
+              <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
               <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
-              <p class="speaker-description">{{ speaker.bio }}</p>
+              <span class="speaker-show-more">Ver más</span>
               <div class="speaker-socials">
                 {% for social in speaker.socials_for_display %}
                   <a href="{{ social.href }}"><i class="fab fa-{{ social.code }}"></i></a>
