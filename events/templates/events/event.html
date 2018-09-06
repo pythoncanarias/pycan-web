@@ -49,7 +49,7 @@
               <span class="speaker-show-more">Ver más</span>
               <div class="speaker-socials">
                 {% for social in speaker.socials_for_display %}
-                  <a href="{{ social.href }}"><i class="fab fa-{{ social.code }}"></i></a>
+                  <a href="{{ social.href }}" target="_blank"><i class="fab fa-{{ social.code }}"></i></a>
                 {% endfor %}
               </div>
             </div>
@@ -79,9 +79,27 @@
             <div class="schedule-row columns is-gapless">
               <div class="column is-12">
                 <div class="schedule-slot schedule-slot-plenary schedule-slot-{{ row.schedule.slot.category.code }}">
-                  <div class="slot-hours">{{ row.schedule.when_for_display }}</div>
-                  <div class="slot-title">{{ row.schedule.slot.name }}</div>
-                  <div class="slot-location">{{ row.schedule.location.name }}</div>
+                  <div class="slot-title">
+                    {% if row.schedule.slot.category.code == 'coffee' %}
+                      <i class="fas fa-coffee icon-slot-category"></i>
+                    {% elif row.schedule.slot.category.code == 'meal' %}
+                      <i class="fas fa-utensils icon-slot-category"></i>
+                    {% endif %}
+                    {{ row.schedule.slot.name }}
+                  </div>
+
+                  <div>
+                    <div class="slot-hours"><i class="fas fa-clock"></i> {{ row.schedule.when_for_display }}</div>
+                    <div class="slot-location"><i class="fas fa-map-marker-alt"></i> {{ row.schedule.location.name }}</div>
+                  </div>
+
+                  {% if row.schedule.speakers.exists %}
+                    <div class="slot-speakers">
+                      {% for speaker in row.schedule.speakers.all %}
+                        <div class="slot-speaker"><i class="far fa-user"></i> {{ speaker }}</div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -94,9 +112,18 @@
                 <div class="schedule-column column is-12-mobile">
                   {% for scheduled_item in track.scheduled_items %}
                     <div class="schedule-slot size-{{ scheduled_item.size_for_display }}">
-                      <div class="slot-hours">{{ scheduled_item.when_for_display }}</div>
                       <div class="slot-title">{{ scheduled_item.slot.name }}</div>
-                      <div class="slot-location">{{ scheduled_item.location.name }}</div>
+
+                      <div>
+                        <div class="slot-hours"><i class="fas fa-clock"></i> {{ scheduled_item.when_for_display }}</div>
+                        <div class="slot-location"><i class="fas fa-map-marker-alt"></i> {{ scheduled_item.location.name }}</div>
+                      </div>
+
+                      <div class="slot-speakers">
+                        {% for speaker in scheduled_item.speakers.all %}
+                          <div class="slot-speaker"><i class="far fa-user"></i> {{ speaker }}</div>
+                        {% endfor %}
+                      </div>
                     </div>
                   {% endfor %}
                 </div>
