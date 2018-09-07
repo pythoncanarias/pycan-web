@@ -32,13 +32,13 @@ class OrganizationAdmin(admin.ModelAdmin):
 class OrganizationRoleAdmin(admin.ModelAdmin):
     inlines = [OrganizationCategoryInline]
     prepopulated_fields = {'code': ('name', ), }
-    list_display = ('name', 'code')
+    list_display = ('name', 'code', 'display_name')
 
 
 @admin.register(OrganizationCategory)
 class OrganizationCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'code': ('name', ), }
-    list_display = ('name', 'role', 'code')
+    list_display = ('name', 'role', 'code', 'display_name')
 
 
 @admin.register(Membership)

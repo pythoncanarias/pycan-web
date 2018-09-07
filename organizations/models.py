@@ -32,9 +32,10 @@ class OrganizationRole(models.Model):
         upload_to='organizations/organization_role/',
         blank=True
     )
+    display_name = models.CharField(max_length=256, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.display_name or self.name
 
 
 class OrganizationCategory(models.Model):
@@ -51,9 +52,10 @@ class OrganizationCategory(models.Model):
         related_name='organization_categories'
     )
     description = models.TextField(blank=True)
+    display_name = models.CharField(max_length=256, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.display_name or self.name
 
     class Meta:
         verbose_name_plural = "organization categories"
