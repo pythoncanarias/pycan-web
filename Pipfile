@@ -11,6 +11,7 @@ ipython = "*"
 "fabric3" = "*"
 pydotplus = "*"
 "autopep8" = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.6"
