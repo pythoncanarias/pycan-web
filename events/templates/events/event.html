@@ -20,7 +20,8 @@
           <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
         </span>
       </div>
-      <a href="" class="button is-white">Comprar entrada</a>
+      <h1> queseto </h1>
+        <a href="{% url 'events:buy_ticket' slug=event.slug %}" class="button is-white">Comprar entrada</a>
     </div>
   </div>
 

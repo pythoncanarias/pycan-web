@@ -1,0 +1,21 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+<div class="wall">
+    
+    <h1> No se ha podido realizar el cobro </h1>
+    
+    <p>Por el momento no se ha realizado ningún cargo a su cuenta.<p>
+
+    {% include 'events/includes/contact_us.html' %}
+
+    <p>El identificador de la 
+        transacción es <code><b>{{ charge_id }}</b></code>.
+        </p> 
+
+    <p>Sentimos las molestias que esto le pueda ocasionar.</p>
+
+</div>
+
+{% endblock content %}

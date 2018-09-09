@@ -6,6 +6,7 @@ from . import models
 from libs.reports.core import Report
 import pyqrcode
 import io
+from . import stripe_utils
 
 
 def index(request):
@@ -24,10 +25,28 @@ def index(request):
 
 def detail_event(request, slug):
     event = models.Event.objects.get(slug=slug)
-
     return render(request, 'events/event.html', {
         'event': event,
     })
+
+
+def stripe_payment_declined(request, charge):
+    return render(request, 'events/payment_declined.html', {
+        'email': settings.CONTACT_EMAIL,
+        'charge_id': charge.id,
+        }
+    )
+
+
+def stripe_payment_error(request, exception):
+    msg, extra_info = stripe_utils.get_description_from_exception(exception)
+    return render(request, 'events/payment_error.html', {
+        'msg': msg,
+        'extra_info': extra_info,
+        'error': str(exception),
+        'email': settings.CONTACT_EMAIL,
+        }
+    )
 
 
 def buy_ticket(request, id_ticket_type):
@@ -42,37 +61,37 @@ def buy_ticket(request, id_ticket_type):
         phone = request.POST.get('phone', None)
         token = request.POST['stripeToken']
         stripe.api_key = settings.STRIPE_SECRET_KEY
-        customer = stripe.Customer.create(
-            email=email,
-            source=token,
-            description='{}, {}'.format(surname, name),
-            )
-        charge = stripe.Charge.create(
-            customer=customer.id,
-            amount=ticket_type.price_in_cents,
-            currency='EUR',
-            description='{} for {}, {}'.format(
-                ticket_type.name,
-                surname,
-                name,
-                )
-            )
-        if charge.paid:
-            ticket = models.Ticket(
-                ticket_type=ticket_type,
-                number=ticket_type.next_number(),
-                name=name,
-                surname=surname,
+        try:
+            customer = stripe.Customer.create(
                 email=email,
-                phone=phone,
+                source=token,
+                description='{}, {}'.format(surname, name),
+            )
+            charge = stripe.Charge.create(
+                customer=customer.id,
+                amount=ticket_type.price_in_cents,
+                currency='EUR',
+                description='{} for {}, {}'.format(
+                    ticket_type.name,
+                    surname,
+                    name,
                 )
-            ticket.save()
-            return redirect(ticket.get_absolute_url())
-        else:
-            # Must implemente a proper response
-            return HttpResponse(
-                'Nope. Algo fallo en el pago: charge:{}'.format(charge)
-                )
+            )
+            if charge.paid:
+                ticket = models.Ticket(
+                    ticket_type=ticket_type,
+                    number=ticket_type.next_number(),
+                    name=name,
+                    surname=surname,
+                    email=email,
+                    phone=phone,
+                    )
+                ticket.save()
+                return redirect(ticket.get_absolute_url())
+            else:
+                return stripe_payment_declined(request, charge)
+        except stripe.error.StripeError as err:
+            return stripe_payment_error(request, err)
     else:
         return render(request, 'events/buy_ticket.html', {
             'event': event,
