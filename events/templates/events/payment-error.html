@@ -1,0 +1,21 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+<div class="wall">
+
+    <h1> Se ha producdo un error al realizar el cobro </h1>
+
+    <h2> {{ msg }} </h2>
+    
+    {% if extra_info %} <h4> {{ info }} </h4> {% endif %}
+   
+    <p>Por el momento no se ha producido ningún cargo a su tarjeta.</p>
+
+    {% include 'events/includes/contact_us.html' %}
+
+
+
+</div>
+
+{% endblock content %}

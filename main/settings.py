@@ -157,6 +157,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 SITE_ID = 1
 
+CONTACT_EMAIL = 'info@pythoncanarias.es'
 # Stripe settings
 
 STRIPE_PUBLIC_KEY = config(
