@@ -143,7 +143,7 @@
           <div class="column is-12-tablet is-6-desktop">
             <div class="map-wrapper">
               <iframe class="map" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                src="https://www.openstreetmap.org/export/embed.html?bbox={{ event.venue.longitude|sum_float:-0.0017 }}%2C{{ event.venue.latitude|sum_float:0.0008 }}%2C{{ event.venue.longitude|sum_float:0.0017 }}%2C{{ event.venue.latitude|sum_float:-0.0008 }}&amp;layer=mapnik&amp;marker={{ event.venue.latitude }}%2C{{ event.venue.longitude }}">
+                src="//www.openstreetmap.org/export/embed.html?bbox={{ event.venue.longitude|sum_float:-0.0017 }}%2C{{ event.venue.latitude|sum_float:0.0008 }}%2C{{ event.venue.longitude|sum_float:0.0017 }}%2C{{ event.venue.latitude|sum_float:-0.0008 }}&amp;layer=mapnik&amp;marker={{ event.venue.latitude }}%2C{{ event.venue.longitude }}">
               </iframe>
               <a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
             </div>
@@ -167,10 +167,10 @@
     <div class="container">
       <h1 class="title section-title">Entidades</h1>
       {% for role, categories in event.memberships_for_display.items %}
-        <h1 class="title is-4 has-text-centered">{{ role.name }}</h1>
+        <h1 class="role-title title is-4 has-text-centered">{{ role.display_name }}</h1>
         {% for category, organizations in categories.items %}
           {% if category.name != role.name %}
-            <h2 class="title is-5 has-text-centered">{{ category.name }}</h2>
+            <h2 class="category-title subtitle is-5 has-text-centered">{{ category.display_name }}</h2>
           {% endif %}
           <div class="columns is-mobile is-multiline is-centered">
             {% for organization in organizations %}
