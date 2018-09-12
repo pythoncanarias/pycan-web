@@ -291,7 +291,7 @@
 
   .section.venue {
     .map-wrapper {
-      .map {
+      .leaflet-container {
         height: 20rem;
         width: 100%;
       }

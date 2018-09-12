@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django_extensions',
+    'leaflet',
     'commons',
     'events',
     'homepage',
@@ -158,6 +159,19 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 SITE_ID = 1
 
 CONTACT_EMAIL = 'info@pythoncanarias.es'
+
+
+# Leaflet settings
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (28.4818, -16.3206),
+    'DEFAULT_ZOOM': 16,
+    'MIN_ZOOM': 5,
+    'MAX_ZOOM': 19,
+    'RESET_VIEW': False,
+}
+
+
 # Stripe settings
 
 STRIPE_PUBLIC_KEY = config(
