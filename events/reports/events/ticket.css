@@ -1,11 +1,19 @@
 .qr {
     text-align: right;
-    margin-top: 8cm;
+    margin-top: 5cm;
 }
 
 .qr img {
+    margin-left: 3cm;
     width: 45mm;
 }
+
+.qr code {
+    color: gray;
+    margin-right: .5cm;
+    font-size: 8pt;
+    }
+
 
 table {
     width: 100%;

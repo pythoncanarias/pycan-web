@@ -176,6 +176,17 @@ LOAD_FONTS_IN_REPORTS = config(
     cast=config.boolean
 )
 
+# Email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # !important
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default=CONTACT_EMAIL)
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='<email password>')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=config.boolean, default=True)
+EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=config.boolean, default=False)
+
+
 LOGFILE_NAME = os.path.join(BASE_DIR, "web.log")
 LOGFILE_SIZE = 1 * 1024 * 1024
 LOGFILE_COUNT = 3
