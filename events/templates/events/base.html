@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load utils %}
+{% load leaflet_tags %}
 
 {% block style %}
   <link rel="stylesheet" href="{{ assets|get_asset_key:'events/custom.min.css' }}">
@@ -8,4 +9,7 @@
 
 {% block js %}
   <script src="{{ assets|get_asset_key:'events/custom.min.js' }}"></script>
+
+  {% leaflet_js %}
+  {% leaflet_css %}
 {% endblock %}
