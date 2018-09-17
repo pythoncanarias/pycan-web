@@ -27,7 +27,7 @@ PDFKIT_OPTIONS = {
 
 
 class Report():
-    def __init__(self, template_path, mapping, pdfkit_options={}):
+    def __init__(self, template_path, mapping, pdfkit_options=None):
         """
         Constructor of the class.
 
@@ -37,11 +37,9 @@ class Report():
             pdfkit_options: dictionary with pdfkit options (optional).
         """
         # override pdfkit options with arguments (in case)
-        self.options = {
-            k: v for k, v in
-            list(PDFKIT_OPTIONS.items()) + list(pdfkit_options.items())
-        }
-
+        self.options = PDFKIT_OPTIONS.copy()
+        if pdfkit_options:
+            self.options.update(pdfkit_options)
         self.template, self.template_html = \
             Report._create_template_handlers(template_path)
         self.template_pdf = tempfile.NamedTemporaryFile(delete=False)

@@ -10,12 +10,35 @@ from . import links
 
 class TicketCategory(models.Model):
     # Twin, Early, Normal, ...
+
+    class Meta:
+        verbose_name_plural = 'ticket categories'
+
     name = models.CharField(max_length=256)
     slug = models.SlugField(unique=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
+
+
+class Article(models.Model):
+    event = models.ForeignKey(
+        'events.Event',
+        on_delete=models.PROTECT,
+        related_name='articles'
+    )
+    category = models.ForeignKey(
+        TicketCategory,
+        on_delete=models.PROTECT,
+        related_name='articles'
+    )
+    price = models.DecimalField(max_digits=9, decimal_places=2)
+    stock = models.PositiveIntegerField()
+    release_at = models.DateTimeField()
+
+    def __str__(self):
+        return '{} [{}]'.format(self.category, self.event)
 
     @property
     def num_sold_tickets(self):
@@ -41,35 +64,12 @@ class TicketCategory(models.Model):
             )
     is_active.boolean = True
 
-    class Meta:
-        verbose_name_plural = 'ticket categories'
-
-
-class Article(models.Model):
-    event = models.ForeignKey(
-        'events.Event',
-        on_delete=models.PROTECT,
-        related_name='articles'
-    )
-    category = models.ForeignKey(
-        TicketCategory,
-        on_delete=models.PROTECT,
-        related_name='articles'
-    )
-    price = models.DecimalField(max_digits=9, decimal_places=2)
-    stock = models.PositiveIntegerField()
-    release_at = models.DateTimeField()
-
-    def __str__(self):
-        return '{} [{}]'.format(self.category, self.event)
-
 
 class Ticket(models.Model):
     number = models.PositiveIntegerField(
         help_text='Consecutive number within event'
     )
     keycode = models.UUIDField(default=uuid.uuid4)
-    customer_email = models.EmailField()
     sold_at = models.DateTimeField(auto_now_add=True)
     payment_id = models.CharField(max_length=128, blank=True)
     article = models.ForeignKey(
@@ -77,6 +77,7 @@ class Ticket(models.Model):
         on_delete=models.PROTECT,
         related_name='tickets'
     )
+    customer_email = models.EmailField()
     customer_name = models.CharField(max_length=256, blank=True)
     customer_surname = models.CharField(max_length=256, blank=True)
     customer_phone = models.CharField(max_length=32, blank=True)
