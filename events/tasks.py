@@ -40,7 +40,8 @@ def create_ticket_pdf(ticket, force=False):
     return full_name
 
 
-def create_ticket_message(email, ticket):
+def create_ticket_message(ticket):
+    email = ticket.customer_email
     event = ticket.article.event
     plantilla = loader.get_template('events/email/ticket_message.md')
     subject = 'Entrada para {}'.format(event.name)
@@ -62,10 +63,10 @@ def create_ticket_message(email, ticket):
     return msg
 
 
-def send_ticket(email, ticket, force=False):
+def send_ticket(ticket, force=False):
     if force:
         create_ticket_pdf(ticket, force=True)
-    msg = create_ticket_message(email, ticket)
+    msg = create_ticket_message(ticket)
     with get_connection() as conn:
         msg.connection = conn
         msg.send(fail_silently=False)

@@ -28,7 +28,7 @@ def test_ticket():
         number=9,
         customer_name="Nombre del comprador",
         customer_surname='Apellidos comprador',
-        customer_email='email@del.comprador.com',
+        customer_email='euribates@gmail.com',
         sold_at=datetime.datetime(2018, 10, 11, 22, 44, 00),
         keycode='18b0b618-7b9e-4857-9f01-39999424ee3f',
         )
@@ -57,12 +57,12 @@ def test_create_ticket_pdf(test_ticket):
 
 
 def test_create_ticket_message(test_ticket):
-    msg = tasks.create_ticket_message('euribates@gmail.com', test_ticket)
+    msg = tasks.create_ticket_message(test_ticket)
     assert isinstance(msg, EmailMessage)
 
 
 def test_send_ticket(test_ticket):
-    tasks.send_ticket('euribates@gmail.com', test_ticket)
+    tasks.send_ticket(test_ticket)
 
 
 if __name__ == '__main__':
