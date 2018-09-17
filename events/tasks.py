@@ -62,15 +62,10 @@ def create_ticket_message(email, ticket):
     return msg
 
 
-def send_message(msg):
-    settings.EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    with get_connection() as conn:
-        msg.connection = conn
-        msg.send(fail_silently=False)
-
-
 def send_ticket(email, ticket, force=False):
     if force:
         create_ticket_pdf(ticket, force=True)
     msg = create_ticket_message(email, ticket)
-    send_message(msg)
+    with get_connection() as conn:
+        msg.connection = conn
+        msg.send(fail_silently=False)

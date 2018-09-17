@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
+    path('django-rq/', include('django_rq.urls')),
     path('admin/', admin.site.urls),
     path('events/', include('events.urls', namespace='events')),
 ]
