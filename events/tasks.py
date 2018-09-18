@@ -7,6 +7,7 @@ from django.conf import settings
 from libs.reports.core import Report
 from django.core.mail import EmailMessage, get_connection
 from django.template import loader
+from django_rq import job
 
 
 def get_qrcode_as_svg(text, scale=8):
@@ -63,6 +64,7 @@ def create_ticket_message(ticket):
     return msg
 
 
+@job
 def send_ticket(ticket, force=False):
     if force:
         create_ticket_pdf(ticket, force=True)

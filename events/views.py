@@ -2,7 +2,11 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import stripe
-from . import models
+from tickets.models import Article, Ticket
+from events.models import Event
+from events.tasks import send_ticket
+
+from . import forms
 from libs.reports.core import Report
 import pyqrcode
 import io
@@ -10,7 +14,7 @@ from . import stripe_utils
 
 
 def index(request):
-    events = models.Event.objects.filter(active=True)
+    events = Event.objects.filter(active=True)
     num_events = events.count()
     if num_events == 0:
         return render(request, 'events/no-events.html')
@@ -24,7 +28,7 @@ def index(request):
 
 
 def detail_event(request, slug):
-    event = models.Event.objects.get(slug=slug)
+    event = Event.objects.get(slug=slug)
     return render(request, 'events/event.html', {
         'event': event,
     })
@@ -49,11 +53,11 @@ def stripe_payment_error(request, exception):
     )
 
 
-def buy_ticket(request, id_ticket_type):
-    ticket_type = models.TicketType.objects  \
+def buy_ticket(request, id_article):
+    article = Article.objects  \
         .select_related('event')  \
-        .get(pk=id_ticket_type)
-    event = ticket_type.event
+        .get(pk=id_article)
+    event = article.event
     if request.method == 'POST':
         email = request.POST['stripeEmail']
         name = request.POST['name']
@@ -69,18 +73,18 @@ def buy_ticket(request, id_ticket_type):
             )
             charge = stripe.Charge.create(
                 customer=customer.id,
-                amount=ticket_type.price_in_cents,
+                amount=article.price_in_cents,
                 currency='EUR',
                 description='{} for {}, {}'.format(
-                    ticket_type.name,
+                    article.name,
                     surname,
                     name,
                 )
             )
             if charge.paid:
-                ticket = models.Ticket(
-                    ticket_type=ticket_type,
-                    number=ticket_type.next_number(),
+                ticket = Ticket(
+                    article=article,
+                    number=article.next_number(),
                     name=name,
                     surname=surname,
                     email=email,
@@ -95,13 +99,13 @@ def buy_ticket(request, id_ticket_type):
     else:
         return render(request, 'events/buy_ticket.html', {
             'event': event,
-            'ticket_type': ticket_type,
+            'article': article,
             'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
             })
 
 
 def ticket_bought(request, keycode):
-    ticket = models.Ticket.objects.get(keycode=keycode)
+    ticket = Ticket.objects.get(keycode=keycode)
     ticket_type = ticket.ticket_type
     event = ticket_type.event
     return render(request, 'events/ticket_bought.html', {
@@ -112,7 +116,7 @@ def ticket_bought(request, keycode):
 
 
 def ticket_qrcode(request, pk):
-    ticket = models.Ticket.objects.get(pk=pk)
+    ticket = Ticket.objects.get(pk=pk)
     img = pyqrcode.create(str(ticket.keycode))
     buff = io.BytesIO()
     img.svg(buff, scale=8)
@@ -128,7 +132,7 @@ def coc(request, language='es'):
 
 
 def ticket_pdf(request, keycode):
-    ticket = models.Ticket.objects.get(keycode=keycode)
+    ticket = Ticket.objects.get(keycode=keycode)
     return Report(
         'events/ticket.j2',
         {
@@ -136,3 +140,34 @@ def ticket_pdf(request, keycode):
             'qrcode_url': request.build_absolute_uri(ticket.get_qrcode_url())
         },
     ).render()
+
+
+def find_tickets_by_email(event, email):
+    qs = Ticket.objects.select_related('article')  \
+        .filter(article__event=event)  \
+        .filter(customer_email=email)
+    return list(qs)
+
+
+def resend_ticket(request, slug):
+    event = Event.objects.get(slug=slug)
+    form = forms.EmailForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            tickets = find_tickets_by_email(event, email)
+            for ticket in tickets:
+                send_ticket.delay(ticket)
+            return redirect('events:resend_confirmation', slug=event.slug)
+    return render(request, 'events/resend_ticket.html', {
+        'event': event,
+        'form': form,
+    })
+
+
+def resend_confirmation(request, slug):
+    event = Event.objects.get(slug=slug)
+    return render(request, 'events/resend_confirmation.html', {
+        'event': event,
+        'contact_email': settings.CONTACT_EMAIL,
+        })
