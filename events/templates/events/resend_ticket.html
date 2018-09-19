@@ -1,0 +1,35 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+          {{ event.name }}
+      </h1>
+      <h2 class="subtitle">
+        Reenviar la entrada
+      </h2>
+    </div>
+  </div>
+</section>
+
+<div class="well hero">
+
+<p>Si has perdido tu entrada, podemos reenviartela de nuevo. Para ello,
+    tienes que indicarnos el email que usaste para comprarla:</p>
+</div>
+
+
+<form method="post" action=".">
+{% csrf_token %}
+<table class="table form">
+{{ form.as_table }}
+<tr> <th> &nbsp; </th>
+     <td> <input type="submit" name="ok" value="Reenviar entrada"> </td>
+     </tr>
+</table>
+</form>
+
+{% endblock %}

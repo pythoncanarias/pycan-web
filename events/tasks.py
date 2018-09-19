@@ -7,6 +7,7 @@ from django.conf import settings
 from libs.reports.core import Report
 from django.core.mail import EmailMessage, get_connection
 from django.template import loader
+from django_rq import job
 
 
 def get_qrcode_as_svg(text, scale=8):
@@ -40,7 +41,8 @@ def create_ticket_pdf(ticket, force=False):
     return full_name
 
 
-def create_ticket_message(email, ticket):
+def create_ticket_message(ticket):
+    email = ticket.customer_email
     event = ticket.article.event
     plantilla = loader.get_template('events/email/ticket_message.md')
     subject = 'Entrada para {}'.format(event.name)
@@ -62,15 +64,11 @@ def create_ticket_message(email, ticket):
     return msg
 
 
-def send_message(msg):
-    settings.EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+@job
+def send_ticket(ticket, force=False):
+    if force:
+        create_ticket_pdf(ticket, force=True)
+    msg = create_ticket_message(ticket)
     with get_connection() as conn:
         msg.connection = conn
         msg.send(fail_silently=False)
-
-
-def send_ticket(email, ticket, force=False):
-    if force:
-        create_ticket_pdf(ticket, force=True)
-    msg = create_ticket_message(email, ticket)
-    send_message(msg)

@@ -1,0 +1,23 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+          {{ event.name }}
+      </h1>
+      <h2 class="subtitle">
+        La entrada ha sido reenviada a la dirección de email
+        que nos has indicado, y deberías recibirla en breve. Si
+        no fuera así, ponte en contacto con nosotros en
+        <a href="mailto://{{ contact_email }}">
+            <code>{{ contact_email }}</code>
+        </a>.
+      </h2>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
