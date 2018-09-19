@@ -76,8 +76,10 @@ class Event(models.Model):
                 for i, org in enumerate(orgs):
                     for jorg in reversed(org.joint_organizations()):
                         orgs.insert(i + 1, jorg)
-                r[cat] = orgs
-            result[role] = r
+                if orgs:
+                    r[cat] = orgs
+            if r:
+                result[role] = r
         return result
 
     def tracks(self):
