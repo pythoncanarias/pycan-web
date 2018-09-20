@@ -5,6 +5,7 @@ import uglifyjs from 'gulp-uglify'
 import uglifycss from 'gulp-uglifycss'
 import sass from 'gulp-sass'
 import babel from 'gulp-babel'
+import iife from 'gulp-iife'
 
 import { APPS } from '../config'
 import modifyCustomCssUrlPath from './utils/custom_css_url_path'
@@ -34,6 +35,7 @@ function getBuildCustomCssPromise(app) {
 function getBuildCustomJsPromise(app) {
   return new Promise(function (resolve) {
     gulp.src(`${app}/static/${app}/js/**/*.js`)
+      .pipe(iife())
       .pipe(babel())
       .pipe(concat('custom.min.js'))
       .pipe(uglifyjs())
