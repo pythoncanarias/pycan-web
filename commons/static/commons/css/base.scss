@@ -14,6 +14,10 @@ body {
   font-size: 1.03rem;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 .header-page {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid #e5e5e5;

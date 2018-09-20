@@ -49,13 +49,25 @@
             <div class="box speaker-box">
               <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
               <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
-              <span class="speaker-show-more">Ver más</span>
+              <span class="speaker-show-more" data-speaker-id="{{ speaker.id }}">Ver más</span>
               <div class="speaker-socials">
                 {% for social in speaker.socials_for_display %}
                   <a href="{{ social.href }}" target="_blank"><i class="fab fa-{{ social.code }}"></i></a>
                 {% endfor %}
               </div>
             </div>
+          </div>
+
+          <div class="modal" id="modal-speaker-{{ speaker.id }}">
+            <div class="modal-background speaker-hide-modal"></div>
+            <div class="modal-content">
+              <div class="box speaker-box">
+                <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
+                <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
+                <p>{{ speaker.bio }}</p>
+              </div>
+            </div>
+            <button class="modal-close is-large speaker-hide-modal" aria-label="close"></button>
           </div>
         {% endfor %}
       </div>
