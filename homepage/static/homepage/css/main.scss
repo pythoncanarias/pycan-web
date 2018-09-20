@@ -14,6 +14,7 @@
 
     .logo {
       max-width: 29rem;
+      width: 100%;
     }
 
     .links {
@@ -30,7 +31,8 @@
       font-size: 1.1em;
 
       .blog-link {
-        padding: 0.14em 0.2em;
+        display: inline-block;
+        padding: 0.11em 0.2em;
         border-radius: $radius;
         color: $yellow;
         background-color: rgba(255, 255, 255, 0.07);
