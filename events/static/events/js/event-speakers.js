@@ -1,12 +1,14 @@
 const modalActions = ModalActions()
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (document.body.classList.contains('event-page')) {
-    window.addEventListener('hashchange', manageModalsBasedOnHash, false)
+function init() {
+  document.addEventListener('DOMContentLoaded', () => {
+    if (document.body.classList.contains('event-page')) {
+      window.addEventListener('hashchange', manageModalsBasedOnHash, false)
 
-    showInitialModal()
-  }
-})
+      showInitialModal()
+    }
+  })
+}
 
 function showInitialModal() {
   const speakerId = getSpeakerIdFromUrlHash()
@@ -91,3 +93,6 @@ const UTILS = {
     element && element.classList.remove(_class)
   }
 }
+
+
+export const initEventSpeakers = init

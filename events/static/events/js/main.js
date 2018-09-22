@@ -1,3 +1,5 @@
+import { initEventSpeakers } from './event-speakers'
+
 document.addEventListener('DOMContentLoaded', () => {
   initNavbarBurguer()
 })
@@ -13,3 +15,5 @@ function initNavbarBurguer() {
     menu.classList.toggle('is-active')
   })
 }
+
+initEventSpeakers()
