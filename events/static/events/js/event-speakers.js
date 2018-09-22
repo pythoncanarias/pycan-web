@@ -2,79 +2,78 @@ const modalActions = ModalActions()
 
 document.addEventListener('DOMContentLoaded', () => {
   if (document.body.classList.contains('event-page')) {
-    modalActions.addListeners()
-
     window.addEventListener('hashchange', manageModalsBasedOnHash, false)
 
-    const speakerId = getSpeakerIdFromHash()
-    if (speakerId) {
-      showInitialModal(speakerId)
-    }
+    showInitialModal()
   }
 })
 
-function showInitialModal(speakerId) {
-  history.replaceState(undefined, undefined, '.')
-  modalActions.showModal(speakerId)
-  history.pushState(undefined, undefined, `#speaker=${speakerId}`)
+function showInitialModal() {
+  const speakerId = getSpeakerIdFromUrlHash()
+  if (speakerId) {
+    history.replaceState({entry_page: true}, null, '')
+    modalActions.showModal(speakerId)
+  }
 }
 
 function manageModalsBasedOnHash() {
   modalActions.hideModal()
 
-  const speakerId = getSpeakerIdFromHash()
+  const speakerId = getSpeakerIdFromUrlHash()
   if (speakerId) {
     modalActions.showModal(speakerId)
   }
 }
 
-function getSpeakerIdFromHash() {
+function getSpeakerIdFromUrlHash() {
   const [speakerHash, speakerId] = window.location.hash.split('=')
   return speakerHash === '#speaker' ? speakerId : null
 }
 
 
 function ModalActions() {
-  function addListeners() {
-    document.querySelectorAll('.speaker-show-more').forEach(element => {
-      element.addEventListener('click', showModalEvent, false)
-    })
-    document.querySelectorAll('.speaker-hide-modal').forEach(element => {
-      element.addEventListener('click', hideModalEvent, false)
-    })
-  }
-
   function showModal(speakerId) {
     UTILS.addClass(`#modal-speaker-${speakerId}`, 'is-active')
     UTILS.addClass('html', 'no-scroll')
 
-    document.addEventListener('keydown', hideModalWithEscKey, false)
+    addEventListeners()
   }
 
   function hideModal() {
     UTILS.removeClass('.speakers .modal.is-active', 'is-active')
     UTILS.removeClass('html', 'no-scroll')
 
-    document.removeEventListener('keydown', hideModalWithEscKey, false)
+    removeEventListeners()
   }
 
-  function showModalEvent(event) {
-    const speakerId = event.target.getAttribute('data-speaker-id')
-    showModal(speakerId)
-    history.pushState(undefined, undefined, `#speaker=${speakerId}`)
+  function addEventListeners() {
+    document.addEventListener('keydown', hideModalWhenEscKeyIsPressed, false)
+    document.querySelectorAll('.modal.is-active .speaker-hide-modal').forEach(element => {
+      element.addEventListener('click', hideModalThroughUserInteraction, false)
+    })
   }
 
-  function hideModalWithEscKey(event) {
-    event.key === 'Escape' && hideModalEvent()
+  function removeEventListeners() {
+    document.removeEventListener('keydown', hideModalWhenEscKeyIsPressed, false)
+    document.querySelectorAll('.modal.is-active .speaker-hide-modal').forEach(element => {
+      element.addEventListener('click', hideModalThroughUserInteraction, false)
+    })
   }
 
-  function hideModalEvent() {
-    hideModal()
-    history.back()
+  function hideModalWhenEscKeyIsPressed(event) {
+    event.key === 'Escape' && hideModalThroughUserInteraction()
+  }
+
+  function hideModalThroughUserInteraction() {
+    history.state && history.state.entry_page ? goToEventPage() : history.back()
+  }
+
+  function goToEventPage() {
+    window.location.hash = '#'
+    history.replaceState(null, null, '.')
   }
 
   return Object.freeze({
-    addListeners,
     showModal,
     hideModal
   })

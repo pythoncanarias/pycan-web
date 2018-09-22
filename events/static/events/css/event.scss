@@ -94,12 +94,16 @@
 
   .section.speakers {
     .modal {
-      .speaker-box {
-        padding: 2em;
+      .modal-content {
+        max-width: 37em;
 
-        .speaker-name {
-          font-size: 1.1em;
-          -webkit-font-smoothing: auto;
+        .speaker-box {
+          padding: 2em;
+
+          .speaker-name {
+            font-size: 1.1em;
+            -webkit-font-smoothing: auto;
+          }
         }
       }
     }

@@ -49,7 +49,7 @@
             <div class="box speaker-box">
               <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
               <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
-              <span class="speaker-show-more" data-speaker-id="{{ speaker.id }}">Ver más</span>
+              <a class="speaker-show-more" href="#speaker={{ speaker.id }}">Ver más</a>
               <div class="speaker-socials">
                 {% for social in speaker.socials_for_display %}
                   <a href="{{ social.href }}" target="_blank"><i class="fab fa-{{ social.code }}"></i></a>
