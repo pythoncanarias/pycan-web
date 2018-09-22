@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import stripe
-from tickets.models import Article, Ticket
+from tickets.models import Ticket
 from events.models import Event
 from events.tasks import send_ticket
 
@@ -53,11 +53,37 @@ def stripe_payment_error(request, exception):
     )
 
 
-def buy_ticket(request, id_article):
-    article = Article.objects  \
-        .select_related('event')  \
-        .get(pk=id_article)
-    event = article.event
+def buy_ticket(request, slug):
+    event = Event.objects.get(slug=slug)
+    all_articles = [a for a in event.all_articles()]
+    active_articles = [a for a in all_articles if a.is_active()]
+    num_active_articles = len(active_articles)
+    num_active_articles = 1
+    if num_active_articles == 0:
+        return no_available_articles(request, event, all_articles)
+    elif num_active_articles == 1:
+        article = active_articles[0]
+        return buy_article(request, event, article)
+    else:
+        return select_article(request, event, all_articles, active_articles)
+
+
+def no_available_articles(request, event, all_articles):
+    return render(request, "events/no_available_articles.html", {
+        'event': event,
+        'contact_email': settings.CONTACT_EMAIL,
+        })
+
+
+def select_article(request, event, all_articles, active_articles):
+    return render(request, "events/select_article.html", {
+        'event': event,
+        'all_articles': all_articles,
+        'active_articles': active_articles,
+        })
+
+
+def buy_article(request, event, article):
     if request.method == 'POST':
         email = request.POST['stripeEmail']
         name = request.POST['name']

@@ -8,6 +8,7 @@ from django.conf import settings
 from speakers.models import Speaker
 from organizations.models import OrganizationRole
 from schedule.models import Track
+from tickets.models import Ticket
 
 
 class Event(models.Model):
@@ -123,13 +124,23 @@ class Event(models.Model):
         if scheduled_items:
             result.append(scheduled_items)
         return result
-    
+
     def all_tickets(self):
         '''Get all the tickets sold for a particular event.
-        
+
             Returns a queryset of tickets, with select related
             articles preloaded.
         '''
         qs = Ticket.objects.select_related('article')
-        qs = qs.filter(article__event=event)
+        qs = qs.filter(article__event=self)
+        return qs
+
+    def all_articles(self):
+        '''Get all the articles we can sold for a particular event.
+
+            Returns a queryset of articles, with select related
+            categorias preloaded, ordered by name.
+        '''
+        qs = self.articles.select_related('category')
+        qs = qs.order_by('category__name')
         return qs
