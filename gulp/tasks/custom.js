@@ -6,6 +6,7 @@ import uglifycss from 'gulp-uglifycss'
 import sass from 'gulp-sass'
 import babel from 'gulp-babel'
 import rollup from 'rollup-stream'
+import rollupResolve from 'rollup-plugin-node-resolve'
 import source from 'vinyl-source-stream'
 import vinylBuffer from 'vinyl-buffer'
 
@@ -43,7 +44,13 @@ function getBuildCustomJsPromise(app) {
       return
     }
 
-    rollup({ input: input, format: 'es'})
+    rollup({
+      input: input,
+      format: 'es',
+      plugins: [
+        rollupResolve(),
+      ],
+    })
       .pipe(source('custom.min.js'))
       .pipe(vinylBuffer())
       .pipe(babel())

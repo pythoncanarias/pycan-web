@@ -1,19 +1,11 @@
-import { initEventSpeakers } from './event-speakers'
+import General from './general'
+import Event from './event'
+
 
 document.addEventListener('DOMContentLoaded', () => {
-  initNavbarBurguer()
+  General.init()
+
+  if (document.body.classList.contains('event-page')) {
+    Event.init()
+  }
 })
-
-function initNavbarBurguer() {
-  const navbarBurger = document.querySelector('.navbar-burger')
-
-  navbarBurger.addEventListener('click', () => {
-    const menuId = navbarBurger.getAttribute('data-target')
-    const menu = document.getElementById(menuId)
-
-    navbarBurger.classList.toggle('is-active')
-    menu.classList.toggle('is-active')
-  })
-}
-
-initEventSpeakers()

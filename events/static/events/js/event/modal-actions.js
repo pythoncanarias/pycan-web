@@ -1,37 +1,4 @@
-const modalActions = ModalActions()
-
-function init() {
-  document.addEventListener('DOMContentLoaded', () => {
-    if (document.body.classList.contains('event-page')) {
-      window.addEventListener('hashchange', manageModalsBasedOnHash, false)
-
-      showInitialModal()
-    }
-  })
-}
-
-function showInitialModal() {
-  const speakerId = getSpeakerIdFromUrlHash()
-  if (speakerId) {
-    history.replaceState({entry_page: true}, null, '')
-    modalActions.showModal(speakerId)
-  }
-}
-
-function manageModalsBasedOnHash() {
-  modalActions.hideModal()
-
-  const speakerId = getSpeakerIdFromUrlHash()
-  if (speakerId) {
-    modalActions.showModal(speakerId)
-  }
-}
-
-function getSpeakerIdFromUrlHash() {
-  const [speakerHash, speakerId] = window.location.hash.split('=')
-  return speakerHash === '#speaker' ? speakerId : null
-}
-
+import UTILS from '../utils'
 
 function ModalActions() {
   function showModal(speakerId) {
@@ -81,18 +48,4 @@ function ModalActions() {
   })
 }
 
-
-const UTILS = {
-  addClass(selector, _class) {
-    const element = document.querySelector(selector)
-    element && element.classList.add(_class)
-  },
-
-  removeClass(selector, _class) {
-    const element = document.querySelector(selector)
-    element && element.classList.remove(_class)
-  }
-}
-
-
-export const initEventSpeakers = init
+export default ModalActions
