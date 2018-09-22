@@ -10,13 +10,13 @@ class ArticleInline(admin.StackedInline):
 @admin.register(TicketCategory)
 class TicketCategoryAdmin(admin.ModelAdmin):
     inlines = [ArticleInline]
-    list_display = ('name', 'slug')
+    list_display = ('name', 'slug',)
     prepopulated_fields = {'slug': ('name', ), }
 
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('event', 'category', 'price', 'stock', 'release_at')
+    list_display = ('event', 'category', 'price', 'stock', 'release_at', 'is_active')
 
 
 @admin.register(Ticket)

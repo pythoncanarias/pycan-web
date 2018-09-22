@@ -58,7 +58,7 @@ def buy_ticket(request, slug):
     all_articles = [a for a in event.all_articles()]
     active_articles = [a for a in all_articles if a.is_active()]
     num_active_articles = len(active_articles)
-    num_active_articles = 1
+    # num_active_articles = 1
     if num_active_articles == 0:
         return no_available_articles(request, event, all_articles)
     elif num_active_articles == 1:

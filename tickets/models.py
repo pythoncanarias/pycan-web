@@ -1,6 +1,8 @@
 import uuid
 from decimal import Decimal
 
+import django
+
 from django.db import models
 from django.db.models import Max
 from django.urls import reverse
@@ -20,6 +22,13 @@ class TicketCategory(models.Model):
 
     def __str__(self):
         return self.name
+
+    def image(self):
+        return {
+            'url': 'events/img/ticket-{}.png'.format(self.slug),
+            'width': 222,
+            'height': 64,
+        }
 
 
 class Article(models.Model):
@@ -58,8 +67,10 @@ class Article(models.Model):
         return current_number + 1
 
     def is_active(self):
+        now = django.utils.timezone.now()
         return (
             self.release_at is not None
+            and self.release_at < now
             and self.release_at.date() < self.event.start_date
             )
     is_active.boolean = True
