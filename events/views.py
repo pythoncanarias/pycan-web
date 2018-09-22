@@ -143,9 +143,7 @@ def ticket_pdf(request, keycode):
 
 
 def find_tickets_by_email(event, email):
-    qs = Ticket.objects.select_related('article')  \
-        .filter(article__event=event)  \
-        .filter(customer_email=email)
+    event.all_tickets().filter(customer_email=email)
     return list(qs)
 
 
