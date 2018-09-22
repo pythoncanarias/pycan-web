@@ -85,7 +85,7 @@
               {% for track in row.tracks %}
                 <div class="column">
                   <div class="schedule-title">
-                    {{ track.name }}
+                    Track {{forloop.counter}}: {{ track.name }}
                   </div>
                 </div>
               {% endfor %}
@@ -122,7 +122,7 @@
             <div class="schedule-columns columns is-gapless">
               {% for track in row.tracks %}
                 {% if track.scheduled_items|length %}
-                  <div class="schedule-title is-hidden-tablet">{{ track.track.name }}</div>
+                  <div class="schedule-title is-hidden-tablet">Track {{forloop.counter}}: {{ track.track.name }}</div>
                 {% endif %}
                 <div class="schedule-column column is-12-mobile">
                   {% for scheduled_item in track.scheduled_items %}
