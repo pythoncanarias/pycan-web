@@ -120,5 +120,14 @@ class Event(models.Model):
         scheduled_items = self._scheduled_items_for_display(start, end)
         if scheduled_items:
             result.append(scheduled_items)
-
         return result
+    
+    def all_tickets(self):
+        '''Get all the tickets sold for a particular event.
+        
+            Returns a queryset of tickets, with select related
+            articles preloaded.
+        '''
+        qs = Ticket.objects.select_related('article')
+        qs = qs.filter(article__event=event)
+        return qs
