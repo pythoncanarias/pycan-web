@@ -59,7 +59,7 @@
           </div>
 
           <div class="modal" id="modal-speaker-{{ speaker.id }}">
-            <div class="modal-background speaker-hide-modal"></div>
+            <div class="modal-background hide-modal"></div>
             <div class="modal-content">
               <div class="box speaker-box">
                 <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
@@ -67,7 +67,7 @@
                 <p>{{ speaker.bio }}</p>
               </div>
             </div>
-            <button class="modal-close is-large speaker-hide-modal" aria-label="close"></button>
+            <button class="modal-close is-large hide-modal" aria-label="close"></button>
           </div>
         {% endfor %}
       </div>

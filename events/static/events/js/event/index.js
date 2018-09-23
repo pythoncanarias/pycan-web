@@ -1,7 +1,8 @@
-import Speakers from './speakers'
+import modalsHandler from './modals/modals-handler'
 
 export default {
   init: () => {
-    Speakers.init()
+    modalsHandler.addScope('speaker')
+    modalsHandler.handleModalsDependingOnUrlHash()
   }
 }
