@@ -1,0 +1,29 @@
+.section.sponsors {
+  .role-title {
+    margin-top: 1.7em;
+    margin-bottom: 0.8em;
+  }
+
+  .category-title {
+    margin-top: 1.4em;
+  }
+
+  .organization-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 7rem;
+    padding: 0.75rem 1.4rem;
+    border: 1px solid #f2f2f4;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: #fdfdfd;
+    }
+
+    img {
+      max-height: 100%;
+    }
+  }
+}

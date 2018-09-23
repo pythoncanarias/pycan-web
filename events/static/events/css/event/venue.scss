@@ -1,0 +1,42 @@
+.section.venue {
+  .map-wrapper {
+    .leaflet-container {
+      height: 20rem;
+      width: 100%;
+    }
+
+    .link-open-map {
+      display: inline-block;
+      font-size: 0.82em;
+      padding: 0.3em 0.7em;
+      margin-top: 0.1em;
+      box-shadow: $default-box-shadow;
+      background-color: #fff;
+      border-radius: $radius;
+      color: $blue-text;
+
+      &:hover,
+      &:active,
+      &:focus {
+        color: lighten($blue-text, 4);
+      }
+    }
+  }
+
+  .venue-name {
+    margin-bottom: 0.2em;
+    display: inline-block;
+
+    i {
+      margin-right: 0.3em;
+    }
+  }
+
+  .venue-address {
+    color: #57575f;
+  }
+
+  .venue-description {
+    font-size: 0.9em;
+  }
+}

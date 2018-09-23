@@ -1,0 +1,41 @@
+.event-header {
+  background-color: #000d19b8;
+  background-image: url('./img/default-event-hero.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+  text-align: center;
+
+  & > .inner {
+    padding: 5rem 1rem;
+    background-color: #000d19b8;
+
+    .title,
+    .subtitle {
+      margin: 0;
+      color: #fff;
+    }
+
+    .subtitle {
+      margin: 0.8rem 0.5rem;
+      -webkit-font-smoothing: auto;
+      font-weight: 300;
+
+      .event-header-date,
+      .event-header-venue {
+        display: inline-block;
+        margin: 0.4em 0.7em;
+      }
+
+      i {
+        color: $yellow-bg;
+        margin-right: 0.3em;
+      }
+    }
+
+    .button {
+      margin-top: 1rem;
+      background-color: $yellow-bg;
+      font-size: 1.1em;
+    }
+  }
+}

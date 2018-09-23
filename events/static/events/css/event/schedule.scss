@@ -1,0 +1,138 @@
+.section.schedule {
+  .schedule-table {
+    display: flex;
+    flex-direction: column;
+
+    .columns.is-gapless {
+      margin-bottom: 0.8rem; // override
+
+      @include from($tablet) {
+        margin-bottom: 0; // override
+      }
+    }
+
+    $cell-margin: 1px;
+    $slot-padding: 0.8rem;
+    $min-height-slot: 9.7rem;
+
+    .schedule-title {
+      background-color: $blue-bg;
+      color: #fff;
+      padding: 1rem;
+      margin: $cell-margin;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .schedule-slot {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      flex-direction: column;
+      text-align: center;
+      padding: $slot-padding;
+      margin: $cell-margin;
+      background-color: #f2f2f3;
+
+      i {
+        color: #245e6f;
+        margin-right: 0.3em;
+        font-size: 0.9em;
+      }
+
+      a {
+        color: $text;
+      }
+
+      .inactive-link {
+        pointer-events: none;
+      }
+    }
+
+    .schedule-slot-plenary {
+      min-height: 6rem;
+    }
+
+    .schedule-slot-organizing {
+      background-color: #d9eff7;
+    }
+
+    .schedule-slot-coffee,
+    .schedule-slot-meal {
+      background-color: #fdebd1;
+
+      i {
+        color: #bb8104;
+      }
+
+      .icon-slot-category {
+        font-size: 1em;
+        color: #d28e20;
+      }
+    }
+
+    .slot-title {
+      text-align: center;
+      font-weight: 600;
+      margin: 0.2em 0;
+    }
+
+    .slot-hours,
+    .slot-location {
+      display: inline-block;
+      margin: 0.5em 1em 0 1em;
+      font-size: 0.9em;
+      font-style: italic;
+    }
+
+    .slot-speakers {
+      border-top: 0.1px solid #dbdbe4;
+      margin-top: 0.6em;
+      padding-top: 0.5em;
+
+      .slot-speaker {
+        margin-top: 0.33em;
+        font-size: 0.9em;
+
+        i {
+          margin-right: 0.2em;
+          font-size: 0.9em;
+        }
+      }
+    }
+
+    .schedule-columns {
+      .schedule-column {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+      }
+
+      .schedule-slot {
+        flex: 1 0 auto;
+        min-height: $min-height-slot;
+
+        &.size-2 {
+          flex-basis: calc(#{$min-height-slot} * 2 + #{$cell-margin} * 2);
+        }
+
+        &.size-3 {
+          flex-basis: calc(#{$min-height-slot} * 3 + #{$cell-margin} * 4);
+        }
+
+        &.size-4 {
+          flex-basis: calc(#{$min-height-slot} * 4 + #{$cell-margin} * 6);
+        }
+      }
+
+      .slot-title {
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+    }
+  }
+}
