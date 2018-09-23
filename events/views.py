@@ -22,6 +22,7 @@ from . import stripe_utils
 
 logger = logging.getLogger(__name__)
 
+
 def index(request):
     events = Event.objects.filter(active=True)
     num_events = events.count()
@@ -96,49 +97,44 @@ def select_article(request, event, all_articles, active_articles):
 
 
 def ticket_purchase(request, id_article):
-    logger.info('ticket_purchase starts : id_article={}'.format(id_article))
     article = Article.objects.select_related('event').get(pk=id_article)
     assert article.is_active(), "Este tipo de entrada no está ya disponible."
     event = article.event
     if request.method == 'POST':
-        logger.info("Es POST")
         email = request.POST['stripeEmail']
         name = request.POST['name']
         surname = request.POST['surname']
         phone = request.POST.get('phone', None)
         token = request.POST['stripeToken']
         stripe.api_key = settings.STRIPE_SECRET_KEY
-        logger.info("Empezamos la transaccion con Stripe")
         try:
             customer = stripe.Customer.create(
                 email=email,
                 source=token,
                 description='{}, {}'.format(surname, name),
             )
-            logger.info("Creado costumer")
-            logger.info("Intentamos crear el cargo")
             charge = stripe.Charge.create(
                 customer=customer.id,
                 amount=article.price_in_cents,
                 currency='EUR',
                 description='{} for {}, {}'.format(
-                    article.name,
+                    article.category.name,
                     surname,
                     name,
                 )
             )
-            logger.info("Cargo creado")
-            logger.info("charge: {}".format(charge))
             if charge.paid:
                 ticket = Ticket(
                     article=article,
                     number=article.next_number(),
-                    name=name,
-                    surname=surname,
-                    email=email,
-                    phone=phone,
+                    customer_name=name,
+                    customer_surname=surname,
+                    customer_email=email,
+                    customer_phone=phone,
+                    payment_id=charge.id,
                     )
                 ticket.save()
+                send_ticket.delay(ticket)
                 return redirect(ticket.get_absolute_url())
             else:
                 return stripe_payment_declined(request, charge)
@@ -153,7 +149,6 @@ def ticket_purchase(request, id_article):
             from django.http import HttpResponse
             return HttpResponse("Something goes wrong\n{}".format(err))
     else:
-        logger.info("Es GET")
         return render(request, 'events/buy_article.html', {
             'event': event,
             'article': article,
@@ -163,11 +158,11 @@ def ticket_purchase(request, id_article):
 
 def ticket_bought(request, keycode):
     ticket = Ticket.objects.get(keycode=keycode)
-    ticket_type = ticket.ticket_type
-    event = ticket_type.event
+    article = ticket.article
+    event = article.event
     return render(request, 'events/ticket_bought.html', {
         'ticket': ticket,
-        'ticket_type': ticket_type,
+        'article': article,
         'event': event,
         })
 

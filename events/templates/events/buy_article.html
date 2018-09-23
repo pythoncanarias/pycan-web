@@ -9,10 +9,11 @@
 <h3 class="subtitle">Compra de entradas - {{ event.start_date|as_date }} 
     <br><small>Entrada tipo {{ article.category.name }}</small></h3>
 
-<div class="columns">
-    <div class="column"
 
-        <form action="." method="POST">
+<div class="columns">
+    <div class="column">
+
+        <form method="POST" action=".">
         {% csrf_token %}
 
         <div class="field">
@@ -47,7 +48,7 @@
             src="https://checkout.stripe.com/checkout.js"
             class="stripe-button"
             data-key="{{ stripe_public_key }}"
-            data-amount="{{ article.price_in_cents }} "
+            data-amount="{{ article.price_in_cents }}"
             data-name="Stripe.com"
             data-description="{{ event.slug }} / {{ article.category.name }}"
             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
