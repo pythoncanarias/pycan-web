@@ -1,16 +1,26 @@
+import logging
+import io
+
+import stripe
+import pyqrcode
+
+from libs.reports.core import Report
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
-import stripe
-from tickets.models import Article, Ticket
+from django.contrib import messages
+
+from tickets.models import Article
+from tickets.models import Ticket
 from events.models import Event
 from events.tasks import send_ticket
 
 from . import forms
-from libs.reports.core import Report
-import pyqrcode
-import io
+from . import links
 from . import stripe_utils
+
+logger = logging.getLogger(__name__)
 
 
 def index(request):
@@ -53,10 +63,41 @@ def stripe_payment_error(request, exception):
     )
 
 
-def buy_ticket(request, id_article):
-    article = Article.objects  \
-        .select_related('event')  \
-        .get(pk=id_article)
+def buy_ticket(request, slug):
+    logger.info("buy_tickts starts : slug={}".format(slug))
+    event = Event.objects.get(slug=slug)
+    all_articles = [a for a in event.all_articles()]
+    active_articles = [a for a in all_articles if a.is_active()]
+    num_active_articles = len(active_articles)
+    # num_active_articles = 1
+    if num_active_articles == 0:
+        return no_available_articles(request, event, all_articles)
+    elif num_active_articles == 1:
+        article = active_articles[0]
+        return redirect(links.ticket_purchase(article.pk))
+    else:
+        return select_article(request, event, all_articles, active_articles)
+
+
+def no_available_articles(request, event, all_articles):
+    return render(request, "events/no_available_articles.html", {
+        'event': event,
+        'contact_email': settings.CONTACT_EMAIL,
+        })
+
+
+def select_article(request, event, all_articles, active_articles):
+    return render(request, "events/select_article.html", {
+        'event': event,
+        'all_articles': all_articles,
+        'active_articles': active_articles,
+        })
+
+
+
+def ticket_purchase(request, id_article):
+    article = Article.objects.select_related('event').get(pk=id_article)
+    assert article.is_active(), "Este tipo de entrada no está ya disponible."
     event = article.event
     if request.method == 'POST':
         email = request.POST['stripeEmail']
@@ -76,7 +117,7 @@ def buy_ticket(request, id_article):
                 amount=article.price_in_cents,
                 currency='EUR',
                 description='{} for {}, {}'.format(
-                    article.name,
+                    article.category.name,
                     surname,
                     name,
                 )
@@ -85,19 +126,29 @@ def buy_ticket(request, id_article):
                 ticket = Ticket(
                     article=article,
                     number=article.next_number(),
-                    name=name,
-                    surname=surname,
-                    email=email,
-                    phone=phone,
+                    customer_name=name,
+                    customer_surname=surname,
+                    customer_email=email,
+                    customer_phone=phone,
+                    payment_id=charge.id,
                     )
                 ticket.save()
+                send_ticket.delay(ticket)
                 return redirect(ticket.get_absolute_url())
             else:
                 return stripe_payment_declined(request, charge)
         except stripe.error.StripeError as err:
+            logger.error('Error de stripe')
+            logger.error(str(err))
             return stripe_payment_error(request, err)
+        except Exception as err:
+            logger.error('Error en el pago por stripe')
+            logger.error(str(err))
+            messages.add_message(request, messages.ERROR, 'Hello world.')
+            from django.http import HttpResponse
+            return HttpResponse("Something goes wrong\n{}".format(err))
     else:
-        return render(request, 'events/buy_ticket.html', {
+        return render(request, 'events/buy_article.html', {
             'event': event,
             'article': article,
             'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
@@ -106,11 +157,11 @@ def buy_ticket(request, id_article):
 
 def ticket_bought(request, keycode):
     ticket = Ticket.objects.get(keycode=keycode)
-    ticket_type = ticket.ticket_type
-    event = ticket_type.event
+    article = ticket.article
+    event = article.event
     return render(request, 'events/ticket_bought.html', {
         'ticket': ticket,
-        'ticket_type': ticket_type,
+        'article': article,
         'event': event,
         })
 
@@ -131,19 +182,8 @@ def coc(request, language='es'):
     return render(request, template)
 
 
-def ticket_pdf(request, keycode):
-    ticket = Ticket.objects.get(keycode=keycode)
-    return Report(
-        'events/ticket.j2',
-        {
-            'ticket': ticket,
-            'qrcode_url': request.build_absolute_uri(ticket.get_qrcode_url())
-        },
-    ).render()
-
-
 def find_tickets_by_email(event, email):
-    event.all_tickets().filter(customer_email=email)
+    qs = event.all_tickets().filter(customer_email=email)
     return list(qs)
 
 

@@ -45,7 +45,7 @@
             TIPO DE ENTRADA
         </td>
         <td>
-            {{ ticket.article.category.name|pprint }}
+            {{ ticket.article.category.name }}
         </td>
     </tr>
     <tr>
@@ -79,7 +79,7 @@
 
 </table>
 
-<div class="qr"> 
+<div class="qr">
     {{ qr_code }}
     <br> <code> {{ ticket.keycode }}</code>
 </div>
