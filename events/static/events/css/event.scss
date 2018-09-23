@@ -96,9 +96,10 @@
     .modal {
       .modal-content {
         max-width: 37em;
+        padding: 2em;
 
         .speaker-box {
-          padding: 2em;
+          padding: 0;
 
           .speaker-name {
             font-size: 1.1em;
@@ -215,6 +216,14 @@
           color: #245e6f;
           margin-right: 0.3em;
           font-size: 0.9em;
+        }
+
+        a {
+          color: $text;
+        }
+
+        .inactive-link {
+          pointer-events: none;
         }
       }
 

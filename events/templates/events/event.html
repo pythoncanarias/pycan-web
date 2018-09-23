@@ -48,6 +48,9 @@
       <h1 class="title section-title">Ponentes</h1>
       <div class="columns is-multiline is-mobile">
         {% for speaker in event.speakers %}
+
+          {% include "./event-components/modals/speaker-modal.html" with speaker=speaker only %}
+
           <div class="column is-6-mobile is-4-tablet is-3-desktop">
             <div class="box speaker-box">
               <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
@@ -59,18 +62,6 @@
                 {% endfor %}
               </div>
             </div>
-          </div>
-
-          <div class="modal" id="modal-speaker-{{ speaker.id }}">
-            <div class="modal-background hide-modal"></div>
-            <div class="modal-content">
-              <div class="box speaker-box">
-                <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
-                <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
-                <p>{{ speaker.bio }}</p>
-              </div>
-            </div>
-            <button class="modal-close is-large hide-modal" aria-label="close"></button>
           </div>
         {% endfor %}
       </div>
@@ -98,14 +89,23 @@
             <div class="schedule-row columns is-gapless">
               <div class="column is-12">
                 <div class="schedule-slot schedule-slot-plenary schedule-slot-{{ row.schedule.slot.category.code }}">
-                  <div class="slot-title">
+
+                  {% include "./event-components/modals/slot-modal.html" with scheduled_item=row.schedule only %}
+
+                  <a
+                    {% if row.schedule.slot.category.code == 'talk' %}
+                      class="slot-title" href="#slot={{ row.schedule.slot.id }}"
+                    {% else %}
+                      class="slot-title inactive-link"
+                    {% endif %}
+                  >
                     {% if row.schedule.slot.category.code == 'coffee' %}
                       <i class="fas fa-coffee icon-slot-category"></i>
                     {% elif row.schedule.slot.category.code == 'meal' %}
                       <i class="fas fa-utensils icon-slot-category"></i>
                     {% endif %}
                     {{ row.schedule.slot.name }}
-                  </div>
+                  </a>
 
                   <div>
                     <div class="slot-hours"><i class="fas fa-clock"></i> {{ row.schedule.when_for_display }}</div>
@@ -130,6 +130,9 @@
                 {% endif %}
                 <div class="schedule-column column is-12-mobile">
                   {% for scheduled_item in track.scheduled_items %}
+
+                    {% include "./event-components/modals/slot-modal.html" with scheduled_item=scheduled_item only %}
+
                     <div class="schedule-slot size-{{ scheduled_item.size_for_display }}">
                       <a class="slot-title" href="#slot={{ scheduled_item.slot.id }}">{{ scheduled_item.slot.name }}</a>
 
@@ -143,25 +146,6 @@
                           <div class="slot-speaker"><i class="far fa-user"></i> {{ speaker }}</div>
                         {% endfor %}
                       </div>
-                    </div>
-
-                    <div class="modal" id="modal-slot-{{ scheduled_item.slot.id }}">
-                      <div class="modal-background hide-modal"></div>
-                      <div class="modal-content box">
-                        <h2 class="slot-title">{{ scheduled_item.slot.name }}</h2>
-                        <div>
-                          <div class="slot-hours"><i class="fas fa-clock"></i> {{ scheduled_item.when_for_display }}</div>
-                          <div class="slot-location"><i class="fas fa-map-marker-alt"></i> {{ scheduled_item.location.name }}</div>
-                          <div class="slot-level"><i class="fas fa-signal"></i> {{ scheduled_item.slot.level.name }}</div>
-                        </div>
-                        <div class="slot-speakers">
-                          {% for speaker in scheduled_item.speakers.all %}
-                            <div class="slot-speaker"><i class="far fa-user"></i> {{ speaker }}</div>
-                          {% endfor %}
-                          </div>
-                        <p>{{ scheduled_item.slot.description }}</p>
-                      </div>
-                      <button class="modal-close is-large hide-modal" aria-label="close"></button>
                     </div>
                   {% endfor %}
                 </div>
