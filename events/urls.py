@@ -22,5 +22,4 @@ urlpatterns = [
     path('ticket/purchase/<int:id_article>/', views.ticket_purchase, name='ticket_purchase'),
     path('ticket/<uuid:keycode>/', views.ticket_bought, name='ticket_bought'),
     path('ticket/<int:pk>/qrcode/', views.ticket_qrcode, name='ticket_qrcode'),
-    path('ticket/<uuid:keycode>/pdf/', views.ticket_pdf, name='ticket_pdf'),
 ]
