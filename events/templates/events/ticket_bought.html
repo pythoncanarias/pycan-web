@@ -7,8 +7,8 @@
 
 <div class="content">
   <h1>¡Felicidades! Ya has conseguido tu entrada!</h1>
-  <h2>{{ event.title }}</h2>
-  <h3>{{ event.start_date|as_date }} <small>{{ ticket_type.name }}</small></h3>
+  <h2>{{ event.name }}</h2>
+  <h3>{{ event.start_date|as_date }} <small>{{ article.category.name }}</small></h3>
 
   <p>Tu ticket es: {{ ticket }}</p>
   <p>En breve te enviaremos a tu dirección de correo un pdf con

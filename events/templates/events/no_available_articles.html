@@ -1,0 +1,32 @@
+{% extends "events/base.html" %}
+
+{% block title %}Eventos - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+          {{ event.name }}
+      </h1>
+      <h2 class="subtitle">
+          Por el momento no se pueden comprar las entradas para este
+          evento. <h2> 
+        
+        <p>Esperamos poder ofertar las entradas en breve. Recuerde
+        que siempre puede ponerse en contacto con nosotros
+        usando nuestro correo:
+        <a href="mailto://{{ contact_email }}">
+            <code>{{ contact_email }}</code>
+        </a>.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<div class="wall">
+    <h2>Por el momento no hay eventos programados</h2>
+</div>
+
+{% endblock content %}

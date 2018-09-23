@@ -217,6 +217,11 @@ LOGGING = {
         },
     },
     "handlers": {
+        # Log to console
+        'console':{
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
         # Log to a text file that can be rotated by logrotate
         "logfile": {
             "level": "ERROR",
@@ -228,6 +233,21 @@ LOGGING = {
         },
     },
     "loggers": {
+        "root": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
+            },
+        "tickets": {
+            "handlers": ["logfile", "console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        "events": {
+            "handlers": ["logfile", "console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
         "django": {
             "handlers": ["logfile"],
             "level": "ERROR",
@@ -252,4 +272,3 @@ RQ_QUEUES = {
         'DB': 0,
     }
 }
-

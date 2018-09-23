@@ -1,0 +1,110 @@
+{% extends "events/base.html" %}
+{% load static %}
+{% load utils %}
+
+{% block title %}Eventos - {{ block.super }}{% endblock %}
+
+{% block body_class %}list-events-page{% endblock %}
+{% block content_class %}is-narrow{% endblock %}
+
+{% block content %}
+
+<h1 class="title">{{ event.name }}</h1>
+<h3 class="subtitle">Seleccione el tipo de ticket</h3>
+
+
+<div class="columns">
+
+  {% for a in active_articles %}
+    <div class="column is-half">
+        <p class="title">{{ a.category.name }}</p>
+    </div>
+  {% endfor %}
+</div>
+
+<hr>
+
+<div class="columns">
+
+  {% for a in active_articles %}
+
+    <div class="column">
+
+        <div class="card">
+            <div class="card-image">
+                <figure class="image">
+
+
+                    <img src="{% static a.category.image.url %}"
+                        height="{{ a.category.image.height }}"
+                        width="{{ a.category.image.width }}" 
+                        alt="Ticket category {{ a.category.name }}">
+                </figure>
+            </div>
+            <div class="card-content">
+                <p class="title">{{ a.category.name }}</p>
+                <p class="subtitle">{{ a.category.description|as_markdown }}</p>
+                <h2 class="subtitle">{{ a.price }} €</h2>
+            </div>
+
+            <footer class="card-footer">
+            <p class="card-footer-item">
+            <span>
+                <a href="{% url 'events:ticket_purchase' id_article=a.pk %}"
+                   class="button is-info">
+                    <span class="icon">
+                        <i class="far fa-thumbs-up"></i></span>&nbsp;
+                    Comprar {{ a.category.name }}</a>
+            </span>
+            </p>
+        </footer>
+
+        </div>
+
+    </div>
+  {% endfor %}
+
+</div>
+<div class="container">
+
+  {% for a in active_articles %}
+
+    <div class="column">
+
+        <div class="card">
+            <div class="card-image">
+                <figure class="image">
+                    <img src="{% static "events/img/ticket-test.png" %}"
+                        height="64"
+                        width="222" alt="Ticket category {{ a.category.name }}">
+                </figure>
+            </div>
+            <div class="card-content">
+                <p class="title is-4">{{ a.category.name }}</p>
+                <p class="subtitle is-6">{{ a.category.description }}</p>
+                <h3>{{ a.price }}</h3>
+            </div>
+
+            <footer class="card-footer">
+            <p class="card-footer-item">
+            <span>
+                View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
+            </span>
+            </p>
+            <p class="card-footer-item">
+            <span>
+                Share on <a href="#">Facebook</a>
+            </span>
+            </p>
+        </footer>
+
+        </div>
+
+    </div>
+  {% endfor %}
+
+</div>
+
+</section>
+
+{% endblock content %}
