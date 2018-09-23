@@ -72,6 +72,7 @@ class Article(models.Model):
             self.release_at is not None
             and self.release_at < now
             and self.release_at.date() < self.event.start_date
+            and self.num_available_tickets > 0
             )
     is_active.boolean = True
 

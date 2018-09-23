@@ -16,7 +16,7 @@
 <div class="columns">
 
   {% for a in active_articles %}
-    <div class="column">
+    <div class="column is-half">
         <p class="title">{{ a.category.name }}</p>
     </div>
   {% endfor %}
@@ -50,7 +50,11 @@
             <footer class="card-footer">
             <p class="card-footer-item">
             <span>
-                <a class="button is-info">Comprar {{ a.category.name }}</a>
+                <a href="{% url 'events:ticket_purchase' id_article=a.pk %}"
+                   class="button is-info">
+                    <span class="icon">
+                        <i class="far fa-thumbs-up"></i></span>&nbsp;
+                    Comprar {{ a.category.name }}</a>
             </span>
             </p>
         </footer>

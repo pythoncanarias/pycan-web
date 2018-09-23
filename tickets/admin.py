@@ -16,8 +16,17 @@ class TicketCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('event', 'category', 'price', 'stock', 'release_at', 'is_active')
+    list_display = (
+        'event', 'category', 'price', 'stock', 
+        'sold_vs_available',
+        'release_at', 'is_active',
+        )
 
+    def sold_vs_available(self, obj):
+        return "{}/{}".format(
+            obj.num_sold_tickets,
+            obj.num_available_tickets,
+            )
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
