@@ -1,6 +1,6 @@
 export default {
   setInitialPage: () => {
-    window.history.replaceState({ is_initial: true }, null, '.')
+    window.history.replaceState({ is_initial: true }, null, '')
   },
 
   isInitialPage: () => {
