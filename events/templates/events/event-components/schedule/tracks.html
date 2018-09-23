@@ -1,0 +1,9 @@
+<div class="schedule-tracks columns is-gapless is-hidden-mobile">
+  {% for track in tracks %}
+    <div class="column">
+      <div class="schedule-title">
+        Track {{forloop.counter}}: {{ track.name }}
+      </div>
+    </div>
+  {% endfor %}
+</div>
