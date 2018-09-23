@@ -1,36 +1,9 @@
 <div class="schedule-row columns is-gapless">
   <div class="column is-12">
-    <div class="schedule-slot schedule-slot-plenary schedule-slot-{{ schedule.slot.category.code }}">
 
-      {% include "../modals/slot-modal.html" with scheduled_item=schedule only %}
+    {% include "../modals/slot-modal.html" with scheduled_item=schedule only %}
 
-      <a
-        {% if schedule.slot.category.code == 'talk' %}
-          class="slot-title" href="#slot={{ schedule.slot.id }}"
-        {% else %}
-          class="slot-title inactive-link"
-        {% endif %}
-      >
-        {% if schedule.slot.category.code == 'coffee' %}
-          <i class="fas fa-coffee icon-slot-category"></i>
-        {% elif schedule.slot.category.code == 'meal' %}
-          <i class="fas fa-utensils icon-slot-category"></i>
-        {% endif %}
-        {{ schedule.slot.name }}
-      </a>
+    {% include "./slot-info.html" with scheduled_item=schedule is_plenary=True only %}
 
-      <div>
-        <div class="slot-hours"><i class="fas fa-clock"></i> {{ schedule.when_for_display }}</div>
-        <div class="slot-location"><i class="fas fa-map-marker-alt"></i> {{ schedule.location.name }}</div>
-      </div>
-
-      {% if schedule.speakers.exists %}
-        <div class="slot-speakers">
-          {% for speaker in schedule.speakers.all %}
-            <div class="slot-speaker"><i class="far fa-user"></i> {{ speaker }}</div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    </div>
   </div>
 </div>

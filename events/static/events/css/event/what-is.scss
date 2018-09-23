@@ -1,4 +1,9 @@
 .section.what-is {
+  @media screen and (max-width: $custom-mobile) {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+  }
+
   .container {
     max-width: 53em;
   }

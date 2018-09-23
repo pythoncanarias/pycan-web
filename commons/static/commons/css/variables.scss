@@ -6,6 +6,7 @@ $yellow-bg: #e6bc3d;
 $light-gray-bg: #f9f9fb;
 $default-box-shadow: 0 1px 1px rgba(10, 10, 29, 0.09), 0 0 1px rgba(10, 10, 29, 0.09);
 
+$custom-mobile: 36rem;
 
 // Bulma variables
 $family-sans-serif: 'Lato', sans-serif;
@@ -23,6 +24,8 @@ $box-padding: 1.5rem;
 $box-shadow: $default-box-shadow;
 $box-link-hover-shadow: $default-box-shadow;
 $box-link-active-shadow: $default-box-shadow;
+
+$column-gap: 0.65rem;
 
 $modal-z: 3000;
 $modal-background-background-color: rgba(7, 8, 16, 0.86);

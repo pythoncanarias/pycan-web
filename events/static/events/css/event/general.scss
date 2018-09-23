@@ -1,0 +1,26 @@
+.section {
+  padding: 2.5em 1.1em;
+
+  @include from($custom-mobile) {
+    padding: 3em 1.5em;
+  }
+
+  .section-title {
+    color: $blue-text;
+    text-align: center;
+    margin-bottom: 2.1rem;
+  }
+}
+
+.modal {
+  .modal-content {
+    margin: 0 1em;
+    padding: 1.2em;
+    text-align: center;
+
+    @include from($custom-mobile) {
+      padding: 2em;
+      margin: 0 1.6em;
+    }
+  }
+}

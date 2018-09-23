@@ -4,10 +4,47 @@
     flex-direction: column;
 
     .columns.is-gapless {
-      margin-bottom: 0.8rem; // override
+      margin-bottom: 0.8rem;
 
       @include from($tablet) {
-        margin-bottom: 0; // override
+        margin-bottom: 0;
+      }
+    }
+
+    i {
+      margin-right: 0.4em;
+      font-size: 0.9em;
+      color: #245e6f;
+    }
+
+    .tags {
+      margin-top: 0.3em;
+      margin-bottom: 0;
+
+      .tag {
+        margin-top: 0.3em;
+        margin-bottom: 0;
+        font-size: 0.9em;
+        background-color: transparent;
+      }
+    }
+
+    .modal {
+      .modal-content {
+        .slot-title {
+          font-size: 1.1em;
+        }
+
+        .slot-tags {
+          .slot-tag {
+            font-size: 0.8em;
+            background-color: $light;
+          }
+        }
+
+        .slot-description {
+          margin-top: 0.5em;
+        }
       }
     }
 
@@ -27,6 +64,7 @@
     }
 
     .schedule-slot {
+      color: $text;
       display: flex;
       justify-content: center;
       align-items: stretch;
@@ -36,68 +74,55 @@
       margin: $cell-margin;
       background-color: #f2f2f3;
 
-      i {
-        color: #245e6f;
-        margin-right: 0.3em;
-        font-size: 0.9em;
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: lighten(#f2f2f3, 1.5);
       }
 
-      a {
-        color: $text;
-      }
-
-      .inactive-link {
+      &.inactive-link {
         pointer-events: none;
       }
-    }
 
-    .schedule-slot-plenary {
-      min-height: 6rem;
-    }
-
-    .schedule-slot-organizing {
-      background-color: #d9eff7;
-    }
-
-    .schedule-slot-coffee,
-    .schedule-slot-meal {
-      background-color: #fdebd1;
-
-      i {
-        color: #bb8104;
+      &.schedule-slot-plenary {
+        min-height: 6rem;
       }
 
-      .icon-slot-category {
-        font-size: 1em;
-        color: #d28e20;
+      &.schedule-slot-category-organizing {
+        background-color: #d9eff7;
       }
-    }
 
-    .slot-title {
-      text-align: center;
-      font-weight: 600;
-      margin: 0.2em 0;
-    }
-
-    .slot-hours,
-    .slot-location {
-      display: inline-block;
-      margin: 0.5em 1em 0 1em;
-      font-size: 0.9em;
-      font-style: italic;
-    }
-
-    .slot-speakers {
-      border-top: 0.1px solid #dbdbe4;
-      margin-top: 0.6em;
-      padding-top: 0.5em;
-
-      .slot-speaker {
-        margin-top: 0.33em;
-        font-size: 0.9em;
+      &.schedule-slot-category-coffee,
+      &.schedule-slot-category-meal {
+        background-color: #fdebd1;
 
         i {
-          margin-right: 0.2em;
+          color: #bb8104;
+        }
+
+        .icon-slot-category {
+          font-size: 1em;
+          color: #d28e20;
+        }
+      }
+
+      .slot-title {
+        font-weight: 600;
+        margin-top: 0.2em;
+      }
+
+      .slot-attributes {
+        .slot-attribute {
+          background-color: transparent;
+          font-size: 0.9em;
+          font-style: italic;
+        }
+      }
+
+      .slot-speakers {
+        margin-top: 0.1em;
+
+        .slot-speaker {
           font-size: 0.9em;
         }
       }
@@ -117,21 +142,6 @@
         &.size-2 {
           flex-basis: calc(#{$min-height-slot} * 2 + #{$cell-margin} * 2);
         }
-
-        &.size-3 {
-          flex-basis: calc(#{$min-height-slot} * 3 + #{$cell-margin} * 4);
-        }
-
-        &.size-4 {
-          flex-basis: calc(#{$min-height-slot} * 4 + #{$cell-margin} * 6);
-        }
-      }
-
-      .slot-title {
-        flex: 1;
-        justify-content: center;
-        align-items: center;
-        display: flex;
       }
     }
   }

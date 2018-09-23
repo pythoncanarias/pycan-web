@@ -12,9 +12,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 7rem;
-    padding: 0.75rem 1.4rem;
     border: 1px solid #f2f2f4;
+    height: 4.7em;
+    padding: 0.4em 0.7em;
+
+    @include from($custom-mobile) {
+      height: 7rem;
+      padding: 0.65em 1.2em;
+    }
 
     &:hover,
     &:active,

@@ -1,11 +1,5 @@
 .event-page {
-  .section {
-    .section-title {
-      color: $blue-text;
-      text-align: center;
-      margin-bottom: 2.1rem;
-    }
-  }
+  @import './event/general';
 
   @import './event/header';
   @import './event/menu';

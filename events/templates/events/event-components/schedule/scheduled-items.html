@@ -8,20 +8,8 @@
 
         {% include "../modals/slot-modal.html" with scheduled_item=scheduled_item only %}
 
-        <div class="schedule-slot size-{{ scheduled_item.size_for_display }}">
-          <a class="slot-title" href="#slot={{ scheduled_item.slot.id }}">{{ scheduled_item.slot.name }}</a>
+        {% include "./slot-info.html" with scheduled_item=scheduled_item only %}
 
-          <div>
-            <div class="slot-hours"><i class="fas fa-clock"></i> {{ scheduled_item.when_for_display }}</div>
-            <div class="slot-location"><i class="fas fa-map-marker-alt"></i> {{ scheduled_item.location.name }}</div>
-          </div>
-
-          <div class="slot-speakers">
-            {% for speaker in scheduled_item.speakers.all %}
-              <div class="slot-speaker"><i class="far fa-user"></i> {{ speaker }}</div>
-            {% endfor %}
-          </div>
-        </div>
       {% endfor %}
     </div>
   {% endfor %}

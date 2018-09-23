@@ -13,6 +13,7 @@ function ModalsHandler() {
 
   function handleModalsDependingOnUrlHash() {
     currentModal && currentModal.close()
+    currentModal = null
 
     const [hashScope, hashId] = window.location.hash.slice(1).split('=')
     if (scopes.includes(hashScope)) {
