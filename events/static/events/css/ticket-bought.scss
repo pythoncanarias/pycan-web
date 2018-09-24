@@ -1,0 +1,22 @@
+.ticket-bought-page {
+  .content-page {
+    max-width: 45rem;
+
+    .box {
+      text-align: center;
+
+      @include from($custom-mobile) {
+        padding: 2rem;
+      }
+
+      .title {
+        color: $blue-text;
+      }
+
+      .subtitle {
+        margin: 1em 0 0.7em 0;
+        font-weight: 600;
+      }
+    }
+  }
+}
