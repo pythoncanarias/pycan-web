@@ -28,7 +28,11 @@ $footer-height: 4.7rem;
 .content-page {
   max-width: 59rem;
   min-height: calc(100vh - #{$navbar-height} - #{$footer-height} - 1px);
-  padding: 2rem 1rem;
+  padding: 1rem;
+
+  @include from($custom-mobile) {
+    padding: 2rem 1rem;
+  }
 
   &.is-narrow {
     max-width: 47rem;
