@@ -1,0 +1,63 @@
+.buy-article-page {
+  .content-page {
+    max-width: 35rem;
+
+    @include from($tablet) {
+      max-width: 46rem;
+    }
+
+    .box {
+      @include from($custom-mobile) {
+        padding: 2rem;
+      }
+
+      .title {
+        color: $blue-text;
+        margin-bottom: 0;
+      }
+
+      .subtitle {
+        font-size: 1.2em;
+        margin: 0.9em 0;
+        font-weight: 600;
+      }
+
+      .message {
+        .title {
+          color: inherit;
+          font-weight: 600;
+          margin-bottom: 0.2em;
+        }
+      }
+
+      .tag {
+        background-color: #ffe8bd;
+        border: 1px solid #ffdc9a;
+      }
+
+      .stripe-button-el {
+        background: $yellow-bg;
+        border-radius: $radius;
+        box-shadow: none;
+        font-size: 0.9em;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background: lighten($yellow-bg, 4);
+        }
+
+        span {
+          background: transparent;
+          box-shadow: none;
+          font-family: $family-sans-serif;
+          color: $brown-text-for-yellow-bg;
+          font-size: 1em;
+          height: auto;
+          padding: 0.2em 1.2em;
+          text-shadow: none;
+        }
+      }
+    }
+  }
+}
