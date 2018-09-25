@@ -5,11 +5,11 @@
 
 {% block title %}Entrada comprada - {{ block.super }}{% endblock %}
 
-{% block body_class %}ticket-bought-page{% endblock %}
+{% block body_class %}tickets-page ticket-bought-page{% endblock %}
 
 {% block content %}
-  <div class="content box">
-    <h1 class="title is-3">¡Felicidades!<br/>¡Ya has conseguido tu entrada!</h1>
+  <div class="box">
+    <h1 class="title is-blue">¡Felicidades!<br/>¡Ya has conseguido tu entrada!</h1>
 
     <h2 class="subtitle is-5">{{ event.name }}</h2>
 
@@ -36,11 +36,9 @@
       </div>
     </div>
 
-    <p>
-      <div><strong>Tu ticket es:</strong></div>
-      <div>{{ ticket }}</div>
-    </p>
+    <div><strong>Tu ticket es:</strong></div>
+    <div>{{ ticket }}</div>
 
-    <p>En breve te enviaremos a tu dirección de correo un pdf con el código QR de la entrada</p>
+    <p class="text-info-mail">En breve te enviaremos a tu dirección de correo un pdf con el código QR de la entrada</p>
   </div>
 {% endblock content %}

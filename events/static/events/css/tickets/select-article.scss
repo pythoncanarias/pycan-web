@@ -1,0 +1,21 @@
+.select-article-page {
+  .content-page {
+    max-width: 55rem;
+
+    .ticket-article {
+      background-color: #fcfcfd;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: #fff;
+      }
+
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+}

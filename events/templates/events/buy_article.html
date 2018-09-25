@@ -3,15 +3,15 @@
 {% load static %}
 {% load utils %}
 
-{% block body_class %}buy-article-page{% endblock %}
+{% block body_class %}tickets-page buy-article-page{% endblock %}
 
 {% block content %}
   <div class="box">
-    <h1 class="title">Compra de entradas</h1>
-    <h2 class="subtitle">{{ event.name }} <small>({{ event.start_date|as_date }})</small></h2>
+    <h1 class="title is-blue">Compra de entradas</h1>
+    <h2 class="subtitle">{{ event.name }}</h2>
 
     <div class="tags">
-      <div class="tag is-medium">
+      <div class="tag is-medium price-tag">
         <b>Entrada {{ article.category.name }}:</b>&nbsp;{{ article.price }}&nbsp;€
       </div>
     </div>
@@ -72,6 +72,7 @@
           data-key="{{ stripe_public_key }}"
           data-amount="{{ article.price_in_cents }}"
           data-name="Stripe.com"
+          data-label="Continuar"
           data-description="{{ event.slug }} / {{ article.category.name }}"
           data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
           data-locale="auto"

@@ -4,6 +4,10 @@ hr {
   margin: 0.7em 0;
 }
 
+.title.is-blue {
+  color: $blue-text;
+}
+
 .button.is-warning {
   color: $brown-text-for-yellow-bg;
   background-color: $yellow-bg;
