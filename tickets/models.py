@@ -32,6 +32,11 @@ class TicketCategory(models.Model):
 
 
 class Article(models.Model):
+
+    SOLDOUT = 'SOLDOUT'
+    SALEABLE = 'SALEABLE'
+    UPCOMING = 'UPCOMING'
+
     event = models.ForeignKey(
         'events.Event',
         on_delete=models.PROTECT,
@@ -67,14 +72,17 @@ class Article(models.Model):
         return current_number + 1
 
     def is_active(self):
-        now = django.utils.timezone.now()
-        return (
-            self.release_at is not None
-            and self.release_at < now
-            and self.release_at.date() < self.event.start_date
-            and self.num_available_tickets > 0
-            )
+        return self.status() == Article.SALEABLE
     is_active.boolean = True
+
+    def status(self):
+        now = django.utils.timezone.now()
+        if self.release_at is None or self.release_at > now:
+            return Article.UPCOMING
+        today = now.date()
+        if self.num_available_tickets <= 0 or self.event.start_date < today:
+            return Article.SOLDOUT
+        return Article.SALEABLE
 
 
 class Ticket(models.Model):
