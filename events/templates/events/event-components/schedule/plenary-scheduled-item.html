@@ -1,0 +1,9 @@
+<div class="schedule-row columns is-gapless">
+  <div class="column is-12">
+
+    {% include "../modals/slot-modal.html" with scheduled_item=schedule only %}
+
+    {% include "./slot-info.html" with scheduled_item=schedule is_plenary=True only %}
+
+  </div>
+</div>

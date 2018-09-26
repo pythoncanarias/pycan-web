@@ -1,9 +1,11 @@
 function Modal({ modalElement, onClose = close}) {
   const htmlElement = document.querySelector('html')
+  const modalContent = modalElement.querySelector('.modal-content')
   const hidersElements = modalElement.querySelectorAll('.hide-modal')
 
   function open() {
     modalElement.classList.add('is-active')
+    modalContent.scrollTop = 0
     htmlElement.classList.add('no-scroll')
 
     addEventListeners()

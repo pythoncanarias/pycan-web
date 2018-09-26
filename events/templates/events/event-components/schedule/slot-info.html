@@ -1,0 +1,40 @@
+<a class="schedule-slot schedule-slot-category-{{ scheduled_item.slot.category.code }}
+  {% if is_plenary %}
+    schedule-slot-plenary
+  {% else %}
+    size-{{ scheduled_item.size_for_display }}
+  {% endif %}
+
+  {% if scheduled_item.slot.category.code != 'talk' %}
+    inactive-link
+  {% endif %}
+  "
+
+  {% if scheduled_item.slot.category.code == 'talk' %}
+    href="#slot={{ scheduled_item.slot.id }}"
+  {% endif %}
+>
+
+  <div class="slot-title">
+    {% if scheduled_item.slot.category.code == 'coffee' %}
+      <i class="fas fa-coffee icon-slot-category"></i>
+    {% elif scheduled_item.slot.category.code == 'meal' %}
+      <i class="fas fa-utensils icon-slot-category"></i>
+    {% endif %}
+    {{ scheduled_item.slot.name }}
+  </div>
+
+  <div class="tags is-centered slot-attributes">
+    <div class="tag slot-attribute"><i class="fas fa-clock"></i> {{ scheduled_item.when_for_display }}</div>
+    <div class="tag slot-attribute"><i class="fas fa-map-marker-alt"></i> {{ scheduled_item.location.name }}</div>
+  </div>
+
+  {% if scheduled_item.speakers.exists %}
+    <div class="tags is-centered slot-speakers">
+      {% for speaker in scheduled_item.speakers.all %}
+        <div class="tag slot-speaker"><i class="fas fa-user"></i> {{ speaker }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+</a>

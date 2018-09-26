@@ -1,0 +1,36 @@
+.event-menu {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: $blue-bg;
+
+  .event-menu-item {
+    padding: 0.9rem 1.5rem;
+    color: #ffffffe8;
+
+    @include until($tablet) {
+      width: 50%;
+      border: 0 solid #1a6caf;
+      text-align: center;
+
+      &:nth-child(1) {
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+      }
+
+      &:nth-child(2) {
+        border-bottom-width: 1px;
+      }
+
+      &:nth-child(3) {
+        border-right-width: 1px;
+      }
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: #ffffff0e;
+    }
+  }
+}

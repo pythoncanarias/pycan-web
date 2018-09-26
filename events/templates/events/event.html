@@ -27,6 +27,7 @@
     </div>
   </div>
 
+
   <nav class="event-menu">
     <a class="event-menu-item" href="#speakers">Ponentes</a>
     <a class="event-menu-item" href="#schedule">Agenda</a>
@@ -34,17 +35,22 @@
     <a class="event-menu-item" href="#sponsors">Entidades</a>
   </nav>
 
-  <section id="event" class="section event has-background-white">
+
+  <section class="section what-is has-background-white">
     <div class="container">
       {% filter as_markdown %} {{ event.description }} {% endfilter %}
     </div>
   </section>
+
 
   <section id="speakers" class="section speakers">
     <div class="container">
       <h1 class="title section-title">Ponentes</h1>
       <div class="columns is-multiline is-mobile">
         {% for speaker in event.speakers %}
+
+          {% include "./event-components/modals/speaker-modal.html" with speaker=speaker only %}
+
           <div class="column is-6-mobile is-4-tablet is-3-desktop">
             <div class="box speaker-box">
               <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
@@ -57,22 +63,11 @@
               </div>
             </div>
           </div>
-
-          <div class="modal" id="modal-speaker-{{ speaker.id }}">
-            <div class="modal-background hide-modal"></div>
-            <div class="modal-content">
-              <div class="box speaker-box">
-                <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
-                <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
-                <p>{{ speaker.bio }}</p>
-              </div>
-            </div>
-            <button class="modal-close is-large hide-modal" aria-label="close"></button>
-          </div>
         {% endfor %}
       </div>
     </div>
   </section>
+
 
   <section id="schedule" class="section schedule has-background-white">
     <div class="container">
@@ -81,74 +76,17 @@
       <div class="schedule-table">
         {% for row in event.schedule_for_display %}
           {% if row.type == 'tracks' %}
-            <div class="schedule-tracks columns is-gapless is-hidden-mobile">
-              {% for track in row.tracks %}
-                <div class="column">
-                  <div class="schedule-title">
-                    Track {{forloop.counter}}: {{ track.name }}
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
+            {% include "./event-components/schedule/tracks.html" with tracks=row.tracks only %}
           {% elif row.type == 'plenary_scheduled_item' %}
-            <div class="schedule-row columns is-gapless">
-              <div class="column is-12">
-                <div class="schedule-slot schedule-slot-plenary schedule-slot-{{ row.schedule.slot.category.code }}">
-                  <div class="slot-title">
-                    {% if row.schedule.slot.category.code == 'coffee' %}
-                      <i class="fas fa-coffee icon-slot-category"></i>
-                    {% elif row.schedule.slot.category.code == 'meal' %}
-                      <i class="fas fa-utensils icon-slot-category"></i>
-                    {% endif %}
-                    {{ row.schedule.slot.name }}
-                  </div>
-
-                  <div>
-                    <div class="slot-hours"><i class="fas fa-clock"></i> {{ row.schedule.when_for_display }}</div>
-                    <div class="slot-location"><i class="fas fa-map-marker-alt"></i> {{ row.schedule.location.name }}</div>
-                  </div>
-
-                  {% if row.schedule.speakers.exists %}
-                    <div class="slot-speakers">
-                      {% for speaker in row.schedule.speakers.all %}
-                        <div class="slot-speaker"><i class="far fa-user"></i> {{ speaker }}</div>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
+            {% include "./event-components/schedule/plenary-scheduled-item.html" with schedule=row.schedule only %}
           {% elif row.type == 'scheduled_items' %}
-            <div class="schedule-columns columns is-gapless">
-              {% for track in row.tracks %}
-                {% if track.scheduled_items|length %}
-                  <div class="schedule-title is-hidden-tablet">Track {{forloop.counter}}: {{ track.track.name }}</div>
-                {% endif %}
-                <div class="schedule-column column is-12-mobile">
-                  {% for scheduled_item in track.scheduled_items %}
-                    <div class="schedule-slot size-{{ scheduled_item.size_for_display }}">
-                      <div class="slot-title">{{ scheduled_item.slot.name }}</div>
-
-                      <div>
-                        <div class="slot-hours"><i class="fas fa-clock"></i> {{ scheduled_item.when_for_display }}</div>
-                        <div class="slot-location"><i class="fas fa-map-marker-alt"></i> {{ scheduled_item.location.name }}</div>
-                      </div>
-
-                      <div class="slot-speakers">
-                        {% for speaker in scheduled_item.speakers.all %}
-                          <div class="slot-speaker"><i class="far fa-user"></i> {{ speaker }}</div>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  {% endfor %}
-                </div>
-              {% endfor %}
-            </div>
+            {% include "./event-components/schedule/scheduled-items.html" with tracks=row.tracks only %}
           {% endif %}
         {% endfor %}
       </div>
     </div>
   </section>
+
 
   <section id="venue" class="section venue">
     <div class="container">
@@ -185,6 +123,7 @@
       }, false);
     </script>
   </section>
+
 
   <section id="sponsors" class="section sponsors has-background-white">
     <div class="container">

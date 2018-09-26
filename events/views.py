@@ -184,18 +184,7 @@ def coc(request, language='es'):
 def privacy(request):
     return render(request, 'events/privacy.html')
 
-
-def ticket_pdf(request, keycode):
-    ticket = Ticket.objects.get(keycode=keycode)
-    return Report(
-        'events/ticket.j2',
-        {
-            'ticket': ticket,
-            'qrcode_url': request.build_absolute_uri(ticket.get_qrcode_url())
-        },
-    ).render()
-
-
+  
 def find_tickets_by_email(event, email):
     qs = event.all_tickets().filter(customer_email=email)
     return list(qs)

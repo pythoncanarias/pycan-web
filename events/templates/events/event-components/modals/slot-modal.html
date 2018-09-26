@@ -1,0 +1,29 @@
+{% extends "./modal.html" %}
+
+{% block modal_id %}modal-slot-{{ scheduled_item.slot.id }}{% endblock %}
+
+{% block modal_content %}
+  <h2 class="slot-title">{{ scheduled_item.slot.name }}</h2>
+
+  <div class="tags is-centered slot-tags">
+      {% for tag in scheduled_item.slot.tags.all %}
+        <div class="tag slot-tag is-light">{{ tag }}</div>
+      {% endfor %}
+    </div>
+
+
+  <div class="tags is-centered slot-attributes">
+    <div class="tag slot-attribute"><i class="fas fa-clock"></i> {{ scheduled_item.when_for_display }}</div>
+    <div class="tag slot-attribute"><i class="fas fa-map-marker-alt"></i> {{ scheduled_item.location.name }}</div>
+    <div class="tag slot-attribute"><i class="fas fa-signal"></i> {{ scheduled_item.slot.level.name }}</div>
+  </div>
+
+
+  <div class="tags is-centered slot-speakers">
+    {% for speaker in scheduled_item.speakers.all %}
+      <div class="tag slot-speaker"><i class="fas fa-user"></i> {{ speaker }}</div>
+    {% endfor %}
+  </div>
+
+  <p class="slot-description">{{ scheduled_item.slot.description }}</p>
+{% endblock %}

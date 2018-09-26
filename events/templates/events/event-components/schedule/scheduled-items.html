@@ -1,0 +1,16 @@
+<div class="schedule-columns columns is-gapless">
+  {% for track in tracks %}
+    {% if track.scheduled_items|length %}
+      <div class="schedule-title is-hidden-tablet">Track {{forloop.counter}}: {{ track.track.name }}</div>
+    {% endif %}
+    <div class="schedule-column column is-12-mobile">
+      {% for scheduled_item in track.scheduled_items %}
+
+        {% include "../modals/slot-modal.html" with scheduled_item=scheduled_item only %}
+
+        {% include "./slot-info.html" with scheduled_item=scheduled_item only %}
+
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
