@@ -5,11 +5,11 @@
         padding: 2rem;
       }
 
-      .title {
+      & > .title {
         margin-bottom: 0;
       }
 
-      .subtitle {
+      & > .subtitle {
         font-size: 1.2em;
         margin: 0.7em 0 0.9em 0;
         font-weight: 600;

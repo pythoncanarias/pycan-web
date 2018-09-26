@@ -12,15 +12,28 @@
     <h1 class="title is-blue">Seleccione el tipo de ticket</h1>
     <h2 class="subtitle">{{ event.name }}</h2>
 
-    <div class="columns">
-      {% for article in active_articles %}
-        <div class="column is-6-desktop">
-          <a href="{% url 'events:ticket_purchase' id_article=article.pk %}" class="box ticket-article">
+    <div class="columns is-multiline">
+      {% for article in all_articles %}
+        <div class="column is-6-tablet">
+          <a
+            {% if article.status == 'SALEABLE' %}
+              href="{% url 'events:ticket_purchase' id_article=article.pk %}" class="box ticket-article"
+            {% else %}
+              class="box ticket-article inactive-link"
+            {% endif %}
+          >
             <h1 class="title is-4">
               {{ article.category.name }}
-              <span class="tag is-medium price-tag">{{ article.price }} €</span>
+
+              {% if article.status == 'SOLDOUT' %}
+                <span class="tag is-medium soldout-tag">Agotadas</span>
+              {% elif article.status == 'SALEABLE' %}
+                <span class="tag is-medium price-tag">{{ article.price }} €</span>
+              {% elif article.status == 'UPCOMING' %}
+                <span class="tag is-medium upcoming-tag">Próximamente</span>
+              {% endif %}
             </h1>
-            <p class="subtitle">{{ article.category.description|as_markdown }}</p>
+            <p>{{ article.category.description }}</p>
           </a>
         </div>
       {% endfor %}

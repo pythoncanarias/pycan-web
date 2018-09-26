@@ -3,7 +3,7 @@
     max-width: 55rem;
 
     .ticket-article {
-      background-color: #fcfcfd;
+      background-color: #fdfdfe;
 
       &:hover,
       &:active,
@@ -14,7 +14,23 @@
       .title {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: start;
+        margin-bottom: 0.5em;
+      }
+
+      .tag {
+        font-size: 0.9rem;
+        white-space: nowrap;
+        margin-left: 1em;
+      }
+
+      .soldout-tag {
+        border: 1px solid #e7e7ec;
+      }
+
+      .upcoming-tag {
+        background-color: #e7f4fe;
+        border: 1px solid #d9ebf9;
       }
     }
   }

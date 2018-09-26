@@ -81,10 +81,6 @@
         background-color: lighten(#f2f2f3, 1.5);
       }
 
-      &.inactive-link {
-        pointer-events: none;
-      }
-
       &.schedule-slot-plenary {
         min-height: 6rem;
       }
