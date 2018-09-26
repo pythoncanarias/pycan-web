@@ -5,6 +5,7 @@ app_name = 'events'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('privacy/', views.privacy, name='privacy'),
     path('coc/', views.coc, name='coc'),
     path('coc/<language>/', views.coc, name='coc'),
     path('<slug:slug>/', views.detail_event, name='detail_event'),

@@ -94,7 +94,6 @@ def select_article(request, event, all_articles, active_articles):
         })
 
 
-
 def ticket_purchase(request, id_article):
     article = Article.objects.select_related('event').get(pk=id_article)
     assert article.is_active(), "Este tipo de entrada no está ya disponible."
@@ -182,6 +181,10 @@ def coc(request, language='es'):
     return render(request, template)
 
 
+def privacy(request):
+    return render(request, 'events/privacy.html')
+
+  
 def find_tickets_by_email(event, email):
     qs = event.all_tickets().filter(customer_email=email)
     return list(qs)
