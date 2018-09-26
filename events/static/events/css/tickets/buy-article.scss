@@ -15,6 +15,22 @@
         }
       }
 
+      p {
+        margin-bottom: 0.6em;
+      }
+
+      .checkbox {
+        margin-bottom: 0.8em;
+
+        input[type=checkbox] {
+          margin-right: 0.5em;
+        }
+      }
+
+      .message-tickets-on-mail {
+        margin-top: 0.5em;
+      }
+
       .stripe-button-el {
         background: $yellow-bg;
         border-radius: $radius;
