@@ -1,21 +1,23 @@
 {% extends "events/base.html" %}
 
+{% block title %}Error al realizar el cobro - {{ block.super }}{% endblock %}
+
+{% block content_class %}is-narrow{% endblock %}
+
 {% block content %}
+  <div class="box">
 
-<div class="wall">
-    
-    <h1> No se ha podido realizar el cobro </h1>
-    
-    <p>Por el momento no se ha realizado ningún cargo a su cuenta.<p>
+    <h1 class="title">No se ha podido realizar el cobro</h1>
 
-    {% include 'events/includes/contact_us.html' %}
+    <h2 class="subtitle">Por el momento no se ha realizado ningún cargo a su cuenta.</h2>
 
-    <p>El identificador de la 
-        transacción es <code><b>{{ charge_id }}</b></code>.
-        </p> 
+    <div class="content">
+      {% include 'events/includes/contact_us.html' %}
 
-    <p>Sentimos las molestias que esto le pueda ocasionar.</p>
+      <p>El identificador de la transacción es <code><b>{{ charge_id }}</b></code>.</p>
 
-</div>
+      <p>Sentimos las molestias que esto le pueda ocasionar.</p>
+    </div>
 
+  </div>
 {% endblock content %}
