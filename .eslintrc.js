@@ -8,6 +8,9 @@ module.exports = {
     'sourceType': 'module',
     'ecmaVersion': 8
   },
+  'globals': {
+    'StripeCheckout': true,
+  },
   'rules': {
     'linebreak-style': ['error', 'unix'],
     'quotes': ['error', 'single'],

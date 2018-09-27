@@ -3,9 +3,21 @@
 {% load static %}
 {% load utils %}
 
+{% block title %}Compra de entradas - {{ block.super }}{% endblock %}
+
 {% block body_class %}tickets-page buy-article-page{% endblock %}
 
 {% block content %}
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+
+  <script>
+    window.STRIPE_SETTINGS = {
+      key: '{{ stripe_public_key }}',
+      description: '{{ event.slug }} / {{ article.category.name }}',
+      amount: parseInt('{{ article.price_in_cents }}'),
+    }
+  </script>
+
   <div class="box">
     <h1 class="title is-blue">Compra de entradas</h1>
     <h2 class="subtitle">{{ event.name }}</h2>
@@ -30,7 +42,7 @@
       </div>
     </article>
 
-    <form method="POST" action=".">
+    <form method="POST" action="." id="buy-article-form">
       {% csrf_token %}
 
       <div class="columns is-multiline">
@@ -38,7 +50,7 @@
           <div class="field">
             <label class="label">Nombre</label>
             <div class="control">
-              <input type="text" name="name" size="32" class="input" placeholder="Nombre">
+              <input type="text" id="name-input" name="name" size="32" class="input" placeholder="Nombre">
             </div>
           </div>
         </div>
@@ -47,7 +59,7 @@
           <div class="field">
             <label class="label">Apellidos</label>
             <div class="control">
-              <input type="text" name="surname" size="32" class="input" placeholder="Apellidos">
+              <input type="text" id="surname-input" name="surname" size="32" class="input" placeholder="Apellidos">
             </div>
           </div>
         </div>
@@ -56,7 +68,7 @@
           <div class="field">
             <label class="label">Teléfono</label>
             <div class="control">
-              <input type="text" name="phone" size="32" class="input" placeholder="Teléfono">
+              <input type="text" id="phone-input" name="phone" size="16" class="input" placeholder="Teléfono">
             </div>
             <p class="help">
               Opcional (Solo lo usaremos para resolver posibles problemas con la compra de la entrada)
@@ -74,47 +86,52 @@
         Acepto usar la pasarela de pago del organizador y deseo continuar con la compra de las entradas.
       </p>
 
-      <label class="checkbox">
-        <input type="checkbox">
-        Acepto el uso de mis datos por parte de Python Canarias.
-      </label>
+      <div class="terms">
+        <label class="checkbox">
+          <input type="checkbox">
+          Acepto el uso de mis datos por parte de Python Canarias.
+        </label>
 
-      <label class="checkbox">
-        <input type="checkbox">
-        Acepto los <a href="">Términos y Condiciones</a> y la <a href="">Política de Privacidad</a>.
-      </label>
+        <label class="checkbox">
+          <input type="checkbox">
+          Acepto los <a href="">Términos y Condiciones</a> y la <a href="">Política de Privacidad</a>.
+        </label>
 
-      <label class="checkbox">
-        <input type="checkbox">
-        Acepto que los datos facilitados con el fin de comprar mi entrada sean comunicados al organizador Python Canarias
-        para que me envíe comunicaciones comerciales.
-      </label>
+        <label class="checkbox">
+          <input type="checkbox">
+          Acepto que los datos facilitados con el fin de comprar mi entrada sean comunicados al organizador Python Canarias
+          para que me envíe comunicaciones comerciales.
+        </label>
+      </div>
 
-      <article class="message is-info message-tickets-on-mail">
+      <div class="message is-info message-tickets-on-mail">
         <div class="message-body">
           <span class="icon">
             <i class="fas fa-info-circle"></i>
           </span>
           Recuerda que las entradas se enviarán a tu correo electrónico.
         </div>
-      </article>
-
-      <div class="control has-text-centered">
-        <script
-          src="https://checkout.stripe.com/checkout.js"
-          class="stripe-button"
-          data-key="{{ stripe_public_key }}"
-          data-amount="{{ article.price_in_cents }}"
-          data-name="Stripe.com"
-          data-label="Continuar"
-          data-description="{{ event.slug }} / {{ article.category.name }}"
-          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-          data-locale="auto"
-          data-currency="EUR"
-          data-zip-code="true"
-        ></script>
       </div>
 
+      {% with id='name-validation-message' message='Debe rellenar el campo Nombre' %}
+        {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
+      {% endwith %}
+
+      {% with id='surname-validation-message' message='Debe rellenar el campo Apellidos' %}
+        {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
+      {% endwith %}
+
+      {% with id='checkboxes-validation-message' message='Debe aceptar todas las casillas de verificación' %}
+        {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
+      {% endwith %}
+
+      <div class="control has-text-centered">
+        <button id="button-go-to-payment" class="button is-warning">Continuar</button>
+      </div>
+
+      <div class="spinner-background is-hidden">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
     </form>
   </div>
 {% endblock content %}

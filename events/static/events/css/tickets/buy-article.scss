@@ -31,27 +31,23 @@
         margin-top: 0.5em;
       }
 
-      .stripe-button-el {
-        background: $yellow-bg;
-        border-radius: $radius;
-        box-shadow: none;
-        font-size: 0.9em;
+      .spinner-background {
+        position: fixed;
+        background: rgba(7, 8, 16, 0.35);
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
 
-        &:hover,
-        &:focus,
-        &:active {
-          background: lighten($yellow-bg, 4);
-        }
-
-        span {
-          background: transparent;
-          box-shadow: none;
-          font-family: $family-sans-serif;
-          color: $brown-text-for-yellow-bg;
-          font-size: 1em;
-          height: auto;
-          padding: 0.2em 1.2em;
-          text-shadow: none;
+        i {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          font-size: 2em;
+          margin-left: -0.5em;
+          margin-top: -1em;
+          color: #fff;
         }
       }
     }

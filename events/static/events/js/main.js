@@ -1,6 +1,7 @@
 import historyState from './utils/history-state'
 import General from './general'
 import Event from './event'
+import BuyArticle from './buy-article'
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,7 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   General.init()
 
-  if (document.body.classList.contains('event-page')) {
+  const pageClasses = document.body.classList
+
+  if (pageClasses.contains('event-page')) {
     Event.init()
+  }
+
+  if (pageClasses.contains('buy-article-page')) {
+    BuyArticle.init()
   }
 })
