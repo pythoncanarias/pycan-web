@@ -3,15 +3,42 @@
 {% load static %}
 {% load utils %}
 
+{% block title %}Entrada comprada - {{ block.super }}{% endblock %}
+
+{% block body_class %}tickets-page ticket-bought-page{% endblock %}
+
 {% block content %}
+  <div class="box">
+    <h1 class="title is-blue">¡Felicidades!<br/>¡Ya has conseguido tu entrada!</h1>
 
-<div class="content">
-  <h1>¡Felicidades! Ya has conseguido tu entrada!</h1>
-  <h2>{{ event.name }}</h2>
-  <h3>{{ event.start_date|as_date }} <small>{{ article.category.name }}</small></h3>
+    <h2 class="subtitle is-5">{{ event.name }}</h2>
 
-  <p>Tu ticket es: {{ ticket }}</p>
-  <p>En breve te enviaremos a tu dirección de correo un pdf con
-  el código QR de la entrada</p>
-</div>
+    <div class="tags is-centered">
+      <div class="tag is-medium">
+        <span class="icon">
+          <i class="fas fa-calendar-alt"></i>
+        </span>
+        <span>{{ event.start_date|as_date }}</span>
+      </div>
+
+      <div class="tag is-medium">
+        <span class="icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </span>
+        <span>{{ event.venue.name }}</span>
+      </div>
+
+      <div class="tag is-medium">
+        <span class="icon">
+          <i class="fas fa-ticket-alt"></i>
+        </span>
+        <span>{{ article.category.name }}</span>
+      </div>
+    </div>
+
+    <div><strong>Tu ticket es:</strong></div>
+    <div>{{ ticket }}</div>
+
+    <p class="text-info-mail">En breve te enviaremos a tu dirección de correo un pdf con el código QR de la entrada</p>
+  </div>
 {% endblock content %}

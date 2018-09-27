@@ -33,6 +33,7 @@
       .modal-content {
         .slot-title {
           font-size: 1.1em;
+          font-weight: 600;
         }
 
         .slot-tags {
@@ -78,10 +79,6 @@
       &:active,
       &:focus {
         background-color: lighten(#f2f2f3, 1.5);
-      }
-
-      &.inactive-link {
-        pointer-events: none;
       }
 
       &.schedule-slot-plenary {
