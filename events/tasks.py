@@ -5,9 +5,10 @@ import shutil
 import pyqrcode
 from django.conf import settings
 from libs.reports.core import Report
-from django.core.mail import EmailMessage, get_connection
+from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template import loader
 from django_rq import job
+from commons.filters import as_markdown
 
 
 def get_qrcode_as_svg(text, scale=8):
@@ -53,11 +54,15 @@ def create_ticket_message(ticket):
         'event': event,
         })
     targets = [email, ]
-    msg = EmailMessage(
+    msg = EmailMultiAlternatives(
         subject, body,
         from_email=settings.EMAIL_HOST_USER,
         to=targets,
     )
+    html_version = '<html><head></head><body>{}</body></html>'.format(
+        as_markdown(body),
+        )
+    msg.attach_alternative(html_version, 'text/html')
     pdf_filename = create_ticket_pdf(ticket)
     with open(pdf_filename, 'rb') as f:
         msg.attach('ticket.pdf', f.read(), 'application/pdf')
