@@ -46,7 +46,7 @@ function getBuildCustomJsPromise(app) {
 
     rollup({
       input: input,
-      format: 'es',
+      format: 'iife',
       plugins: [
         rollupResolve(),
       ],
