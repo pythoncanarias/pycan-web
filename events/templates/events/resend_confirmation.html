@@ -1,4 +1,5 @@
 {% extends "events/base.html" %}
+{% load social %}
 
 {% block content %}
 
@@ -19,5 +20,16 @@
     </div>
   </div>
 </section>
+
+  <p>Si quieres hacernos un poco de publicidad en tweeter, nos harías
+  un gran favor, solo pulsa en el siguiente enlace y deja que tus
+  seguidores sepan a donde ir para pedirte un autógrafo:
+
+<div class="notification is-warning">
+    <span class="icon"> <i class="fab fa-lg fa-twitter-square"></i> </span>
+{% tweet event.get_full_url %}
+☑ Yo ya he comprado mi entrada para el evento {{ event.name }}. ¿Nos vamos allí? #{{ event.slug }} @pythoncanarias
+{% endtweet %}
+</div>
 
 {% endblock %}

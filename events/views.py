@@ -154,11 +154,11 @@ def ticket_purchase(request, id_article):
             })
 
 
-def ticket_bought(request, keycode):
+def article_bought(request, keycode):
     ticket = Ticket.objects.get(keycode=keycode)
     article = ticket.article
     event = article.event
-    return render(request, 'events/ticket_bought.html', {
+    return render(request, 'events/article_bought.html', {
         'ticket': ticket,
         'article': article,
         'event': event,
@@ -182,7 +182,10 @@ def coc(request, language='es'):
 
 
 def privacy(request):
-    return render(request, 'events/privacy.html')
+    event = Event.objects.all().first()
+    return render(request, 'events/privacy.html', {
+        'event': event,
+        })
 
   
 def find_tickets_by_email(event, email):

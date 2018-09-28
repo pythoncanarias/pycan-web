@@ -113,4 +113,4 @@ class Ticket(models.Model):
         return links.qr_code(self.pk)
 
     def get_absolute_url(self):
-        return reverse('events:ticket_bought', args=(str(self.keycode),))
+        return reverse('events:article_bought', args=(str(self.keycode),))

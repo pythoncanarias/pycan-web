@@ -1,0 +1,37 @@
+{% extends "events/base.html" %}
+{% load social %}
+{% load static %}
+{% load utils %}
+
+{% block content %}
+
+<div class="content">
+  <h1>¡Felicidades! Ya has conseguido tu entrada!</h1>
+  <h2><a href="{% url 'events:detail_event' event.slug %}">{{ event.name }}</a></h2>
+  <h3>{{ event.start_date|as_date }} <small>{{ article.category.name }}</small></h3>
+
+  <p>En breve te enviaremos a tu dirección de correo un pdf con
+  el código QR de la entrada</p>
+
+  <p>Tu ticket es el número <strong>{{ ticket.number }}</strong> y está asociado
+  con la dirección de email <code>{{ ticket.customer_email }}</code>. En caso de que pierdas el
+  PDF siempre te lo podemos <a href="{% url 'events:resend_ticket' slug=event.slug %}">reenviar
+  de nuevo a tu email desde esta página</a>.
+  </p>
+
+  <p>Si quieres hacernos un poco de publicidad en tweeter, nos harías
+  un gran favor, solo pulsa en el siguiente enlace y deja que tus
+  seguidores sepan a donde ir para pedirte un autógrafo:
+
+<div class="notification is-warning">
+    <span class="icon"> <i class="fab fa-lg fa-twitter-square"></i> </span>
+{% tweet event.get_full_url %}
+☑ Yo ya he comprado mi entrada para el evento {{ event.name }}. ¿Nos vamos allí? #{{ event.slug }} @pythoncanarias
+{% endtweet %}
+</div>
+
+
+</div>
+
+
+{% endblock content %}
