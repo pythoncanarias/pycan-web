@@ -7,8 +7,26 @@
         padding: 0;
 
         .speaker-name {
+          margin-top: 1.2em;
+          margin-bottom: 0;
           font-size: 1.1em;
           -webkit-font-smoothing: auto;
+        }
+
+        .speaker-bio {
+          margin-top: 1em;
+
+          p:not(:last-child) {
+            margin-bottom: 0.8em;
+          }
+        }
+
+        .speaker-socials {
+          margin-top: 1em;
+          margin-bottom: -0.1em;
+          border: 0;
+          background-color: transparent;
+          height: auto;
         }
       }
     }

@@ -25,5 +25,5 @@
     {% endfor %}
   </div>
 
-  <p class="slot-description">{{ scheduled_item.slot.description }}</p>
+  <div class="slot-description">{{ scheduled_item.slot.description|linebreaks }}</div>
 {% endblock %}
