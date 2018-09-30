@@ -57,7 +57,7 @@ function validateForm() {
   } else if (document.getElementById('surname-input').value.trim() === '') {
     isValid = false
     showValidationMessage('surname-validation-message')
-  } else if (document.querySelectorAll('.terms input[type=checkbox]:checked').length !== 3) {
+  } else if (document.querySelectorAll('.terms input[type=checkbox]:checked').length !== 1) {
     isValid = false
     showValidationMessage('checkboxes-validation-message')
   }
