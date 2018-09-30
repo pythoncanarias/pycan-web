@@ -115,8 +115,8 @@ def ticket_purchase(request, id_article):
                 customer=customer.id,
                 amount=article.price_in_cents,
                 currency='EUR',
-                description='{} for {}, {}'.format(
-                    article.category.name,
+                description='{}/{}, {}'.format(
+                    event.slug,
                     surname,
                     name,
                 )
