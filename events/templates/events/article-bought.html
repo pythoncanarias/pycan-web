@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load utils %}
+{% load social %}
 
 {% block title %}Entrada comprada - {{ block.super }}{% endblock %}
 
@@ -39,6 +40,17 @@
     <div><strong>Tu ticket es:</strong></div>
     <div>{{ ticket }}</div>
 
-    <p class="text-info-mail">En breve te enviaremos a tu dirección de correo un pdf con el código QR de la entrada</p>
+    <p class="text-info-mail">En breve te enviaremos a tu dirección de correo un pdf con el código QR de la entrada.</p>
+
+    <p>
+      Si quieres hacernos un poco de publicidad en Twitter, nos harías un gran favor, solo pulsa en
+      el siguiente enlace y deja que tus seguidores sepan a donde ir para pedirte un autógrafo:
+    </p>
+    <div class="notification is-warning">
+      <span class="icon"> <i class="fab fa-lg fa-twitter-square"></i> </span>
+    {% tweet event.get_full_url %}
+    ☑ Yo ya he comprado mi entrada para el evento {{ event.name }}. ¿Nos vamos allí? #{{ event.slug }} @pythoncanarias
+    {% endtweet %}
+    </div>
   </div>
 {% endblock content %}
