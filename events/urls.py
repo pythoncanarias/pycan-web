@@ -21,6 +21,6 @@ urlpatterns = [
         ),
     path('<slug:slug>/buy/', views.buy_ticket, name='buy_ticket'),
     path('ticket/purchase/<int:id_article>/', views.ticket_purchase, name='ticket_purchase'),
-    path('ticket/<uuid:keycode>/', views.ticket_bought, name='ticket_bought'),
+    path('ticket/<uuid:keycode>/', views.article_bought, name='article_bought'),
     path('ticket/<int:pk>/qrcode/', views.ticket_qrcode, name='ticket_qrcode'),
 ]

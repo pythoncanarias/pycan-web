@@ -159,7 +159,12 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 SITE_ID = 1
 
-CONTACT_EMAIL = 'info@pythoncanarias.es'
+# Python Canarias Info
+#
+# You probably want to change this to use this code
+
+DOMAIN = config('DOMAIN', default='pythoncanarias.es')
+CONTACT_EMAIL = config('CONTACT_EMAIL', default='info@{}'.format(DOMAIN))
 
 
 # Leaflet settings
