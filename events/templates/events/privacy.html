@@ -1,21 +1,22 @@
 {% extends "events/base.html" %}
 {% load utils %}
 
+{% block title %}Política de privacidad - {{ block.super }}{% endblock %}
+
 {% block content %}
+
+<div class="content box">
 
 {% filter as_markdown %}
 
-## POLÍTICA DE PRIVACIDAD Y PROTECCIÓN DE DATOS
+# Política de privacidad y protección de datos
 
+## 1. Responsable del tratamiento
 
-### 1. RESPONSABLE DEL TRATAMIENTO
+- Responsable del tratamiento: Asociación cultural Python Canarias
+- Correo electrónico:	info@pythoncanarias.es
 
-
- - Responsable del tratamiento:	Asociación Python Canarias 
- - Correo electrónico:	info@@pythoncanarias.es
-
-
-### 2. COSAS QUE NUNCA HAREMOS
+## 2. Cosas que nunca haremos
 
 - Nunca te solicitaremos información personal a menos que realmente sea
   necesaria para prestarte los servicios que nos requieras.
@@ -26,8 +27,7 @@
 - Nunca utilizaremos tus datos personales con una finalidad diferente a la
   expresada en esta política de privacidad.
 
-
-### 2. PARA QUÉ USAREMOS TUS DATOS
+## 3. Para qué usaremos tus datos
 
 Los datos que nos facilites se usaran para:
 
@@ -37,15 +37,14 @@ Los datos que nos facilites se usaran para:
   por la asociación, unicamente en el caso de que se haya
   manifestado explicitamente este preferencia.
 
+## 4. Duración del tratamiento de datos
 
-### 3. DURACIÓN DEL TRATAMIENTO DE DATOS
-
-Los datos se conservaran durante un plazo mínimo de doce meses al 
-amparo de la normativa de conservación de datos relativos a comunicaciones 
-electrónicas y redes públicas de comunicaciones, hasta el plazo que 
+Los datos se conservaran durante un plazo mínimo de doce meses al
+amparo de la normativa de conservación de datos relativos a comunicaciones
+electrónicas y redes públicas de comunicaciones, hasta el plazo que
 prevé la normativa para hacer frente al ejercicio y defensa de reclamaciones.
 
-### 4. PRINCIPIOS
+## 5. Principios
 
 En el tratamiento de tus datos personales, aplicaremos los siguientes principios
 que se ajustan a las exigencias del nuevo reglamento europeo de protección de
@@ -71,5 +70,7 @@ datos:
   tus datos por parte de terceros.
 
 {% endfilter %}
-{% endblock content %}
 
+</div>
+
+{% endblock content %}
