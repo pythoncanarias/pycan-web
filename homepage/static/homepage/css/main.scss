@@ -19,7 +19,7 @@
 
     .links {
       margin-top: 1.5em;
-      margin-bottom: 2.1em;
+      margin-bottom: 2em;
 
       & > .link {
         text-decoration: none;
@@ -28,6 +28,7 @@
     }
 
     .blog-message {
+      margin-top: 1em;
       font-size: 1.1em;
 
       .blog-link {
