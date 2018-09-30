@@ -215,3 +215,7 @@ def resend_confirmation(request, slug):
         'event': event,
         'contact_email': settings.CONTACT_EMAIL,
         })
+
+
+def legal(request):
+    return render(request, 'events/legal.html')
