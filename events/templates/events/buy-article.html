@@ -89,18 +89,7 @@
       <div class="terms">
         <label class="checkbox">
           <input type="checkbox">
-          Acepto el uso de mis datos por parte de Python Canarias.
-        </label>
-
-        <label class="checkbox">
-          <input type="checkbox">
-          Acepto los <a href="">Términos y Condiciones</a> y la <a href="">Política de Privacidad</a>.
-        </label>
-
-        <label class="checkbox">
-          <input type="checkbox">
-          Acepto que los datos facilitados con el fin de comprar mi entrada sean comunicados al organizador Python Canarias
-          para que me envíe comunicaciones comerciales.
+          Acepto los <a href="">Términos y Condiciones</a> y la <a href="{% url 'events:privacy' %}">Política de Privacidad</a>.
         </label>
       </div>
 
@@ -121,7 +110,7 @@
         {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
       {% endwith %}
 
-      {% with id='checkboxes-validation-message' message='Debe aceptar todas las casillas de verificación' %}
+      {% with id='checkboxes-validation-message' message='Debe aceptar la casilla de verificación' %}
         {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
       {% endwith %}
 
