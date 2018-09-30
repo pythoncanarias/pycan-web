@@ -1,10 +1,6 @@
 .tickets-page {
   .content-page {
     & > .box {
-      @include from($custom-mobile) {
-        padding: 2rem;
-      }
-
       & > .title {
         margin-bottom: 0;
       }

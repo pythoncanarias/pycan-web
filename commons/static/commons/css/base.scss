@@ -36,6 +36,10 @@ $footer-height: 4.7rem;
 
   @include from($custom-mobile) {
     padding: 2rem 1rem;
+
+    & > .box {
+      padding: 2rem;
+    }
   }
 
   &.is-narrow {
