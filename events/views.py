@@ -184,7 +184,7 @@ def coc(request, language='es'):
 def privacy(request):
     return render(request, 'events/privacy.html')
 
-  
+
 def find_tickets_by_email(event, email):
     qs = event.all_tickets().filter(customer_email=email)
     return list(qs)
@@ -192,7 +192,7 @@ def find_tickets_by_email(event, email):
 
 def resend_ticket(request, slug):
     event = Event.objects.get(slug=slug)
-    form = forms.EmailForm(request.POST)
+    form = forms.EmailForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
             email = form.cleaned_data['email']
