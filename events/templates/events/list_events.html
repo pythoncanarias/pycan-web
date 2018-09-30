@@ -11,25 +11,29 @@
 <h1 class="title title-list-events">Próximos eventos</h1>
 
 <section>
-  {% for i in "123" %}
-    <a class="box event-box" href="2018/pydaytf/">
+  {% for event in events %}
+    <a class="box event-box" href="{% url 'events:detail_event' slug=event.slug %}">
       <div class="columns is-mobile">
         <div class="column is-3-mobile is-2-tablet">
-          <img src="https://via.placeholder.com/150x150" alt="">
+          {% if event.cover %}
+            <img src="{{ event.cover.url }}" alt="{{ event.name }}">
+          {% endif %}
         </div>
 
         <div class="column">
-          <h1 class="title is-4">PyDay Tenerife 2018</h1>
+          <h1 class="title is-4">{{ event.name }}</h1>
           <div>
             <div class="event-date">
-              <i class="far fa-calendar-alt"></i> 17/nov
+              <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
             </div>
-            <div class="event-location">
-              <i class="fas fa-map-marker-alt"></i> Universidad de La Laguna
-            </div>
+            {% if event.venue %}
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
+              </div>
+            {% endif %}
           </div>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum ut corporis harum esse sunt quam reprehenderit eveniet quos, cum quisquam ex maxime ipsum nisi, amet id consequuntur iusto repellat unde?
+            {{ event.short_description }}
           </p>
         </div>
       </div>
