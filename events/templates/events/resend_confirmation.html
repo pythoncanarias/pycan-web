@@ -1,35 +1,32 @@
 {% extends "events/base.html" %}
 {% load social %}
 
-{% block content %}
+{% block title %}Entrada reenviada - {{ block.super }}{% endblock %}
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-          {{ event.name }}
-      </h1>
-      <h2 class="subtitle">
-        La entrada ha sido reenviada a la dirección de email
-        que nos has indicado, y deberías recibirla en breve. Si
-        no fuera así, ponte en contacto con nosotros en
-        <a href="mailto://{{ contact_email }}">
-            <code>{{ contact_email }}</code>
-        </a>.
-      </h2>
-    </div>
-  </div>
-</section>
+{% block content_class %}is-narrow{% endblock %}
+
+{% block content %}
+<div class="box has-text-centered">
+  <h1 class="title is-blue">{{ event.name }}</h1>
+  <h2 class="subtitle">Entrada reenviada</h2>
+
+  <p>La entrada ha sido reenviada a la dirección de email que nos
+    has indicado, y deberías recibirla en breve.
+    Si no fuera así, ponte en contacto con nosotros en
+    <a href="mailto://{{ contact_email }}">
+      <code>{{ contact_email }}</code>
+    </a>.</p>
 
   <p>Si quieres hacernos un poco de publicidad en tweeter, nos harías
   un gran favor, solo pulsa en el siguiente enlace y deja que tus
   seguidores sepan a donde ir para pedirte un autógrafo:
 
-<div class="notification is-warning">
-    <span class="icon"> <i class="fab fa-lg fa-twitter-square"></i> </span>
-{% tweet event.get_full_url %}
-☑ Yo ya he comprado mi entrada para el evento {{ event.name }}. ¿Nos vamos allí? #{{ event.slug }} @pythoncanarias
-{% endtweet %}
-</div>
+    <div class="notification is-warning">
+        <span class="icon"> <i class="fab fa-lg fa-twitter-square"></i> </span>
+    {% tweet event.get_full_url %}
+    ☑ Yo ya he comprado mi entrada para el evento {{ event.name }}. ¿Nos vamos allí? #{{ event.slug }} @pythoncanarias
+    {% endtweet %}
+    </div>
 
+</div>
 {% endblock %}

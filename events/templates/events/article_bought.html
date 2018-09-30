@@ -1,37 +1,44 @@
 {% extends "events/base.html" %}
-{% load social %}
+
 {% load static %}
 {% load utils %}
 
+{% block title %}Entrada comprada - {{ block.super }}{% endblock %}
+
+{% block body_class %}tickets-page ticket-bought-page{% endblock %}
+
 {% block content %}
+  <div class="box">
+    <h1 class="title is-blue">¡Felicidades!<br/>¡Ya has conseguido tu entrada!</h1>
 
-<div class="content">
-  <h1>¡Felicidades! Ya has conseguido tu entrada!</h1>
-  <h2><a href="{% url 'events:detail_event' event.slug %}">{{ event.name }}</a></h2>
-  <h3>{{ event.start_date|as_date }} <small>{{ article.category.name }}</small></h3>
+    <h2 class="subtitle is-5">{{ event.name }}</h2>
 
-  <p>En breve te enviaremos a tu dirección de correo un pdf con
-  el código QR de la entrada</p>
+    <div class="tags is-centered">
+      <div class="tag is-medium">
+        <span class="icon">
+          <i class="fas fa-calendar-alt"></i>
+        </span>
+        <span>{{ event.start_date|as_date }}</span>
+      </div>
 
-  <p>Tu ticket es el número <strong>{{ ticket.number }}</strong> y está asociado
-  con la dirección de email <code>{{ ticket.customer_email }}</code>. En caso de que pierdas el
-  PDF siempre te lo podemos <a href="{% url 'events:resend_ticket' slug=event.slug %}">reenviar
-  de nuevo a tu email desde esta página</a>.
-  </p>
+      <div class="tag is-medium">
+        <span class="icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </span>
+        <span>{{ event.venue.name }}</span>
+      </div>
 
-  <p>Si quieres hacernos un poco de publicidad en tweeter, nos harías
-  un gran favor, solo pulsa en el siguiente enlace y deja que tus
-  seguidores sepan a donde ir para pedirte un autógrafo:
+      <div class="tag is-medium">
+        <span class="icon">
+          <i class="fas fa-ticket-alt"></i>
+        </span>
+        <span>{{ article.category.name }}</span>
+      </div>
+    </div>
 
-<div class="notification is-warning">
-    <span class="icon"> <i class="fab fa-lg fa-twitter-square"></i> </span>
-{% tweet event.get_full_url %}
-☑ Yo ya he comprado mi entrada para el evento {{ event.name }}. ¿Nos vamos allí? #{{ event.slug }} @pythoncanarias
-{% endtweet %}
-</div>
+    <div><strong>Tu ticket es:</strong></div>
+    <div>{{ ticket }}</div>
 
-
-</div>
-
-
+    <p class="text-info-mail">En breve te enviaremos a tu dirección de correo un pdf con el código QR de la entrada</p>
+  </div>
 {% endblock content %}

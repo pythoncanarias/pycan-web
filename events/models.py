@@ -68,6 +68,8 @@ class Event(models.Model):
             order_by('name', 'surname')
 
     def venue(self):
+        if not self.schedule.exists():
+            return None
         return self.schedule.filter(location__isnull=False).\
             first().location.venue
 

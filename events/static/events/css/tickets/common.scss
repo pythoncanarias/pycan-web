@@ -1,0 +1,30 @@
+.tickets-page {
+  .content-page {
+    & > .box {
+      @include from($custom-mobile) {
+        padding: 2rem;
+      }
+
+      & > .title {
+        margin-bottom: 0;
+      }
+
+      & > .subtitle {
+        font-size: 1.2em;
+        margin: 0.7em 0 0.9em 0;
+        font-weight: 600;
+      }
+
+      .tag {
+        height: auto;
+        white-space: normal;
+        padding: 0.3em 0.75em;
+      }
+
+      .price-tag {
+        background-color: #ffe8bd;
+        border: 1px solid #ffdc9a;
+      }
+    }
+  }
+}

@@ -5,7 +5,17 @@
 {% block modal_content %}
   <div class="speaker-box">
     <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
+
     <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
-    <p>{{ speaker.bio }}</p>
+
+    <div class="speaker-bio">{{ speaker.bio|linebreaks }}</div>
+
+    {% if speaker.socials_for_display %}
+      <div class="speaker-socials">
+        {% for social in speaker.socials_for_display %}
+          <a href="{{ social.href }}" target="_blank"><i class="fab fa-{{ social.code }}"></i></a>
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 {% endblock %}

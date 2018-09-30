@@ -6,7 +6,7 @@
   text-align: center;
 
   & > .inner {
-    padding: 4.5em 0.8em;
+    padding: 4.5em 0.8em 4.2em 0.8em;
     background-color: #000d19b8;
 
     .title,
@@ -38,8 +38,20 @@
 
     .button {
       margin-top: 0.3em;
-      background-color: $yellow-bg;
-      font-size: 1.1em;
+    }
+
+    .link-to-resend-ticket {
+      display: inline-block;
+      margin-top: 1.2em;
+      padding: 0.3em;
+      font-size: 0.85em;
+      color: rgba(255, 255, 255, 0.55);
+
+      &:hover,
+      &:active,
+      &:focus {
+        color: rgba(255, 255, 255, 0.9);
+      }
     }
   }
 }

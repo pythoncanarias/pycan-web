@@ -33,17 +33,28 @@
       .modal-content {
         .slot-title {
           font-size: 1.1em;
+          font-weight: 600;
         }
 
         .slot-tags {
+          margin-top: 0.8em;
+
           .slot-tag {
             font-size: 0.8em;
             background-color: $light;
           }
         }
 
+        .slot-attributes {
+          margin-top: 0.7em;
+        }
+
         .slot-description {
-          margin-top: 0.5em;
+          margin-top: 1em;
+
+          p:not(:last-child) {
+            margin-bottom: 0.8em;
+          }
         }
       }
     }
@@ -78,10 +89,6 @@
       &:active,
       &:focus {
         background-color: lighten(#f2f2f3, 1.5);
-      }
-
-      &.inactive-link {
-        pointer-events: none;
       }
 
       &.schedule-slot-plenary {
