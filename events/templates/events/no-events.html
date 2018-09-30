@@ -1,11 +1,11 @@
 {% extends "events/base.html" %}
 
-{% block title %}Eventos - {{ block.super }}{% endblock %}
+{% block title %}No hay eventos programados - {{ block.super }}{% endblock %}
+
+{% block content_class %}is-narrow{% endblock %}
 
 {% block content %}
-
-<div class="wall">
-    <h2>Por el momento no hay eventos programados</h2>
+<div class="box has-text-centered">
+  <h1 class="title is-6">Por el momento no hay eventos programados</h1>
 </div>
-
 {% endblock content %}
