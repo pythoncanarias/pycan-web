@@ -40,10 +40,11 @@
 
         <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias" />
 
+        {% if active_events %} 
         <div class="links buttons is-centered">
-          <a href="https://pyday.pythoncanarias.es" target="_blank" class="link button is-link is-medium">PyDay TF 2018</a>
-          <a href="https://micropython.pythoncanarias.es/" target="_blank" class="link button is-link is-medium">MicroPython</a>
+          <a href="https://pythoncanarias.es/events/" class="link button is-link is-medium">Eventos</a>
         </div>
+        {% endif %} 
 
         <h4 class="blog-message">Para más noticias, pásate por nuestro
           <a href="https://medium.com/pythoncanarias" target="_blank" class="blog-link">
