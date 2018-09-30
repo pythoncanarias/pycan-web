@@ -32,7 +32,7 @@ def index(request):
         event = events.first()
         return redirect('events:detail_event', slug=event.slug)
     else:
-        return render(request, 'events/list_events.html', {
+        return render(request, 'events/list-events.html', {
             'events': events.all()
             })
 
@@ -45,7 +45,7 @@ def detail_event(request, slug):
 
 
 def stripe_payment_declined(request, charge):
-    return render(request, 'events/payment_declined.html', {
+    return render(request, 'events/payment-declined.html', {
         'email': settings.CONTACT_EMAIL,
         'charge_id': charge.id,
         }
@@ -54,7 +54,7 @@ def stripe_payment_declined(request, charge):
 
 def stripe_payment_error(request, exception):
     msg, extra_info = stripe_utils.get_description_from_exception(exception)
-    return render(request, 'events/payment_error.html', {
+    return render(request, 'events/payment-error.html', {
         'msg': msg,
         'extra_info': extra_info,
         'error': str(exception),
@@ -80,14 +80,14 @@ def buy_ticket(request, slug):
 
 
 def no_available_articles(request, event, all_articles):
-    return render(request, "events/no_available_articles.html", {
+    return render(request, "events/no-available-articles.html", {
         'event': event,
         'contact_email': settings.CONTACT_EMAIL,
         })
 
 
 def select_article(request, event, all_articles, active_articles):
-    return render(request, "events/select_article.html", {
+    return render(request, "events/select-article.html", {
         'event': event,
         'all_articles': all_articles,
         'active_articles': active_articles,
@@ -147,7 +147,7 @@ def ticket_purchase(request, id_article):
             from django.http import HttpResponse
             return HttpResponse("Something goes wrong\n{}".format(err))
     else:
-        return render(request, 'events/buy_article.html', {
+        return render(request, 'events/buy-article.html', {
             'event': event,
             'article': article,
             'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
@@ -158,7 +158,7 @@ def article_bought(request, keycode):
     ticket = Ticket.objects.get(keycode=keycode)
     article = ticket.article
     event = article.event
-    return render(request, 'events/article_bought.html', {
+    return render(request, 'events/article-bought.html', {
         'ticket': ticket,
         'article': article,
         'event': event,
@@ -177,7 +177,7 @@ def ticket_qrcode(request, pk):
 
 
 def coc(request, language='es'):
-    template = 'events/coc_{}.html'.format(language)
+    template = 'events/coc-{}.html'.format(language)
     return render(request, template)
 
 
@@ -203,7 +203,7 @@ def resend_ticket(request, slug):
             for ticket in tickets:
                 send_ticket.delay(ticket)
             return redirect('events:resend_confirmation', slug=event.slug)
-    return render(request, 'events/resend_ticket.html', {
+    return render(request, 'events/resend-ticket.html', {
         'event': event,
         'form': form,
     })
@@ -211,7 +211,7 @@ def resend_ticket(request, slug):
 
 def resend_confirmation(request, slug):
     event = Event.objects.get(slug=slug)
-    return render(request, 'events/resend_confirmation.html', {
+    return render(request, 'events/resend-confirmation.html', {
         'event': event,
         'contact_email': settings.CONTACT_EMAIL,
         })
