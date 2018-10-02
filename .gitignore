@@ -91,3 +91,4 @@ node_modules
 /static/
 .vscode
 /media/
+/temporal/
