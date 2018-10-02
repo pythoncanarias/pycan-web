@@ -40,11 +40,11 @@
 
         <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias" />
 
-        {% if active_events %} 
+        {% if active_events %}
         <div class="links buttons is-centered">
-          <a href="https://pythoncanarias.es/events/" class="link button is-link is-medium">Eventos</a>
+          <a href="{% url 'events:index' %}" class="link button is-link is-medium">Eventos</a>
         </div>
-        {% endif %} 
+        {% endif %}
 
         <h4 class="blog-message">Para más noticias, pásate por nuestro
           <a href="https://medium.com/pythoncanarias" target="_blank" class="blog-link">
