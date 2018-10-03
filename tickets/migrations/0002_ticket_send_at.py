@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ticket',
             name='send_at',
-            field=models.DateTimeField(default=None),
+            field=models.DateTimeField(blank=True, default=None, null=True),
         ),
     ]

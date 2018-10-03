@@ -101,7 +101,7 @@ class Ticket(models.Model):
     customer_name = models.CharField(max_length=256, blank=True)
     customer_surname = models.CharField(max_length=256, blank=True)
     customer_phone = models.CharField(max_length=32, blank=True)
-    send_at = models.DateTimeField(default=None)
+    send_at = models.DateTimeField(default=None, blank=True, null=True)
 
     def __str__(self):
         return '{}/{} [{}]'.format(
