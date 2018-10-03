@@ -1,12 +1,14 @@
 import io
 import os
 import shutil
+import time
 
 import pyqrcode
 from django.conf import settings
 from libs.reports.core import Report
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template import loader
+from django.utils import timezone
 from django_rq import job
 from commons.filters import as_markdown
 
@@ -77,3 +79,6 @@ def send_ticket(ticket, force=False):
     with get_connection() as conn:
         msg.connection = conn
         msg.send(fail_silently=False)
+        ticket.send_at = timezone.now()
+        ticket.save()
+    time.sleep(210)  # 210 s = 3 minutes and a half (ovh limit is 3 minutes)
