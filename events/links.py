@@ -5,6 +5,13 @@ def event_detail(slug):
     return reverse('events:detail_event', kwargs={'slug': slug})
 
 
-def ticket_purchase(pk):
-    pk = int(pk)
-    return reverse('events:ticket_purchase', kwargs={'id_article': pk})
+def ticket_purchase(id_article):
+    id_article = int(id_article)
+    return reverse('events:ticket_purchase', kwargs={'id_article': id_article})
+
+
+def article_bought(id_article):
+    id_article = int(id_article)
+    return reverse('events:article_bought', kwargs={'id_article': id_article})
+
+

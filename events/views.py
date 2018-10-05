@@ -20,6 +20,7 @@ from . import forms
 from . import links
 from . import stripe_utils
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -38,7 +39,7 @@ def index(request):
 
 
 def detail_event(request, slug):
-    event = Event.objects.get(slug=slug)
+    event = Event.objects.get(slug__iexact=slug)
     return render(request, 'events/event.html', {
         'event': event,
     })
@@ -65,7 +66,7 @@ def stripe_payment_error(request, exception):
 
 def buy_ticket(request, slug):
     logger.info("buy_tickts starts : slug={}".format(slug))
-    event = Event.objects.get(slug=slug)
+    event = Event.objects.get(slug__iexact=slug)
     all_articles = [a for a in event.all_articles()]
     active_articles = [a for a in all_articles if a.is_active()]
     num_active_articles = len(active_articles)
@@ -133,7 +134,7 @@ def ticket_purchase(request, id_article):
                     )
                 ticket.save()
                 send_ticket.delay(ticket)
-                return redirect(ticket.get_absolute_url())
+                return redirect(links.article_bought(article.pk))
             else:
                 return stripe_payment_declined(request, charge)
         except stripe.error.StripeError as err:
@@ -154,26 +155,26 @@ def ticket_purchase(request, id_article):
             })
 
 
-def article_bought(request, keycode):
-    ticket = Ticket.objects.get(keycode=keycode)
-    article = ticket.article
+def article_bought(request, id_article):
+    article = Article.objects.select_related('event').get(pk=id_article)
+    assert article.is_active(), "Este tipo de entrada no está ya disponible."
     event = article.event
     return render(request, 'events/article-bought.html', {
-        'ticket': ticket,
         'article': article,
         'event': event,
+        'contact_email': settings.CONTACT_EMAIL,
         })
 
 
-def ticket_qrcode(request, pk):
-    ticket = Ticket.objects.get(pk=pk)
-    img = pyqrcode.create(str(ticket.keycode))
-    buff = io.BytesIO()
-    img.svg(buff, scale=8)
-    return HttpResponse(
-        buff.getvalue(),
-        content_type='image/svg+xml',
-        )
+# def ticket_qrcode(request, pk):
+    # ticket = Ticket.objects.get(pk=pk)
+    # img = pyqrcode.create(str(ticket.keycode))
+    # buff = io.BytesIO()
+    # img.svg(buff, scale=8)
+    # return HttpResponse(
+        # buff.getvalue(),
+        # content_type='image/svg+xml',
+        # )
 
 
 def coc(request, language='es'):
@@ -194,7 +195,7 @@ def find_tickets_by_email(event, email):
 
 
 def resend_ticket(request, slug):
-    event = Event.objects.get(slug=slug)
+    event = Event.objects.get(slug__iexact=slug)
     form = forms.EmailForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -210,7 +211,7 @@ def resend_ticket(request, slug):
 
 
 def resend_confirmation(request, slug):
-    event = Event.objects.get(slug=slug)
+    event = Event.objects.get(slug__iexact=slug)
     return render(request, 'events/resend-confirmation.html', {
         'event': event,
         'contact_email': settings.CONTACT_EMAIL,
