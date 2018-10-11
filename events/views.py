@@ -65,7 +65,7 @@ def stripe_payment_error(request, exception):
 
 
 def buy_ticket(request, slug):
-    logger.info("buy_tickts starts : slug={}".format(slug))
+    logger.debug("buy_tickts starts : slug={}".format(slug))
     event = Event.objects.get(slug__iexact=slug)
     all_articles = [a for a in event.all_articles()]
     active_articles = [a for a in all_articles if a.is_active()]
