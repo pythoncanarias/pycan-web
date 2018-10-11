@@ -13,11 +13,11 @@ pydotplus = "*"
 "autopep8" = "*"
 pytest-django = "*"
 
-[requires]
-python_version = "3.6"
+# [requires]
+# python_version = ">3.6"
 
 [packages]
-django = "*"
+django = ">=2.1.2"
 stripe = "*"
 pillow = "*"
 prettyconf = "*"
