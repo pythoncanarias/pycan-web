@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.http import HttpResponse
 
 from .models import SlotCategory, SlotTag, SlotLevel, Slot, \
     Track, Schedule
@@ -48,3 +49,21 @@ class ScheduleAdmin(admin.ModelAdmin):
                      'track__name', 'speakers__name', 'speakers__surname']
     list_display = ('slot', 'event', 'location', 'start')
     autocomplete_fields = ['speakers', 'slot']
+
+    def download_speakers_emails(self, request, queryset):
+        emails = set()
+        for schedule in queryset:
+            schedule_emails = schedule.speakers.all().values_list(
+                'email', flat=True)
+            if schedule_emails:
+                emails.add(*schedule_emails)
+        content = ','.join(emails)
+        filename = 'emails.txt'
+        response = HttpResponse(content, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename={}'.format(
+            filename)
+        return response
+
+    download_speakers_emails.short_description = "Download speakers' emails"
+
+    actions = [download_speakers_emails, ]

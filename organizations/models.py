@@ -105,3 +105,6 @@ class Membership(models.Model):
 
     def __str__(self):
         return "{} {} {}".format(self.organization, self.category, self.amount)
+
+    def get_email(self):
+        return self.management_email or self.organization.email
