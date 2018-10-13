@@ -36,6 +36,7 @@ class Article(models.Model):
     SOLDOUT = 'SOLDOUT'
     SALEABLE = 'SALEABLE'
     UPCOMING = 'UPCOMING'
+    HIDDEN = 'HIDDEN'
 
     event = models.ForeignKey(
         'events.Event',
@@ -76,8 +77,10 @@ class Article(models.Model):
     is_active.boolean = True
 
     def status(self):
+        if self.release_at is None:
+            return Article.HIDDEN
         now = django.utils.timezone.now()
-        if self.release_at is None or self.release_at > now:
+        if self.release_at > now:
             return Article.UPCOMING
         today = now.date()
         if self.num_available_tickets <= 0 or self.event.start_date < today:
