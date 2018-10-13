@@ -50,7 +50,7 @@ class Article(models.Model):
     )
     price = models.DecimalField(max_digits=9, decimal_places=2)
     stock = models.PositiveIntegerField()
-    release_at = models.DateTimeField()
+    release_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return '{} [{}]'.format(self.category, self.event)
