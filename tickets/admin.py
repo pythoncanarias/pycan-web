@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.http import HttpResponse
+
 from .models import TicketCategory, Article, Ticket
 from events.tasks import send_ticket
 
@@ -69,5 +71,16 @@ class TicketAdmin(admin.ModelAdmin):
 
     resend_ticket.short_description = "Resend ticket"
 
-    actions = [resend_ticket, resend_ticket_force, ]
+    def download_emails(self, request, queryset):
+        distinct_emails = queryset.order_by().values_list(
+            'customer_email', flat=True).distinct()
+        content = ','.join(distinct_emails)
+        filename = 'emails.txt'
+        response = HttpResponse(content, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename={}'.format(
+            filename)
+        return response
 
+    download_emails.short_description = "Download customers' emails"
+
+    actions = [resend_ticket, resend_ticket_force, download_emails, ]
