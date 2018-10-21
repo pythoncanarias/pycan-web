@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'schedule',
     'speakers',
     'tickets',
+    'api',
 ]
 
 MIDDLEWARE = [
