@@ -1,5 +1,6 @@
 import uuid
 from decimal import Decimal
+from PIL import ImageFont, ImageDraw, Image
 
 import django
 from django.db import models
@@ -128,3 +129,49 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return reverse('events:article_bought', args=(str(self.keycode),))
+
+
+class Badge(models.Model):
+    article = models.ForeignKey('tickets.Article', on_delete=models.CASCADE)
+    base_image = models.ImageField(upload_to=f"events/badges/", blank=False)
+    # Coordinates start from the top-left corner
+    name_coordinates = models.CharField(
+        max_length=255,
+        verbose_name="eg: 100,50 (0,0 will prevent this field to be printed)"
+    )
+    name_font_size = models.PositiveIntegerField()
+    #name_color = ""
+    number_coordinates = models.CharField(
+        max_length=255,
+        verbose_name="eg: 100,50 (0,0 will prevent this field to be printed)"
+    )
+    number_font_size = models.PositiveIntegerField()
+    #number_color = ""
+    category_coordinates = models.CharField(
+        max_length=255,
+        verbose_name="eg: 100,50 (0,0 will prevent this field to be printed)"
+    )
+    category_font_size = models.PositiveIntegerField()
+    #category_color = ""
+
+    @staticmethod
+    def coord_to_tuple(coord):
+        return tuple(int(i) for i in coord.split(","))
+
+    def __str__(self):
+        return f'Badge for {self.article}'
+
+    def render(self, ticket=Ticket):
+        img = Image.open(self.base_image.path)
+        image_draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype("fonts/arial.ttf", size=20)
+        print(f"Rendering ticket {ticket.number} for {ticket.customer_name} on {self.coord_to_tuple(self.name_coordinates)} using base image = {self.base_image.path}")
+        image_draw.text(
+            self.coord_to_tuple(self.name_coordinates),
+            f'{ticket.customer_name} \n{ticket.customer_surname}',
+            fill=(255, 255, 255),
+            font=font
+        )
+        # test
+        img.save(f"image_{ticket.customer_name}.png", quality=100)
+        return img
