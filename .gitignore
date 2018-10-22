@@ -92,3 +92,5 @@ node_modules
 .vscode
 /media/
 /temporal/
+.media
+.idea

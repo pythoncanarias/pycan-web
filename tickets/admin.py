@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import TicketCategory, Article, Ticket
+from .models import TicketCategory, Article, Ticket, Badge
 from events.tasks import send_ticket
 
 
@@ -84,3 +84,8 @@ class TicketAdmin(admin.ModelAdmin):
     download_emails.short_description = "Download customers' emails"
 
     actions = [resend_ticket, resend_ticket_force, download_emails, ]
+
+
+@admin.register(Badge)
+class BadgeAdmin(admin.ModelAdmin):
+    pass
