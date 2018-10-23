@@ -9,6 +9,7 @@ urlpatterns = [
     path('django-rq/', include('django_rq.urls')),
     path('admin/', admin.site.urls),
     path('events/', include('events.urls', namespace='events')),
+    path('api/', include('api.urls', namespace='api')),
 ]
 
 if settings.DEBUG:

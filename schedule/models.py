@@ -65,6 +65,13 @@ class Slot(models.Model):
     def __str__(self):
         return self.name
 
+    def get_tags(self):
+        return [
+            t.slug
+            for t in self.tags.all().order_by('slug')
+            ]
+
+
 
 class Track(models.Model):
     name = models.CharField(max_length=256)
@@ -87,6 +94,19 @@ class Track(models.Model):
         else:
             schedule = self.schedule.all()
         return schedule.order_by('start')
+
+    def get_talks(self):
+        return [
+                {
+                'name': _.slot.name,
+                'start': _.start.strftime('%H:%M'),
+                'end': _.end.strftime('%H:%M'),
+                'description': _.slot.description,
+                'tags': _.slot.get_tags(),
+                'language': _.language,
+                }
+                for _ in self.schedule.all().select_related('slot').order_by('start')
+            ]
 
 
 class Schedule(models.Model):
