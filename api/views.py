@@ -1,10 +1,8 @@
 from django.http import HttpResponse
 import json
 import functools
-
-CURRENT_API_VERSION = 1
-
 from events.models import Event
+from django.conf import settings
 
 
 def api(func):
@@ -21,7 +19,7 @@ def api(func):
         return HttpResponse(
             json.dumps(response, indent=4),
             content_type='application/json',
-            )
+        )
 
     return wrapper
 
@@ -30,21 +28,19 @@ def api(func):
 def status(request):
     return {
         "active": True,
-        "version": CURRENT_API_VERSION,
-        }
+        "version": settings.CURRENT_API_VERSION,
+    }
 
 
 @api
 def list_events(request):
-    active_events = Event.objects.all().filter(active=True).order_by('start_date')
-    return [
-        dict(
-            slug=e.slug,
-            name=e.name,
-            start=e.start_date.isoformat(),
-            ) 
-        for e in active_events
-        ]
+    active_events = Event.objects.all().filter(
+        active=True).order_by('start_date')
+    return [{
+        'slug': e.slug,
+        'name': e.name,
+        'start': e.start_date.isoformat(),
+    } for e in active_events]
 
 
 @api
@@ -58,13 +54,10 @@ def detail_event(request, slug):
         'start_date': event.start_date.isoformat(),
         'short_description': event.short_description,
         'url': event.get_full_url(),
-        'tracks': [
-            {
-                'track_id': t.pk,
-                'order': t.order,
-                'name': t.name,
-                'talks': t.get_talks(),
-            } for t in tracks
-            ],
-        }
-
+        'tracks': [{
+            'track_id': t.pk,
+            'order': t.order,
+            'name': t.name,
+            'talks': t.get_talks(),
+        } for t in tracks],
+    }
