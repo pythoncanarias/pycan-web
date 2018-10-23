@@ -10,8 +10,8 @@ pytest-sugar = "*"
 ipython = "*"
 "fabric3" = "*"
 pydotplus = "*"
-"autopep8" = "*"
 pytest-django = "*"
+yapf = "*"
 
 [requires]
 python_version = "3.6"
