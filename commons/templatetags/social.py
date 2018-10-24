@@ -17,21 +17,13 @@ def make_tweet(msg, url=''):
 
 @register.tag(name="tweet")
 def tweet(parser, token):
-    print('tweet starts')
     params = token.split_contents()
-    print('params:')
-    for p in params:
-        print(' - {}'.format(p))
     tag_name = params.pop(0)
     assert tag_name == 'tweet'
     url = template.Variable(params.pop(0)) if params else ''
     assert len(params) == 0
     nodelist = parser.parse(('endtweet',))
     parser.delete_first_token()
-    print('return TweetNode({}, {})'.format(
-        repr(nodelist),
-        repr(url),
-        ))
     return TweetNode(nodelist, url)
 
 

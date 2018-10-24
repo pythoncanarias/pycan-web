@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.http import HttpResponse
 
 from .models import Organization, OrganizationRole, \
     OrganizationCategory, Membership
@@ -47,3 +48,15 @@ class MembershipAdmin(admin.ModelAdmin):
     list_filter = ('category__name',)
     search_fields = ['organization__name']
     autocomplete_fields = ['organization', 'joint_organization']
+
+    def download_emails(self, request, queryset):
+        content = ','.join([m.get_email() for m in queryset])
+        filename = 'emails.txt'
+        response = HttpResponse(content, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename={}'.format(
+            filename)
+        return response
+
+    download_emails.short_description = 'Download management emails'
+
+    actions = [download_emails, ]
