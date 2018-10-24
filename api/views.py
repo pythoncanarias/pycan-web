@@ -1,5 +1,4 @@
-from django.http import HttpResponse
-import json
+from django.http import JsonResponse
 import functools
 from events.models import Event
 from django.conf import settings
@@ -16,10 +15,7 @@ def api(func):
         except Exception as err:
             response['status'] = 'error'
             response['message'] = str(err)
-        return HttpResponse(
-            json.dumps(response, indent=4),
-            content_type='application/json',
-        )
+        return JsonResponse(response, json_dumps_params={'indent': 4})
 
     return wrapper
 
