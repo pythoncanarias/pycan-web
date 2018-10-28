@@ -1,12 +1,6 @@
 import logging
-import io
 
 import stripe
-import pyqrcode
-
-from libs.reports.core import Report
-
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
@@ -15,7 +9,6 @@ from tickets.models import Article
 from tickets.models import Ticket
 from events.models import Event
 from events.tasks import send_ticket
-
 from . import forms
 from . import links
 from . import stripe_utils
@@ -125,13 +118,12 @@ def ticket_purchase(request, id_article):
             if charge.paid:
                 ticket = Ticket(
                     article=article,
-                    number=article.next_number(),
                     customer_name=name,
                     customer_surname=surname,
                     customer_email=email,
                     customer_phone=phone,
                     payment_id=charge.id,
-                    )
+                )
                 ticket.save()
                 send_ticket.delay(ticket)
                 return redirect(links.article_bought(article.pk))
@@ -164,17 +156,6 @@ def article_bought(request, id_article):
         'event': event,
         'contact_email': settings.CONTACT_EMAIL,
         })
-
-
-# def ticket_qrcode(request, pk):
-    # ticket = Ticket.objects.get(pk=pk)
-    # img = pyqrcode.create(str(ticket.keycode))
-    # buff = io.BytesIO()
-    # img.svg(buff, scale=8)
-    # return HttpResponse(
-        # buff.getvalue(),
-        # content_type='image/svg+xml',
-        # )
 
 
 def coc(request, language='es'):
