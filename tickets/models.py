@@ -2,7 +2,6 @@ import uuid
 from decimal import Decimal
 
 import django
-
 from django.db import models
 from django.db.models import Max
 from django.urls import reverse
@@ -90,8 +89,10 @@ class Article(models.Model):
 
 class Ticket(models.Model):
     number = models.PositiveIntegerField(
-        help_text='Consecutive number within event'
-    )
+        help_text=('Consecutive number within event '
+                   '(if blank it will be automatically fulfilled)'),
+        null=True,
+        blank=True)
     keycode = models.UUIDField(default=uuid.uuid4)
     sold_at = models.DateTimeField(auto_now_add=True)
     payment_id = models.CharField(max_length=128, blank=True)
@@ -112,6 +113,15 @@ class Ticket(models.Model):
             self.article.event,
             self.customer_email
         )
+
+    @property
+    def event(self):
+        return self.article.event
+
+    def save(self, *args, **kwargs):
+        if not self.number:
+            self.number = self.event.next_ticket_number()
+        super().save(*args, **kwargs)
 
     def get_qrcode_url(self):
         return links.qr_code(self.pk)
