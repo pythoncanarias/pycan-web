@@ -1,3 +1,5 @@
+import os
+
 import locale
 import datetime
 import pytz
@@ -159,9 +161,18 @@ class Event(models.Model):
         qs = qs.order_by('category__name')
         return qs
 
+    def render_all_badges(self, remove_images=False):
+        """
+        Render all Badges for this event as images, save them and make an unique PDF with all
+        badges for printing.
+        :param remove_images: True if each badge image should be removed after creating the final PDF
+        :return:
+        """
+        pass
+
 
 class Badge(models.Model):
-    article = models.ForeignKey('events.Event', on_delete=models.CASCADE)
+    event = models.ForeignKey('events.Event', on_delete=models.CASCADE)
     base_image = models.ImageField(upload_to=f"events/badges/", blank=False)
     # Coordinates start from the top-left corner
     name_coordinates = models.CharField(
@@ -170,40 +181,81 @@ class Badge(models.Model):
         default="0,0"
     )
     name_font_size = models.PositiveIntegerField(default=24)
-    name_color = ColorField(default='#FF0000')
+    name_color = ColorField(default='#FFFFFF')
     number_coordinates = models.CharField(
         max_length=255,
         verbose_name="Ticket number coordinates",
         default="0,0"
     )
     number_font_size = models.PositiveIntegerField(default=24)
-    number_color = ColorField(default='#FF0000')
+    number_color = ColorField(default='#FFFFFF')
     category_coordinates = models.CharField(
         max_length=255,
         verbose_name="Ticket category coordinates",
         default="0,0"
     )
     category_font_size = models.PositiveIntegerField(default=24)
-    category_color = ColorField(default='#FF0000')
+    category_color = ColorField(default='#FFFFFF')
+
+    def __str__(self):
+        return f'Badge for {self.event.name}'
 
     @staticmethod
     def coord_to_tuple(coord):
         return tuple(int(i) for i in coord.split(","))
 
-    def __str__(self):
-        return f'Badge for {self.article}'
+    @staticmethod
+    def _parse_name(name: str, surname: str):
+        name_list = name.split()
+        if len(name_list) >= 2 and len(name_list[1]) > 2:
+            name = f"{name_list[0]} {name_list[1][:1]}."
 
-    def render(self, ticket=Ticket):
-        img = Image.open(self.base_image.path)
-        image_draw = ImageDraw.Draw(img)
-        font = ImageFont.truetype("fonts/arial.ttf", size=20)
-        print(f"Rendering ticket {ticket.number} for {ticket.customer_name} on {self.coord_to_tuple(self.name_coordinates)} using base image = {self.base_image.path}")
+        return f"{name} \n{surname}"
+
+    @staticmethod
+    def _hex_to_rgb(color: str)-> tuple:
+        return tuple(int(color.lstrip("#")[i: i + 2], 16) for i in (0, 2, 4))
+
+    def add_field(self, image_draw: ImageDraw, text: str, coord: str, font_size: int, color: str):
+        font = ImageFont.truetype("fonts/arial.ttf", size=font_size)
         image_draw.text(
-            self.coord_to_tuple(self.name_coordinates),
-            f'{ticket.customer_name} \n{ticket.customer_surname}',
-            fill=(255, 255, 255),
+            self.coord_to_tuple(coord),
+            text,
+            fill=self._hex_to_rgb(color),
             font=font
         )
+        return image_draw
+
+    def render(self, ticket: Ticket):
+        img = Image.open(self.base_image.path)
+        image_draw = ImageDraw.Draw(img)
+        self.add_field(
+            image_draw,
+            self._parse_name(ticket.customer_name, ticket.customer_surname),
+            self.name_coordinates,
+            self.name_font_size,
+            self.name_color
+        )
+        self.add_field(
+            image_draw,
+            str(ticket.number),
+            self.number_coordinates,
+            self.number_font_size,
+            self.number_color
+        )
+        self.add_field(
+            image_draw,
+            ticket.article.category.name,
+            self.category_coordinates,
+            self.category_font_size,
+            self.category_color
+        )
         # test
-        img.save(f"image_{ticket.customer_name}.png", quality=100)
+        path = f"{settings.MEDIA_ROOT}/events/{self.event.slug}/badge_{ticket.number}.png"
+        if not os.path.exists(os.path.dirname(path)):
+            try:
+                os.makedirs(os.path.dirname(path))
+            except OSError:
+                raise
+        img.save(path, quality=100)
         return img
