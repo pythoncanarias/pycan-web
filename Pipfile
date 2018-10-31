@@ -13,8 +13,6 @@ pydotplus = "*"
 pytest-django = "*"
 yapf = "*"
 rope = "*"
-# [requires]
-# python_version = ">3.6"
 
 [packages]
 django = ">=2.1.2"
@@ -33,3 +31,4 @@ rq = "*"
 django-leaflet = "*"
 django-rq = "*"
 sendgrid = "*"
+django-colorfield = "*"
