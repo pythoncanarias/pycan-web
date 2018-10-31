@@ -1,6 +1,8 @@
 import locale
 import datetime
 import pytz
+from PIL import Image, ImageDraw, ImageFont
+from colorfield.fields import ColorField
 
 from django.db import models
 from django.conf import settings
@@ -156,3 +158,52 @@ class Event(models.Model):
         qs = self.articles.select_related('category')
         qs = qs.order_by('category__name')
         return qs
+
+
+class Badge(models.Model):
+    article = models.ForeignKey('events.Event', on_delete=models.CASCADE)
+    base_image = models.ImageField(upload_to=f"events/badges/", blank=False)
+    # Coordinates start from the top-left corner
+    name_coordinates = models.CharField(
+        max_length=255,
+        verbose_name="Person name coordinates (eg 15,23).",
+        default="0,0"
+    )
+    name_font_size = models.PositiveIntegerField(default=24)
+    name_color = ColorField(default='#FF0000')
+    number_coordinates = models.CharField(
+        max_length=255,
+        verbose_name="Ticket number coordinates",
+        default="0,0"
+    )
+    number_font_size = models.PositiveIntegerField(default=24)
+    number_color = ColorField(default='#FF0000')
+    category_coordinates = models.CharField(
+        max_length=255,
+        verbose_name="Ticket category coordinates",
+        default="0,0"
+    )
+    category_font_size = models.PositiveIntegerField(default=24)
+    category_color = ColorField(default='#FF0000')
+
+    @staticmethod
+    def coord_to_tuple(coord):
+        return tuple(int(i) for i in coord.split(","))
+
+    def __str__(self):
+        return f'Badge for {self.article}'
+
+    def render(self, ticket=Ticket):
+        img = Image.open(self.base_image.path)
+        image_draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype("fonts/arial.ttf", size=20)
+        print(f"Rendering ticket {ticket.number} for {ticket.customer_name} on {self.coord_to_tuple(self.name_coordinates)} using base image = {self.base_image.path}")
+        image_draw.text(
+            self.coord_to_tuple(self.name_coordinates),
+            f'{ticket.customer_name} \n{ticket.customer_surname}',
+            fill=(255, 255, 255),
+            font=font
+        )
+        # test
+        img.save(f"image_{ticket.customer_name}.png", quality=100)
+        return img

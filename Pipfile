@@ -12,7 +12,6 @@ ipython = "*"
 pydotplus = "*"
 "autopep8" = "*"
 pytest-django = "*"
-
 # [requires]
 # python_version = ">3.6"
 
@@ -32,3 +31,4 @@ redis = "*"
 rq = "*"
 django-leaflet = "*"
 django-rq = "*"
+django-colorfield = "*"

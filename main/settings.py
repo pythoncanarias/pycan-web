@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django_extensions',
     'django_rq',
+    'colorfield',
     'leaflet',
     'commons',
     'homepage',
