@@ -1,4 +1,5 @@
 import os
+from fpdf import FPDF
 
 import locale
 import datetime
@@ -168,7 +169,40 @@ class Event(models.Model):
         :param remove_images: True if each badge image should be removed after creating the final PDF
         :return:
         """
-        pass
+        for ticket in self.all_tickets():
+            self.badge_set.first().render(ticket)
+        image_dir = os.path.join(settings.MEDIA_ROOT, f"events/{self.slug}/")
+        """
+        
+        #save_to_dir = os.path.join(settings.MEDIA_ROOT, f"events/{self.slug}/")
+        images = os.listdir(image_dir)
+        pdf = FPDF('P', 'mm', 'A4')  # create an A4-size pdf document
+        x, y, w, h = 0, 0, 200, 250
+        for image in images:
+            pdf.add_page()
+            pdf.image(image_dir + image, x, y, w, h)
+
+        pdf.output("images.pdf", "F")
+        """
+        offset_top = 50
+        offset_side = 50
+        image_list = os.listdir(image_dir)
+        print([img for img in image_list if img.split('.')[1] == 'png'])
+        badges = [Image.open(os.path.join(image_dir, img)).convert('RGB') for img in image_list if img.split('.')[1] == 'png']
+        print(badges)
+        if len(badges) == 0:
+            return
+
+        pdf_pages = []
+        x = offset_top
+        y = offset_side
+        current = None
+        for i in image_list:
+            if current is None:
+                current = Image.new("RGB", (2480, 3508), (255, 255, 255))
+        #pdf = Image.new("RGB", (2480, 3508), (255, 255, 255))
+        pdf_output = os.path.join(image_dir, 'print.pdf')
+        pdf.save(pdf_output, "PDF", resolution=100.0, save_all=True, append_images=badges)
 
 
 class Badge(models.Model):
