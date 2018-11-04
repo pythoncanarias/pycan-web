@@ -12,6 +12,7 @@ ipython = "*"
 pydotplus = "*"
 pytest-django = "*"
 yapf = "*"
+rope = "*"
 # [requires]
 # python_version = ">3.6"
 
