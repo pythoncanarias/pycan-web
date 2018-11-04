@@ -50,14 +50,11 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return links.event(self.slug)
-
     def get_full_url(self):
         return 'http://{}{}'.format(
             settings.DOMAIN,
             links.event_detail(self.slug),
-            )
+        )
 
     def get_long_start_date(self, to_locale=settings.LC_TIME_SPANISH_LOCALE):
         locale.setlocale(locale.LC_TIME, to_locale)
