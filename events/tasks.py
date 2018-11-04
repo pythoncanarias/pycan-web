@@ -47,24 +47,20 @@ def create_ticket_pdf(ticket, force=False):
 
 
 def create_ticket_message(ticket):
-    email = ticket.customer_email
     event = ticket.article.event
-    plantilla = loader.get_template('events/email/ticket_message.md')
+    tmpl = loader.get_template('events/email/ticket_message.md')
     subject = 'Entrada para {}'.format(event.name)
-    body = plantilla.render({
+    body = tmpl.render({
         'ticket': ticket,
         'article': ticket.article,
         'category': ticket.article.category,
         'event': event,
     })
-    html_version = '<html><head></head><body>{}</body></html>'.format(
-        as_markdown(body), )
-
     mail = Mail(
         from_email=Email(settings.EMAIL_HOST_USER),
         subject=subject,
-        to_email=Email(email),
-        content=Content('text/html', html_version))
+        to_email=Email(ticket.customer_email),
+        content=Content('text/html', as_markdown(body)))
 
     attachment = Attachment()
     pdf_filename = create_ticket_pdf(ticket)
@@ -75,7 +71,6 @@ def create_ticket_message(ticket):
     attachment.filename = 'ticket.pdf'
     attachment.disposition = 'attachment'
     mail.add_attachment(attachment)
-
     return mail
 
 
