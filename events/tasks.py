@@ -1,16 +1,18 @@
+import base64
 import io
 import os
 import shutil
-import time
 
 import pyqrcode
+import sendgrid
 from django.conf import settings
-from libs.reports.core import Report
-from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template import loader
 from django.utils import timezone
 from django_rq import job
+from sendgrid.helpers.mail import Attachment, Content, Email, Mail
+
 from commons.filters import as_markdown
+from libs.reports.core import Report
 
 
 def get_qrcode_as_svg(text, scale=8):
@@ -54,21 +56,27 @@ def create_ticket_message(ticket):
         'article': ticket.article,
         'category': ticket.article.category,
         'event': event,
-        })
-    targets = [email, ]
-    msg = EmailMultiAlternatives(
-        subject, body,
-        from_email=settings.EMAIL_HOST_USER,
-        to=targets,
-    )
+    })
     html_version = '<html><head></head><body>{}</body></html>'.format(
-        as_markdown(body),
-        )
-    msg.attach_alternative(html_version, 'text/html')
+        as_markdown(body), )
+
+    mail = Mail(
+        from_email=Email(settings.EMAIL_HOST_USER),
+        subject=subject,
+        to_email=Email(email),
+        content=Content('text/html', html_version))
+
+    attachment = Attachment()
     pdf_filename = create_ticket_pdf(ticket)
     with open(pdf_filename, 'rb') as f:
-        msg.attach('ticket.pdf', f.read(), 'application/pdf')
-    return msg
+        data = f.read()
+    attachment.content = base64.b64encode(data).decode()
+    attachment.type = 'application/pdf'
+    attachment.filename = 'ticket.pdf'
+    attachment.disposition = 'attachment'
+    mail.add_attachment(attachment)
+
+    return mail
 
 
 @job
@@ -76,9 +84,13 @@ def send_ticket(ticket, force=False):
     if force:
         create_ticket_pdf(ticket, force=True)
     msg = create_ticket_message(ticket)
-    with get_connection() as conn:
-        msg.connection = conn
-        msg.send(fail_silently=False)
-        ticket.send_at = timezone.now()
-        ticket.save()
-    time.sleep(210)  # 210 s = 3 minutes and a half (ovh limit is 3 minutes)
+    sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
+    response = sg.client.mail.send.post(request_body=msg.get())
+    if response.status_code >= 400:
+        error_msg = []
+        error_msg.append('STATUS CODE: {}'.format(response.status_code))
+        error_msg.append('RESPONSE HEADERS: {}'.format(response.headers))
+        error_msg.append('RESPONSE BODY: {}'.format(response.body))
+        raise Exception(os.linesep.join(error_msg))
+    ticket.send_at = timezone.now()
+    ticket.save()
