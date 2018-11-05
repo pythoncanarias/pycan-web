@@ -12,7 +12,7 @@ ipython = "*"
 pydotplus = "*"
 pytest-django = "*"
 yapf = "*"
-
+rope = "*"
 # [requires]
 # python_version = ">3.6"
 
@@ -32,3 +32,4 @@ redis = "*"
 rq = "*"
 django-leaflet = "*"
 django-rq = "*"
+sendgrid = "*"
