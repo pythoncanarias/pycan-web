@@ -9,6 +9,7 @@ from colorfield.fields import ColorField
 
 from django.db import models
 from django.conf import settings
+from django.db.models import Max
 
 from speakers.models import Speaker
 from organizations.models import OrganizationRole
@@ -161,6 +162,12 @@ class Event(models.Model):
         qs = self.articles.select_related('category')
         qs = qs.order_by('category__name')
         return qs
+
+    def next_ticket_number(self):
+        '''Get the number for the next ticket within this event.'''
+        data = self.all_tickets().aggregate(Max('number'))
+        current_number = data.get('number__max', 0) or 0
+        return current_number + 1
 
     def render_all_badges(self, pdf_only=False, remove_badges=True):
         """

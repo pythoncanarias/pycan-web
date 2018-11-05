@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'schedule',
     'speakers',
     'tickets',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -224,7 +225,7 @@ LOGGING = {
     },
     "handlers": {
         # Log to console
-        'console':{
+        'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
@@ -278,3 +279,5 @@ RQ_QUEUES = {
         'DB': 0,
     }
 }
+
+CURRENT_API_VERSION = 1
