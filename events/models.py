@@ -162,47 +162,61 @@ class Event(models.Model):
         qs = qs.order_by('category__name')
         return qs
 
-    def render_all_badges(self, remove_images=False):
+    def render_all_badges(self, pdf_only=False, remove_badges=True):
         """
         Render all Badges for this event as images, save them and make an unique PDF with all
         badges for printing.
-        :param remove_images: True if each badge image should be removed after creating the final PDF
+        :param pdf_only: If True, it won't render the intermediate badges, only the final PDF
+        with all the images in the folder.
+        :param remove_badges: If True, remove the intermediate badges to keep the server clean.
         :return:
         """
-        for ticket in self.all_tickets():
-            self.badge_set.first().render(ticket)
+        if not pdf_only:
+            badge = self.badge_set.first()
+            for ticket in self.all_tickets():
+                badge.render(ticket)
         image_dir = os.path.join(settings.MEDIA_ROOT, f"events/{self.slug}/")
-        """
-        
-        #save_to_dir = os.path.join(settings.MEDIA_ROOT, f"events/{self.slug}/")
-        images = os.listdir(image_dir)
-        pdf = FPDF('P', 'mm', 'A4')  # create an A4-size pdf document
-        x, y, w, h = 0, 0, 200, 250
-        for image in images:
-            pdf.add_page()
-            pdf.image(image_dir + image, x, y, w, h)
-
-        pdf.output("images.pdf", "F")
-        """
-        offset_top = 50
-        offset_side = 50
         image_list = os.listdir(image_dir)
-        print([img for img in image_list if img.split('.')[1] == 'png'])
-        badges = [Image.open(os.path.join(image_dir, img)).convert('RGB') for img in image_list if img.split('.')[1] == 'png']
-        print(badges)
+        badges = [
+            Image.open(os.path.join(image_dir, img)).convert('RGB') for img in image_list if img.split('.')[1] != 'pdf'
+        ]
         if len(badges) == 0:
             return
-
+        # Calculate the size of the page (A4) depending on image dpi
+        dpi = badges[0].info['dpi']
         pdf_pages = []
-        x = offset_top
-        y = offset_side
-        current = None
-        for i in image_list:
-            if current is None:
-                current = Image.new("RGB", (2480, 3508), (255, 255, 255))
-        #pdf = Image.new("RGB", (2480, 3508), (255, 255, 255))
+        offset_top = 50
+        offset_side = 10
+        x = offset_side
+        y = offset_top
+        a4_width = int(210 // 25.4 * dpi[0])
+        a4_height = int(297 // 25.4 * dpi[1])
+        current = Image.new("RGB", (a4_width, a4_height), (255, 255, 255))  # PDF blank page
+        pdf_pages.append(current)
+        for img in badges:
+            width, height = img.size
+            if current is None or y + height >= a4_height:
+                # Create a new PDF page and reset x, y
+                if current not in pdf_pages:
+                    pdf_pages.append(current)
+                x = offset_side
+                y = offset_top
+                current = Image.new("RGB", (a4_width, a4_height), (255, 255, 255))
+            current.paste(img, (x, y))
+            if x + (width * 2) >= a4_width:  # No more badges in the row
+                x = offset_side
+                y += height
+            else:
+                x += width
+        pdf = Image.new("RGB", (a4_width, a4_height), (255, 255, 255))
         pdf_output = os.path.join(image_dir, 'print.pdf')
-        pdf.save(pdf_output, "PDF", resolution=100.0, save_all=True, append_images=badges)
+        pdf.save(pdf_output, "PDF", resolution=100.0, save_all=True, quality=100, append_images=pdf_pages)
+        del badges
+        if remove_badges:
+            for img in image_list:
+                if img.split('.')[1] != 'pdf':
+                    os.remove(os.path.join(image_dir, img))
+        return f"{settings.MEDIA_URL}events/{self.slug}/print.pdf"
 
 
 class Badge(models.Model):
