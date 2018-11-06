@@ -85,19 +85,17 @@ class Track(models.Model):
         return self.name
 
     def schedule_in_range(self, start=None, end=None):
-        if start and end:
-            schedule = self.schedule.filter(start__gte=start, end__lte=end)
-        elif start and not end:
-            schedule = self.schedule.filter(start__gte=start)
-        elif not start and end:
-            schedule = self.schedule.filter(end__lte=end)
-        else:
-            schedule = self.schedule.all()
-        return schedule.order_by('start')
+        queryset = self.schedule.all().order_by('start')
+        if start:
+            queryset = queryset.filter(start__gte=start)
+        if end:
+            schedule = queryset.filter(end__lte=end)
+        return queryset
 
     def get_talks(self):
         return [
                 {
+                'talk_id': _.slot.pk,
                 'name': _.slot.name,
                 'start': _.start.strftime('%H:%M'),
                 'end': _.end.strftime('%H:%M'),
