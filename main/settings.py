@@ -164,6 +164,7 @@ SITE_ID = 1
 #
 # You probably want to change this to use this code
 
+ASSOCIATION_NAME = 'Python Canarias'
 DOMAIN = config('DOMAIN', default='pythoncanarias.es')
 CONTACT_EMAIL = config('CONTACT_EMAIL', default='info@{}'.format(DOMAIN))
 
@@ -197,8 +198,6 @@ LOAD_FONTS_IN_REPORTS = config(
     cast=config.boolean
 )
 
-# Email settings
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default=CONTACT_EMAIL)
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='<sengrid api key>')
 
 

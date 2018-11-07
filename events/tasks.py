@@ -57,7 +57,7 @@ def create_ticket_message(ticket):
         'event': event,
     })
     mail = Mail(
-        from_email=Email(settings.EMAIL_HOST_USER),
+        from_email=Email(settings.CONTACT_EMAIL, settings.ASSOCIATION_NAME),
         subject=subject,
         to_email=Email(ticket.customer_email),
         content=Content('text/html', as_markdown(body)))
