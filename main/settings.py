@@ -164,7 +164,7 @@ SITE_ID = 1
 #
 # You probably want to change this to use this code
 
-ASSOCIATION_NAME = 'Python Canarias'
+ASSOCIATION_NAME = config('ASSOCIATION_NAME', default='Python Canarias')
 DOMAIN = config('DOMAIN', default='pythoncanarias.es')
 CONTACT_EMAIL = config('CONTACT_EMAIL', default='info@{}'.format(DOMAIN))
 
