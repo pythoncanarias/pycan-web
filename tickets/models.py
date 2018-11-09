@@ -1,10 +1,11 @@
 import uuid
+
 from decimal import Decimal
 
-import django
 from django.db import models
 from django.db.models import Max
 from django.urls import reverse
+from django.utils import timezone as dj_timezone
 
 from . import links
 
@@ -78,7 +79,7 @@ class Article(models.Model):
     def status(self):
         if self.release_at is None:
             return Article.HIDDEN
-        now = django.utils.timezone.now()
+        now = dj_timezone.now()
         if self.release_at > now:
             return Article.UPCOMING
         today = now.date()

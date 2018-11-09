@@ -1,16 +1,19 @@
-import locale
 import datetime
+import locale
+import os
+
 import pytz
-
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.db.models import Max
+from PIL import Image, ImageDraw, ImageFont
 
-from speakers.models import Speaker
+from colorfield.fields import ColorField
+from events import links
 from organizations.models import OrganizationRole
 from schedule.models import Track
+from speakers.models import Speaker
 from tickets.models import Ticket
-from events import links
 
 
 class Event(models.Model):
@@ -160,3 +163,149 @@ class Event(models.Model):
         data = self.all_tickets().aggregate(Max('number'))
         current_number = data.get('number__max', 0) or 0
         return current_number + 1
+
+    def render_all_badges(self, pdf_only=False, remove_badges=True):
+        """
+        Render all Badges for this event as images, save them and make an unique PDF with all
+        badges for printing.
+        :param pdf_only: If True, it won't render the intermediate badges, only the final PDF
+        with all the images in the folder.
+        :param remove_badges: If True, remove the intermediate badges to keep the server clean.
+        :return:
+        """
+        if not pdf_only:
+            badge = self.badge_set.first()
+            for ticket in self.all_tickets():
+                badge.render(ticket)
+        image_dir = os.path.join(settings.MEDIA_ROOT, f"events/{self.slug}/")
+        image_list = os.listdir(image_dir)
+        badges = [
+            Image.open(os.path.join(image_dir, img)).convert('RGB') for img in image_list if img.split('.')[1] != 'pdf'
+        ]
+        if len(badges) == 0:
+            return
+        # Calculate the size of the page (A4) depending on image dpi
+        dpi = badges[0].info['dpi']
+        pdf_pages = []
+        offset_top = 50
+        offset_side = 10
+        x = offset_side
+        y = offset_top
+        a4_width = int(210 // 25.4 * dpi[0])
+        a4_height = int(297 // 25.4 * dpi[1])
+        current = Image.new("RGB", (a4_width, a4_height), (255, 255, 255))  # PDF blank page
+        pdf_pages.append(current)
+        for img in badges:
+            width, height = img.size
+            if current is None or y + height >= a4_height:
+                # Create a new PDF page and reset x, y
+                if current not in pdf_pages:
+                    pdf_pages.append(current)
+                x = offset_side
+                y = offset_top
+                current = Image.new("RGB", (a4_width, a4_height), (255, 255, 255))
+            current.paste(img, (x, y))
+            if x + (width * 2) >= a4_width:  # No more badges in the row
+                x = offset_side
+                y += height
+            else:
+                x += width
+        pdf = Image.new("RGB", (a4_width, a4_height), (255, 255, 255))
+        pdf_output = os.path.join(image_dir, 'print.pdf')
+        pdf.save(pdf_output, "PDF", resolution=100.0, save_all=True, quality=100, append_images=pdf_pages)
+        del badges
+        if remove_badges:
+            for img in image_list:
+                if img.split('.')[1] != 'pdf':
+                    os.remove(os.path.join(image_dir, img))
+        return f"{settings.MEDIA_URL}events/{self.slug}/print.pdf"
+
+
+class Badge(models.Model):
+    event = models.ForeignKey('events.Event', on_delete=models.CASCADE)
+    base_image = models.ImageField(upload_to=f"events/badges/", blank=False)
+    # Coordinates start from the top-left corner
+    name_coordinates = models.CharField(
+        max_length=255,
+        verbose_name="Person name coordinates (eg 15,23).",
+        default="0,0"
+    )
+    name_font_size = models.PositiveIntegerField(default=24)
+    name_color = ColorField(default='#FFFFFF')
+    number_coordinates = models.CharField(
+        max_length=255,
+        verbose_name="Ticket number coordinates",
+        default="0,0"
+    )
+    number_font_size = models.PositiveIntegerField(default=24)
+    number_color = ColorField(default='#FFFFFF')
+    category_coordinates = models.CharField(
+        max_length=255,
+        verbose_name="Ticket category coordinates",
+        default="0,0"
+    )
+    category_font_size = models.PositiveIntegerField(default=24)
+    category_color = ColorField(default='#FFFFFF')
+
+    def __str__(self):
+        return f'Badge for {self.event.name}'
+
+    @staticmethod
+    def coord_to_tuple(coord):
+        return tuple(int(i) for i in coord.split(","))
+
+    @staticmethod
+    def _parse_name(name: str, surname: str):
+        name_list = name.split()
+        if len(name_list) >= 2 and len(name_list[1]) > 2:
+            name = f"{name_list[0]} {name_list[1][:1]}."
+
+        return f"{name} \n{surname}"
+
+    @staticmethod
+    def _hex_to_rgb(color: str)-> tuple:
+        return tuple(int(color.lstrip("#")[i: i + 2], 16) for i in (0, 2, 4))
+
+    def add_field(self, image_draw: ImageDraw, text: str, coord: str, font_size: int, color: str):
+        font = ImageFont.truetype("fonts/arial.ttf", size=font_size)
+        image_draw.text(
+            self.coord_to_tuple(coord),
+            text,
+            fill=self._hex_to_rgb(color),
+            font=font
+        )
+        return image_draw
+
+    def render(self, ticket: Ticket):
+        img = Image.open(self.base_image.path)
+        image_draw = ImageDraw.Draw(img)
+        self.add_field(
+            image_draw,
+            self._parse_name(ticket.customer_name, ticket.customer_surname),
+            self.name_coordinates,
+            self.name_font_size,
+            self.name_color
+        )
+        self.add_field(
+            image_draw,
+            str(ticket.number),
+            self.number_coordinates,
+            self.number_font_size,
+            self.number_color
+        )
+        self.add_field(
+            image_draw,
+            ticket.article.category.name,
+            self.category_coordinates,
+            self.category_font_size,
+            self.category_color
+        )
+        # test
+        path = f"{settings.MEDIA_ROOT}/events/{self.event.slug}/badge_{ticket.number}.png"
+        if not os.path.exists(os.path.dirname(path)):
+            try:
+                os.makedirs(os.path.dirname(path))
+            except OSError:
+                raise
+        img.save(path, quality=100)
+        return img
