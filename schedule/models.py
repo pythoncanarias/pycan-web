@@ -89,7 +89,7 @@ class Track(models.Model):
         if start:
             queryset = queryset.filter(start__gte=start)
         if end:
-            schedule = queryset.filter(end__lte=end)
+            queryset = queryset.filter(end__lte=end)
         return queryset
 
     def get_talks(self):
