@@ -1,21 +1,19 @@
-import os
-from fpdf import FPDF
-
-import locale
 import datetime
+import locale
+import os
+
 import pytz
-from PIL import Image, ImageDraw, ImageFont
-from colorfield.fields import ColorField
-
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.db.models import Max
+from PIL import Image, ImageDraw, ImageFont
 
-from speakers.models import Speaker
+from colorfield.fields import ColorField
+from events import links
 from organizations.models import OrganizationRole
 from schedule.models import Track
+from speakers.models import Speaker
 from tickets.models import Ticket
-from events import links
 
 
 class Event(models.Model):
