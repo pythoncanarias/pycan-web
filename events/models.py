@@ -185,7 +185,7 @@ class Event(models.Model):
         if len(badges) == 0:
             return
         # Calculate the size of the page (A4) depending on image dpi
-        dpi = badges[0].info['dpi']
+        dpi = badges[0].info.get('dpi', (96, 96))
         pdf_pages = []
         offset_top = 50
         offset_side = 10
