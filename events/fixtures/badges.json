@@ -1,0 +1,19 @@
+[
+    {
+        "model": "events.badge",
+        "pk": 1,
+        "fields": {
+            "event": 1,
+            "base_image": "events/badges/pyday_blank_scaled.png",
+            "name_coordinates": "120,0",
+            "name_font_size": 12,
+            "name_color": "#FFFFFF",
+            "number_coordinates": "5,145",
+            "number_font_size": 19,
+            "number_color": "#000000",
+            "category_coordinates": "42,150",
+            "category_font_size": 13,
+            "category_color": "#000000"
+        }
+    }
+]
