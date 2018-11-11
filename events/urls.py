@@ -11,6 +11,16 @@ urlpatterns = [
     path('coc/<language>/', views.coc, name='coc'),
     path('<slug:slug>/', views.detail_event, name='detail_event'),
     path(
+        '<slug:slug>/waiting_list/',
+        views.waiting_list,
+        name='waiting_list',
+        ),
+    path(
+        '<slug:slug>/waiting_list/accepted/',
+        views.waiting_list_accepted,
+        name='waiting_list_accepted',
+        ),
+    path(
         '<slug:slug>/resend_ticket/',
         views.resend_ticket,
         name='resend_ticket',

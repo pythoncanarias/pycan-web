@@ -1,0 +1,15 @@
+{% extends "events/base.html" %}
+{% load static %}
+{% load utils %}
+{% block title %}Lista de espera - {{event.name}} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<h1> {{ event.name }} 
+    <br> <small> Lista de espera </small>
+</h1>
+
+<h2> Gracias por su interes en el evento </h2>
+<h3> Su solicitud ha sido aceptada </h3>
+
+{% endblock content %}

@@ -8,6 +8,7 @@ from django.contrib import messages
 from tickets.models import Article
 from tickets.models import Ticket
 from events.models import Event
+from events.models import WaitingList
 from events.tasks import send_ticket
 from . import forms
 from . import links
@@ -34,6 +35,36 @@ def index(request):
 def detail_event(request, slug):
     event = Event.objects.get(slug__iexact=slug)
     return render(request, 'events/event.html', {
+        'event': event,
+    })
+
+
+def waiting_list(request, slug):
+    event = Event.objects.get(slug__iexact=slug)
+    form = forms.WaitingListForm(request.POST)
+    if request.method == 'POST':
+        form = forms.WaitingListForm(request.POST)
+        if form.is_valid():
+            wl = WaitingList(
+                event=event,
+                name=form.cleaned_data['name'],
+                surname=form.cleaned_data['surname'],
+                email=form.cleaned_data['email'],
+                phone=form.cleaned_data['phone'],
+                )
+            wl.save()
+            return redirect(links.waiting_list_accepted(event.slug))
+    else:
+        form = forms.WaitingListForm()
+    return render(request, 'events/waiting-list.html', {
+        'event': event,
+        'form': form,
+    })
+
+
+def waiting_list_accepted(request, slug):
+    event = Event.objects.get(slug__iexact=slug)
+    return render(request, 'events/waiting-list-accepted.html', {
         'event': event,
     })
 

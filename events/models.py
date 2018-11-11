@@ -309,3 +309,34 @@ class Badge(models.Model):
                 raise
         img.save(path, quality=100)
         return img
+
+
+# Waiting List
+
+
+class WaitingList(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    email = models.EmailField(max_length=254)
+    name = models.CharField(max_length=256)
+    surname = models.CharField(max_length=256)
+    phone = models.CharField(max_length=32, blank=True)
+    created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    fixed_at = models.DateTimeField(default=None, blank=True, null=True)
+
+    def __str__(self):
+        if self.fixed_at:
+            return '{}, {} ({}) FIXED'.format(
+                self.surname,
+                self.name,
+                self.email,
+                )
+        else:
+            return '{}, {} ({}) waiting since {}'.format(
+                self.surname,
+                self.name,
+                self.email,
+                self.created_at,
+                )
+
+
+

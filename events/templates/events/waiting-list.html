@@ -1,0 +1,25 @@
+{% extends "events/base.html" %}
+{% load static %}
+{% load utils %}
+{% block title %}Lista de espera - {{event.name}} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<h1> {{ event.name }} 
+    <small> Lista de espera </small>
+</h1>
+
+<form method="POST" action =".">
+
+    {% csrf_token %}
+
+    <table class="table form">
+
+    {{ form.as_table }}
+
+    </table>
+
+<input type="submit" name="Apuntarse en la lista de espera">
+</form>
+
+{% endblock content %}

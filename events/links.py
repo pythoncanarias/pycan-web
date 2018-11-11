@@ -15,3 +15,7 @@ def article_bought(id_article):
     return reverse('events:article_bought', kwargs={'id_article': id_article})
 
 
+def waiting_list_accepted(slug):
+    return reverse('events:waiting_list_accepted', kwargs={
+        'slug': slug,
+        })
