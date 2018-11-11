@@ -31,13 +31,14 @@ class EventAdmin(admin.ModelAdmin):
 
 
 @admin.register(WaitingList)
-class EventAdmin(admin.ModelAdmin):
+class WaitingListAdmin(admin.ModelAdmin):
     list_display = (
         'full_name',
         'email',
         'phone',
         'created_at',
         'fixed_at',
+        'buy_code',
         )
 
     def full_name(self, obj):

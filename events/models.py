@@ -1,5 +1,6 @@
 import datetime
 import locale
+import uuid
 import os
 
 import pytz
@@ -322,6 +323,7 @@ class WaitingList(models.Model):
     phone = models.CharField(max_length=32, blank=True)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     fixed_at = models.DateTimeField(default=None, blank=True, null=True)
+    buy_code = models.UUIDField(default=uuid.uuid4)
 
     def __str__(self):
         if self.fixed_at:
