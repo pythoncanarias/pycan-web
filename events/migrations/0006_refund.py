@@ -7,7 +7,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tickets', '0006_merge_20181109_2124'),
         ('events', '0005_waitinglist'),
     ]
 
