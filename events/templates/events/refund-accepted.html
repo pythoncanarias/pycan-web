@@ -1,0 +1,21 @@
+{% extends "events/base.html" %}
+{% load static %}
+{% load utils %}
+{% block title %}Lista de espera - {{event.name}} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<h1> {{ event.name }} 
+    <small> Solicitud de devolución </small>
+</h1>
+
+<p> Su solicitud de devolución de la entrada ha sido aceptada. recuerde que está
+condicionada a las solicitudes recibidas en la lista de espera.  Tanto las
+solicitudes de devolución de la entrada como las de la lista de espera se
+servirán por estricto criterio de <b>orden temporal</b>, es decir, las primeras
+solicitudes recibidas serán las primeras resueltas. </p>
+
+<p>Su solicitod está ahora mismo en la 
+  posición <b>{{ refund.get_position }}</b~</p>
+
+{% endblock content %}

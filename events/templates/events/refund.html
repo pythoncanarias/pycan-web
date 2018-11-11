@@ -1,0 +1,44 @@
+{% extends "events/base.html" %}
+{% load static %}
+{% load utils %}
+{% block title %}Lista de espera - {{event.name}} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<h1> {{ event.name }} 
+    <small> Solicitud de devolución </small>
+</h1>
+
+<p> La solicitud de devolución de la entrada <b>está condicionada a las
+solicitudes recibidas en la lista de espera</b>. Tanto las solicitudes de
+devolución de la entrada como las de la lista de espera se servirán por estricto
+criterio de <b>orden temporal</b>, es decir, las primeras solicitudes recibidas
+serán las primeras resueltas. </p>
+
+<p>Por tanto, no está garantizada la devolución de la entrada, pero haremos todo
+lo posible para que se le pueda devolver el importe, descontando los gastos de
+comisión que nos haya cobrado la pasarela de pago.</p>
+
+<p>Para mayor seguridad, debes indicarnos el email que usaste para comprar
+la entrada, y los <b>12 últimos números o letras del código UUID</b> de la misma. 
+El código uuid es una serie de 32 dígitos y 
+letras, (y opcionalmente, guiones) como por ejemplo
+<code>ff1fa8a1-b9b3-4a9d-b3df-8bb016c02829</code>, y está en la entrada en PDF
+que te enviamos, debajo del código QR. Para este ejemplo, tendrías que incluir
+los últimos 12 símbolos, o sea <code>8bb016c02829</code></p>
+
+<form method="POST" action =".">
+
+    {% csrf_token %}
+
+    <table class="table form">
+
+    {{ form.as_table }}
+
+    </table>
+
+<input type="submit" name="Solicitar devolución entrada">
+
+</form>
+
+{% endblock content %}

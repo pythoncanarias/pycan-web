@@ -19,3 +19,16 @@ def waiting_list_accepted(slug):
     return reverse('events:waiting_list_accepted', kwargs={
         'slug': slug,
         })
+
+
+def refund(slug):
+    return reverse('events:refund', kwargs={
+        'slug': slug,
+        })
+
+
+def refund_accepted(slug, pk):
+    return reverse('events:refund_accepted', kwargs={
+        'slug': slug,
+        'pk': pk,
+        })
