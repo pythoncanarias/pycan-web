@@ -1,5 +1,6 @@
 from django.contrib import admin, messages
 from .models import Event, Badge
+from .models import WaitingList
 
 
 def render_event_badges(modeladmin, request, queryset):
@@ -27,3 +28,15 @@ class EventAdmin(admin.ModelAdmin):
                     'opened_ticket_sales', 'start_date')
 
 
+@admin.register(WaitingList)
+class EventAdmin(admin.ModelAdmin):
+    list_display = (
+        'event',
+        'name',
+        'surname',
+        'email',
+        'created_at',
+        'fixed_at',
+        )
+
+    
