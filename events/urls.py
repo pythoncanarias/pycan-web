@@ -11,12 +11,12 @@ urlpatterns = [
     path('coc/<language>/', views.coc, name='coc'),
     path('<slug:slug>/', views.detail_event, name='detail_event'),
     path(
-        '<slug:slug>/waiting_list/',
+        '<slug:slug>/waiting-list/',
         views.waiting_list,
         name='waiting_list',
         ),
     path(
-        '<slug:slug>/waiting_list/accepted/',
+        '<slug:slug>/waiting-list/accepted/',
         views.waiting_list_accepted,
         name='waiting_list_accepted',
         ),
