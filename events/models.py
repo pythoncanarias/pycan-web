@@ -338,5 +338,31 @@ class WaitingList(models.Model):
                 self.created_at,
                 )
 
+# Refunds
 
 
+class Refund(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete=models.PROTECT)
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    fixed_at = models.DateTimeField(default=None, blank=True, null=True)
+
+    def __str__(self):
+        if self.fixed_at:
+            return 'Refund for ticket {} [FIXED]'.format(self.ticket)
+        else:
+            return 'Refund for ticket {}'.format(self.ticket)
+
+    def get_absolute_url(self):
+        return links.refund_accepted(self.event.slug, self.pk)
+
+    def get_position(self):
+        return Refund.objects.all()  \
+            .filter(event=self.event)  \
+            .filter(fixed_at__isnull=True)  \
+            .filter(created_at__lt=self.created_at)  \
+            .count() + 1
+
+    @classmethod
+    def exists(cls, event, ticket):
+        return cls.objects.filter(event=event, ticket=ticket).count() > 0

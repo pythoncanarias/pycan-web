@@ -1,6 +1,8 @@
 from django.contrib import admin, messages
-from .models import Event, Badge
+from .models import Event
+from .models import Badge
 from .models import WaitingList
+from .models import Refund
 
 
 def render_event_badges(modeladmin, request, queryset):
@@ -44,4 +46,13 @@ class EventAdmin(admin.ModelAdmin):
             obj.name,
             )
 
-    
+
+@admin.register(Refund)
+class RefundAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'ticket',
+        'event',
+        'created_at',
+        'fixed_at',
+        )

@@ -9,6 +9,7 @@ from tickets.models import Article
 from tickets.models import Ticket
 from events.models import Event
 from events.models import WaitingList
+from events.models import Refund
 from events.tasks import send_ticket
 from . import forms
 from . import links
@@ -41,7 +42,6 @@ def detail_event(request, slug):
 
 def waiting_list(request, slug):
     event = Event.objects.get(slug__iexact=slug)
-    form = forms.WaitingListForm(request.POST)
     if request.method == 'POST':
         form = forms.WaitingListForm(request.POST)
         if form.is_valid():
@@ -59,6 +59,36 @@ def waiting_list(request, slug):
     return render(request, 'events/waiting-list.html', {
         'event': event,
         'form': form,
+    })
+
+
+def refund(request, slug):
+    logging.error('refund(request, "{}") starts'.format(slug))
+    event = Event.objects.get(slug__iexact=slug)
+    logging.error('   request method is {}'.format(request.method))
+    if request.method == 'POST':
+        form = forms.RefundForm(event, request.POST)
+        logging.error('   form.is_valid() is {}'.format(form.is_valid()))
+        logging.error('   form.errors is {}'.format(form.errors))
+        if form.is_valid():
+            ticket = form.ticket
+            rf = Refund(ticket=ticket, event=event)
+            rf.save()
+            return redirect(links.refund_accepted(event.slug, rf.pk))
+    else:
+        form = forms.RefundForm(event)
+    return render(request, 'events/refund.html', {
+        'event': event,
+        'form': form,
+    })
+
+
+def refund_accepted(request, slug, pk):
+    event = Event.objects.get(slug__iexact=slug)
+    refund = Refund.objects.get(pk=pk)
+    return render(request, 'events/refund-accepted.html', {
+        'event': event,
+        'refund': refund,
     })
 
 
