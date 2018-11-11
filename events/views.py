@@ -99,6 +99,18 @@ def waiting_list_accepted(request, slug):
     })
 
 
+def trade(request, slug, sell_code, buy_code):
+    event = Event.objects.get(slug__iexact=slug)
+    waiting_list = WaitingList.load_by_buy_code(buy_code)
+    refund = Refund.load_by_sell_code(sell_code)
+    return render(request, 'events/trade.html', {
+        'event': event,
+        'waiting_list': waiting_list,
+        'refund': refund,
+        }
+    )
+
+
 def stripe_payment_declined(request, charge):
     return render(request, 'events/payment-declined.html', {
         'email': settings.CONTACT_EMAIL,

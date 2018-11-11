@@ -325,6 +325,13 @@ class WaitingList(models.Model):
     fixed_at = models.DateTimeField(default=None, blank=True, null=True)
     buy_code = models.UUIDField(default=uuid.uuid4)
 
+    @classmethod
+    def load_by_buy_code(cls, buy_code):
+        try:
+            return cls.objects.get(buy_code=buy_code)
+        except cls.DoesNotExist:
+            return None
+
     def __str__(self):
         if self.fixed_at:
             return '{}, {} ({}) FIXED'.format(
@@ -340,6 +347,8 @@ class WaitingList(models.Model):
                 self.created_at,
                 )
 
+
+
 # Refunds
 
 
@@ -348,6 +357,14 @@ class Refund(models.Model):
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     fixed_at = models.DateTimeField(default=None, blank=True, null=True)
+    sell_code = models.UUIDField(default=uuid.uuid4)
+
+    @classmethod
+    def load_by_sell_code(cls, sell_code):
+        try:
+            return cls.objects.get(sell_code=sell_code)
+        except cls.DoesNotExist:
+            return None
 
     def __str__(self):
         if self.fixed_at:

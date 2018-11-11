@@ -21,6 +21,14 @@ def waiting_list_accepted(slug):
         })
 
 
+def trade(slug, sell_code, buy_code):
+    return reverse('events:trade', kwargs={
+        'slug': slug,
+        'sell_code': sell_code,
+        'buy_code': buy_code,
+        })
+
+
 def refund(slug):
     return reverse('events:refund', kwargs={
         'slug': slug,
