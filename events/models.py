@@ -323,7 +323,7 @@ class WaitingList(models.Model):
     phone = models.CharField(max_length=32, blank=True)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     fixed_at = models.DateTimeField(default=None, blank=True, null=True)
-    buy_code = models.UUIDField(default=uuid.uuid4)
+    buy_code = models.UUIDField(default=uuid.uuid4, unique=True)
 
     @classmethod
     def load_by_buy_code(cls, buy_code):
