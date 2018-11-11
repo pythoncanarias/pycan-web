@@ -101,8 +101,22 @@ def waiting_list_accepted(request, slug):
 
 def trade(request, slug, sell_code, buy_code):
     event = Event.objects.get(slug__iexact=slug)
-    waiting_list = WaitingList.load_by_buy_code(buy_code)
     refund = Refund.load_by_sell_code(sell_code)
+    waiting_list = WaitingList.load_by_buy_code(buy_code)
+    ticket = refund.ticket
+    article = ticket.article
+    """Pseudo codigo
+    GET:
+    1) A partir del ticket comprado obtener el tipo de ticket (articulo)
+    2) A partir del waiting list, obtener los datos del nuevo comprador
+    3) Preparar el formulario de compra. Idealmente un solo boton
+    POST:
+    1) obtener timestamp
+    2) Marcar el waiting list como fixed
+    3) Marcar el refund como fixed
+    4) Notificar a ambos que el acuerdo esta cerrado
+    """
+
     return render(request, 'events/trade.html', {
         'event': event,
         'waiting_list': waiting_list,
