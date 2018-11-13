@@ -141,6 +141,13 @@ class Event(models.Model):
             result.append(scheduled_items)
         return result
 
+    def get_non_org_speakers(self):
+        speakers_ids = self.schedule.all().exclude(
+            slot__category__code='organizing').values_list(
+                'speakers', flat=True)
+        return Speaker.objects.filter(pk__in=speakers_ids).order_by(
+            'name', 'surname')
+
     def all_tickets(self):
         '''Get all the tickets sold for a particular event.
 
@@ -427,4 +434,3 @@ class Trade(models.Model):
         if not self.finished and time_utils.now() > self.finish_at:
             self.finish(sucessful=False)
         return self.finished
-
