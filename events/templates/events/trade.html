@@ -1,0 +1,12 @@
+{% extends "events/base.html" %}
+{% load static %}
+{% load utils %}
+{% block title %}Trade - {{event.name}} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<p> event: {{ event }} </p>
+<p> waiting_list: {{ waiting_list }} </p>
+<p> refund: {{ refund }} </p>
+
+{% endblock content %}
