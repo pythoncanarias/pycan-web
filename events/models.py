@@ -2,6 +2,7 @@ import datetime
 import locale
 import uuid
 import os
+from functools import partial
 
 import pytz
 from django.conf import settings
@@ -15,6 +16,7 @@ from organizations.models import OrganizationRole
 from schedule.models import Track
 from speakers.models import Speaker
 from tickets.models import Ticket
+from . import time_utils
 
 
 class Event(models.Model):
@@ -385,3 +387,44 @@ class Refund(models.Model):
     @classmethod
     def exists(cls, event, ticket):
         return cls.objects.filter(event=event, ticket=ticket).count() > 0
+
+
+# Trade class (intermedite between WaitingList and Refund)
+
+
+class Trade(models.Model):
+
+    TERM_IN_HOURS = 3
+
+    sell_code = models.UUIDField(default=uuid.uuid4, unique=True)
+    buy_code = models.UUIDField(default=uuid.uuid4, unique=True)
+    start_at = models.DateTimeField(default=time_utils.now)
+    finish_at = models.DateTimeField(
+        default=partial(time_utils.now_plus, hours=TERM_IN_HOURS)
+        )
+    fixed_at = models.DateTimeField(default=None, blank=True, null=True)
+    finished = models.BooleanField(default=False)
+    sucessful = models.BooleanField(default=False)
+
+    @classmethod
+    def load_active_trade(cls):
+        qs = cls.objects.filter(finished==False)
+        num_trades = qs.count()
+        assert num_trades in (0, 1)
+        return qs.first() if num_trades == 1 else None
+
+    def finish(self, sucessful=False):
+        if not self.finished:
+            now = time_utils.now()
+            self.finished = True
+            self.finish_at = now
+            if sucessful:
+                self.sucessful = True
+                self.fixed_at = now
+            self.save()
+
+    def is_due(self):
+        if not self.finished and time_utils.now() > self.finish_at:
+            self.finish(sucessful=False)
+        return self.finished
+
