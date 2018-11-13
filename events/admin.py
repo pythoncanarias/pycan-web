@@ -1,8 +1,9 @@
 from django.contrib import admin, messages
-from .models import Event
 from .models import Badge
-from .models import WaitingList
+from .models import Event
 from .models import Refund
+from .models import Trade
+from .models import WaitingList
 
 
 def render_event_badges(modeladmin, request, queryset):
@@ -57,3 +58,20 @@ class RefundAdmin(admin.ModelAdmin):
         'created_at',
         'fixed_at',
         )
+
+
+@admin.register(Trade)
+class TradeAdmin(admin.ModelAdmin):
+    list_display = (
+        '__str__',
+        'start_at',
+        'finish_at',
+        'finished',
+        'is_sucessful',
+        )
+
+    def is_sucessful(self, obj):
+        if obj.finished:
+            return 'Yes' if obj.sucessful else 'No'
+        else:
+            return 'N/A'

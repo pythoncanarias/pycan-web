@@ -420,6 +420,9 @@ class Trade(models.Model):
         assert num_trades in (0, 1)
         return qs.first() if num_trades == 1 else None
 
+    def __str__(self):
+        return 'Trade #{}'.format(self.pk)
+
     def finish(self, sucessful=False):
         if not self.finished:
             now = time_utils.now()
