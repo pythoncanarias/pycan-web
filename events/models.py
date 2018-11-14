@@ -429,25 +429,29 @@ class Trade(models.Model):
         return qs.first() if num_trades == 1 else None
 
     @classmethod
-    def create_from_event(cls, slug):
-        first_seller = WaitingList.objects  \
+    def find_candidates(cls):
+        first_buyer = WaitingList.objects  \
             .filter(fixed_at__isnull=True)  \
             .order_by('created_at')  \
             .first()
-        if first_seller is None:
-            return None
-        first_buyer = Refund.objects  \
+        first_seller = Refund.objects  \
             .filter(fixed_at__isnull=True)  \
             .order_by('created_at')  \
             .first()
-        if first_buyer is None:
+        return first_seller, first_buyer
+
+    @classmethod
+    def create(cls):
+        waiting_list, refund = cls.find_candidates()
+        if waiting_list and refund:
+            trade = Trade(
+                buy_code=first_seller.buy_code,
+                sell_code=first_buyer.sell_code,
+                )
+            trade.save()
+            return trade
+        else:
             return None
-        trade = Trade(
-            buy_code=first_seller.buy_code,
-            sell_code=first_buyer.sell_code,
-            )
-        trade.save()
-        return trade
 
     @property
     def refund(self):
