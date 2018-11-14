@@ -188,11 +188,11 @@ class Event(models.Model):
 
         :return:
         """
+        badge = self.badge_set.first()
         if not pdf_only:
-            badge = self.badge_set.first()
             for ticket in self.all_tickets():
                 badge.render(ticket)
-        image_dir = os.path.join(settings.MEDIA_ROOT, f"events/{self.slug}/")
+        image_dir = os.path.join(settings.MEDIA_ROOT, "events", self.slug)
         image_list = os.listdir(image_dir)
         badges = [
             Image.open(os.path.join(image_dir, img)).convert('RGB')
@@ -201,21 +201,23 @@ class Event(models.Model):
         ]
         if len(badges) == 0:
             return
-        # Calculate the size of the page (A4) depending on image dpi
-        dpi = badges[0].info.get('dpi', (96, 96))
+        # Calculate the size of the page (A4) depending on the base image dpi.
+        dpi = Image.open(badge.base_image.path).info.get('dpi')
+        if not dpi:
+            print("Error getting the DPI from the badge. Aborting")
+            raise KeyError
         pdf_pages = []
         offset_top = 50
         offset_side = 10
         x = offset_side
         y = offset_top
-        a4_width = int(210 // 25.4 * dpi[0])
-        a4_height = int(297 // 25.4 * dpi[1])
+        a4_width = int(210 / 25.4 * dpi[0])
+        a4_height = int(297 / 25.4 * dpi[1])
         current = Image.new(
             "RGB",
             (a4_width, a4_height),
             (255, 255, 255),
             )  # PDF blank page
-
         pdf_pages.append(current)
         for img in badges:
             width, height = img.size
