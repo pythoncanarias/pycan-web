@@ -177,11 +177,15 @@ class Event(models.Model):
 
     def render_all_badges(self, pdf_only=False, remove_badges=True):
         """
-        Render all Badges for this event as images, save them and make an unique PDF with all
-        badges for printing.
-        :param pdf_only: If True, it won't render the intermediate badges, only the final PDF
-        with all the images in the folder.
-        :param remove_badges: If True, remove the intermediate badges to keep the server clean.
+        Render all Badges for this event as images, save them and make
+        an unique PDF with all badges for printing.
+
+        :param pdf_only: If True, it won't render the intermediate
+            badges, only the final PDF with all the images in the folder.
+
+        :param remove_badges: If True, remove the intermediate badges
+            to keep the server clean.
+
         :return:
         """
         if not pdf_only:
@@ -191,7 +195,9 @@ class Event(models.Model):
         image_dir = os.path.join(settings.MEDIA_ROOT, f"events/{self.slug}/")
         image_list = os.listdir(image_dir)
         badges = [
-            Image.open(os.path.join(image_dir, img)).convert('RGB') for img in image_list if img.split('.')[1] != 'pdf'
+            Image.open(os.path.join(image_dir, img)).convert('RGB')
+            for img in image_list
+            if img.endswith('.pdf')
         ]
         if len(badges) == 0:
             return
@@ -204,7 +210,12 @@ class Event(models.Model):
         y = offset_top
         a4_width = int(210 // 25.4 * dpi[0])
         a4_height = int(297 // 25.4 * dpi[1])
-        current = Image.new("RGB", (a4_width, a4_height), (255, 255, 255))  # PDF blank page
+        current = Image.new(
+            "RGB",
+            (a4_width, a4_height),
+            (255, 255, 255),
+            )  # PDF blank page
+
         pdf_pages.append(current)
         for img in badges:
             width, height = img.size
@@ -214,7 +225,11 @@ class Event(models.Model):
                     pdf_pages.append(current)
                 x = offset_side
                 y = offset_top
-                current = Image.new("RGB", (a4_width, a4_height), (255, 255, 255))
+                current = Image.new(
+                    "RGB",
+                    (a4_width, a4_height),
+                    (255, 255, 255),
+                    )
             current.paste(img, (x, y))
             if x + (width * 2) >= a4_width:  # No more badges in the row
                 x = offset_side
@@ -223,7 +238,14 @@ class Event(models.Model):
                 x += width
         pdf = Image.new("RGB", (a4_width, a4_height), (255, 255, 255))
         pdf_output = os.path.join(image_dir, 'print.pdf')
-        pdf.save(pdf_output, "PDF", resolution=100.0, save_all=True, quality=100, append_images=pdf_pages)
+        pdf.save(
+            pdf_output,
+            "PDF",
+            resolution=100.0,
+            save_all=True,
+            quality=100,
+            append_images=pdf_pages,
+            )
         del badges
         if remove_badges:
             for img in image_list:
@@ -277,7 +299,7 @@ class Badge(models.Model):
     def _hex_to_rgb(color: str)-> tuple:
         return tuple(int(color.lstrip("#")[i: i + 2], 16) for i in (0, 2, 4))
 
-    def add_field(self, image_draw: ImageDraw, text: str, coord: str, font_size: int, color: str):
+    def add_field(self, image_draw: ImageDraw, text, coord, font_size, color):
         font = ImageFont.truetype("fonts/arial.ttf", size=font_size)
         image_draw.text(
             self.coord_to_tuple(coord),
@@ -312,13 +334,15 @@ class Badge(models.Model):
             self.category_color
         )
         # test
-        path = f"{settings.MEDIA_ROOT}/events/{self.event.slug}/badge_{ticket.number}.png"
-        if not os.path.exists(os.path.dirname(path)):
-            try:
-                os.makedirs(os.path.dirname(path))
-            except OSError:
-                raise
-        img.save(path, quality=100)
+        path = "{base}/events/{slug}".format(
+            base=settings.MEDIA_ROOT,
+            slug=self.event.slug,
+            )
+        if not os.path.exists(path):
+            os.makedirs(path)
+        filename = f"badge_{ticket.number}.png"
+        full_filename = os.path.join(path, filename)
+        img.save(full_filename, quality=100)
         return img
 
 
@@ -356,7 +380,6 @@ class WaitingList(models.Model):
                 self.email,
                 self.created_at,
                 )
-
 
 
 # Refunds
@@ -438,20 +461,16 @@ class Trade(models.Model):
             .filter(fixed_at__isnull=True)  \
             .order_by('created_at')  \
             .first()
-        return first_seller, first_buyer
+        return first_buyer, first_seller
 
     @classmethod
-    def create(cls):
-        waiting_list, refund = cls.find_candidates()
-        if waiting_list and refund:
-            trade = Trade(
-                buy_code=first_seller.buy_code,
-                sell_code=first_buyer.sell_code,
-                )
-            trade.save()
-            return trade
-        else:
-            return None
+    def create(cls, waiting_list, refund):
+        trade = Trade(
+            buy_code=waiting_list.buy_code,
+            sell_code=refund.sell_code,
+            )
+        trade.save()
+        return trade
 
     @property
     def refund(self):
