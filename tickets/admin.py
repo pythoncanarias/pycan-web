@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import TicketCategory, Article, Ticket
+from .models import TicketCategory
+from .models import Article
+from .models import Ticket
 from events.tasks import send_ticket
 
 
@@ -36,7 +38,7 @@ class ArticleAdmin(admin.ModelAdmin):
 class TicketAdmin(admin.ModelAdmin):
     list_display = (
         'customer_email', 'full_name', 'number',
-        'sold_at', 'is_mail_send'
+        'sold_at', 'is_mail_send', 'is_valid',
         )
     search_fields = (
         'customer_email',
@@ -46,7 +48,7 @@ class TicketAdmin(admin.ModelAdmin):
         'number',
         )
     ordering = ('-sold_at', '-number')
-    list_filter = ('article', 'sold_at', )
+    list_filter = ('article', 'sold_at', 'invalid',)
 
     def full_name(self, obj):
         return "{}, {}".format(
@@ -58,6 +60,11 @@ class TicketAdmin(admin.ModelAdmin):
         return bool(obj.sold_at)
 
     is_mail_send.boolean = True
+
+    def is_valid(self, obj):
+        return not obj.invalid
+
+    is_valid.boolean = True
 
     def resend_ticket_force(self, request, queryset):
         for ticket in queryset:

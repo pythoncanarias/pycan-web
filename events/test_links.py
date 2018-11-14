@@ -18,9 +18,13 @@ def test_article_bought():
 def test_trade():
     sell_code = 'f67b4b1a-87eb-40a5-8855-d3167c4de403'
     buy_code = '1cc0e40a-adcc-4ca5-89f2-d84d8b994ff9'
-    tgt = '/events/abc/trade/{}/{}/'.format(sell_code, buy_code)
-    url = links.trade('abc', sell_code, buy_code)
+    tgt = '/events/trade/{}/{}/'.format(sell_code, buy_code)
+    url = links.trade(sell_code, buy_code)
     assert url == tgt
+
+
+def test_trade_success():
+    assert links.trade_success() == '/events/trade/success/'
 
 
 if __name__ == '__main__':

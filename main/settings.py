@@ -204,6 +204,7 @@ SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='<sengrid api key>')
 
 LOGFILE_NAME = os.path.join(BASE_DIR, "web.log")
 LOGFILE_SIZE = 1 * 1024 * 1024
+DOMAIN = config('DOMAIN', default='pythoncanarias.es')
 LOGFILE_COUNT = 3
 
 LOGGING = {

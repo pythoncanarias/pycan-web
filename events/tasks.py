@@ -74,11 +74,26 @@ def create_ticket_message(ticket):
     return mail
 
 
-@job
-def send_ticket(ticket, force=False):
-    if force:
-        create_ticket_pdf(ticket, force=True)
-    msg = create_ticket_message(ticket)
+def create_ticket_canceled_message(ticket):
+    event = ticket.article.event
+    tmpl = loader.get_template('events/email/ticket_canceled_message.md')
+    subject = 'CANCELADA Entrada para {}'.format(event.name)
+    body = tmpl.render({
+        'ticket': ticket,
+        'article': ticket.article,
+        'category': ticket.article.category,
+        'event': event,
+    })
+    mail = Mail(
+        from_email=Email(settings.CONTACT_EMAIL, settings.ASSOCIATION_NAME),
+        subject=subject,
+        to_email=Email(ticket.customer_email),
+        content=Content('text/html', as_markdown(body)),
+        )
+    return mail
+
+
+def mail_send(msg):
     sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
     response = sg.client.mail.send.post(request_body=msg.get())
     if response.status_code >= 400:
@@ -87,5 +102,22 @@ def send_ticket(ticket, force=False):
         error_msg.append('RESPONSE HEADERS: {}'.format(response.headers))
         error_msg.append('RESPONSE BODY: {}'.format(response.body))
         raise Exception(os.linesep.join(error_msg))
+
+
+@job
+def send_ticket_canceled(ticket):
+    assert ticket.invalid
+    msg = create_ticket_canceled_message(ticket)
+    mail_send(msg)
+    ticket.send_at = timezone.now()
+    ticket.save()
+
+
+@job
+def send_ticket(ticket, force=False):
+    if force:
+        create_ticket_pdf(ticket, force=True)
+    msg = create_ticket_message(ticket)
+    mail_send(msg)
     ticket.send_at = timezone.now()
     ticket.save()

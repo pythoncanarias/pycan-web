@@ -62,6 +62,8 @@ class RefundAdmin(admin.ModelAdmin):
 
 @admin.register(Trade)
 class TradeAdmin(admin.ModelAdmin):
+    readonly_fields = ('sell_code', 'buy_code', 'get_trade_link')
+
     list_display = (
         '__str__',
         'start_at',

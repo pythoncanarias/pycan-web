@@ -3,17 +3,19 @@ import logging
 import stripe
 from django.shortcuts import render, redirect
 from django.conf import settings
-from django.contrib import messages
+from django.http import Http404
 
-from tickets.models import Article
-from tickets.models import Ticket
-from events.models import Event
-from events.models import WaitingList
-from events.models import Refund
-from events.tasks import send_ticket
 from . import forms
 from . import links
+from . import operations
 from . import stripe_utils
+from .models import Event
+from .models import Refund
+from .models import Trade
+from .models import WaitingList
+from .tasks import send_ticket
+from tickets.models import Article
+from tickets.models import Ticket
 
 
 logger = logging.getLogger(__name__)
@@ -99,32 +101,6 @@ def waiting_list_accepted(request, slug):
     })
 
 
-def trade(request, slug, sell_code, buy_code):
-    event = Event.objects.get(slug__iexact=slug)
-    refund = Refund.load_by_sell_code(sell_code)
-    waiting_list = WaitingList.load_by_buy_code(buy_code)
-    ticket = refund.ticket
-    article = ticket.article
-    """Pseudo codigo
-    GET:
-    1) A partir del ticket comprado obtener el tipo de ticket (articulo)
-    2) A partir del waiting list, obtener los datos del nuevo comprador
-    3) Preparar el formulario de compra. Idealmente un solo boton
-    POST:
-    1) obtener timestamp
-    2) Marcar el waiting list como fixed
-    3) Marcar el refund como fixed
-    4) Notificar a ambos que el acuerdo esta cerrado
-    """
-
-    return render(request, 'events/trade.html', {
-        'event': event,
-        'waiting_list': waiting_list,
-        'refund': refund,
-        }
-    )
-
-
 def stripe_payment_declined(request, charge):
     return render(request, 'events/payment-declined.html', {
         'email': settings.CONTACT_EMAIL,
@@ -142,6 +118,69 @@ def stripe_payment_error(request, exception):
         'email': settings.CONTACT_EMAIL,
         }
     )
+
+
+def make_stripe_payment(token, label, price_in_cents, name, surname, email):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    try:
+        customer = stripe.Customer.create(
+            email=email,
+            source=token,
+            description='{}, {}'.format(surname, name),
+        )
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount=price_in_cents,
+            currency='EUR',
+            description='{}/{}, {}'.format(label, surname, name)
+        )
+        return charge.paid, charge.id
+    except Exception as err:
+        logger.error('[{}] Error en el pago por stripe'.format(
+            err.__class__.__name__
+            ))
+        logger.error(str(err))
+        return False, err
+
+
+def trade_view_success(request):
+    return render(request, 'trade-success.html')
+
+
+def trade_view(request, sell_code, buy_code):
+    trade = Trade.load(sell_code, buy_code)
+    if trade is None:
+        raise Http404
+    refund = trade.refund
+    waiting_list = trade.waiting_list
+    ticket = refund.ticket
+    article = ticket.article
+    event = article.event
+    if request.method == 'GET':
+        return render(request, 'events/trade.html', {
+            'event': event,
+            'article': article,
+            'name': waiting_list.name,
+            'surname': waiting_list.surname,
+            'phone': waiting_list.phone,
+            'email': waiting_list.email,
+            'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
+            })
+    else:  # POST
+        email = request.POST['stripeEmail']
+        name = request.POST['name']
+        surname = request.POST['surname']
+        token = request.POST['stripeToken']
+        success, response = make_stripe_payment(
+            token, event.slug, article.price_in_cents,
+            name, surname, email,
+            )
+        if success:
+            payment_id = response
+            operations.execute_trade(trade, payment_id)
+            return redirect(links.trade_success())
+        else:
+            return stripe_payment_error(request, response)
 
 
 def buy_ticket(request, slug):
@@ -185,47 +224,25 @@ def ticket_purchase(request, id_article):
         surname = request.POST['surname']
         phone = request.POST.get('phone', None)
         token = request.POST['stripeToken']
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        try:
-            customer = stripe.Customer.create(
-                email=email,
-                source=token,
-                description='{}, {}'.format(surname, name),
+        success, response = make_stripe_payment(
+            token, event.slug, article.price_in_cents,
+            name, surname, email,
             )
-            charge = stripe.Charge.create(
-                customer=customer.id,
-                amount=article.price_in_cents,
-                currency='EUR',
-                description='{}/{}, {}'.format(
-                    event.slug,
-                    surname,
-                    name,
-                )
+        if success:
+            payment_id = response
+            ticket = Ticket(
+                article=article,
+                customer_name=name,
+                customer_surname=surname,
+                customer_email=email,
+                customer_phone=phone,
+                payment_id=payment_id,
             )
-            if charge.paid:
-                ticket = Ticket(
-                    article=article,
-                    customer_name=name,
-                    customer_surname=surname,
-                    customer_email=email,
-                    customer_phone=phone,
-                    payment_id=charge.id,
-                )
-                ticket.save()
-                send_ticket.delay(ticket)
-                return redirect(links.article_bought(article.pk))
-            else:
-                return stripe_payment_declined(request, charge)
-        except stripe.error.StripeError as err:
-            logger.error('Error de stripe')
-            logger.error(str(err))
-            return stripe_payment_error(request, err)
-        except Exception as err:
-            logger.error('Error en el pago por stripe')
-            logger.error(str(err))
-            messages.add_message(request, messages.ERROR, 'Hello world.')
-            from django.http import HttpResponse
-            return HttpResponse("Something goes wrong\n{}".format(err))
+            ticket.save()
+            send_ticket.delay(ticket)
+            return redirect(links.article_bought(article.pk))
+        else:
+            return stripe_payment_error(request, response)
     else:
         return render(request, 'events/buy-article.html', {
             'event': event,

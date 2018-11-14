@@ -149,13 +149,14 @@ class Event(models.Model):
             'name', 'surname')
 
     def all_tickets(self):
-        '''Get all the tickets sold for a particular event.
+        '''Get all the valid tickets sold for a particular event.
 
             Returns a queryset of tickets, with select related
             articles preloaded.
         '''
         qs = Ticket.objects.select_related('article')
         qs = qs.filter(article__event=self)
+        qs = qs.filter(invalid=False)
         return qs
 
     def all_articles(self):
@@ -414,11 +415,51 @@ class Trade(models.Model):
     sucessful = models.BooleanField(default=False)
 
     @classmethod
-    def load_active_trade(cls):
-        qs = cls.objects.filter(finished==False)
+    def load(cls, sell_code, buy_code):
+        qs = cls.objects.filter(sell_code=sell_code, buy_code=buy_code)
         num_trades = qs.count()
         assert num_trades in (0, 1)
         return qs.first() if num_trades == 1 else None
+
+    @classmethod
+    def load_active_trade(cls):
+        qs = cls.objects.filter(finished=False)
+        num_trades = qs.count()
+        assert num_trades in (0, 1)
+        return qs.first() if num_trades == 1 else None
+
+    @classmethod
+    def create_from_event(cls, slug):
+        first_seller = WaitingList.objects  \
+            .filter(fixed_at__isnull=True)  \
+            .order_by('created_at')  \
+            .first()
+        if first_seller is None:
+            return None
+        first_buyer = Refund.objects  \
+            .filter(fixed_at__isnull=True)  \
+            .order_by('created_at')  \
+            .first()
+        if first_buyer is None:
+            return None
+        trade = Trade(
+            buy_code=first_seller.buy_code,
+            sell_code=first_buyer.sell_code,
+            )
+        trade.save()
+        return trade
+
+    @property
+    def refund(self):
+        if not hasattr(self, '_refund'):
+            self._refund = Refund.load_by_sell_code(self.sell_code)
+        return self._refund
+
+    @property
+    def waiting_list(self):
+        if not hasattr(self, '_waiting_list'):
+            self._waiting_list = WaitingList.load_by_buy_code(self.buy_code)
+        return self._waiting_list
 
     def __str__(self):
         return 'Trade #{}'.format(self.pk)
@@ -431,9 +472,19 @@ class Trade(models.Model):
             if sucessful:
                 self.sucessful = True
                 self.fixed_at = now
+                self.refund.fixed_at = now
+                self.refund.save()
+                self.waiting_list.fixed_at = now
+                self.waiting_list.save()
             self.save()
 
     def is_due(self):
         if not self.finished and time_utils.now() > self.finish_at:
             self.finish(sucessful=False)
         return self.finished
+
+    def get_trade_link(self):
+        return 'https://{}{}'.format(
+            settings.DOMAIN,
+            links.trade(self.sell_code, self.buy_code),
+            )

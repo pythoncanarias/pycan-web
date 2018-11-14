@@ -31,9 +31,14 @@ urlpatterns = [
         name='refund_accepted',
         ),
     path(
-        '<slug:slug>/trade/<uuid:sell_code>/<uuid:buy_code>/',
-        views.trade,
+        'trade/<uuid:sell_code>/<uuid:buy_code>/',
+        views.trade_view,
         name='trade',
+        ),
+    path(
+        'trade/success/',
+        views.trade_view_success,
+        name='trade_success',
         ),
     path(
         '<slug:slug>/resend_ticket/',

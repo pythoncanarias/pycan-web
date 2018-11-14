@@ -5,8 +5,50 @@
 
 {% block content %}
 
-<p> event: {{ event }} </p>
-<p> waiting_list: {{ waiting_list }} </p>
-<p> refund: {{ refund }} </p>
+<div class="box">
+    <h1 class="title is-blue">Intercambio de entradas</h1>
+    <h2 class="subtitle">{{ event.name }}</h2>
+    <div class="tags">
+      <div class="tag is-medium price-tag">
+        <b>Entrada {{ article.category.name }}:</b>&nbsp;{{ article.price }}&nbsp;€
+      </div>
+</div>
+
+<form action="." method="POST">
+{% csrf_token %}
+<input type="hidden" name="name" value="{{ name }}">
+<input type="hidden" name="surname" value="{{ surname }}">
+<input type="hidden" name="phone" value="{{ phone }}">
+
+<dl>
+    <dt>Nombre</dt>
+    <dd> {{ name }} </dd>
+    <dt>Apellidos</dt>
+    <dd> {{ surname }} </dd>
+    <dt>Email</dt>
+    <dd> {{ email }} </dd>
+</dl>
+
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="{{ stripe_public_key }}"
+    data-amount="{{ article.price_in_cents }}"
+    data-name="Stripe.com"
+    data-description="{{ event.slug }} / {{ article.category.name }}"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-zip-code="true">
+  </script>
+</form>
+
+
+<p> Las entradas seleccionadas se compran a través de la pasarela de pago de
+Python Canarias; esto significa que el importe de dichas entradas se abonará en
+la cuenta bancaria de la organización.</p>
+
+<p> <span class="icon"> <i class="fas fa-info-circle"></i> </span> Recuerda que
+las entradas se enviarán a tu correo electrónico, que se te pedirá al realizar
+el pago. Añade <code>info@pythoncanarias.es</code> a tu agenda para evitar que
+el correo acabe en la badeja de spam.  </p>
 
 {% endblock content %}

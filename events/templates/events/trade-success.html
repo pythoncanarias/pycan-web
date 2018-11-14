@@ -1,0 +1,18 @@
+{% extends "events/base.html" %}
+{% load static %}
+{% load utils %}
+{% block title %}Trade - {{event.name}} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="box">
+    <h1 class="title is-blue">El intercambio de entradas ha sido realizado con
+        éxito</h1>
+    <h2 class="subtitle">{{ event.name }}</h2>
+    <div class="tags">
+      <div class="tag is-medium price-tag">
+        <b>Entrada {{ article.category.name }}:</b>&nbsp;{{ article.price }}&nbsp;€
+      </div>
+</div>
+
+{% endblock content %}
