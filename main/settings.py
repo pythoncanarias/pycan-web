@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_rq',
     'colorfield',
     'leaflet',
+    'import_export',
     'commons',
     'homepage',
     'events',

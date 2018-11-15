@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.http import HttpResponse
+from import_export.admin import ImportExportActionModelAdmin
 
-from .models import TicketCategory, Article, Ticket
 from events.tasks import send_ticket
+
+from .models import Article, Ticket, TicketCategory
 
 
 class ArticleInline(admin.StackedInline):
@@ -33,7 +35,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
 
 @admin.register(Ticket)
-class TicketAdmin(admin.ModelAdmin):
+class TicketAdmin(ImportExportActionModelAdmin):
     list_display = (
         'customer_email', 'full_name', 'number',
         'sold_at', 'is_mail_send'
