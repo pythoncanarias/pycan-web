@@ -1,12 +1,13 @@
 {% extends "./modal.html" %}
-
 {% block modal_id %}modal-slot-{{ scheduled_item.slot.id }}{% endblock %}
 
 {% block modal_content %}
-  <h2 class="slot-title">{{ scheduled_item.slot.name }}</h2>
+{% with scheduled_item.slot as slot %}
+
+  <h2 class="slot-title">{{ slot.name }}</h2>
 
   <div class="tags is-centered slot-tags">
-      {% for tag in scheduled_item.slot.tags.all %}
+      {% for tag in slot.tags.all %}
         <div class="tag slot-tag is-light">{{ tag }}</div>
       {% endfor %}
     </div>
@@ -15,7 +16,7 @@
   <div class="tags is-centered slot-attributes">
     <div class="tag slot-attribute"><i class="fas fa-clock"></i> {{ scheduled_item.when_for_display }}</div>
     <div class="tag slot-attribute"><i class="fas fa-map-marker-alt"></i> {{ scheduled_item.location.name }}</div>
-    <div class="tag slot-attribute"><i class="fas fa-signal"></i> {{ scheduled_item.slot.level.name }}</div>
+    <div class="tag slot-attribute"><i class="fas fa-signal"></i> {{ slot.level.name }}</div>
   </div>
 
 
@@ -25,5 +26,22 @@
     {% endfor %}
   </div>
 
-  <div class="slot-description">{{ scheduled_item.slot.description|linebreaks }}</div>
+  <div class="slot-description">{{ slot.description|linebreaks }}</div>
+  <div class="talk-links">
+    <ul>
+      {% if slot.repo %}
+      <li><i class="far fa-copy"></i> <b title="{{ slot.repo}}">
+      <a href="{{ slot.repo }}"> Enlace al repositorio</b></a>
+      </li>
+      {% endif %}
+
+      {% if slot.slides %}
+      <li><i class="fas fa-chalkboard"></i> <b title="{{ slot.slides }}">
+          <a href="{{ slot.slides }}">Enlace a la presentación</b></a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+
+{% endwith %}
 {% endblock %}
