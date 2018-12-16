@@ -93,18 +93,19 @@ class Track(models.Model):
         return queryset
 
     def get_talks(self):
+        qs = self.schedule.all().select_related('slot').order_by('start')
         return [
-                {
-                'talk_id': _.slot.pk,
-                'name': _.slot.name,
-                'start': _.start.strftime('%H:%M'),
-                'end': _.end.strftime('%H:%M'),
-                'description': _.slot.description,
-                'tags': _.slot.get_tags(),
-                'language': _.language,
-                }
-                for _ in self.schedule.all().select_related('slot').order_by('start')
-            ]
+            {
+                'talk_id': t.slot.pk,
+                'name': t.slot.name,
+                'start': t.start.strftime('%H:%M'),
+                'end': t.end.strftime('%H:%M'),
+                'description': t.slot.description,
+                'tags': t.slot.get_tags(),
+                'language': t.language,
+                'speakers': t.get_speakers(),
+            } for t in qs
+        ]
 
 
 class Schedule(models.Model):
@@ -157,6 +158,19 @@ class Schedule(models.Model):
             self.start.time(),
             self.end.time()
         )
+
+    def get_speakers(self):
+        qs = self.speakers.all().order_by('surname', 'name')
+        result = [
+            {
+                'speaker_id': s.pk,
+                'slug': s.slug,
+                'name': s.name,
+                'surname': s.surname,
+                'photo': s.photo_url,
+            } for s in qs
+        ]
+        return result
 
     @property
     def size_for_display(self):
