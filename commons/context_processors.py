@@ -10,5 +10,8 @@ def glob(request):
 
     manifest_path = os.path.join(static_folder_path, "rev-manifest.json")
     with open(manifest_path) as f:
-        assets = json.load(f)
+        try:
+            assets = json.load(f)
+        except Exception:
+            assets = False
     return {"assets": assets}
