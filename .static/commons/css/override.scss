@@ -1,0 +1,83 @@
+hr {
+  background-color: #ececf1;
+  height: 1px;
+  margin: 0.7em 0;
+}
+
+.title.is-blue {
+  color: $blue-text;
+}
+
+.button.is-warning {
+  color: $brown-text-for-yellow-bg;
+  background-color: $yellow-bg;
+  font-weight: 600;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: lighten($yellow-bg, 2);
+  }
+}
+
+.message.is-info .message-body {
+  border-color: #c8dfec;
+}
+
+.tag {
+  background-color: #f3f3f7;
+}
+
+.navbar {
+  .navbar-brand {
+    .navbar-item {
+      padding: 0.35rem 1rem;
+
+      .logo {
+        margin-top: 2px; // offset logo
+        max-height: 3.25rem;
+      }
+    }
+  }
+
+  .navbar-menu {
+    box-shadow: none;
+    border-top: 1px solid #f2f2f2;
+    background-color: #fcfcfd;
+
+    @include from($desktop) {
+      border-top: 0;
+      background-color: #fff;
+    }
+
+    @include from($desktop) {
+      .navbar-end {
+        padding-right: 1rem;
+      }
+    }
+
+    a.navbar-item:hover,
+    a.navbar-item.is-active,
+    .navbar-link:hover,
+    .navbar-link.is-active {
+      background: #fff;
+
+      @include from($desktop) {
+        background: #fcfcfd;
+      }
+    }
+  }
+}
+
+.card {
+  border-radius: $radius;
+
+  & + .card {
+    margin-top: 1.7rem;
+  }
+
+  .card-header {
+    border-radius: $radius $radius 0 0;
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+}

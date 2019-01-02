@@ -1,0 +1,38 @@
+.section.sponsors {
+  .container {
+    max-width: 54em;
+  }
+
+  .role-title {
+    margin-top: 1.7em;
+    margin-bottom: 0.8em;
+  }
+
+  .category-title {
+    margin-top: 1.4em;
+  }
+
+  .organization-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f2f2f4;
+    height: 4.7em;
+    padding: 0.4em 0.7em;
+
+    @include from($custom-mobile) {
+      height: 7rem;
+      padding: 0.65em 1.2em;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: #fdfdfd;
+    }
+
+    img {
+      max-height: 100%;
+    }
+  }
+}

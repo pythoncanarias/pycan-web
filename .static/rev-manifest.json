@@ -1,0 +1,20 @@
+{
+  "commons/img/favicon.ico": "commons/img/favicon-cd9570e723.ico",
+  "commons/img/logo-no-margin.png": "commons/img/logo-no-margin-cbf3406c48.png",
+  "commons/img/logo.png": "commons/img/logo-6d93d3b0c7.png",
+  "commons/img/logo_text.png": "commons/img/logo_text-1368238e3d.png",
+  "commons/vendor.min.css": "commons/vendor-3ad90e5840.min.css",
+  "events/custom.min.css": "events/custom-0f970c0217.min.css",
+  "events/custom.min.js": "events/custom-9defbb7abf.min.js",
+  "events/img/default-event-hero.jpg": "events/img/default-event-hero-84902f613b.jpg",
+  "events/img/ticket-bg.png": "events/img/ticket-bg-85440d6b18.png",
+  "events/img/ticket-default.png": "events/img/ticket-default-5ec2b69aa1.png",
+  "events/img/ticket-early.png": "events/img/ticket-early-5f1f713708.png",
+  "events/img/ticket-normal.png": "events/img/ticket-normal-d89cc42f86.png",
+  "events/img/ticket-test.png": "events/img/ticket-test-6299cce625.png",
+  "events/img/ticket-twin.png": "events/img/ticket-twin-7ef8d68d1c.png",
+  "homepage/custom.min.css": "homepage/custom-3051611ed2.min.css",
+  "homepage/img/bg.jpg": "homepage/img/bg-316d294c42.jpg",
+  "homepage/vendor.min.css": "homepage/vendor-bd01d5fa01.min.css",
+  "speakers/img/noavatar.png": "speakers/img/noavatar-120df7b4ba.png"
+}

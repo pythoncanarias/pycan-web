@@ -1,0 +1,56 @@
+@import './variables';
+@import 'node_modules/bulma/bulma.sass';
+@import './override';
+
+
+html {
+  // source: https://stackoverflow.com/q/46463338
+  -webkit-font-feature-settings: 'liga' 0, 'clig' 0;
+  -moz-font-feature-settings: 'liga' 0, 'clig' 0;
+  font-feature-settings: 'liga' 0, 'clig' 0;
+}
+
+body {
+  font-size: 1.03rem;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.inactive-link {
+  pointer-events: none;
+}
+
+.header-page {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid #ececec;
+}
+
+$footer-height: 4.7rem;
+
+.content-page {
+  max-width: 59rem;
+  min-height: calc(100vh - #{$navbar-height} - #{$footer-height} - 1px);
+  padding: 1rem;
+
+  @include from($custom-mobile) {
+    padding: 2rem 1rem;
+
+    & > .box {
+      padding: 2rem;
+    }
+  }
+
+  &.is-narrow {
+    max-width: 47rem;
+  }
+}
+
+.footer-page {
+  height: $footer-height;
+  line-height: $footer-height;
+  background-color: #2f394e;
+  color: #d9dadd;
+  font-weight: 400;
+}

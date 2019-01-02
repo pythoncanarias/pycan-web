@@ -8,5 +8,11 @@ class Concept(models.Model):
 
     invoice = models.ForeignKey('invoices.Invoice', on_delete=models.CASCADE)
 
+    def save(self, *args, **kwargs):
+        obj = super().save(*args, **kwargs)
+        self.invoice.save()
+
+        return obj
+
     def __str__(self):
         return self.description

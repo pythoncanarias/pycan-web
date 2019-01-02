@@ -16,3 +16,11 @@ RETENTION_CHOICES = (
     (RETENTION_12, 'IRPF 12%'),
     (RETENTION_21, 'IRPF 21%'),
 )
+
+ORG_NAME = 'Python Canarias'
+ORG_MOTTO = 'algun motto para la org'
+ORG_CIF = 'XXXXXXXXB'
+ORG_ADDRESS = 'Ctra This tthat'
+ORG_CITY = 'San Cristobal de La Laguna'
+ORG_EMAIL = 'info@pythoncanarias.es'
+ORG_WEB = 'www.pythoncanarias.es'

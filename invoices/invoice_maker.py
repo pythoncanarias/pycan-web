@@ -14,7 +14,19 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate, Paragraph
 from reportlab.platypus import Table, TableStyle
 
-from invoices.constants import NO_IGIC, IGIC_7, RETENTION_21, RETENTION_6
+from invoices.constants import (
+    IGIC_7,
+    NO_IGIC,
+    ORG_ADDRESS,
+    ORG_CIF,
+    ORG_CITY,
+    ORG_EMAIL,
+    ORG_MOTTO,
+    ORG_NAME,
+    ORG_WEB,
+    RETENTION_21,
+    RETENTION_6,
+)
 
 
 class InvoiceMaker(object):
@@ -22,13 +34,13 @@ class InvoiceMaker(object):
     PAGE_WIDTH = A4[0]
 
     ORG_DATA = {
-        'name': 'Python Canarias',
-        'motto': 'algun motto para la org',
-        'cif': 'XXXXXXXXB',
-        'address': 'Ctra This tthat',
-        'city': 'San Cristobal de La Laguna',
-        'email': 'info@pythoncanarias.es',
-        'web': 'www.pythoncanarias.es',
+        'name': ORG_NAME,
+        'motto': ORG_MOTTO,
+        'cif': ORG_CIF,
+        'address': ORG_ADDRESS,
+        'city': ORG_CITY,
+        'email': ORG_EMAIL,
+        'web': ORG_WEB,
     }
 
     def __init__(self, invoice):
@@ -62,7 +74,11 @@ class InvoiceMaker(object):
         self.first_page = PageTemplate(id='1st_page', frames=self.frame, onPage=self._render_page)
 
         abs_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-        abs_filename = os.path.join(abs_path, 'media', 'invoices', self.invoice.filename)
+        directory = os.path.join(abs_path, 'media', 'invoices')
+        abs_filename = os.path.join(directory, self.invoice.filename)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
         self.sheet_style = BaseDocTemplate(
             abs_filename,
             pagesize=A4,
@@ -105,10 +121,14 @@ class InvoiceMaker(object):
         italic = '{}It'.format(font)
         bold = '{}Bd'.format(font)
         bold_italic = '{}BdIt'.format(font)
-        pdfmetrics.registerFont(TTFont(normal, './invoices/Fonts/DejaVuSans.ttf'))
-        pdfmetrics.registerFont(TTFont(italic, './invoices/Fonts/DejaVuCondensedSansOblique.ttf'))
-        pdfmetrics.registerFont(TTFont(bold, './invoices/Fonts/DejaVuSansBold.ttf'))
-        pdfmetrics.registerFont(TTFont(bold_italic, './invoices/Fonts/DejaVuSansBoldOblique.ttf'))
+
+        fonts_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources', 'fonts')
+
+        pdfmetrics.registerFont(TTFont(normal, os.path.join(fonts_path, 'DejaVuSans.ttf')))
+        pdfmetrics.registerFont(TTFont(italic, os.path.join(fonts_path, 'DejaVuCondensedSansOblique.ttf')))
+        pdfmetrics.registerFont(TTFont(bold, os.path.join(fonts_path, 'DejaVuSansBold.ttf')))
+        pdfmetrics.registerFont(TTFont(bold_italic, os.path.join(fonts_path, 'DejaVuSansBoldOblique.ttf')))
+
         registerFontFamily('Dejavu', normal=normal, bold=bold, italic=italic, boldItalic=bold_italic)
 
     @staticmethod
@@ -129,6 +149,12 @@ class InvoiceMaker(object):
             self.PAGE_WIDTH / 2, self.PAGE_HEIGHT - 4.35 * cm
         )
         canvas.rect(1.2 * cm, self.PAGE_HEIGHT - 1.65 * cm, self.PAGE_WIDTH - 2.4 * cm, - 3 * cm)
+        # logo_directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources', 'images')
+        # logo_python_path = os.path.join(logo_directory, 'logo_python.png')
+        # image_size = 18 * cm
+        # canvas.drawImage(
+        #     logo_python_path, 1.3 * cm, (self.PAGE_HEIGHT - image_size) / 2,
+        #     width=image_size, height=image_size, mask='auto')
 
         # left box
         canvas.drawString(1.4 * cm, self.PAGE_HEIGHT - 2.3 * cm, self.ORG_DATA['name'])
@@ -240,6 +266,9 @@ class InvoiceMaker(object):
         canvas.setLineWidth(1)
 
         canvas.line(5.2 * cm, 2.4 * cm, self.PAGE_WIDTH - 5.2 * cm, 2.4 * cm)
+
+        # logo_python_letras_path = os.path.join(logo_directory, 'logo_python_letras.png')
+        # canvas.drawImage(logo_python_letras_path, 1.3 * cm, 2.9 * cm, width=7.8 * cm, height=2.8 * cm)
 
         # watermark proforma
         if self.invoice.proforma:
