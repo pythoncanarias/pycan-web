@@ -270,3 +270,15 @@ RQ_QUEUES = {
 }
 
 CURRENT_API_VERSION = 1
+
+# invoices
+ORG_DATA = {
+    'name': config('ORG_NAME', default='Python Canarias'),
+    'motto': config('ORG_MOTTO', default=''),
+    'cif': config('ORG_CIF', default='XXXXXXXXB'),
+    'address': config('ORG_ADDRESS', default='Ctra This tthat'),
+    'city': config('ORG_CITY', default='San Cristobal de La Laguna'),
+    'email': config('ORG_EMAIL', default='info@pythoncanarias.es'),
+    'web': config('ORG_WEB', default='www.pythoncanarias.es'),
+    'iban': config('ORG_IBAN', default='111222333'),
+}

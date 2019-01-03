@@ -23,7 +23,7 @@ class ConceptInline(admin.StackedInline):
 class InvoiceAdmin(admin.ModelAdmin):
     inlines = [ConceptInline, ]
     list_filter = ('date', 'client', 'active')
-    list_display = ('__str__', 'date', 'client', 'proforma', 'active', 'invoice_pdf')
+    list_display = ('__str__', 'date', 'client', 'proforma', 'active', 'taxes', 'retention', 'invoice_pdf')
 
     fields = ('client', ('invoice_number', 'proforma', 'active'), 'date', ('taxes', 'retention'))
     readonly_fields = ('invoice_number', )
