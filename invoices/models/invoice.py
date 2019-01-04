@@ -4,7 +4,7 @@ from django.db import models
 from django.conf import settings
 
 from invoices.constants import RETENTION_CHOICES, TAX_CHOICES
-from invoices.invoice_maker import InvoiceMaker
+from invoices.services.invoice_maker import InvoiceMaker
 
 
 class InvoiceManager(models.Manager):
