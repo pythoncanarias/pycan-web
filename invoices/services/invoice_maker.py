@@ -124,14 +124,14 @@ class InvoiceMaker(object):
         canvas.setFont(self.bold, 12)
         canvas.drawString(1.4 * cm, self.PAGE_HEIGHT - 1.58 * cm, 'FACTURA')
 
-        canvas.setFont(self.normal, 6.5)
+        canvas.setFont(self.normal, 11)
         canvas.drawRightString(
-            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.3 * cm, self.invoice.date.strftime('%d-%m-%Y'))
+            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.35 * cm, self.invoice.date.strftime('%d-%m-%Y'))
         canvas.drawRightString(
-            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.7 * cm, self.invoice.verbose_invoice_number)
-        canvas.setFont(self.bold, 6.5)
-        canvas.drawString(self.PAGE_WIDTH - 4 * cm, self.PAGE_HEIGHT - 1.3 * cm, 'FECHA')
-        canvas.drawString(self.PAGE_WIDTH - 4 * cm, self.PAGE_HEIGHT - 1.7 * cm, 'NUMERO')
+            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.75 * cm, self.invoice.verbose_invoice_number)
+        canvas.setFont(self.bold, 11)
+        canvas.drawString(self.PAGE_WIDTH - 6 * cm, self.PAGE_HEIGHT - 1.35 * cm, 'FECHA')
+        canvas.drawString(self.PAGE_WIDTH - 6 * cm, self.PAGE_HEIGHT - 1.75 * cm, 'NUMERO')
 
         # top box
         canvas.setLineWidth(0)
@@ -217,40 +217,39 @@ class InvoiceMaker(object):
 
         retention = 0
         taxes = 0
+
+        canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 4.8 * cm, self.invoice.get_taxes_display())
         if self.invoice.taxes:
-            canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 4.8 * cm, self.invoice.get_taxes_display())
             taxes_percentage = Decimal(self.invoice.get_taxes_display().split('(')[1].split('%')[0])
             taxes = subtotal * taxes_percentage / 100
-
             canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 4.8 * cm, '{} €'.format(taxes))
 
+        canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 4.3 * cm, self.invoice.get_retention_display())
         if self.invoice.retention:
-            canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 4.3 * cm, self.invoice.get_retention_display())
             retention_percentage = Decimal(self.invoice.get_retention_display().replace('IRPF ', '').replace('%', ''))
             retention = subtotal * retention_percentage / 100
-
-            canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 4.3 * cm, '{} €'.format(retention))
+            canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 4.3 * cm, '-{} €'.format(retention))
 
         grantotal = subtotal + taxes - retention
 
         canvas.setLineWidth(1)
         canvas.rect(self.PAGE_WIDTH - 9.8 * cm, 2.9 * cm, 8.5 * cm, 1.2 * cm)
 
-        canvas.setFont(self.bold, 14)
+        canvas.setFont(self.bold, 12)
         canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 3.5 * cm, 'TOTAL:')
         canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 3.5 * cm, '{} €'.format(grantotal))
-        canvas.setFont(self.normal, 6.5)
-        canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 3.1 * cm, self.ORG_DATA['iban'])
-        canvas.setFont(self.bold, 6.5)
-        prev_width = stringWidth(self.ORG_DATA['iban'], self.normal, 6.5)
-        canvas.drawRightString(self.PAGE_WIDTH - (1.6 * cm + prev_width), 3.1 * cm, 'IBAN:')
+
+        canvas.setFont(self.normal, 14)
+        canvas.drawString(1.5 * cm, 5.2 * cm, 'Pago por ransferencia bancaria:')
+        canvas.setFont(self.normal, 12)
+        canvas.drawString(2 * cm, 4.7 * cm, 'OpenBank')
+        canvas.setFont(self.bold, 12)
+        canvas.drawString(2 * cm, 4.2 * cm, self.ORG_DATA['iban'])
 
         # FOOTER
-        canvas.line(5.2 * cm, 2.4 * cm, self.PAGE_WIDTH - 5.2 * cm, 2.4 * cm)
-
         canvas.setFont(self.normal, 9)
-        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2 * cm, self.ORG_DATA['email'])
-        canvas.drawCentredString(self.PAGE_WIDTH / 2, 1.7 * cm, self.ORG_DATA['web'])
+        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2.5 * cm, self.ORG_DATA['email'])
+        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2.2 * cm, self.ORG_DATA['web'])
 
         # watermark proforma
         if self.invoice.proforma:
