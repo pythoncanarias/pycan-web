@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'speakers',
     'tickets',
     'api',
+    'certificates',
 ]
 
 MIDDLEWARE = [

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from import_export.admin import ImportExportActionModelAdmin
 
 from events.tasks import send_ticket
+from certificates.utils import create_certificate
 
 from .models import Article, Ticket, TicketCategory
 
@@ -85,4 +86,19 @@ class TicketAdmin(ImportExportActionModelAdmin):
 
     download_emails.short_description = "Download customers' emails"
 
-    actions = [resend_ticket, resend_ticket_force, download_emails, ]
+    def gen_certificate(self, request, queryset):
+        for ticket in queryset:
+            create_certificate(
+                'attendance',
+                output_name=ticket.keycode,
+                name=ticket.customer_full_name,
+                )
+
+    gen_certificate.short_description = 'Generar certificado de asistencia'
+
+    actions = [
+        resend_ticket,
+        resend_ticket_force,
+        download_emails,
+        gen_certificate,
+        ]
