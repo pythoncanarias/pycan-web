@@ -33,7 +33,12 @@ This will install a virtual environment for the project, with Python 3.6, Django
 
 ## Node.js dependencies
 
-It's essential to use `npm >= 6.0.0` and `node >= 10.0.0` in order to update properly the `package-lock.json`.
+Minimal versions:
+
+- `npm >= 5.6.0`
+- `node >= 9.11.2`
+- `gulp (cli) >= 2.0.1`
+- `gulp (local version) >= 4.0.0`
 
 There are some libraries (*css, js*) used on either the *frontend* or the *development phase*. To install them, make:
 
@@ -43,13 +48,19 @@ $ npm install
 
 > This will create a bunch of folders and files under `node_modules`.
 
+In order to use `gulp` correctly it is necessary to install:
+
+~~~console
+$ sudo npm install --global gulp-cli
+~~~
+
 ## Other dependencies
 
 One of the Python dependencies is [wkhtmltopdf](https://github.com/JazzCore/python-pdfkit). Besides the proper Python package, you have to install the system package. In our experience with *Ubuntu 18.04 Bionic* you should do the following:
 
 ~~~console
 $ wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
-$ sudo dpkg -i https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
+$ sudo dpkg -i wkhtmltox_0.12.5-1.bionic_amd64.deb
 ## in case there are other not resolved dependencies
 $ sudo apt-get -f install
 ~~~
@@ -70,31 +81,31 @@ Feel free to change some of the settings creating a file called `.venv` on the r
 
 We are using **PostgreSQL** as *database management system*. In order to configure the project correctly it is important to follow some indications:
 
-#### Approach A
-
 1. Install [PostgreSQL](https://www.postgresql.org/download/).
 2. Create a *database* and a *user/password* with full access to that database.
 3. Set the following keys in the `.env` file: `DATABASE_NAME`, `DATABASE_USER` and `DATABASE_PASSWORD`.
 
-#### Approach B
-
-1. Install [Docker](https://docs.docker.com/install/).
-2. Use the following `Dockerfile`:
-
-~~~docker
-postgres:
-  image: "postgres:10.4"
-  environment:
-    POSTGRES_DB: "my_db"
-  ports:
-    - 5432:5432
-~~~
-
-Afterwards, in both cases, you can apply migrations with:
+Afterwards you can apply migrations with:
 
 ~~~console
 $ pipenv run python manage.py migrate
 ~~~
+
+#### Admin user
+
+In order to create a user for the admin site of Django you should:
+
+~~~console
+$ pipenv run python manage.py createsuperuser
+~~~
+
+#### Fixtures
+
+Initially (and obviously) the database will be empty. Some `fixtures` will be needed to work with.
+
+### Media
+
+It is important to set property the key `MEDIA_ROOT` in the file `.env`
 
 ### Launching services
 
