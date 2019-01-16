@@ -22,7 +22,7 @@ def get_template_full_name(filename, base=base_dir):
 
 
 def get_output_full_name(filename, base=base_dir):
-    output_dir = os.path.join(base, 'output')
+    output_dir = os.path.join(base, 'media')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     return os.path.join(output_dir, filename)
