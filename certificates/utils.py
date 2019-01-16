@@ -55,3 +55,4 @@ def create_certificate(template, output_name, **kwargs):
             fout.write(output)
     pdf_filename = get_output_full_name('{}.pdf'.format(output_name))
     inkscape_export(full_output_name, pdf_filename)
+    return pdf_filename
