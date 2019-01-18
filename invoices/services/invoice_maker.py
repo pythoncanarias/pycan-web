@@ -52,14 +52,13 @@ class InvoiceMaker(object):
         ])
         self.first_page = PageTemplate(id='1st_page', frames=self.frame, onPage=self._render_page)
 
-        abs_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-        directory = os.path.join(abs_path, 'media', 'invoices')
-        abs_filename = os.path.join(directory, self.invoice.filename)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+        # check if target directory exists
+        dirname = os.path.dirname(self.invoice.path)
+        if not os.path.exists(dirname):
+            os.mkdir(dirname)
 
         self.sheet_style = BaseDocTemplate(
-            abs_filename,
+            self.invoice.path,
             pagesize=A4,
             pageTemplates=[self.first_page],
             showBoundary=0,

@@ -1,4 +1,5 @@
 from datetime import date
+import os
 
 from django.db import models
 from django.conf import settings
@@ -30,6 +31,10 @@ class Invoice(models.Model):
     @property
     def filename(self):
         return '{}.pdf'.format(self.verbose_invoice_number)
+
+    @property
+    def path(self):
+        return os.path.join(settings.MEDIA_ROOT, 'invoices', self.filename)
 
     def filename_url(self):
         media_root = settings.MEDIA_URL
