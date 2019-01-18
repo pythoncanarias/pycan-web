@@ -126,14 +126,14 @@ class InvoiceMaker(object):
         canvas.setFont(self.bold, 12)
         canvas.drawString(1.4 * cm, self.PAGE_HEIGHT - 1.58 * cm, 'FACTURA')
 
-        canvas.setFont(self.normal, 11)
+        canvas.setFont(self.normal, 9)
         canvas.drawRightString(
-            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.35 * cm, self.invoice.date.strftime('%d-%m-%Y'))
+            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.30 * cm, self.invoice.date.strftime('%d-%m-%Y'))
         canvas.drawRightString(
-            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.75 * cm, self.invoice.verbose_invoice_number)
-        canvas.setFont(self.bold, 11)
-        canvas.drawString(self.PAGE_WIDTH - 6 * cm, self.PAGE_HEIGHT - 1.35 * cm, 'FECHA')
-        canvas.drawString(self.PAGE_WIDTH - 6 * cm, self.PAGE_HEIGHT - 1.75 * cm, 'NUMERO')
+            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.70 * cm, self.invoice.verbose_invoice_number)
+        canvas.setFont(self.bold, 9)
+        canvas.drawString(self.PAGE_WIDTH - 6 * cm, self.PAGE_HEIGHT - 1.30 * cm, 'FECHA')
+        canvas.drawString(self.PAGE_WIDTH - 6 * cm, self.PAGE_HEIGHT - 1.70 * cm, 'NUMERO')
 
         # top box
         canvas.setLineWidth(0)
@@ -250,8 +250,8 @@ class InvoiceMaker(object):
 
         # FOOTER
         canvas.setFont(self.normal, 9)
-        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2.5 * cm, self.python_canarias.email)
-        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2.2 * cm, self.python_canarias.url)
+        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2 * cm, self.python_canarias.email)
+        canvas.drawCentredString(self.PAGE_WIDTH / 2, 1.5 * cm, self.python_canarias.url)
 
         # watermark proforma
         if self.invoice.proforma:
