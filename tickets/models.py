@@ -119,6 +119,10 @@ class Ticket(models.Model):
     def event(self):
         return self.article.event
 
+    @property
+    def customer_full_name(self):
+        return '{} {}'.format(self.customer_name, self.customer_surname)
+
     def save(self, *args, **kwargs):
         if not self.number:
             self.number = self.event.next_ticket_number()
