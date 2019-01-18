@@ -30,9 +30,7 @@ class InvoiceAdmin(admin.ModelAdmin):
     ordering = ('-date', )
 
     def invoice_pdf(self, invoice):
-        abs_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-        abs_filename = os.path.join(abs_path, 'media', 'invoices', invoice.filename)
-        if not os.path.isfile(abs_filename):
+        if not os.path.isfile(invoice.path):
             invoice.render()
 
         return mark_safe('<a href="{}" download>Download</a>'.format(invoice.filename_url()))
