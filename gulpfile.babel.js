@@ -9,7 +9,7 @@ import { revFiles } from './gulp/tasks/rev'
 
 gulp.task('default', make)
 
-gulp.task('watch', gulp.series(make, watch))
+gulp.task('watch', gulp.series(make, watch_static))
 
 
 function make(done) {
@@ -24,7 +24,7 @@ function clean() {
   return del(['./static/*'], { dot: true })
 }
 
-function watch() {
-  return gulp.watch('*/**/static/**/*.{scss,js}')
+function watch_static() {
+  return gulp.watch('*/**/{static,media}/**/*.{scss,js,pdf}')
     .on('all', gulp.series(buildCustom, revFiles))
 }

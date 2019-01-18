@@ -33,7 +33,7 @@ ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
     cast=config.list,
     default='localhost, 127.0.0.1',
-    )
+)
 
 
 # Application definition
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'schedule',
     'speakers',
     'tickets',
+    'invoices',
     'api',
     'certificates',
 ]
@@ -117,22 +118,10 @@ DATABASES = {
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': ('django.contrib.auth.password_validation.'
-                 'UserAttributeSimilarityValidator'),
-    },
-    {
-        'NAME': ('django.contrib.auth.password_validation.'
-                 'MinimumLengthValidator'),
-    },
-    {
-        'NAME': ('django.contrib.auth.password_validation.'
-                 'CommonPasswordValidator'),
-    },
-    {
-        'NAME': ('django.contrib.auth.password_validation.'
-                 'NumericPasswordValidator'),
-    },
+    {'NAME': ('django.contrib.auth.password_validation.UserAttributeSimilarityValidator')},
+    {'NAME': ('django.contrib.auth.password_validation.MinimumLengthValidator')},
+    {'NAME': ('django.contrib.auth.password_validation.CommonPasswordValidator')},
+    {'NAME': ('django.contrib.auth.password_validation.NumericPasswordValidator')},
 ]
 
 
@@ -188,12 +177,12 @@ LEAFLET_CONFIG = {
 STRIPE_PUBLIC_KEY = config(
     'STRIPE_PUBLIC_KEY',
     default='Set your Stripe api public key in .env file',
-    )
+)
 
 STRIPE_SECRET_KEY = config(
     'STRIPE_SECRET_KEY',
     default='Set your Stripe api secret key in .env file',
-    )
+)
 
 LOAD_FONTS_IN_REPORTS = config(
     'LOAD_FONTS_IN_REPORTS',
@@ -208,6 +197,7 @@ LOGFILE_NAME = os.path.join(BASE_DIR, "web.log")
 LOGFILE_SIZE = 1 * 1024 * 1024
 LOGFILE_COUNT = 3
 
+LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -221,7 +211,7 @@ LOGGING = {
     "handlers": {
         # Log to console
         'console': {
-            'level': 'DEBUG',
+            'level': LOG_LEVEL,
             'class': 'logging.StreamHandler',
         },
         # Log to a text file that can be rotated by logrotate
@@ -237,17 +227,22 @@ LOGGING = {
     "loggers": {
         "root": {
             "handlers": ["console"],
-            "level": "DEBUG",
+            "level": LOG_LEVEL,
             "propagate": True,
-            },
+        },
         "tickets": {
             "handlers": ["logfile", "console"],
-            "level": "DEBUG",
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+        "invoices": {
+            "handlers": ["logfile", "console"],
+            "level": LOG_LEVEL,
             "propagate": True,
         },
         "events": {
             "handlers": ["logfile", "console"],
-            "level": "DEBUG",
+            "level": LOG_LEVEL,
             "propagate": True,
         },
         "django": {
@@ -276,3 +271,5 @@ RQ_QUEUES = {
 }
 
 CURRENT_API_VERSION = 1
+
+ORGANIZATION_NAME = 'Python Canarias'
