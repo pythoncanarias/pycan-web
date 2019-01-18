@@ -6,8 +6,6 @@ from commons.constants import PRIORITY
 class Organization(models.Model):
     name = models.CharField(max_length=256)
     logo = models.FileField(upload_to='organizations/organization/')
-    url = models.URLField()
-    email = models.EmailField(blank=True)
 
     def __str__(self):
         return self.name
@@ -17,6 +15,15 @@ class Organization(models.Model):
             m.organization for m in self.joint_memberships.
             order_by('-amount', 'order', 'organization__name')
         ]
+
+    address = models.CharField(max_length=100, blank=True, null=True)
+    rest_address = models.CharField(max_length=100, blank=True, null=True)
+    po_box = models.CharField(max_length=10, blank=True, null=True)
+    city = models.CharField(max_length=20, blank=True, null=True)
+    cif = models.CharField(max_length=10, blank=True, null=True)
+    iban = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(blank=True)
+    url = models.URLField()
 
 
 class OrganizationRole(models.Model):

@@ -1,8 +1,5 @@
 #! / usr / bin / env python
 # -*- coding: utf-8 -*-
-import os
-import subprocess
-import sys
 from decimal import Decimal
 
 from django.conf import settings
@@ -10,19 +7,24 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.pdfmetrics import registerFontFamily, stringWidth
+from reportlab.pdfbase.pdfmetrics import registerFontFamily
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate, Paragraph
 from reportlab.platypus import Table, TableStyle
+import os
+import subprocess
+import sys
+
+from organizations.models import Organization
 
 
 class InvoiceMaker(object):
     PAGE_HEIGHT = A4[1]
     PAGE_WIDTH = A4[0]
 
-    ORG_DATA = settings.ORG_DATA
-
     def __init__(self, invoice):
+        self.python_canarias = Organization.objects.get(name__istartswith=settings.ORGANIZATION_NAME)
+
         self.invoice = invoice
 
         self._configure_fonts('DejaVu')
@@ -154,17 +156,17 @@ class InvoiceMaker(object):
 
         # LEFT HALF
         canvas.setFont(self.bold, 12)
-        canvas.drawString(1.4 * cm, self.PAGE_HEIGHT - 2.7 * cm, self.ORG_DATA['name'])
+        canvas.drawString(1.4 * cm, self.PAGE_HEIGHT - 2.7 * cm, self.python_canarias.name)
         canvas.setFont(self.normal, 9)
-        canvas.drawString(1.7 * cm, self.PAGE_HEIGHT - 3.2 * cm, self.ORG_DATA['address'])
+        canvas.drawString(1.7 * cm, self.PAGE_HEIGHT - 3.2 * cm, self.python_canarias.address)
         vertical_1 = self.PAGE_HEIGHT - 3.55 * cm
-        if self.ORG_DATA['rest_address']:
-            canvas.drawString(1.7 * cm, self.PAGE_HEIGHT - 3.55 * cm, self.ORG_DATA['rest_address'])
+        if self.python_canarias.rest_address:
+            canvas.drawString(1.7 * cm, self.PAGE_HEIGHT - 3.55 * cm, self.python_canarias.rest_address)
             vertical_1 = self.PAGE_HEIGHT - 3.9 * cm
-        canvas.drawString(1.7 * cm, vertical_1, '{} {}'.format(self.ORG_DATA['po_box'], self.ORG_DATA['city']))
+        canvas.drawString(1.7 * cm, vertical_1, '{} {}'.format(self.python_canarias.po_box, self.python_canarias.city))
 
         canvas.setFont(self.bold, 9)
-        canvas.drawRightString(self.PAGE_WIDTH / 2 - 0.3 * cm, self.PAGE_HEIGHT - 4.8 * cm, self.ORG_DATA['cif'])
+        canvas.drawRightString(self.PAGE_WIDTH / 2 - 0.3 * cm, self.PAGE_HEIGHT - 4.8 * cm, self.python_canarias.cif)
 
         # RIGHT HALF
         canvas.setFont(self.bold, 12)
@@ -244,12 +246,12 @@ class InvoiceMaker(object):
         canvas.setFont(self.normal, 12)
         canvas.drawString(2 * cm, 4.7 * cm, 'OpenBank')
         canvas.setFont(self.bold, 12)
-        canvas.drawString(2 * cm, 4.2 * cm, self.ORG_DATA['iban'])
+        canvas.drawString(2 * cm, 4.2 * cm, self.python_canarias.iban)
 
         # FOOTER
         canvas.setFont(self.normal, 9)
-        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2.5 * cm, self.ORG_DATA['email'])
-        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2.2 * cm, self.ORG_DATA['web'])
+        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2.5 * cm, self.python_canarias.email)
+        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2.2 * cm, self.python_canarias.url)
 
         # watermark proforma
         if self.invoice.proforma:
