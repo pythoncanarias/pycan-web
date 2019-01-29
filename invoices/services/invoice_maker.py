@@ -241,7 +241,7 @@ class InvoiceMaker(object):
         canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 3.5 * cm, '{} €'.format(grantotal))
 
         canvas.setFont(self.normal, 14)
-        canvas.drawString(1.5 * cm, 5.2 * cm, 'Pago por ransferencia bancaria:')
+        canvas.drawString(1.5 * cm, 5.2 * cm, 'Pago por transferencia bancaria:')
         canvas.setFont(self.normal, 12)
         canvas.drawString(2 * cm, 4.7 * cm, 'OpenBank')
         canvas.setFont(self.bold, 12)
