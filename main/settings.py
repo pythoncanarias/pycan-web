@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'invoices',
     'api',
     'certificates',
+    'quotes',
 ]
 
 MIDDLEWARE = [

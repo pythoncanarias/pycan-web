@@ -1,0 +1,336 @@
+[
+{
+    "model": "quotes.author",
+    "pk": 1,
+    "fields": {
+        "name": "Doug",
+        "surname": "McIlroy",
+        "url": "https://en.wikipedia.org/wiki/Douglas_McIlroy",
+        "photo": "",
+        "created": "2019-01-25T15:24:59.815Z",
+        "updated": "2019-01-25T15:24:59.815Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 2,
+    "fields": {
+        "name": "Dennis",
+        "surname": "Ritchie",
+        "url": "https://en.wikipedia.org/wiki/Dennis_Ritchie",
+        "photo": "",
+        "created": "2019-01-25T15:28:09.551Z",
+        "updated": "2019-01-25T15:31:58.283Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 3,
+    "fields": {
+        "name": "Henry",
+        "surname": "Ford",
+        "url": "https://en.wikipedia.org/wiki/Henry_Ford",
+        "photo": "",
+        "created": "2019-01-25T15:30:17.624Z",
+        "updated": "2019-01-25T15:32:16.400Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 4,
+    "fields": {
+        "name": "Brian",
+        "surname": "Kernighan",
+        "url": "",
+        "photo": "",
+        "created": "2019-01-25T15:35:07.959Z",
+        "updated": "2019-01-25T15:35:07.959Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 5,
+    "fields": {
+        "name": "Antoine",
+        "surname": "De Saint Exup\u00e9ry",
+        "url": "https://en.wikipedia.org/wiki/Antoine_de_Saint-Exup%C3%A9ry",
+        "photo": "",
+        "created": "2019-01-25T15:37:21.705Z",
+        "updated": "2019-01-25T15:38:09.108Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 6,
+    "fields": {
+        "name": "Martin",
+        "surname": "Fowler",
+        "url": "https://en.wikipedia.org/wiki/Martin_Fowler_(software_engineer)",
+        "photo": "",
+        "created": "2019-01-25T15:44:05.504Z",
+        "updated": "2019-01-25T15:44:40.037Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 7,
+    "fields": {
+        "name": "Ron",
+        "surname": "Jeffries",
+        "url": "",
+        "photo": "",
+        "created": "2019-01-25T15:46:51.745Z",
+        "updated": "2019-01-25T15:46:51.745Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 8,
+    "fields": {
+        "name": "Roberto",
+        "surname": "Waltman",
+        "url": "",
+        "photo": "",
+        "created": "2019-01-25T15:51:04.965Z",
+        "updated": "2019-01-25T15:51:04.965Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 9,
+    "fields": {
+        "name": "Chris",
+        "surname": "Sacca",
+        "url": "",
+        "photo": "",
+        "created": "2019-01-25T15:52:05.739Z",
+        "updated": "2019-01-25T15:52:05.739Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 10,
+    "fields": {
+        "name": "Ralph",
+        "surname": "Johnson",
+        "url": "",
+        "photo": "",
+        "created": "2019-01-25T15:54:20.169Z",
+        "updated": "2019-01-25T15:54:20.169Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 11,
+    "fields": {
+        "name": "Frederick",
+        "surname": "P. Brooks",
+        "url": "",
+        "photo": "",
+        "created": "2019-01-25T15:55:13.393Z",
+        "updated": "2019-01-25T15:55:13.393Z"
+    }
+},
+{
+    "model": "quotes.author",
+    "pk": 12,
+    "fields": {
+        "name": "Grace",
+        "surname": "Hopper",
+        "url": "https://en.wikipedia.org/wiki/Grace_Hopper",
+        "photo": "",
+        "created": "2019-01-25T16:08:25.340Z",
+        "updated": "2019-01-25T16:13:12.971Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 1,
+    "fields": {
+        "text": "Expect the output of every program to become the input to another, as yet unknown, program",
+        "author": 1,
+        "created": "2019-01-25T15:25:26.830Z",
+        "updated": "2019-01-25T15:25:26.830Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 2,
+    "fields": {
+        "text": "The real hero of programming is the one who writes negative code",
+        "author": 1,
+        "created": "2019-01-25T15:25:56.339Z",
+        "updated": "2019-01-25T15:25:56.339Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 3,
+    "fields": {
+        "text": "Keep it simple, make it general, and make it intelligible",
+        "author": 1,
+        "created": "2019-01-25T15:26:11.639Z",
+        "updated": "2019-01-25T15:26:11.639Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 4,
+    "fields": {
+        "text": "UNIX is basically a simple operating system, but you have to be a genius to understand the simplicity",
+        "author": 2,
+        "created": "2019-01-25T15:28:27.479Z",
+        "updated": "2019-01-25T15:28:27.479Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 5,
+    "fields": {
+        "text": "Whether you think you can, or you think you can't - you're right",
+        "author": 3,
+        "created": "2019-01-25T15:30:38.848Z",
+        "updated": "2019-01-25T15:30:38.848Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 6,
+    "fields": {
+        "text": "Controlling complexity is the essence of computer programming",
+        "author": 4,
+        "created": "2019-01-25T15:35:22.282Z",
+        "updated": "2019-01-25T15:35:22.282Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 7,
+    "fields": {
+        "text": "The time for action is now. It's never too late to do something",
+        "author": 5,
+        "created": "2019-01-25T15:39:57.567Z",
+        "updated": "2019-01-25T15:39:57.567Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 8,
+    "fields": {
+        "text": "A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away",
+        "author": 5,
+        "created": "2019-01-25T15:40:47.454Z",
+        "updated": "2019-01-25T15:40:47.454Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 9,
+    "fields": {
+        "text": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand",
+        "author": 6,
+        "created": "2019-01-25T15:44:07.529Z",
+        "updated": "2019-01-25T15:44:07.529Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 10,
+    "fields": {
+        "text": "Models are not right or wrong; they are more or less useful",
+        "author": 6,
+        "created": "2019-01-25T15:46:04.564Z",
+        "updated": "2019-01-25T15:46:04.564Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 11,
+    "fields": {
+        "text": "Always implement things when you actually need them, never when you just foresee that you need them",
+        "author": 7,
+        "created": "2019-01-25T15:46:53.649Z",
+        "updated": "2019-01-25T15:46:53.649Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 12,
+    "fields": {
+        "text": "The object-oriented version of spaghetti code is, of course, 'lasagna code'. Too many layers",
+        "author": 8,
+        "created": "2019-01-25T15:51:06.839Z",
+        "updated": "2019-01-25T15:51:06.839Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 13,
+    "fields": {
+        "text": "Almost every attempt at making something better will be regarded by someone else as a personal attack",
+        "author": 9,
+        "created": "2019-01-25T15:52:07.530Z",
+        "updated": "2019-01-25T15:52:07.530Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 14,
+    "fields": {
+        "text": "Before software can be reusable it first has to be usable",
+        "author": 10,
+        "created": "2019-01-25T15:54:21.913Z",
+        "updated": "2019-01-25T15:54:21.913Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 15,
+    "fields": {
+        "text": "What one programmer can do in one month, two programmers can do in two months.",
+        "author": 11,
+        "created": "2019-01-25T15:55:15.136Z",
+        "updated": "2019-01-25T15:55:15.137Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 16,
+    "fields": {
+        "text": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it",
+        "author": 4,
+        "created": "2019-01-25T15:57:09.492Z",
+        "updated": "2019-01-25T15:57:09.492Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 17,
+    "fields": {
+        "text": "People have an enormous tendency to resist change. They love to say, 'We've always done it this way.' I try to fight that",
+        "author": 12,
+        "created": "2019-01-25T16:08:27.112Z",
+        "updated": "2019-01-25T16:08:27.112Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 18,
+    "fields": {
+        "text": "It's easier to ask forgiveness than it is to get permission",
+        "author": 12,
+        "created": "2019-01-25T16:09:20.829Z",
+        "updated": "2019-01-25T16:09:20.829Z"
+    }
+},
+{
+    "model": "quotes.quote",
+    "pk": 19,
+    "fields": {
+        "text": "The wonderful thing about standards is that there are so many of them to choose from",
+        "author": 12,
+        "created": "2019-01-25T16:11:37.676Z",
+        "updated": "2019-01-25T16:11:37.676Z"
+    }
+}
+]
