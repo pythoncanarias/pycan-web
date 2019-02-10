@@ -40,6 +40,11 @@
 
         <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias" />
 
+        <div class="quote is-centered">
+          <p><i class="fas fa-quote-left"></i> {{ quote.text }} <i class="fas fa-quote-right"></i></p>
+          <p>&mdash; {{ quote.author }}</p>
+        </div>
+
         {% if active_events %}
         <div class="links buttons is-centered">
           <a href="{% url 'events:index' %}" class="link button is-link is-medium is-outlined">Eventos</a>
