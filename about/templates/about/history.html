@@ -1,0 +1,39 @@
+{% extends "about/base.html" %}
+{% load utils %}
+{% load static %}
+
+{% block title %}Historia - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="content box">
+
+{% filter as_markdown %}
+
+# Historia de Python Canarias
+
+La historia conocida de Python en Canarias se remonta al **año 2001**. Por aquellos tiempos, el software libre se empezaba a cocinar en el [Grupo de Usuarios de Linux de Canarias](http://gulic.org/).
+
+Desde **2001** un grupo de alumnos daba en la [Universidad de La Laguna](https://www.ull.es/) los cursos CILA y, entre ellos, varios años se impartió el *CILA de Programación con Python*. Posteriormente los oficializó la [Oficina del software libre de la ULL](https://osl.ull.es/). También hubo incursiones en el ámbito de la Astrofísica en la ULL.
+
+En junio de **2002**, en Gran Canaria, **Ricardo Cárdenes** [(heimy)](https://twitter.com/heimy?lang=es) anunciaba la [traducción](http://web.archive.org/web/20010630145724/http://www.gulic.org/) por **Iván Juanes** ([kerberos](https://twitter.com/kerberus)) de la primera edicion del libro *How to think like a computer scientist, Python version* (Aprenda a pensar como un cientifico informático, versión Python).
+
+![Historia de Python Canarias]({{ assets|get_asset_key:'about/img/history.png' }})
+
+En **2003** aparecen las primeras reuniones de desarrolladores de Python [PyCon](https://www.pycon.org/), que comenzaron en Washington DC, donde los asistentes marcaban las líneas de desarrollo de Python y compartían experiencias.
+
+En **2005** heimy estaba traduciendo el [Dive into Python](http://quie.blogalia.com/historias/25052) y daba cursos de Python en la [Universidad de Verano de Adeje](http://www.barraquito.net/archives/2005/05/24/curso-sobre-software-libre-en-la-universidad-de-verano/).
+
+La primera reunión de desarrolladores de Python en España [PyConES](http://2013.es.pycon.org/) se celebró en Madrid en el año **2013**. Parecía que la comunidad en España comenzaba a tener suficiente masa crítica como para merecer la pena un evento en el que intercambiar experiencias.
+
+Desde **2014** entusiastas de Tenerife comenzaron a reunirse de manera informal en los eventos denominados [PyBirras](https://github.com/pythoncanarias/pythoncanarias_web/blob/master/tag/pybirras) y comenzaron a visitar la PyConES. El número ha ido en aumento cada año. En la PyConES 2016, por ejemplo, ya acudieron 7 personas desde Tenerife.
+
+En **2017** tuvimos el primer gran evento de Python organizado en Canarias: [PyDay Tenerife](https://medium.com/pythoncanarias/resumen-del-pyday-tenerife-652d0055a6c0), celebrado en la Universidad de La Laguna, y que contó con más de 100 asistentes y una jornada completa de ponencias.
+
+La [asociación Python Canarias]({% url 'about:index' %}) se constituye oficialmente en el año **2018**. Recordar la historia es algo necesario pero debemos seguir mirando hacia el futuro. En eso estamos.
+
+{% endfilter %}
+
+</div>
+
+{% endblock content %}
