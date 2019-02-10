@@ -13,3 +13,7 @@ def index(request):
         name__istartswith=settings.ORGANIZATION_NAME)
     return render(request, 'about/index.html',
                   {'pythoncanarias': pythoncanarias})
+
+
+def history(request):
+    return render(request, 'about/history.html', {})
