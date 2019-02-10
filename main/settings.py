@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'api',
     'certificates',
     'quotes',
+    'about'
 ]
 
 MIDDLEWARE = [
