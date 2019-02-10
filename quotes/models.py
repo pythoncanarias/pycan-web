@@ -1,3 +1,5 @@
+import random
+
 from django.db import models
 
 
@@ -21,3 +23,8 @@ class Quote(models.Model):
 
     def __str__(self):
         return '{}\n--\n{}'.format(self.text, self.author)
+
+    @classmethod
+    def get_random_quote(cls):
+        quotes = cls.objects.all()
+        return random.choice(quotes)
