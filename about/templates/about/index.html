@@ -1,0 +1,95 @@
+{% extends "about/base.html" %}
+
+{% block title %}Asociación - {{ block.super }}{% endblock %}
+
+{% block body_class %}about-index{% endblock %}
+
+{% block content %}
+
+<p class="title is-1">Asociación</p>
+<p class="subtitle is-3">{{ pythoncanarias.name }}</p>
+
+<article class="message">
+  <a id="intro"></a>
+  <div class="message-header">
+    Introducción
+    <a class="headerlink" href="#intro">¶</a>
+  </div>
+  <div class="message-body">
+    <p>La asociación <strong>{{ pythoncanarias.name }}</strong> es una asociación sin ánimo de lucro cuyos objetivos, son, entre otros, promover el <strong>uso del lenguaje</strong> de programación Python, dar <strong>soporte</strong> a quienes deseen aprenderlo y promover la programación como una <strong>competencia educativa básica</strong>.</p>
+
+    <p>La asociación fue creada el <strong>{{ pythoncanarias.registration_date|date:"d/m/Y" }}</strong> y desde entonces ha organizado <a href="{% url 'events:index' %}">diferentes eventos</a> de difusión del lenguaje de programación Python colaborando en el incremento de la comunidad de usuarios de Python en Canarias.</p>
+
+    <p>Si quieres apoyar nuestra labor para que podamos abordar proyectos cada vez más ambiciosos, <strong>hazte socio/a!</strong> Estamos deseando escuchar tus propuestas.</p>
+  </div>
+</article>
+
+<article class="message">
+  <a id="whypython"></a>
+  <div class="message-header">
+    ¿Por qué Python?
+    <a class="headerlink" href="#whypython">¶</a>
+  </div>
+  <div class="message-body">
+    <p>Python es un lenguaje dinámico, de alto nivel y con una sintaxis clara. Es de propósito general lo que permite usarlo para cualquier tipo de programa o herramienta. Dispone de una inmensa cantidad de librerías, tanto internas como de terceras partes. Por si todo esto fuera poco, es software libre, multiplataforma (Unix, Windows u OS/X entre otras) y multiparadigma (orientación a objetos, funcional o imperativo). Python es utilizado hoy en día por empresas tan destacadas como Instagram, The New York Times, Google, Dropbox, NASA, Mercedes-Benz, Pinterest, National Geographic, The Washington Post, YouTube, Blender o Industrial Light & Magic.</p>
+  </div>
+</article>
+
+<article class="message">
+  <a id="fiscal"></a>
+  <div class="message-header">
+    Datos fiscales
+    <a class="headerlink" href="#fiscal">¶</a>
+  </div>
+  <div class="message-body">
+    <p>
+      Asociación cultural {{ pythoncanarias.name }}<br>
+      CIF {{ pythoncanarias.cif }}<br>
+      {{ pythoncanarias.address }}<br>
+      {{ pythoncanarias.po_box }} {{ pythoncanarias.city }}
+    </p>
+
+    <p>
+      <i class="fas fa-credit-card"></i> {{ pythoncanarias.bank}} | {{ pythoncanarias.iban }}<br>
+      <i class="fas fa-fingerprint"></i> {{ pythoncanarias.registration_number }} <span class="content is-small">(número de registro)</span>
+    </p>
+  </div>
+</article>
+
+<article class="message">
+  <a id="board"></a>
+  <div class="message-header">
+    Junta directiva
+    <a class="headerlink" href="#board">¶</a>
+  </div>
+  <div class="message-body">
+    <p>Actualmente la <strong>junta directiva</strong> de {{ pythoncanarias.name }} está formada por:</p>
+    <table class="table is-bordered is-striped is-narrow">
+      <tr><td>Presidente</td><td>Juan Ignacio Rodríguez de León</td></tr>
+      <tr><td>Vicepresidente</td><td>Israel Santana Alemán</td></tr>
+      <tr><td>Secretario</td><td>Sergio Delgado Quintero</td></tr>
+      <tr><td>Tesorero</td><td>Héctor Álvarez Alonso</td></tr>
+      <tr><td>Vocal</td><td>Víctor Suárez García</td></tr>
+      <tr><td>Vocal</td><td>José Lucas Grillo Lorenzo</td></tr>
+      <tr><td>Vocal</td><td>Jaime Iván Juanes Prieto</td></tr>
+      <tr><td>Vocal</td><td>Víctor Raúl Ruiz Ruiz</td></tr>
+    </table>
+  </div>
+</article>
+
+<article class="message">
+  <a id="board"></a>
+  <div class="message-header">
+    Documentación
+    <a class="headerlink" href="#docs">¶</a>
+  </div>
+  <div class="content message-body">
+    <ul>
+      <li><a href="https://github.com/pythoncanarias/docs/raw/master/asociacion/estatutos/estatutos.pdf">Estatutos</a></li>
+      <li><a href="https://github.com/pythoncanarias/docs/tree/master/actas/junta-directiva">Actas de la junta directiva</a></li>
+      <li><a href="https://github.com/pythoncanarias/docs/tree/master/actas/core">Actas del CORE</a> <span class="content is-small">(Comisión para la organización y realización de eventos)</span></li>
+    </ul>
+  </div>
+</article>
+
+{% endblock content %}

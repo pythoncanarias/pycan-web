@@ -25,6 +25,6 @@ function clean() {
 }
 
 function watch_static() {
-  return gulp.watch('*/**/{static,media}/**/*.{scss,js,pdf}')
+  return gulp.watch('*/{static,media}/**/*.{scss,js,pdf}')
     .on('all', gulp.series(buildCustom, revFiles))
 }

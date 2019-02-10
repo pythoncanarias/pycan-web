@@ -36,32 +36,13 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.flatpages',
-    'django_extensions',
-    'django_rq',
-    'colorfield',
-    'leaflet',
-    'import_export',
-    'commons',
-    'homepage',
-    'events',
-    'locations',
-    'organizations',
-    'schedule',
-    'speakers',
-    'tickets',
-    'invoices',
-    'api',
-    'certificates',
-    'quotes',
-    'members',
+    'django.contrib.admin', 'django.contrib.auth',
+    'django.contrib.contenttypes', 'django.contrib.sessions',
+    'django.contrib.messages', 'django.contrib.staticfiles',
+    'django.contrib.sites', 'django.contrib.flatpages', 'django_extensions',
+    'django_rq', 'colorfield', 'leaflet', 'import_export', 'commons',
+    'homepage', 'events', 'locations', 'organizations', 'schedule', 'speakers',
+    'tickets', 'invoices', 'api', 'certificates', 'quotes', 'members', 'about'
 ]
 
 MIDDLEWARE = [

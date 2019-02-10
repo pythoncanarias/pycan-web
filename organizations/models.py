@@ -23,7 +23,10 @@ class Organization(models.Model):
     cif = models.CharField(max_length=10, blank=True, null=True)
     iban = models.CharField(max_length=50, blank=True, null=True)
     email = models.EmailField(blank=True)
-    url = models.URLField()
+    url = models.URLField(blank=True)
+    bank = models.CharField(max_length=50, blank=True)
+    registration_date = models.DateField(blank=True, null=True)
+    registration_number = models.CharField(max_length=50, blank=True)
 
 
 class OrganizationRole(models.Model):
