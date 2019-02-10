@@ -27,20 +27,21 @@
   </div>
 
   <div class="slot-description">{{ slot.description|linebreaks }}</div>
-  <div class="talk-links">
-    <ul>
+
+  <div class="talk-links columns">
       {% if slot.repo %}
-      <li><i class="far fa-copy"></i> <b title="{{ slot.repo}}">
-      <a href="{{ slot.repo }}"> Enlace al repositorio</b></a>
-      </li>
+        <div class="column">
+          <i class="fab fa-github"></i>
+          <a href="{{ slot.repo }}">Enlace al repositorio</a>
+        </div>
       {% endif %}
 
       {% if slot.slides %}
-      <li><i class="fas fa-chalkboard"></i> <b title="{{ slot.slides }}">
-          <a href="{{ slot.slides }}">Enlace a la presentación</b></a>
-      </li>
+        <div class="column">
+          <i class="fab fa-slideshare"></i>
+          <a href="{{ slot.slides }}">Enlace a la presentación</a>
+        </div>
       {% endif %}
-    </ul>
   </div>
 
 {% endwith %}
