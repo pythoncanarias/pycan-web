@@ -5,4 +5,4 @@ from members.models import Member
 
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
-    pass
+    raw_id_fields = ['user']
