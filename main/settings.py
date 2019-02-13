@@ -254,7 +254,7 @@ LOGGING = {
             'django':
                 {
                     'handlers': ['logfile', 'console'],
-                    'level': LOG_LEVEL,
+                    'level': 'INFO',
                     'propagate': True,
                 },
             'members':
