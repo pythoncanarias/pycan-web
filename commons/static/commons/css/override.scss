@@ -35,7 +35,7 @@ hr {
 
       .logo {
         margin-top: 2px; // offset logo
-        max-height: 3.25rem;
+        max-height: $header-height;
       }
     }
   }
@@ -43,11 +43,9 @@ hr {
   .navbar-menu {
     box-shadow: none;
     border-top: 1px solid #f2f2f2;
-    background-color: #fcfcfd;
 
     @include from($desktop) {
       border-top: 0;
-      background-color: #fff;
     }
 
     @include from($desktop) {
@@ -56,14 +54,22 @@ hr {
       }
     }
 
+    a.navbar-item,
+    a.navbar-item.is-active,
+    .navbar-link,
+    .navbar-link.is-active {
+      color: white;
+    }
+
     a.navbar-item:hover,
     a.navbar-item.is-active,
     .navbar-link:hover,
     .navbar-link.is-active {
-      background: #fff;
+      background: darken($header-bg, 5%);
+      font-weight: bold;
 
       @include from($desktop) {
-        background: #fcfcfd;
+        background: darken($header-bg, 5%);
       }
     }
   }
