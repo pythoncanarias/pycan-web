@@ -62,14 +62,21 @@ hr {
     }
 
     a.navbar-item:hover,
-    a.navbar-item.is-active,
-    .navbar-link:hover,
-    .navbar-link.is-active {
+    .navbar-link:hover {
       background: darken($header-bg, 5%);
-      font-weight: bold;
 
       @include from($desktop) {
         background: darken($header-bg, 5%);
+      }
+    }
+
+    a.navbar-item.is-active,
+    .navbar-link.is-active {
+      background: darken($header-bg, 10%);
+      font-weight: bold;
+
+      @include from($desktop) {
+        background: darken($header-bg, 10%);
       }
     }
   }
