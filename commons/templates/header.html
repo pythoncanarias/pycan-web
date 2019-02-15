@@ -15,14 +15,11 @@
 
   <div class="navbar-menu" id="navMenu">
     <div class="navbar-end has-text-centered">
-      <a class="navbar-item" href="{% url 'events:index' %}">
+      <a class="navbar-item {% is_active 'events:index' %}" href="{% url 'events:index' %}">
         Eventos
       </a>
-      <a class="navbar-item" href="{% url 'about:index' %}">
+      <a class="navbar-item {% is_active 'about:index' %}" href="{% url 'about:index' %}">
         Asociación
-      </a>
-      <a class="navbar-item" href="{% url 'events:coc' %}">
-        Código de conducta
       </a>
     </div>
   </div>
