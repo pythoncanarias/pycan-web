@@ -5,9 +5,17 @@ $yellow-text: #dcb029;
 $yellow-bg: #efc23b;
 $brown-text-for-yellow-bg: #332702;
 $light-gray-bg: #f9f9fb;
+
+// https://flatuicolors.com/palette/nl
+$header-bg: #F79F1F;
+$footer-bg: #444444;
+
 $default-box-shadow: 0 1px 1px rgba(10, 10, 29, 0.09), 0 0 1px rgba(10, 10, 29, 0.09);
 
 $custom-mobile: 36rem;
+
+$header-height: 4rem;
+$footer-height: 6rem;
 
 // Bulma variables
 $family-sans-serif: 'Lato', sans-serif;

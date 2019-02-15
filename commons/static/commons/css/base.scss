@@ -26,9 +26,8 @@ body {
 .header-page {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
   border-bottom: 1px solid #ececec;
+  background-color: $header-bg;
 }
-
-$footer-height: 4.7rem;
 
 .content-page {
   max-width: 59rem;
@@ -51,7 +50,7 @@ $footer-height: 4.7rem;
 .footer-page {
   height: $footer-height;
   line-height: $footer-height;
-  background-color: #2f394e;
-  color: #d9dadd;
+  background-color: $footer-bg;
+  color: #ebebeb;
   font-weight: 400;
 }
