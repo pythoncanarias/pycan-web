@@ -108,9 +108,8 @@ class Event(models.Model):
         return self.schedule.filter(track__isnull=True).order_by('start')
 
     @property
-    def start_date_as_datetime(self):
-        return datetime.datetime.combine(
-            self.start_date, datetime.time(0, 0, tzinfo=pytz.UTC))
+    def start_datetime(self):
+        return self.schedule.order_by('start').first().start
 
     def _scheduled_items_for_display(self, start=None, end=None):
         result = {'type': 'scheduled_items', 'tracks': []}
@@ -127,7 +126,7 @@ class Event(models.Model):
 
     def schedule_for_display(self):
         result = [{'type': 'tracks', 'tracks': self.tracks()}]
-        start, end = self.start_date_as_datetime, None
+        start, end = self.start_datetime, None
         for psi in list(self.plenary_scheduled_items()):
             end = psi.start
             scheduled_items = self._scheduled_items_for_display(start, end)
