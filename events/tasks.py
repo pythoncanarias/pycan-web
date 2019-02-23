@@ -1,9 +1,6 @@
 import base64
-import io
 import os
-import shutil
 
-import pyqrcode
 import sendgrid
 from django.conf import settings
 from django.template import loader
@@ -12,38 +9,6 @@ from django_rq import job
 from sendgrid.helpers.mail import Attachment, Content, Email, Mail
 
 from commons.filters import as_markdown
-from libs.reports.core import Report
-
-
-def get_qrcode_as_svg(text, scale=8):
-    img = pyqrcode.create(str(text))
-    buff = io.BytesIO()
-    img.svg(buff, scale=scale)
-    return buff.getvalue().decode('ascii')
-
-
-def get_tickets_dir():
-    _dir = os.path.join(settings.BASE_DIR, 'temporal', 'tickets')
-    if not os.path.isdir(_dir):
-        os.makedirs(_dir)
-    return _dir
-
-
-def create_ticket_pdf(ticket, force=False):
-    output_dir = get_tickets_dir()
-    pdf_file = 'ticket-{}.pdf'.format(ticket.keycode)
-    full_name = os.path.join(output_dir, pdf_file)
-    if not os.path.exists(full_name) or force:
-        event = ticket.article.event
-        qr_code = get_qrcode_as_svg(ticket.keycode, scale=6)
-        report = Report('events/ticket.j2', {
-            'ticket': ticket,
-            'event': event,
-            'qr_code': qr_code,
-        })
-        report.render(http_response=False)
-        shutil.move(report.template_pdf.name, full_name)
-    return full_name
 
 
 def create_ticket_message(ticket):
@@ -63,7 +28,7 @@ def create_ticket_message(ticket):
         content=Content('text/html', as_markdown(body)))
 
     attachment = Attachment()
-    pdf_filename = create_ticket_pdf(ticket)
+    pdf_filename = ticket.as_pdf()
     with open(pdf_filename, 'rb') as f:
         data = f.read()
     attachment.content = base64.b64encode(data).decode()
@@ -76,8 +41,7 @@ def create_ticket_message(ticket):
 
 @job
 def send_ticket(ticket, force=False):
-    if force:
-        create_ticket_pdf(ticket, force=True)
+    ticket.as_pdf(force)
     msg = create_ticket_message(ticket)
     sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
     response = sg.client.mail.send.post(request_body=msg.get())

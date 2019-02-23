@@ -1,11 +1,16 @@
+import io
+import os
 import uuid
-
 from decimal import Decimal
 
+import pyqrcode
+from django.conf import settings
 from django.db import models
 from django.db.models import Max
 from django.urls import reverse
 from django.utils import timezone as dj_timezone
+
+from tickets.services.ticket_maker import TicketMaker
 
 from . import links
 
@@ -133,3 +138,25 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return reverse('events:article_bought', args=(str(self.keycode),))
+
+    def get_qrcode_as_svg(self, scale=8):
+        img = pyqrcode.create(str(self.keycode))
+        buff = io.BytesIO()
+        img.svg(buff, scale=scale)
+        return buff.getvalue().decode('ascii')
+
+    @staticmethod
+    def get_tickets_dir():
+        _dir = os.path.join(settings.BASE_DIR, 'temporal', 'tickets')
+        if not os.path.isdir(_dir):
+            os.makedirs(_dir)
+        return _dir
+
+    def as_pdf(self, force=False):
+        output_dir = Ticket.get_tickets_dir()
+        pdf_file = f'ticket-{self.keycode}.pdf'
+        full_name = os.path.join(output_dir, pdf_file)
+        if not os.path.exists(full_name) or force:
+            tm = TicketMaker(full_name, self)
+            tm.create()
+        return full_name
