@@ -183,10 +183,6 @@ STRIPE_SECRET_KEY = config(
     default='Set your Stripe api secret key in .env file',
 )
 
-LOAD_FONTS_IN_REPORTS = config(
-    'LOAD_FONTS_IN_REPORTS', default=True, cast=config.boolean
-)
-
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='<sengrid api key>')
 
 LOGFILE_NAME = os.path.join(BASE_DIR, 'web.log')
