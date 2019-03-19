@@ -70,6 +70,13 @@
               </div>
             </div>
           </div>
+        {% empty %}
+          <div class="column is-full has-text-centered coming-soon">
+            <p>
+              <i class="fas fa-box-open"></i>
+              Más información próximamente!
+            </p>
+          </div>
         {% endfor %}
       </div>
     </div>
@@ -89,6 +96,13 @@
           {% elif row.type == 'scheduled_items' %}
             {% include "./event-components/schedule/scheduled-items.html" with tracks=row.tracks only %}
           {% endif %}
+        {% empty %}
+          <div class="column is-full has-text-centered coming-soon">
+            <p>
+              <i class="fas fa-box-open"></i>
+              Más información próximamente!
+            </p>
+          </div>
         {% endfor %}
       </div>
     </div>
@@ -100,22 +114,31 @@
       <h1 class="title section-title">Localización</h1>
       <div>
         <div class="columns is-multiline">
-          <div class="column is-12-tablet is-6-desktop">
-            <div class="map-wrapper">
-              {% leaflet_map "event-map" %}
-              <a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
+          {% if event.venue %}
+            <div class="column is-12-tablet is-6-desktop">
+              <div class="map-wrapper">
+                {% leaflet_map "event-map" %}
+                <a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
+              </div>
             </div>
-          </div>
-          <div class="column is-12-tablet is-6-desktop">
-            <strong class="venue-name">
-              <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
-            </strong>
-            <address>
-              <p class="venue-address">{{ event.venue.address }}</p>
-            </address>
-            <hr/>
-            <p class="venue-description">{{ event.venue.description }}</p>
-          </div>
+            <div class="column is-12-tablet is-6-desktop">
+              <strong class="venue-name">
+                <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
+              </strong>
+              <address>
+                <p class="venue-address">{{ event.venue.address }}</p>
+              </address>
+              <hr/>
+              <p class="venue-description">{{ event.venue.description }}</p>
+            </div>
+          {% else %}
+            <div class="column is-full has-text-centered coming-soon">
+              <p>
+                <i class="fas fa-box-open"></i>
+                Más información próximamente!
+              </p>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -151,6 +174,13 @@
             {% endfor %}
           </div>
         {% endfor %}
+      {% empty %}
+        <div class="column is-full has-text-centered coming-soon">
+          <p>
+            <i class="fas fa-box-open"></i>
+            Más información próximamente!
+          </p>
+        </div>
       {% endfor %}
     </div>
   </section>
