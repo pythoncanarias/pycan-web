@@ -19,9 +19,11 @@
         <span class="event-header-date">
           <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
         </span>
-        <span class="event-header-venue">
-          <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
-        </span>
+        {% if event.venue %}
+          <span class="event-header-venue">
+            <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
+          </span>
+        {% endif %}
       </div>
 
       {% if event.opened_ticket_sales %}
