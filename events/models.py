@@ -31,14 +31,18 @@ class Event(models.Model):
     start_date = models.DateField()
     # 50 minutes as default duration for each slot
     default_slot_duration = models.DurationField(default=50 * 60)
-    short_description = models.TextField(blank=True)
+    short_description = models.TextField(
+        blank=True,
+        help_text='Shown in events\' list'
+    )
     description = models.TextField(
         blank=True,
-        help_text='Markdown is allowed'
+        help_text='Shown in main page of event (markdown allowed)'
     )
     cover = models.ImageField(
         upload_to='events/event/',
-        blank=True
+        blank=True,
+        help_text='Should be squared (250x250 max). Shown in events\' list'
     )
     poster = models.FileField(
         upload_to='events/event/',
@@ -50,7 +54,8 @@ class Event(models.Model):
     )
     hero = models.ImageField(
         upload_to='events/event/',
-        blank=True
+        blank=True,
+        help_text='Enough 1200px wide. Shown shaded in main page of event'
     )
 
     def __str__(self):
