@@ -31,14 +31,18 @@ class Event(models.Model):
     start_date = models.DateField()
     # 50 minutes as default duration for each slot
     default_slot_duration = models.DurationField(default=50 * 60)
-    short_description = models.TextField(blank=True)
+    short_description = models.TextField(
+        blank=True,
+        help_text='Shown in events\' list'
+    )
     description = models.TextField(
         blank=True,
-        help_text='Markdown is allowed'
+        help_text='Shown in main page of event (markdown allowed)'
     )
     cover = models.ImageField(
         upload_to='events/event/',
-        blank=True
+        blank=True,
+        help_text='Should be squared (250x250 max). Shown in events\' list'
     )
     poster = models.FileField(
         upload_to='events/event/',
@@ -50,7 +54,8 @@ class Event(models.Model):
     )
     hero = models.ImageField(
         upload_to='events/event/',
-        blank=True
+        blank=True,
+        help_text='Enough 1200px wide. Shown shaded in main page of event'
     )
 
     def __str__(self):
@@ -107,9 +112,12 @@ class Event(models.Model):
     def plenary_scheduled_items(self):
         return self.schedule.filter(track__isnull=True).order_by('start')
 
-    @property
     def start_datetime(self):
-        return self.schedule.order_by('start').first().start
+        try:
+            return self.schedule.order_by('start').first().start
+        except AttributeError:
+            return datetime.datetime.combine(self.start_date,
+                                             datetime.datetime.min.time())
 
     def _scheduled_items_for_display(self, start=None, end=None):
         result = {'type': 'scheduled_items', 'tracks': []}
@@ -125,19 +133,26 @@ class Event(models.Model):
         return result
 
     def schedule_for_display(self):
-        result = [{'type': 'tracks', 'tracks': self.tracks()}]
-        start, end = self.start_datetime, None
-        for psi in list(self.plenary_scheduled_items()):
-            end = psi.start
+        tracks = self.tracks()
+        if not tracks:
+            result = []
+        else:
+            result = [{'type': 'tracks', 'tracks': tracks}]
+            start, end = self.start_datetime(), None
+            for psi in list(self.plenary_scheduled_items()):
+                end = psi.start
+                scheduled_items = self._scheduled_items_for_display(start, end)
+                if scheduled_items:
+                    result.append(scheduled_items)
+                result.append({
+                    'type': 'plenary_scheduled_item',
+                    'schedule': psi
+                })
+                start, end = psi.end, None
+
             scheduled_items = self._scheduled_items_for_display(start, end)
             if scheduled_items:
                 result.append(scheduled_items)
-            result.append({'type': 'plenary_scheduled_item', 'schedule': psi})
-            start, end = psi.end, None
-
-        scheduled_items = self._scheduled_items_for_display(start, end)
-        if scheduled_items:
-            result.append(scheduled_items)
         return result
 
     def get_non_org_speakers(self):

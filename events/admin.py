@@ -9,21 +9,20 @@ def render_event_badges(modeladmin, request, queryset):
     prints = []
     for event in queryset:
         prints.append(request.get_host() + event.render_all_badges())
-    messages.add_message(request, messages.INFO, f"Generated PDFs in -> {' '.join(prints)} ")
+    messages.add_message(request, messages.INFO,
+                         f"Generated PDFs in -> {' '.join(prints)} ")
 
 
 render_event_badges.short_description = "Generate a PDF with all the badges"
 
 
-class BadgeInline(admin.StackedInline):
-    model = Badge
-    min_num = 1
-    max_num = 1
+@admin.register(Badge)
+class BadgeInline(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    inlines = [BadgeInline]
     prepopulated_fields = {'slug': ('name', ), }
     actions = [render_event_badges]
     list_display = ('name', 'slug', 'active',
