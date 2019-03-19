@@ -94,7 +94,6 @@ class Event(models.Model):
             r = {}
             for cat in role.organization_categories.order_by('order', 'name'):
                 orgs = cat.organizations(self)
-                print(orgs)
                 # insert joint organizations next to its reference
                 for i, org in enumerate(orgs):
                     for jorg in reversed(org.joint_organizations()):

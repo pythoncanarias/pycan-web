@@ -176,10 +176,3 @@ class Schedule(models.Model):
     def size_for_display(self):
         t = round((self.end - self.start) / self.event.default_slot_duration)
         return t if t > 0 else 1
-
-    @property
-    def when_for_display(self):
-        return '{} - {}'.format(
-            self.start.strftime('%H:%M'),
-            self.end.strftime('%H:%M')
-        )
