@@ -133,19 +133,26 @@ class Event(models.Model):
         return result
 
     def schedule_for_display(self):
-        result = [{'type': 'tracks', 'tracks': self.tracks()}]
-        start, end = self.start_datetime(), None
-        for psi in list(self.plenary_scheduled_items()):
-            end = psi.start
+        tracks = self.tracks()
+        if not tracks:
+            result = []
+        else:
+            result = [{'type': 'tracks', 'tracks': tracks}]
+            start, end = self.start_datetime(), None
+            for psi in list(self.plenary_scheduled_items()):
+                end = psi.start
+                scheduled_items = self._scheduled_items_for_display(start, end)
+                if scheduled_items:
+                    result.append(scheduled_items)
+                result.append({
+                    'type': 'plenary_scheduled_item',
+                    'schedule': psi
+                })
+                start, end = psi.end, None
+
             scheduled_items = self._scheduled_items_for_display(start, end)
             if scheduled_items:
                 result.append(scheduled_items)
-            result.append({'type': 'plenary_scheduled_item', 'schedule': psi})
-            start, end = psi.end, None
-
-        scheduled_items = self._scheduled_items_for_display(start, end)
-        if scheduled_items:
-            result.append(scheduled_items)
         return result
 
     def get_non_org_speakers(self):
