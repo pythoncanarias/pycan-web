@@ -5,12 +5,12 @@
     size-{{ scheduled_item.size_for_display }}
   {% endif %}
 
-  {% if scheduled_item.slot.category.code != 'talk' %}
+  {% if scheduled_item.slot.category.code != 'talk' and  scheduled_item.slot.category.code != 'workshop' %}
     inactive-link
   {% endif %}
   "
 
-  {% if scheduled_item.slot.category.code == 'talk' %}
+  {% if scheduled_item.slot.category.code == 'talk' or scheduled_item.slot.category.code == 'workshop' %}
     href="#slot={{ scheduled_item.slot.id }}"
   {% endif %}
 >
@@ -20,6 +20,8 @@
       <i class="fas fa-coffee icon-slot-category"></i>
     {% elif scheduled_item.slot.category.code == 'meal' %}
       <i class="fas fa-utensils icon-slot-category"></i>
+    {% elif scheduled_item.slot.category.code == 'workshop' %}
+      <i class="fas fa-toolbox icon-slot-category"></i>
     {% endif %}
     {{ scheduled_item.slot.name }}
   </div>

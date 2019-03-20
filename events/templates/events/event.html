@@ -54,7 +54,7 @@
   <section id="speakers" class="section speakers">
     <div class="container">
       <h1 class="title section-title">Ponentes</h1>
-      <div class="columns is-multiline is-mobile">
+      <div class="columns is-multiline is-mobile is-centered">
         {% for speaker in event.get_non_org_speakers %}
 
           {% include "./event-components/modals/speaker-modal.html" with speaker=speaker only %}

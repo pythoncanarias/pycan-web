@@ -14,7 +14,9 @@
 
 
   <div class="tags is-centered slot-attributes">
-    <div class="tag slot-attribute"><i class="fas fa-clock"></i> {{ scheduled_item.when_for_display }}</div>
+    <div class="tag slot-attribute"><i class="fas fa-clock"></i>
+      {{ scheduled_item.start|date:'G:i' }} - {{ scheduled_item.end|date:'G:i' }}
+    </div>
     <div class="tag slot-attribute"><i class="fas fa-map-marker-alt"></i> {{ scheduled_item.location.name }}</div>
     <div class="tag slot-attribute"><i class="fas fa-signal"></i> {{ slot.level.name }}</div>
   </div>
