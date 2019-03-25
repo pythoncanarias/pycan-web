@@ -119,6 +119,10 @@ class Event(models.Model):
             return datetime.datetime.combine(self.start_date,
                                              datetime.datetime.min.time())
 
+    @property
+    def start_hour(self):
+        return time_utils.as_hour(self.start_datetime())
+
     def _scheduled_items_for_display(self, start=None, end=None):
         result = {'type': 'scheduled_items', 'tracks': []}
         exist_scheduled_item = False
