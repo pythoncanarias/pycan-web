@@ -162,7 +162,7 @@ class TicketMaker(BaseReport):
         self.elements.append(s)
 
     def create_features(self):
-        start = self.ticket.event.start_datetime
+        start = self.ticket.event.start_datetime()
         data = (
             ('\uf554', 'asistente', self.ticket.customer_full_name),
             ('\uf0e0', 'email', self.ticket.customer_email),
