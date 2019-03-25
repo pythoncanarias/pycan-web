@@ -19,6 +19,12 @@ def test_as_hour_with_non_naive_datetime():
     assert time_utils.as_hour(dst) == '13:22'
 
 
+def test_timestamp():
+    t = time_utils.timestamp(2019, 3, 25, 14, 22, 1)
+    assert isinstance(t, datetime.datetime)
+    assert t.tzinfo == pytz.utc
+
+
 def test_now():
     t = time_utils.now()
     assert isinstance(t, datetime.datetime)
