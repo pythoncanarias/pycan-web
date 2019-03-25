@@ -1,11 +1,28 @@
 #!/usr/bin/enb python3
 
-import time_utils
 import pytest
+import datetime
+
+import pytz
+
+from . import time_utils
+
+
+def test_as_hour_with_naive_datetime():
+    dst = datetime.datetime(2019, 3, 25, 14, 22, 1, tzinfo=None)
+    assert time_utils.as_hour(dst) == '14:22'
+
+
+def test_as_hour_with_non_naive_datetime():
+    ams = pytz.timezone('CET')
+    dst = datetime.datetime(2019, 3, 25, 14, 22, 1, tzinfo=ams)
+    assert time_utils.as_hour(dst) == '13:22'
 
 
 def test_now():
     t = time_utils.now()
+    assert isinstance(t, datetime.datetime)
+    assert t.tzinfo == pytz.utc
 
 
 def test_now_plus():
