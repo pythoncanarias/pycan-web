@@ -1,5 +1,7 @@
 import os
 
+from django.utils import timezone
+
 from reportlab.graphics import renderPDF
 from reportlab.graphics.barcode import qr
 from reportlab.graphics.shapes import Drawing
@@ -162,7 +164,7 @@ class TicketMaker(BaseReport):
         self.elements.append(s)
 
     def create_features(self):
-        start = self.ticket.event.start_datetime()
+        start = timezone.localtime(self.ticket.event.start_datetime())
         data = (
             ('\uf554', 'asistente', self.ticket.customer_full_name),
             ('\uf0e0', 'email', self.ticket.customer_email),
