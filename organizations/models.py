@@ -27,6 +27,11 @@ class Organization(models.Model):
     bank = models.CharField(max_length=50, blank=True)
     registration_date = models.DateField(blank=True, null=True)
     registration_number = models.CharField(max_length=50, blank=True)
+    paypal_username = models.CharField(max_length=50, blank=True)
+
+    @property
+    def paypal_me(self):
+        return f'https://paypal.me/{self.paypal_username}'
 
 
 class OrganizationRole(models.Model):
