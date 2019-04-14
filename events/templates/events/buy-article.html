@@ -77,13 +77,8 @@
         </div>
       </div>
 
-      <p>
-        Las entradas seleccionadas se compran a través de la pasarela de pago de Python Canarias;
-        esto significa que el importe de dichas entradas se pagará en la cuenta bancaria de la organización.
-      </p>
-
-      <p>
-        Acepto usar la pasarela de pago del organizador y deseo continuar con la compra de las entradas.
+      <p class="has-text-weight-light">
+        Las entradas seleccionadas se compran a través de la pasarela de pago de Stripe programada desde la web de Python Canarias. Esto significa que el importe de dichas entradas se abonará en la cuenta bancaria de la asociación. Al continuar con la adquisición de las entradas acepta usar la pasarela de pago del organizador.
       </p>
 
       <div class="terms">
@@ -118,6 +113,10 @@
       <div class="control has-text-centered">
         <button id="button-go-to-payment" class="button is-warning">Continuar</button>
       </div>
+
+      <p class="has-text-weight-light has-text-centered">
+        Pulse <a href="{% url 'events:ticket_purchase_nocc' id_article=article.id %}">aquí</a> si no dispone de tarjeta bancaria.
+      </p>
 
       <div class="spinner-background is-hidden">
         <i class="fas fa-spinner fa-spin"></i>
