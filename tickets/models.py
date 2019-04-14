@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.utils import timezone as dj_timezone
 
 from tickets.services.ticket_maker import TicketMaker
+from .constants import PAYMENT_METHOD
 
 from . import links
 
@@ -102,6 +103,11 @@ class Ticket(models.Model):
     keycode = models.UUIDField(default=uuid.uuid4)
     sold_at = models.DateTimeField(auto_now_add=True)
     payment_id = models.CharField(max_length=128, blank=True)
+    payment_method = models.PositiveSmallIntegerField(
+        choices=PAYMENT_METHOD.CHOICES,
+        default=PAYMENT_METHOD.STRIPE,
+        blank=True,
+        null=True)
     article = models.ForeignKey(
         Article,
         on_delete=models.PROTECT,
