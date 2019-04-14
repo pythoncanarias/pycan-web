@@ -1,0 +1,47 @@
+{% extends "events/base.html" %}
+{% load utils %}
+
+{% block title %}Otros métodos de pago - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="content box">
+
+{% filter as_markdown %}
+
+# {{ article.event }}
+## Otros métodos de pago
+
+Si dispone de tarjeta bancaria acceda a [la página de venta de entradas]({% url 'events:ticket_purchase' id_article=article.id %}). En otro caso le explicamos cómo puede adquirir entradas para este evento utilizando <b>métodos de pago alternativos</b> (procedimiento manual).
+
+## <i class="fas fa-university"></i> Transferencia bancaria
+
+1. Realice una transferencia bancaria indicando los siguientes datos:
+  - **Banco**: {{ pythoncanarias.bank}}
+  - **IBAN**: {{ pythoncanarias.iban }}
+  - **Importe**: {{ article.price }} €
+  - **Concepto**: Entrada para {{ article.event.slug }}
+  - **Beneficiario**: {{ pythoncanarias.name }}
+
+2. Envíe un correo a [{{ pythoncanarias.email }}](mailto:{{ pythoncanarias.email }}) indicando los siguientes datos:
+  - <b>Asunto</b>: Transferencia bancaria - Entrada para {{ article.event.slug }}
+  - <b>Cuerpo</b>: Indique su *nombre y apellidos* así como un *teléfono de contacto*.
+  - **IMPORTANTE**: Adjuntar el justificante de la transferencia en formato PDF.
+
+3. Una vez recibamos este email, generaremos su entrada y se la enviaremos por correo electrónico como fichero adjunto PDF.
+
+## <i class="fab fa-paypal"></i> PayPal
+
+1. Realice un pago PayPal usando [este enlace de la asociación Python Canarias]({{ pythoncanarias.paypal_me }}), indicando los siguientes datos:
+  - **Importe**: {{ article.price }} €
+  - **Añada una nota**: Entrada para {{ article.event.slug }}
+
+2. No es necesario enviar correo electrónico, ya que PayPal se encarga de notificar el envío de dinero.
+
+3. Una vez recibamos este email, generaremos su entrada y se la enviaremos por correo electrónico como fichero adjunto PDF.
+
+{% endfilter %}
+
+</div>
+
+{% endblock content %}

@@ -1,20 +1,16 @@
 import logging
 
 import stripe
-from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
+from django.shortcuts import redirect, render
 
-from tickets.models import Article
-from tickets.models import Ticket
-from events.models import Event
-from events.models import WaitingList
-from events.models import Refund
+from events.models import Event, Refund, WaitingList
 from events.tasks import send_ticket
-from . import forms
-from . import links
-from . import stripe_utils
+from organizations.models import Organization
+from tickets.models import Article, Ticket
 
+from . import forms, links, stripe_utils
 
 logger = logging.getLogger(__name__)
 
@@ -232,6 +228,19 @@ def ticket_purchase(request, id_article):
             'article': article,
             'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
             })
+
+
+def ticket_purchase_nocc(request, id_article):
+    article = Article.objects.select_related('event').get(pk=id_article)
+    assert article.is_active(), "Este tipo de entrada no está ya disponible."
+    pythoncanarias = Organization.objects.get(
+        name__istartswith=settings.ORGANIZATION_NAME)
+
+    template = 'events/ticket-purchase-nocc.html'
+    return render(request, template, {
+        'article': article,
+        'pythoncanarias': pythoncanarias
+    })
 
 
 def article_bought(request, id_article):
