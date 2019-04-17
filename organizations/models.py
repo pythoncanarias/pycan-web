@@ -19,7 +19,7 @@ class Organization(models.Model):
     address = models.CharField(max_length=100, blank=True, null=True)
     rest_address = models.CharField(max_length=100, blank=True, null=True)
     po_box = models.CharField(max_length=10, blank=True, null=True)
-    city = models.CharField(max_length=20, blank=True, null=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
     cif = models.CharField(max_length=10, blank=True, null=True)
     iban = models.CharField(max_length=50, blank=True, null=True)
     email = models.EmailField(blank=True)
