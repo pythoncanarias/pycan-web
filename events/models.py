@@ -8,6 +8,7 @@ from colorfield.fields import ColorField
 from django.conf import settings
 from django.db import models
 from django.db.models import Max
+from django.utils import timezone
 from PIL import Image, ImageDraw, ImageFont
 
 from events import links
@@ -117,8 +118,9 @@ class Event(models.Model):
         try:
             return self.schedule.order_by('start').first().start
         except AttributeError:
-            return datetime.datetime.combine(self.start_date,
-                                             datetime.datetime.min.time())
+            start_time = datetime.time(
+                9, 0, 0, tzinfo=timezone.get_current_timezone())
+            return datetime.datetime.combine(self.start_date, start_time)
 
     @property
     def start_hour(self):
