@@ -1,21 +1,22 @@
 import datetime
 import locale
-import uuid
 import os
+import uuid
 from functools import partial
 
-import pytz
+from colorfield.fields import ColorField
 from django.conf import settings
 from django.db import models
 from django.db.models import Max
 from PIL import Image, ImageDraw, ImageFont
 
-from colorfield.fields import ColorField
 from events import links
+from locations.models import Venue
 from organizations.models import OrganizationRole
 from schedule.models import Track
 from speakers.models import Speaker
 from tickets.models import Ticket
+
 from . import time_utils
 
 
@@ -29,6 +30,12 @@ class Event(models.Model):
     )
     opened_ticket_sales = models.BooleanField(default=False)
     start_date = models.DateField()
+    venue = models.ForeignKey(
+        Venue,
+        related_name='events',
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT)
     # 50 minutes as default duration for each slot
     default_slot_duration = models.DurationField(default=50 * 60)
     short_description = models.TextField(
@@ -75,12 +82,6 @@ class Event(models.Model):
         speaker_ids = self.schedule.values_list('speakers').distinct()
         return Speaker.objects.filter(pk__in=speaker_ids).\
             order_by('name', 'surname')
-
-    def venue(self):
-        if not self.schedule.exists():
-            return None
-        return self.schedule.filter(location__isnull=False).\
-            first().location.venue
 
     def organization_roles(self):
         org_roles_ids = self.memberships.values_list(

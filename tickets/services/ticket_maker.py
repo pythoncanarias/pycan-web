@@ -177,10 +177,10 @@ class TicketMaker(BaseReport):
                 self.ticket.sold_at.strftime('%d/%m/%y @ %H:%Mh')),
             ('\uf3c5', 'ubicación',
              self.paragraph(f'''
-                <font name=bold>{ self.ticket.event.venue().name }</font>''')),
+                <font name=bold>{ self.ticket.event.venue.name }</font>''')),
             ('\uf14e', 'dirección',
              self.paragraph(f'''
-                <font name=bold>{ self.ticket.event.venue().address }</font>
+                <font name=bold>{ self.ticket.event.venue.address }</font>
             '''))
         )
 
