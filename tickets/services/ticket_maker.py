@@ -1,7 +1,6 @@
 import os
 
 from django.utils import timezone
-
 from reportlab.graphics import renderPDF
 from reportlab.graphics.barcode import qr
 from reportlab.graphics.shapes import Drawing
@@ -11,7 +10,6 @@ from reportlab.lib.units import cm, mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table
-
 
 class BaseReport:
     FONTS = {
@@ -165,11 +163,16 @@ class TicketMaker(BaseReport):
 
     def create_features(self):
         start = timezone.localtime(self.ticket.event.start_datetime())
+        event_date = start.strftime('%d/%m/%Y')
+        if start.hour == 0:
+            event_hour = 'Aún sin definir'
+        else:
+            event_hour = start.strftime('%H:%Mh')
         data = (
             ('\uf554', 'asistente', self.ticket.customer_full_name),
             ('\uf0e0', 'email', self.ticket.customer_email),
-            ('\uf784', 'fecha del evento', start.strftime('%d/%m/%Y')),
-            ('\uf017', 'hora de comienzo', start.strftime('%H:%Mh')),
+            ('\uf784', 'fecha del evento', event_date),
+            ('\uf017', 'hora de comienzo', event_hour),
             ('\uf810', 'tipo de entrada', self.ticket.article.category.name),
             ('\uf4c0', 'precio de la entrada',
                 f'{self.ticket.article.price}€'),

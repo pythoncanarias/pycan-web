@@ -119,7 +119,7 @@ class Event(models.Model):
             return self.schedule.order_by('start').first().start
         except AttributeError:
             start_time = datetime.time(
-                9, 0, 0, tzinfo=timezone.get_current_timezone())
+                0, 0, 0, tzinfo=timezone.get_current_timezone())
             return datetime.datetime.combine(self.start_date, start_time)
 
     @property
