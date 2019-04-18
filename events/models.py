@@ -69,6 +69,9 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['start_date']
+
     def get_full_url(self):
         return 'http://{}{}'.format(
             settings.DOMAIN,
