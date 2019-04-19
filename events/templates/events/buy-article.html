@@ -106,6 +106,10 @@
         {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
       {% endwith %}
 
+      {% with id='phone-validation-message' message='El formato del campo Teléfono no es adecuado' %}
+        {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
+      {% endwith %}
+
       {% with id='checkboxes-validation-message' message='Debe aceptar la casilla de verificación' %}
         {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
       {% endwith %}
