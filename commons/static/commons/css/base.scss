@@ -48,9 +48,25 @@ body {
 }
 
 .footer-page {
+  color: #ebebeb;
   height: $footer-height;
   line-height: $footer-height;
-  background-color: $footer-bg;
-  color: #ebebeb;
   font-weight: 400;
+
+  & .column {
+    padding: 0;
+    background-color: $footer-bg;
+
+    &.multiline {
+      line-height: 2rem;
+    }
+  }
+
+  & a {
+    color: $yellow-text;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
