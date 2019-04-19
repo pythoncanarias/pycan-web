@@ -1,4 +1,4 @@
-from fabric.api import env, local, cd, run
+from fabric.api import cd, env, local, run
 
 env.hosts = ['pythoncanarias.es']
 

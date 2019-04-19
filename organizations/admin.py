@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import Organization, OrganizationRole, \
-    OrganizationCategory, Membership
+from .models import (Membership, Organization, OrganizationCategory,
+                     OrganizationRole)
 
 
 class MembershipInline(admin.StackedInline):

@@ -1,8 +1,8 @@
-from datetime import date
 import os
+from datetime import date
 
-from django.db import models
 from django.conf import settings
+from django.db import models
 
 from invoices.constants import RETENTION_CHOICES, TAX_CHOICES
 from invoices.services.invoice_maker import InvoiceMaker
@@ -40,7 +40,8 @@ class Invoice(models.Model):
         media_root = settings.MEDIA_URL
         invoices_uri = 'invoices'
         filename = self.filename
-        return '/'.join([media_root, invoices_uri, filename]).replace('//', '/')
+        return '/'.join([media_root, invoices_uri, filename]).replace(
+            '//', '/')
 
     def save(self, *args, **kwargs):
         if not self.invoice_number:
@@ -51,7 +52,8 @@ class Invoice(models.Model):
     def next_invoice_number(self):
         year = self.date.year
         invoices_for_year = Invoice.objects.for_year(year).exclude(id=self.id)
-        return invoices_for_year.latest('id').invoice_number + 1 if invoices_for_year else 1
+        return invoices_for_year.latest(
+            'id').invoice_number + 1 if invoices_for_year else 1
 
     @property
     def verbose_invoice_number(self):

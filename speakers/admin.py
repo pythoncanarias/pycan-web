@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Social, Speaker, Contact
+from .models import Contact, Social, Speaker
 
 
 class ContactInline(admin.TabularInline):

@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-import os
 import datetime
-import pytest
+import os
 from unittest.mock import Mock
+
+import pytest
 from django.core.mail import EmailMessage
 
 from . import tasks

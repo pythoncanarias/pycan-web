@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+
 from prettyconf import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -104,26 +105,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-            (
-                'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'
-            )
+        'NAME': ('django.contrib.auth.password_validation'
+                 '.UserAttributeSimilarityValidator')
     },
     {
-        'NAME':
-            ('django.contrib.auth.password_validation.MinimumLengthValidator')
+        'NAME': ('django.contrib.auth.password_validation'
+                 '.MinimumLengthValidator')
     },
     {
-        'NAME':
-            (
-                'django.contrib.auth.password_validation.CommonPasswordValidator'
-            )
+        'NAME': ('django.contrib.auth.password_validation'
+                 '.CommonPasswordValidator')
     },
     {
-        'NAME':
-            (
-                'django.contrib.auth.password_validation.NumericPasswordValidator'
-            )
+        'NAME': ('django.contrib.auth.password_validation'
+                 '.NumericPasswordValidator')
     },
 ]
 
@@ -193,85 +188,73 @@ LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters':
-        {
-            'verbose':
-                {
-                    'format':
-                        '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s',
-                    'datefmt':
-                        '%d/%b/%Y %H:%M:%S',
-                },
+    'formatters': {
+        'verbose': {
+            'format': ('%(levelname)s %(asctime)s %(module)s '
+                       '%(process)d %(thread)d %(message)s'),
+            'datefmt':
+            '%d/%b/%Y %H:%M:%S',
         },
-    'handlers':
-        {
-            # Log to console
-            'console': {
-                'level': LOG_LEVEL,
-                'class': 'logging.StreamHandler',
-            },
-            # Log to a text file that can be rotated by logrotate
-            'logfile':
-                {
-                    'level': 'ERROR',
-                    'formatter': 'verbose',
-                    'class': 'logging.handlers.RotatingFileHandler',
-                    'filename': LOGFILE_NAME,
-                    'maxBytes': LOGFILE_SIZE,
-                    'backupCount': LOGFILE_COUNT,
-                },
+    },
+    'handlers': {
+        # Log to console
+        'console': {
+            'level': LOG_LEVEL,
+            'class': 'logging.StreamHandler',
         },
-    'loggers':
-        {
-            'root':
-                {
-                    'handlers': ['console'],
-                    'level': LOG_LEVEL,
-                    'propagate': True,
-                },
-            'tickets':
-                {
-                    'handlers': ['logfile', 'console'],
-                    'level': LOG_LEVEL,
-                    'propagate': True,
-                },
-            'invoices':
-                {
-                    'handlers': ['logfile', 'console'],
-                    'level': LOG_LEVEL,
-                    'propagate': True,
-                },
-            'events':
-                {
-                    'handlers': ['logfile', 'console'],
-                    'level': LOG_LEVEL,
-                    'propagate': True,
-                },
-            'django':
-                {
-                    'handlers': ['logfile', 'console'],
-                    'level': 'INFO',
-                    'propagate': True,
-                },
-            'members':
-                {
-                    'handlers': ['logfile', 'console'],
-                    'level': LOG_LEVEL,
-                    'propagate': True,
-                },
+        # Log to a text file that can be rotated by logrotate
+        'logfile': {
+            'level': 'ERROR',
+            'formatter': 'verbose',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGFILE_NAME,
+            'maxBytes': LOGFILE_SIZE,
+            'backupCount': LOGFILE_COUNT,
         },
+    },
+    'loggers': {
+        'root': {
+            'handlers': ['console'],
+            'level': LOG_LEVEL,
+            'propagate': True,
+        },
+        'tickets': {
+            'handlers': ['logfile', 'console'],
+            'level': LOG_LEVEL,
+            'propagate': True,
+        },
+        'invoices': {
+            'handlers': ['logfile', 'console'],
+            'level': LOG_LEVEL,
+            'propagate': True,
+        },
+        'events': {
+            'handlers': ['logfile', 'console'],
+            'level': LOG_LEVEL,
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['logfile', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'members': {
+            'handlers': ['logfile', 'console'],
+            'level': LOG_LEVEL,
+            'propagate': True,
+        },
+    },
 }
 
 LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')
 
 RQ_QUEUES = {
-    'default':
-        {
-            'HOST': 'localhost',
-            'PORT': 6379,
-            'DB': 0,
-            'DEFAULT_TIMEOUT': 360,
-        },
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    },
     'low': {
         'HOST': 'localhost',
         'PORT': 6379,

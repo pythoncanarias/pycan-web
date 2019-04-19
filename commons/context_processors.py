@@ -1,6 +1,7 @@
-import os
-from django.conf import settings
 import json
+import os
+
+from django.conf import settings
 
 
 def glob(request):

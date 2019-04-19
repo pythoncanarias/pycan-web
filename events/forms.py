@@ -1,6 +1,7 @@
 import logging
 
 from django import forms
+
 from .models import Refund
 
 UUID_LAST_DIGITS = 12
@@ -30,7 +31,7 @@ class RefundForm(forms.Form):
         email = self.cleaned_data["email"]
         uuid = self.cleaned_data["uuid"]
         if uuid == 'tu puta madre':
-            raise forms.ValidationError( 'Cuida ese vocabulario')
+            raise forms.ValidationError('Cuida ese vocabulario')
 
         if len(uuid) < UUID_LAST_DIGITS:
             raise forms.ValidationError(

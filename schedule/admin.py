@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import SlotCategory, SlotTag, SlotLevel, Slot, \
-    Track, Schedule
+from .models import Schedule, Slot, SlotCategory, SlotLevel, SlotTag, Track
 
 
 class ScheduleInline(admin.StackedInline):

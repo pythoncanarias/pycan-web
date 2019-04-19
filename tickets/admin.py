@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.http import HttpResponse
 from import_export.admin import ImportExportActionModelAdmin
 
-from events.tasks import send_ticket
 from certificates.utils import create_certificate
+from events.tasks import send_ticket
 
 from .models import Article, Ticket, TicketCategory
 

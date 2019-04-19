@@ -1,9 +1,8 @@
-import os
 import datetime
-from markdown2 import markdown
+import os
 
 from django.conf import settings
-
+from markdown2 import markdown
 
 _months = [
     '',

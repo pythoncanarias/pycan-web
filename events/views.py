@@ -99,8 +99,6 @@ def trade(request, slug, sell_code, buy_code):
     event = Event.objects.get(slug__iexact=slug)
     refund = Refund.load_by_sell_code(sell_code)
     waiting_list = WaitingList.load_by_buy_code(buy_code)
-    ticket = refund.ticket
-    article = ticket.article
     """Pseudo codigo
     GET:
     1) A partir del ticket comprado obtener el tipo de ticket (articulo)

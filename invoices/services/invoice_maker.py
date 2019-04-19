@@ -1,5 +1,8 @@
 #! / usr / bin / env python
 # -*- coding: utf-8 -*-
+import os
+import subprocess
+import sys
 from decimal import Decimal
 
 from django.conf import settings
@@ -9,11 +12,8 @@ from reportlab.lib.units import cm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.pdfmetrics import registerFontFamily
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate, Paragraph
-from reportlab.platypus import Table, TableStyle
-import os
-import subprocess
-import sys
+from reportlab.platypus import (BaseDocTemplate, Frame, PageTemplate,
+                                Paragraph, Table, TableStyle)
 
 from organizations.models import Organization
 
@@ -23,7 +23,8 @@ class InvoiceMaker(object):
     PAGE_WIDTH = A4[0]
 
     def __init__(self, invoice):
-        self.python_canarias = Organization.objects.get(name__istartswith=settings.ORGANIZATION_NAME)
+        self.python_canarias = Organization.objects.get(
+            name__istartswith=settings.ORGANIZATION_NAME)
 
         self.invoice = invoice
 
@@ -38,7 +39,8 @@ class InvoiceMaker(object):
             self.PAGE_HEIGHT - 12 * cm,
             leftPadding=0, rightPadding=0
         )
-        self.paragraph_estile_1 = ParagraphStyle('', fontName='DejaVu', fontSize=12, alignment=0)
+        self.paragraph_estile_1 = ParagraphStyle(
+            '', fontName='DejaVu', fontSize=12, alignment=0)
 
         self.table_style = TableStyle([
             ('BOTTOMPADDING', (0, 0), (- 1, - 1), 0),
@@ -50,7 +52,8 @@ class InvoiceMaker(object):
             ('ALIGN', (1, 0), (1, - 1), 'LEFT'),
             ('VALIGN', (0, 0), (- 1, - 1), 'MIDDLE'),
         ])
-        self.first_page = PageTemplate(id='1st_page', frames=self.frame, onPage=self._render_page)
+        self.first_page = PageTemplate(
+            id='1st_page', frames=self.frame, onPage=self._render_page)
 
         # check if target directory exists
         dirname = os.path.dirname(self.invoice.path)
@@ -80,8 +83,12 @@ class InvoiceMaker(object):
             table_cont = []
             pos = 1
             for cncpt in concepts:
-                description = Paragraph(cncpt.description, self.paragraph_estile_1)
-                table_cont.append([pos, description, cncpt.quantity, cncpt.amount, cncpt.amount * cncpt.quantity])
+                description = Paragraph(cncpt.description,
+                                        self.paragraph_estile_1)
+                table_cont.append([
+                    pos, description, cncpt.quantity, cncpt.amount,
+                    cncpt.amount * cncpt.quantity
+                ])
                 pos += 1
             self.body.append(
                 Table(
@@ -99,15 +106,26 @@ class InvoiceMaker(object):
         self.bold = '{}Bd'.format(self.normal)
         self.bold_italic = '{}BdIt'.format(self.normal)
 
-        fonts_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources', 'fonts')
+        fonts_path = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), 'resources', 'fonts')
 
-        pdfmetrics.registerFont(TTFont(self.normal, os.path.join(fonts_path, 'DejaVuSans.ttf')))
-        pdfmetrics.registerFont(TTFont(self.italic, os.path.join(fonts_path, 'DejaVuCondensedSansOblique.ttf')))
-        pdfmetrics.registerFont(TTFont(self.bold, os.path.join(fonts_path, 'DejaVuSansBold.ttf')))
-        pdfmetrics.registerFont(TTFont(self.bold_italic, os.path.join(fonts_path, 'DejaVuSansBoldOblique.ttf')))
+        pdfmetrics.registerFont(
+            TTFont(self.normal, os.path.join(fonts_path, 'DejaVuSans.ttf')))
+        pdfmetrics.registerFont(
+            TTFont(self.italic,
+                   os.path.join(fonts_path, 'DejaVuCondensedSansOblique.ttf')))
+        pdfmetrics.registerFont(
+            TTFont(self.bold, os.path.join(fonts_path, 'DejaVuSansBold.ttf')))
+        pdfmetrics.registerFont(
+            TTFont(self.bold_italic,
+                   os.path.join(fonts_path, 'DejaVuSansBoldOblique.ttf')))
 
         registerFontFamily(
-            self.normal, normal=self.normal, bold=self.bold, italic=self.italic, boldItalic=self.bold_italic)
+            self.normal,
+            normal=self.normal,
+            bold=self.bold,
+            italic=self.italic,
+            boldItalic=self.bold_italic)
 
     @staticmethod
     def _open_file(filename):
@@ -121,18 +139,23 @@ class InvoiceMaker(object):
         canvas.saveState()
 
         # header
-        canvas.rect(1.2 * cm, self.PAGE_HEIGHT - 1 * cm, self.PAGE_WIDTH - 2.4 * cm, - 0.8 * cm)
+        canvas.rect(1.2 * cm, self.PAGE_HEIGHT - 1 * cm,
+                    self.PAGE_WIDTH - 2.4 * cm, -0.8 * cm)
         canvas.setFont(self.bold, 12)
         canvas.drawString(1.4 * cm, self.PAGE_HEIGHT - 1.58 * cm, 'FACTURA')
 
         canvas.setFont(self.normal, 9)
-        canvas.drawRightString(
-            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.30 * cm, self.invoice.date.strftime('%d-%m-%Y'))
-        canvas.drawRightString(
-            self.PAGE_WIDTH - 1.3 * cm, self.PAGE_HEIGHT - 1.70 * cm, self.invoice.verbose_invoice_number)
+        canvas.drawRightString(self.PAGE_WIDTH - 1.3 * cm,
+                               self.PAGE_HEIGHT - 1.30 * cm,
+                               self.invoice.date.strftime('%d-%m-%Y'))
+        canvas.drawRightString(self.PAGE_WIDTH - 1.3 * cm,
+                               self.PAGE_HEIGHT - 1.70 * cm,
+                               self.invoice.verbose_invoice_number)
         canvas.setFont(self.bold, 9)
-        canvas.drawString(self.PAGE_WIDTH - 6 * cm, self.PAGE_HEIGHT - 1.30 * cm, 'FECHA')
-        canvas.drawString(self.PAGE_WIDTH - 6 * cm, self.PAGE_HEIGHT - 1.70 * cm, 'NUMERO')
+        canvas.drawString(self.PAGE_WIDTH - 6 * cm,
+                          self.PAGE_HEIGHT - 1.30 * cm, 'FECHA')
+        canvas.drawString(self.PAGE_WIDTH - 6 * cm,
+                          self.PAGE_HEIGHT - 1.70 * cm, 'NUMERO')
 
         # top box
         canvas.setLineWidth(0)
@@ -140,8 +163,10 @@ class InvoiceMaker(object):
             self.PAGE_WIDTH / 2, self.PAGE_HEIGHT - 2.35 * cm,
             self.PAGE_WIDTH / 2, self.PAGE_HEIGHT - 4.75 * cm
         )
-        canvas.rect(1.2 * cm, self.PAGE_HEIGHT - 2.1 * cm, self.PAGE_WIDTH - 2.4 * cm, - 3 * cm)
-        logo_directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources', 'images')
+        canvas.rect(1.2 * cm, self.PAGE_HEIGHT - 2.1 * cm,
+                    self.PAGE_WIDTH - 2.4 * cm, -3 * cm)
+        logo_directory = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), 'resources', 'images')
         logo_python_path = os.path.join(logo_directory, 'logo_python.png')
         image_size = 17 * cm
         canvas.drawImage(
@@ -155,53 +180,71 @@ class InvoiceMaker(object):
 
         # LEFT HALF
         canvas.setFont(self.bold, 12)
-        canvas.drawString(1.4 * cm, self.PAGE_HEIGHT - 2.7 * cm, self.python_canarias.name)
+        canvas.drawString(1.4 * cm, self.PAGE_HEIGHT - 2.7 * cm,
+                          self.python_canarias.name)
         canvas.setFont(self.normal, 9)
-        canvas.drawString(1.7 * cm, self.PAGE_HEIGHT - 3.2 * cm, self.python_canarias.address)
+        canvas.drawString(1.7 * cm, self.PAGE_HEIGHT - 3.2 * cm,
+                          self.python_canarias.address)
         vertical_1 = self.PAGE_HEIGHT - 3.55 * cm
         if self.python_canarias.rest_address:
-            canvas.drawString(1.7 * cm, self.PAGE_HEIGHT - 3.55 * cm, self.python_canarias.rest_address)
+            canvas.drawString(1.7 * cm, self.PAGE_HEIGHT - 3.55 * cm,
+                              self.python_canarias.rest_address)
             vertical_1 = self.PAGE_HEIGHT - 3.9 * cm
-        canvas.drawString(1.7 * cm, vertical_1, '{} {}'.format(self.python_canarias.po_box, self.python_canarias.city))
+        canvas.drawString(
+            1.7 * cm, vertical_1, '{} {}'.format(self.python_canarias.po_box,
+                                                 self.python_canarias.city))
 
         canvas.setFont(self.bold, 9)
-        canvas.drawRightString(self.PAGE_WIDTH / 2 - 0.3 * cm, self.PAGE_HEIGHT - 4.8 * cm, self.python_canarias.cif)
+        canvas.drawRightString(self.PAGE_WIDTH / 2 - 0.3 * cm,
+                               self.PAGE_HEIGHT - 4.8 * cm,
+                               self.python_canarias.cif)
 
         # RIGHT HALF
         canvas.setFont(self.bold, 12)
-        canvas.drawString(self.PAGE_WIDTH / 2 + 0.3 * cm, self.PAGE_HEIGHT - 2.7 * cm, 'CLIENTE')
-        canvas.drawString(self.PAGE_WIDTH / 2 + 0.6 * cm, self.PAGE_HEIGHT - 3.2 * cm, self.invoice.client.name)
+        canvas.drawString(self.PAGE_WIDTH / 2 + 0.3 * cm,
+                          self.PAGE_HEIGHT - 2.7 * cm, 'CLIENTE')
+        canvas.drawString(self.PAGE_WIDTH / 2 + 0.6 * cm,
+                          self.PAGE_HEIGHT - 3.2 * cm,
+                          self.invoice.client.name)
         canvas.setFont(self.normal, 9)
-        canvas.drawString(self.PAGE_WIDTH / 2 + 0.6 * cm, self.PAGE_HEIGHT - 3.55 * cm, self.invoice.client.address)
+        canvas.drawString(self.PAGE_WIDTH / 2 + 0.6 * cm,
+                          self.PAGE_HEIGHT - 3.55 * cm,
+                          self.invoice.client.address)
 
         vertical_2 = self.PAGE_HEIGHT - 3.9 * cm
         if self.invoice.client.rest_address:
             vertical_1 = self.PAGE_HEIGHT - 3.9 * cm
             vertical_2 = self.PAGE_HEIGHT - 4.25 * cm
-            canvas.drawString(self.PAGE_WIDTH / 2 + 0.6 * cm, vertical_1, self.invoice.client.rest_address)
+            canvas.drawString(self.PAGE_WIDTH / 2 + 0.6 * cm, vertical_1,
+                              self.invoice.client.rest_address)
         canvas.drawString(
-            self.PAGE_WIDTH / 2 + 0.6 * cm,
-            vertical_2,
-            '{} {}'.format(self.invoice.client.po_box, self.invoice.client.city)
-        )
+            self.PAGE_WIDTH / 2 + 0.6 * cm, vertical_2, '{} {}'.format(
+                self.invoice.client.po_box, self.invoice.client.city))
         canvas.setFont(self.bold, 9)
-        canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, self.PAGE_HEIGHT - 4.8 * cm, self.invoice.client.nif)
+        canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm,
+                               self.PAGE_HEIGHT - 4.8 * cm,
+                               self.invoice.client.nif)
 
         # CONCEPTS
         canvas.setFont(self.normal, 8)
         canvas.drawRightString(1.9 * cm, self.PAGE_HEIGHT - 5.85 * cm, 'ord')
         canvas.drawString(2.5 * cm, self.PAGE_HEIGHT - 5.85 * cm, 'concepto')
-        canvas.drawString(self.PAGE_WIDTH - 5.5 * cm, self.PAGE_HEIGHT - 5.85 * cm, 'uds')
-        canvas.drawString(self.PAGE_WIDTH - 4.3 * cm, self.PAGE_HEIGHT - 5.85 * cm, 'precio')
-        canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, self.PAGE_HEIGHT - 5.85 * cm, 'total')
+        canvas.drawString(self.PAGE_WIDTH - 5.5 * cm,
+                          self.PAGE_HEIGHT - 5.85 * cm, 'uds')
+        canvas.drawString(self.PAGE_WIDTH - 4.3 * cm,
+                          self.PAGE_HEIGHT - 5.85 * cm, 'precio')
+        canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm,
+                               self.PAGE_HEIGHT - 5.85 * cm, 'total')
         canvas.setLineWidth(0)
-        canvas.line(1.2 * cm, self.PAGE_HEIGHT - 6 * cm, self.PAGE_WIDTH - 1.2 * cm, self.PAGE_HEIGHT - 6 * cm)
+        canvas.line(1.2 * cm, self.PAGE_HEIGHT - 6 * cm,
+                    self.PAGE_WIDTH - 1.2 * cm, self.PAGE_HEIGHT - 6 * cm)
 
         canvas.setStrokeColor('Black')
 
         canvas.setDash(1)
         canvas.setLineWidth(1)
-        canvas.rect(1.2 * cm, self.PAGE_HEIGHT - 5.5 * cm, self.PAGE_WIDTH - 2.4 * cm, - 18 * cm)
+        canvas.rect(1.2 * cm, self.PAGE_HEIGHT - 5.5 * cm,
+                    self.PAGE_WIDTH - 2.4 * cm, -18 * cm)
 
         # TOTALS BOX
         canvas.setLineWidth(0)
@@ -214,22 +257,31 @@ class InvoiceMaker(object):
         for concept in self.invoice.concept_set.all():
             subtotal += concept.amount * concept.quantity
 
-        canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 5.3 * cm, '{} €'.format(subtotal))
+        canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 5.3 * cm,
+                               '{} €'.format(subtotal))
 
         retention = 0
         taxes = 0
 
-        canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 4.8 * cm, self.invoice.get_taxes_display())
+        canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 4.8 * cm,
+                          self.invoice.get_taxes_display())
         if self.invoice.taxes:
-            taxes_percentage = Decimal(self.invoice.get_taxes_display().split('(')[1].split('%')[0])
+            taxes_percentage = Decimal(
+                self.invoice.get_taxes_display().split('(')[1].split('%')[0])
             taxes = subtotal * taxes_percentage / 100
-            canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 4.8 * cm, '{} €'.format(taxes))
+            canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 4.8 * cm,
+                                   '{} €'.format(taxes))
 
-        canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 4.3 * cm, self.invoice.get_retention_display())
+        canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 4.3 * cm,
+                          self.invoice.get_retention_display())
         if self.invoice.retention:
-            retention_percentage = Decimal(self.invoice.get_retention_display().replace('IRPF ', '').replace('%', ''))
+            retention_percentage = Decimal(
+                self.invoice.get_retention_display().replace('IRPF ',
+                                                             '').replace(
+                                                                 '%', ''))
             retention = subtotal * retention_percentage / 100
-            canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 4.3 * cm, '-{} €'.format(retention))
+            canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 4.3 * cm,
+                                   '-{} €'.format(retention))
 
         grantotal = subtotal + taxes - retention
 
@@ -238,10 +290,12 @@ class InvoiceMaker(object):
 
         canvas.setFont(self.bold, 12)
         canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 3.5 * cm, 'TOTAL:')
-        canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 3.5 * cm, '{} €'.format(grantotal))
+        canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 3.5 * cm,
+                               '{} €'.format(grantotal))
 
         canvas.setFont(self.normal, 14)
-        canvas.drawString(1.5 * cm, 5.2 * cm, 'Pago por transferencia bancaria:')
+        canvas.drawString(1.5 * cm, 5.2 * cm,
+                          'Pago por transferencia bancaria:')
         canvas.setFont(self.normal, 12)
         canvas.drawString(2 * cm, 4.7 * cm, 'OpenBank')
         canvas.setFont(self.bold, 12)
@@ -249,8 +303,10 @@ class InvoiceMaker(object):
 
         # FOOTER
         canvas.setFont(self.normal, 9)
-        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2 * cm, self.python_canarias.email)
-        canvas.drawCentredString(self.PAGE_WIDTH / 2, 1.5 * cm, self.python_canarias.url)
+        canvas.drawCentredString(self.PAGE_WIDTH / 2, 2 * cm,
+                                 self.python_canarias.email)
+        canvas.drawCentredString(self.PAGE_WIDTH / 2, 1.5 * cm,
+                                 self.python_canarias.url)
 
         # watermark proforma
         if self.invoice.proforma:

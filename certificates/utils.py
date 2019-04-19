@@ -11,8 +11,8 @@ current_module = sys.modules[__name__]
 base_dir = os.path.dirname(current_module.__file__)
 
 
-
 FORMAT = '%(asctime)-15s %(levelname)s %(message)s'
+
 logging.basicConfig(format=FORMAT)
 logger = logging.getLogger(__name__)
 

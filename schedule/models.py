@@ -72,7 +72,6 @@ class Slot(models.Model):
             ]
 
 
-
 class Track(models.Model):
     name = models.CharField(max_length=256)
     order = models.PositiveIntegerField(

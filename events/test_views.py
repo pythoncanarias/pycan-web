@@ -3,6 +3,7 @@ from django.http import HttpRequest
 
 from events import views
 
+
 @pytest.mark.django_db
 def test_events_index():
     request = HttpRequest()

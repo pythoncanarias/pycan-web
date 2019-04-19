@@ -1,8 +1,8 @@
 from datetime import datetime
-from pytz import utc
 
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from pytz import utc
 
 
 class Member(models.Model):
@@ -21,4 +21,5 @@ class Member(models.Model):
         return datetime.now(tz=utc) < self.member_until
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name} member until {self.member_until}'
+        return (f'{self.user.first_name} {self.user.last_name} '
+                'member until {self.member_until}')

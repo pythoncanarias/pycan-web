@@ -11,9 +11,9 @@ from django.urls import reverse
 from django.utils import timezone as dj_timezone
 
 from tickets.services.ticket_maker import TicketMaker
-from .constants import PAYMENT_METHOD
 
 from . import links
+from .constants import PAYMENT_METHOD
 
 
 class TicketCategory(models.Model):

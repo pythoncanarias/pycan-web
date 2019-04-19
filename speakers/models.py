@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 
-from django.db import models
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.db import models
 
 
 class Social(models.Model):

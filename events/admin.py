@@ -1,8 +1,6 @@
 from django.contrib import admin, messages
-from .models import Event
-from .models import Badge
-from .models import WaitingList
-from .models import Refund
+
+from .models import Badge, Event, Refund, WaitingList
 
 
 def render_event_badges(modeladmin, request, queryset):

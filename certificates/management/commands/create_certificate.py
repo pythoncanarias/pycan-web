@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-
 from django.core.management.base import BaseCommand
+
 from certificates.utils import create_certificate
 from tickets.models import Ticket
 
@@ -32,4 +32,3 @@ class Command(BaseCommand):
             )
         if tron:
             print('File {} created'.format(output_filename))
-

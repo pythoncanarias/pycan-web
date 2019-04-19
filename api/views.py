@@ -1,7 +1,9 @@
-from django.http import JsonResponse
 import functools
-from events.models import Event
+
 from django.conf import settings
+from django.http import JsonResponse
+
+from events.models import Event
 
 
 def api(func):

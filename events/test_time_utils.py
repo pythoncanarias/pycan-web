@@ -1,8 +1,8 @@
 #!/usr/bin/enb python3
 
-import pytest
 import datetime
 
+import pytest
 import pytz
 
 from . import time_utils
