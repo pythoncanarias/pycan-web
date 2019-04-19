@@ -46,6 +46,10 @@ function createHiddenInput(name, value) {
   return input
 }
 
+function validatePhone(phone) {
+  return phone.match(/^\+?\d{9,20}/)
+}
+
 function validateForm() {
   let isValid = true
 
@@ -57,9 +61,16 @@ function validateForm() {
   } else if (document.getElementById('surname-input').value.trim() === '') {
     isValid = false
     showValidationMessage('surname-validation-message')
-  } else if (document.querySelectorAll('.terms input[type=checkbox]:checked').length !== 1) {
-    isValid = false
-    showValidationMessage('checkboxes-validation-message')
+  } else {
+    let cleanedPhone = document.getElementById('phone-input').value.trim()
+    if (cleanedPhone.length > 0 && !validatePhone(cleanedPhone)) {
+      isValid = false
+      showValidationMessage('phone-validation-message')
+    }
+    else if (document.querySelectorAll('.terms input[type=checkbox]:checked').length !== 1) {
+      isValid = false
+      showValidationMessage('checkboxes-validation-message')
+    }
   }
 
   return isValid
