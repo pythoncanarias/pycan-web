@@ -83,12 +83,14 @@ class Track(models.Model):
     def __str__(self):
         return self.name
 
-    def schedule_in_range(self, start=None, end=None):
+    def schedule_in_range(self, start=None, end=None, event=None):
         queryset = self.schedule.all().order_by('start')
         if start:
             queryset = queryset.filter(start__gte=start)
         if end:
             queryset = queryset.filter(end__lte=end)
+        if event:
+            queryset = queryset.filter(event=event)
         return queryset
 
     def get_talks(self):

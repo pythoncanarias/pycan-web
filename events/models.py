@@ -133,7 +133,7 @@ class Event(models.Model):
         result = {'type': 'scheduled_items', 'tracks': []}
         exist_scheduled_item = False
         for track in self.tracks():
-            scheduled_items = track.schedule_in_range(start, end)
+            scheduled_items = track.schedule_in_range(start, end, event=self)
             if scheduled_items:
                 exist_scheduled_item = True
             result['tracks'].append(
