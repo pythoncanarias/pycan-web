@@ -54,11 +54,9 @@ hr {
       }
     }
 
-    a.navbar-item,
-    a.navbar-item.is-active,
-    .navbar-link,
-    .navbar-link.is-active {
+    a.navbar-item, .navbar-link {
       color: white;
+      background: $header-bg;
     }
 
     a.navbar-item:hover,
