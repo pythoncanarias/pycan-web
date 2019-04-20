@@ -32,11 +32,9 @@ body {
 .content-page {
   max-width: 59rem;
   min-height: calc(100vh - #{$navbar-height} - #{$footer-height} - 1px);
-  padding: 1rem;
+  padding: 2rem 0rem 5rem 0rem;
 
   @include from($custom-mobile) {
-    padding: 2rem 1rem;
-
     & > .box {
       padding: 2rem;
     }
@@ -49,17 +47,16 @@ body {
 
 .footer-page {
   color: #ebebeb;
-  height: $footer-height;
-  line-height: $footer-height;
+  background-color: $footer-bg;
+  line-height: $footer-mobile-height;
   font-weight: 400;
+
+  @include from($desktop) {
+    line-height: $footer-height;
+  }
 
   & .column {
     padding: 0;
-    background-color: $footer-bg;
-
-    &.multiline {
-      line-height: 2rem;
-    }
   }
 
   & a {

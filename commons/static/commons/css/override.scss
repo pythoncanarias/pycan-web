@@ -41,6 +41,7 @@ hr {
   }
 
   .navbar-menu {
+    background: $header-bg;
     box-shadow: none;
     border-top: 1px solid #f2f2f2;
 
@@ -56,26 +57,17 @@ hr {
 
     a.navbar-item, .navbar-link {
       color: white;
-      background: $header-bg;
     }
 
     a.navbar-item:hover,
     .navbar-link:hover {
       background: darken($header-bg, 5%);
-
-      @include from($desktop) {
-        background: darken($header-bg, 5%);
-      }
     }
 
     a.navbar-item.is-active,
     .navbar-link.is-active {
       background: darken($header-bg, 10%);
       font-weight: bold;
-
-      @include from($desktop) {
-        background: darken($header-bg, 10%);
-      }
     }
   }
 }
