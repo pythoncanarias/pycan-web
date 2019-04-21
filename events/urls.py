@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('privacy/', views.privacy, name='privacy'),
     path('legal/', views.legal, name='legal'),  # aviso legal
+    path('purchase_terms/', views.purchase_terms, name='purchase_terms'),
     path('coc/', views.coc, name='coc'),
     path('coc/<language>/', views.coc, name='coc'),
     path('<slug:slug>/', views.detail_event, name='detail_event'),

@@ -67,7 +67,7 @@ function validateForm() {
       isValid = false
       showValidationMessage('phone-validation-message')
     }
-    else if (document.querySelectorAll('.terms input[type=checkbox]:checked').length !== 1) {
+    else if (document.querySelectorAll('.terms input[type=checkbox]:checked').length !== 2) {
       isValid = false
       showValidationMessage('checkboxes-validation-message')
     }
