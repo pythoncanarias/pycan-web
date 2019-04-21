@@ -30,14 +30,14 @@ def index(request):
 
 
 def detail_event(request, slug):
-    event = Event.objects.get(slug__iexact=slug)
+    event = Event.get_by_slug(slug)
     return render(request, 'events/event.html', {
         'event': event,
     })
 
 
 def waiting_list(request, slug):
-    event = Event.objects.get(slug__iexact=slug)
+    event = Event.get_by_slug(slug)
     if request.method == 'POST':
         form = forms.WaitingListForm(request.POST)
         if form.is_valid():
@@ -60,7 +60,7 @@ def waiting_list(request, slug):
 
 def refund(request, slug):
     logging.error('refund(request, "{}") starts'.format(slug))
-    event = Event.objects.get(slug__iexact=slug)
+    event = Event.get_by_slug(slug)
     logging.error('   request method is {}'.format(request.method))
     if request.method == 'POST':
         form = forms.RefundForm(event, request.POST)
@@ -80,7 +80,7 @@ def refund(request, slug):
 
 
 def refund_accepted(request, slug, pk):
-    event = Event.objects.get(slug__iexact=slug)
+    event = Event.get_by_slug(slug)
     refund = Refund.objects.get(pk=pk)
     return render(request, 'events/refund-accepted.html', {
         'event': event,
@@ -89,14 +89,14 @@ def refund_accepted(request, slug, pk):
 
 
 def waiting_list_accepted(request, slug):
-    event = Event.objects.get(slug__iexact=slug)
+    event = Event.get_by_slug(slug)
     return render(request, 'events/waiting-list-accepted.html', {
         'event': event,
     })
 
 
 def trade(request, slug, sell_code, buy_code):
-    event = Event.objects.get(slug__iexact=slug)
+    event = Event.get_by_slug(slug)
     refund = Refund.load_by_sell_code(sell_code)
     waiting_list = WaitingList.load_by_buy_code(buy_code)
     """Pseudo codigo
@@ -140,7 +140,7 @@ def stripe_payment_error(request, exception):
 
 def buy_ticket(request, slug):
     logger.debug("buy_tickts starts : slug={}".format(slug))
-    event = Event.objects.get(slug__iexact=slug)
+    event = Event.get_by_slug(slug)
     all_articles = [a for a in event.all_articles()]
     active_articles = [a for a in all_articles if a.is_active()]
     num_active_articles = len(active_articles)
@@ -270,7 +270,7 @@ def find_tickets_by_email(event, email):
 
 
 def resend_ticket(request, slug):
-    event = Event.objects.get(slug__iexact=slug)
+    event = Event.get_by_slug(slug)
     form = forms.EmailForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -286,7 +286,7 @@ def resend_ticket(request, slug):
 
 
 def resend_confirmation(request, slug):
-    event = Event.objects.get(slug__iexact=slug)
+    event = Event.get_by_slug(slug)
     return render(request, 'events/resend-confirmation.html', {
         'event': event,
         'contact_email': settings.CONTACT_EMAIL,

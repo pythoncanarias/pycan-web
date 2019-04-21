@@ -23,7 +23,8 @@ class BaseReport:
         'fira': 'FiraCode-Light.ttf'
     }
 
-    def __init__(self, width, height):
+    def __init__(self, ticket, width, height):
+        self.ticket = ticket
         self.width = width
         self.height = height
         self.styles = getSampleStyleSheet()
@@ -63,8 +64,8 @@ class BaseReport:
 
 class Header(BaseReport):
 
-    def __init__(self, canvas, x, y, width=17 * cm, height=3 * cm):
-        BaseReport.__init__(self, width, height)
+    def __init__(self, ticket, canvas, x, y, width=17 * cm, height=3 * cm):
+        BaseReport.__init__(self, ticket, width, height)
         self.canvas = canvas
         self.x = x
         self.y = y
@@ -89,8 +90,8 @@ class Header(BaseReport):
 
 class Footer(BaseReport):
 
-    def __init__(self, canvas, x, y, width=17 * cm, height=3 * cm):
-        BaseReport.__init__(self, width, height)
+    def __init__(self, ticket, canvas, x, y, width=17 * cm, height=3 * cm):
+        BaseReport.__init__(self, ticket, width, height)
         self.canvas = canvas
         self.x = x
         self.y = y
@@ -100,31 +101,51 @@ class Footer(BaseReport):
 
         self.canvas.setLineWidth(0.2 * mm)
         self.canvas.line(self.x, self.y, self.x + self.width, self.y)
+
+        # Left side of footer
+        start_x = self.x
+        start_y = self.y - 5 * mm
+        # icon
+        self.canvas.setFont('fab', 10)
+        self.canvas.drawString(start_x, start_y, '\uf099')
+        # message
+        start_x += 5 * mm
+        self.canvas.setFont('bold', 10)
+        self.canvas.drawString(start_x, start_y,
+                               f'Comparte el evento con:')
+        # hashtag
+        start_x += 38 * mm
+        self.canvas.setFont('fira', 9)
+        self.canvas.drawString(start_x, start_y,
+                               self.ticket.event.qualified_hashtag)
+
+        # Right side of footer
+        start_x = self.x + self.width - 33 * mm
+        start_y = self.y - 5 * mm
         # icon
         self.canvas.setFont('fas', 10)
-        self.canvas.drawString(self.x, self.y - 5 * mm, '\uf0c1')
+        self.canvas.drawString(start_x, start_y, '\uf0c1')
         # url
+        start_x += 5 * mm
         self.canvas.setFont('bold', 10)
-        self.canvas.drawString(self.x + 4 * mm, self.y - 5 * mm,
-                               'pythoncanarias.es')
+        self.canvas.drawString(start_x, start_y, 'pythoncanarias.es')
 
         self.canvas.restoreState()
 
 
 class QRCode(BaseReport):
 
-    def __init__(self, canvas, x, y, barcode, width=5 * cm, height=5 * cm):
-        BaseReport.__init__(self, width, height)
+    def __init__(self, ticket, canvas, x, y, width=5 * cm, height=5 * cm):
+        BaseReport.__init__(self, ticket, width, height)
         self.canvas = canvas
         self.x = x
         self.y = y
-        self.barcode = barcode
 
     def draw(self):
         self.canvas.saveState()
 
         # qrcode image
-        qr_code = qr.QrCodeWidget(self.barcode)
+        qr_code = qr.QrCodeWidget(str(self.ticket.keycode))
         qr_code.barWidth = self.width
         qr_code.barHeight = self.height
         qr_code.qrVersion = 1
@@ -135,7 +156,7 @@ class QRCode(BaseReport):
         # qrcode text
         self.canvas.setFont('fira', 8)
         self.canvas.rotate(90)
-        self.canvas.drawString(52 * mm, -18 * cm, self.barcode)
+        self.canvas.drawString(52 * mm, -18 * cm, str(self.ticket.keycode))
 
         self.canvas.restoreState()
 
@@ -143,8 +164,7 @@ class QRCode(BaseReport):
 class TicketMaker(BaseReport):
 
     def __init__(self, pdf_file, ticket, width=A4[0], height=A4[1]):
-        super().__init__(width, height)
-        self.ticket = ticket
+        super().__init__(ticket, width, height)
         self.doc = SimpleDocTemplate(
             pdf_file,
             pagesize=A4,
@@ -200,16 +220,15 @@ class TicketMaker(BaseReport):
         self.elements.append(tbl)
 
     def create_header(self):
-        header = Header(self.canvas, *self.coord(2, 1, cm))
+        header = Header(self.ticket, self.canvas, *self.coord(2, 1, cm))
         header.draw()
 
     def create_footer(self):
-        footer = Footer(self.canvas, *self.coord(2, 27, cm))
+        footer = Footer(self.ticket, self.canvas, *self.coord(2, 27, cm))
         footer.draw()
 
     def create_qr(self):
-        qrcode = QRCode(self.canvas, *self.coord(13, 25, cm),
-                        str(self.ticket.keycode))
+        qrcode = QRCode(self.ticket, self.canvas, *self.coord(13, 25, cm))
         qrcode.draw()
 
     def draw_flowables(self):

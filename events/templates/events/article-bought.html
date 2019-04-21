@@ -51,7 +51,7 @@
 
     <div class="notification is-info">
       <i class="fab fa-twitter"></i>
-      {% tweet event.get_full_url %}Ya he comprado mi entrada para el evento "{{ event.name }}". ¿Nos vemos allí? #{{ event.slug }} @pythoncanarias{% endtweet %}
+      {% tweet event.get_full_url %}Ya he comprado mi entrada para el evento "{{ event.name }}". ¿Nos vemos allí? {{ event.qualified_hashtag }} @pythoncanarias{% endtweet %}
     </div>
 
   </div>

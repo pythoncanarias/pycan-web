@@ -46,6 +46,10 @@
     <a class="event-menu-item" href="#venue">Localización</a>
     <a class="event-menu-item" href="#sponsors">Entidades</a>
     <a class="event-menu-item" href="{% url 'events:coc' %}">Código de conducta</a>
+    <a class="event-menu-item" href="{{ event.twitter_hashtag_url }}">
+      <i class="fab fa-twitter"></i>
+      {{ event.qualified_hashtag }}
+    </a>
   </nav>
 
 

@@ -43,7 +43,7 @@ def list_events(request):
 
 @api
 def detail_event(request, slug):
-    event = Event.objects.get(slug=slug)
+    event = Event.get_by_slug(slug)
     tracks = event.tracks()
     return {
         'id': event.pk,

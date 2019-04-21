@@ -23,8 +23,7 @@ from . import time_utils
 
 class Event(models.Model):
     name = models.CharField(max_length=256)
-    # url of the event is /events/<slug>
-    slug = models.SlugField(unique=True)
+    hashtag = models.SlugField(unique=True)
     active = models.BooleanField(
         help_text='The current event is shown in the events page',
         default=False
@@ -71,6 +70,14 @@ class Event(models.Model):
 
     class Meta:
         ordering = ['start_date']
+
+    @property
+    def slug(self):
+        return self.hashtag.lower()
+
+    @classmethod
+    def get_by_slug(cls, slug):
+        return cls.objects.get(hashtag__iexact=slug)
 
     def get_full_url(self):
         return 'http://{}{}'.format(
@@ -203,6 +210,14 @@ class Event(models.Model):
         data = self.all_tickets().aggregate(Max('number'))
         current_number = data.get('number__max', 0) or 0
         return current_number + 1
+
+    @property
+    def qualified_hashtag(self):
+        return f'#{self.hashtag}'
+
+    @property
+    def twitter_hashtag_url(self):
+        return f'https://twitter.com/hashtag/{self.slug}?f=tweets'
 
     def render_all_badges(self, pdf_only=False, remove_badges=True):
         """
