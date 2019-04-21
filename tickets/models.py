@@ -63,11 +63,11 @@ class Article(models.Model):
 
     @property
     def num_sold_tickets(self):
-        return self.tickets.all().count()
+        return self.tickets.exclude(refunded_at__isnull=False).count()
 
     @property
     def num_available_tickets(self):
-        return self.stock - self.tickets.all().count()
+        return self.stock - self.num_sold_tickets
 
     @property
     def price_in_cents(self):
@@ -118,6 +118,7 @@ class Ticket(models.Model):
     customer_surname = models.CharField(max_length=256, blank=True)
     customer_phone = models.CharField(max_length=32, blank=True)
     send_at = models.DateTimeField(default=None, blank=True, null=True)
+    refunded_at = models.DateTimeField(default=None, blank=True, null=True)
 
     def __str__(self):
         return '{}/{} [{}]'.format(
