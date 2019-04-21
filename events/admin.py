@@ -21,7 +21,7 @@ class BadgeInline(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name', ), }
+    prepopulated_fields = {'hashtag': ('name', ), }
     actions = [render_event_badges]
     list_display = ('name', 'slug', 'active',
                     'opened_ticket_sales', 'start_date')
