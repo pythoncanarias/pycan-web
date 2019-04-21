@@ -295,3 +295,7 @@ def resend_confirmation(request, slug):
 
 def legal(request):
     return render(request, 'events/legal.html')
+
+
+def purchase_terms(request):
+    return render(request, 'events/purchase-terms.html')
