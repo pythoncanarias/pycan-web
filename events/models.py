@@ -192,6 +192,12 @@ class Event(models.Model):
         qs = qs.order_by('category__name')
         return qs
 
+    def num_sold_tickets(self):
+        return sum([a.num_sold_tickets for a in self.articles.all()])
+
+    def num_available_tickets(self):
+        return sum([a.num_available_tickets for a in self.articles.all()])
+
     def next_ticket_number(self):
         '''Get the number for the next ticket within this event.'''
         data = self.all_tickets().aggregate(Max('number'))
