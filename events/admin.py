@@ -23,7 +23,7 @@ class BadgeInline(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {'hashtag': ('name', ), }
     actions = [render_event_badges]
-    list_display = ('name', 'slug', 'active',
+    list_display = ('name', 'hashtag', 'active',
                     'opened_ticket_sales', 'start_date')
 
 
