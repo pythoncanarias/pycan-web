@@ -46,24 +46,32 @@ body {
 }
 
 .footer-page {
-  color: #ebebeb;
   background-color: $footer-bg;
-  line-height: $footer-mobile-height;
-  font-weight: 400;
 
-  @include from($desktop) {
-    line-height: $footer-height;
-  }
-
-  & .column {
-    padding: 0;
-  }
-
-  & a {
-    color: $yellow-text;
+  a {
+    color: $header-bg;
 
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  .footer-column {
+    color: #ebebeb;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    @include from($desktop) {
+      padding-top: 1rem;
+      padding-bottom: 3rem;
+    }
+  }
+
+  h1,h2 {
+    color: whitesmoke;
+  }
+
+  i {
+    padding-right: 0.2rem;
   }
 }

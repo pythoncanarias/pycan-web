@@ -1,14 +1,40 @@
 <footer class="footer-page has-text-centered">
+
   <div class="columns">
     <div class="column has-text-weight-light">
-      Events's covers by <a href="https://flaticon.com">Flaticon</a>
+      <div class="footer-column">
+        <h2 class="subtitle"><i class="fas fa-award"></i> Créditos</h2>
+        <ul class="footer-column-items">
+          <li>Imágenes vectoriales por <a href="https://flaticon.com">Flaticon</a></li>
+          <li>Fotografías por <a href="https://unsplash.com">Unsplash</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="column">
-      <i class="fas fa-copyright"></i>
-      Python Canarias 2018
-    </div>
+
+
     <div class="column has-text-weight-light">
-      Events's heroes by <a href="https://unsplash.com">Unsplash</a>
+      <div class="footer-column">
+        <h2 class="subtitle"><i class="fas fa-copyright"></i> Python Canarias</h2>
+        <ul class="footer-column-items">
+          <li>Islas Canarias (España)</li>
+          <li><a href="mailto:info@pythoncanarias.es">info@pythoncanarias.es</li>
+          <li><a href="{% url 'about:index' %}">Sobre la asociación</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
+
+
+    <div class="column has-text-weight-light">
+      <div class="footer-column">
+        <h2 class="subtitle"><i class="fas fa-gavel"></i> Legal</h2>
+        <ul class="footer-column-items">
+          <li><a href="{% url 'events:coc' %}">Código de conducta</a></li>
+          <li><a href="{% url 'events:legal' %}">Aviso legal</a></li>
+          <li><a href="{% url 'events:privacy' %}">Política de privacidad</a></li>
+          <li><a href="{% url 'events:purchase_terms' %}">Condiciones de compra</a></li>
+        </ul>
+      </div>
+    </div>
+
+</div>
 </footer>
