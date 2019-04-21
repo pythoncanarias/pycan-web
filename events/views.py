@@ -299,3 +299,7 @@ def legal(request):
 
 def purchase_terms(request):
     return render(request, 'events/purchase-terms.html')
+
+
+def cookie_policy(request):
+    return render(request, 'events/cookie-policy.html')

@@ -1,0 +1,71 @@
+{% extends "events/base.html" %}
+{% load utils %}
+
+{% block title %}Política de cookies - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="content box">
+
+{% filter as_markdown %}
+
+# Política de Cookies
+
+Esta web utiliza cookies propias y de terceros para conseguir que tu navegación sea perfecta y para conocer las preferencias de navegación de los usuarios de Python Canarias.
+
+Si estás navegando por estas páginas supongo que conoces [qué son las cookies](https://es.wikipedia.org/wiki/Cookie_(inform%C3%A1tica)) y para qué sirven. En el caso de que no, recordarte que son unos archivos de información que el servidor de la web envía a tu dispositivo (bien sea tu ordenador, tu móvil o tablet) cuando accedes a Python Canarias, para almacenar y recuperar información sobre tu comportamiento en la navegación que haces en tus equipos. ¡No te alarmes! Tu información está a salvo, no tienes que preocuparte.
+
+Si has accedido y sigues navegando, entiendo que aceptas la instalación de estas cookies.
+
+## Gestión de cookies
+
+Puedes permitir, bloquear o eliminar las cookies instaladas, mediante la selección de la configuración apropiada de tu navegador, sin embargo, debes saber que si lo haces puede ser que no puedas usar la plena funcionalidad de esta web.
+
+A continuación te ofrecemos enlaces en los que encontrarás información sobre cómo puedes configurar tus preferencias, respecto a las cookies, en los principales navegadores:
+
+- Google Chrome: [https://support.google.com/chrome/answer/95647?hl=es](https://support.google.com/chrome/answer/95647?hl=es)
+- Mozilla Firefox: [http://support.mozilla.org/es/kb/cookies-informacion-que-los-sitios-web-guardan-en-?redirectlocale=en-US&redirectslug=Cookies](http://support.mozilla.org/es/kb/cookies-informacion-que-los-sitios-web-guardan-en-?redirectlocale=en-US&redirectslug=Cookies)
+- Internet Explorer: [https://support.microsoft.com/es-es/help/17442/windows-internet-explorer-delete-manage-cookies](https://support.microsoft.com/es-es/help/17442/windows-internet-explorer-delete-manage-cookies)
+- Safari: [https://support.apple.com/es-es/guide/safari/sfri11471/mac](https://support.apple.com/es-es/guide/safari/sfri11471/mac)
+- Safari IOS (iPhone, iPad): [http://support.apple.com/kb/HT1677?viewlocale=es_ES&locale=es_ES](http://support.apple.com/kb/HT1677?viewlocale=es_ES&locale=es_ES)
+
+## Cookies técnicas y funcionales
+
+### Django
+
+- `cookielaw_accepted`
+- `csrftoken`
+- `sessionid`
+
+## Cookies analíticas
+
+### Google
+
+- `_ga`
+
+## Cookies de terceros
+
+### Stripe (core)
+
+- `private_machine_identifier`
+- `user`
+- `lang`
+- `_fbp`
+- `locale`
+- `merchant`
+- `country`
+- `machine_identifier`
+
+### Stripe (checkout)
+
+- `__stripe_sid`
+- `__stripe_mid`
+- `checkout-live-session`
+- `checkout-test-session`
+
+
+{% endfilter %}
+
+</div>
+
+{% endblock content %}
