@@ -28,20 +28,6 @@
       </div>
     </div>
 
-    <article class="message is-info">
-      <div class="message-body">
-        <h3 class="title is-6">
-          <span class="icon">
-            <i class="fas fa-info-circle"></i>
-          </span>
-          Asistencia de menores
-        </h3>
-        Los menores de 16 años deberán ir acompañados de padre, madre o tutor legal.
-        Menores entre los 16 y los 18 años deberán presentar autorización del tutor legal
-        con fotocopia de su DNI.
-      </div>
-    </article>
-
     <form method="POST" action="." id="buy-article-form">
       {% csrf_token %}
 
@@ -77,14 +63,15 @@
         </div>
       </div>
 
-      <p class="has-text-weight-light">
-        Las entradas seleccionadas se compran a través de la pasarela de pago de Stripe programada desde la web de Python Canarias. Esto significa que el importe de dichas entradas se abonará en la cuenta bancaria de la asociación. Al continuar con la adquisición de las entradas acepta usar la pasarela de pago del organizador.
-      </p>
-
       <div class="terms">
         <label class="checkbox">
           <input type="checkbox">
           Acepto la <a href="{% url 'events:privacy' %}">Política de Privacidad</a>.
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox">
+          Acepto las <a href="{% url 'events:purchase_terms' %}">Condiciones generales de compra</a>.
         </label>
       </div>
 
@@ -93,8 +80,7 @@
           <span class="icon">
             <i class="fas fa-info-circle"></i>
           </span>
-          Recuerda que las entradas se enviarán a tu correo electrónico, que
-          se te pedirá al realizar el pago.
+          Las entradas se enviarán a tu correo electrónico (que se solicitará al realizar el pago)
         </div>
       </div>
 
@@ -110,7 +96,7 @@
         {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
       {% endwith %}
 
-      {% with id='checkboxes-validation-message' message='Debe aceptar la casilla de verificación' %}
+      {% with id='checkboxes-validation-message' message='Debe aceptar todas las casillas de verificación' %}
         {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
       {% endwith %}
 
@@ -118,8 +104,8 @@
         <button id="button-go-to-payment" class="button is-warning">Continuar</button>
       </div>
 
-      <p class="has-text-weight-light has-text-centered">
-        Pulse <a href="{% url 'events:ticket_purchase_nocc' id_article=article.id %}">aquí</a> si no dispone de tarjeta bancaria.
+      <p class="has-text-centered help">
+        Pulsa <a href="{% url 'events:ticket_purchase_nocc' id_article=article.id %}">aquí</a> si no dispones de tarjeta bancaria
       </p>
 
       <div class="spinner-background is-hidden">
