@@ -33,7 +33,11 @@
                 <span class="tag is-medium upcoming-tag">Próximamente</span>
               {% endif %}
             </h1>
-            <p>{{ article.category.description }}</p>
+            <p class="is-italic">{{ article.category.description }}</p>
+            <p>
+              <i class="fas fa-shopping-cart"></i>
+              Quedan <b>{{ article.num_available_tickets }}</b> disponible{{ article.num_available_tickets|pluralize }}
+            </p>
           </a>
         </div>
       {% endfor %}

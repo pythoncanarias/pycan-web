@@ -53,5 +53,20 @@
         color: rgba(255, 255, 255, 0.9);
       }
     }
+
+    .ticket-availability {
+      display: inline-flex;
+
+      .num-available-tickets {
+        background: #00800038;
+        color: whitesmoke;
+        border: 1px solid #ffffff69;
+      }
+
+      .num-sold-tickets {
+        background: #c5323247;
+        color: whitesmoke;
+      }
+    }
   }
 }

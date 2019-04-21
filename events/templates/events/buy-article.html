@@ -26,6 +26,10 @@
       <div class="tag is-medium price-tag">
         <b>Entrada {{ article.category.name }}:</b>&nbsp;{{ article.price }}&nbsp;€
       </div>
+      <span>
+        <i class="fas fa-shopping-cart"></i>
+        Quedan <b>{{ article.num_available_tickets }}</b> disponible{{ article.num_available_tickets|pluralize }}
+      </span>
     </div>
 
     <form method="POST" action="." id="buy-article-form">
