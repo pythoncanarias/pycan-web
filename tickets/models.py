@@ -63,11 +63,11 @@ class Article(models.Model):
 
     @property
     def num_sold_tickets(self):
-        return self.tickets.all().count()
+        return self.tickets.exclude(refunded_at__isnull=False).count()
 
     @property
     def num_available_tickets(self):
-        return self.stock - self.tickets.all().count()
+        return self.stock - self.num_sold_tickets
 
     @property
     def price_in_cents(self):
