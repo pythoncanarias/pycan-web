@@ -211,6 +211,14 @@ class Event(models.Model):
         current_number = data.get('number__max', 0) or 0
         return current_number + 1
 
+    @property
+    def qualified_hashtag(self):
+        return f'#{self.hashtag}'
+
+    @property
+    def twitter_hashtag_url(self):
+        return f'https://twitter.com/hashtag/{self.slug}?f=tweets'
+
     def render_all_badges(self, pdf_only=False, remove_badges=True):
         """
         Render all Badges for this event as images, save them and make an
