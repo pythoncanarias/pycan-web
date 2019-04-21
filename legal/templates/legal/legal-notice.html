@@ -1,4 +1,4 @@
-{% extends "events/base.html" %}
+{% extends "legal/base.html" %}
 {% load utils %}
 
 {% block title %}Aviso legal - {{ block.super }}{% endblock %}
@@ -13,7 +13,7 @@
 
 ## 1. Objeto y aceptación
 
-El presente aviso legal regula el uso del sitio web: <a href="pythoncanarias.es">pythoncanarias.es</a>. El sitio web pythoncanarias.es presta servicios cuyo objetivo primordial es difundir y promover el uso del lenguaje de programación Python en la comunidad Canaria.
+El presente aviso legal regula el uso del sitio web: [pythoncanarias.es](https://pythoncanarias.es). El sitio web pythoncanarias.es presta servicios cuyo objetivo primordial es difundir y promover el uso del lenguaje de programación Python en la comunidad Canaria.
 
 La navegación por la página pythoncanarias.es atribuye la condición de usuario de la misma e implica la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en estos Términos de servicio, que pueden sufrir modificaciones.
 
@@ -23,9 +23,9 @@ El usuario se obliga a hacer un uso correcto del sitio Web de conformidad con la
 
 Con la finalidad de dar cumplimiento al principio de Información general exigido por el Artículo 10 de la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico  informamos a nuestros usuarios que el presente sitio web pertenece a Python Canarias:
 
-- Dirección: Avenida de Alonso Fernández de Lugo, 4, 38300 La Orotava, Santa Cruz de Tenerife
+- Dirección: Avenida de Alonso Fernández de Lugo, 4 - 1C, 38300 La Orotava, Santa Cruz de Tenerife
 - Correo electrónico: info@pythoncanarias
-- Web alojada por: Digital Ocean (<a href="digitalocean.com">digitalocean.com</a>)
+- Web alojada por: Digital Ocean ([digitalocean.com](https://digitalocean.com))
 
 ## 3. Condiciones generales de acceso y utilización
 
@@ -57,20 +57,28 @@ En el caso de que cualquier usuario o un tercero considere que existen hechos o 
 
 ## 4. Política de privacidad
 
-El usuario puede consultar cómo Python Canarias utiliza sus datos y las medidas de seguridad implantadas en el siguiente enlace: <a href="{% url 'events:privacy' %}">política de privacidad</a>.
+El usuario puede consultar cómo Python Canarias utiliza sus datos y las medidas de seguridad implantadas en el siguiente enlace: [política de privacidad]({% url 'legal:privacy_policy' %}).
 
 ## 5. Política de cookies
 
-Python Canarias instala cookies en el ordenador del usuario. Para conocer más las cookies de nuestro sitio web acuda al siguiente enlace: <a href="">política de cookies</a>.
+Python Canarias instala cookies en el ordenador del usuario. Para conocer más las cookies de nuestro sitio web acuda al siguiente enlace: [política de cookies]({% url 'legal:cookie_policy' %}).
 
-## 6. Notificaciones
+## 6. Código de conducta
+
+Los eventos que organiza Python Canarias deben cumplir con un código de conducta. Para saber cuáles son las indicaciones consulta el siguiente enlace: [código de conducta]({% url 'legal:coc' %}).
+
+## 7. Condiciones generales de compra
+
+Python Canarias, a través de este sitio web, vende entradas para los eventos que organiza. La adquisición de estas entradas está sujeta a unas condiciones. Para comprobar cuáles son te aconsejamos que acudas a este enlace: [condiciones generales de compra]({% url 'legal:purchase_terms' %}).
+
+## 8. Notificaciones
 
 Todas las notificaciones y comunicaciones entre los usuarios y Python Canarias se considerarán eficaces, a todos los efectos, cuando se realicen a través de correo postal o correo electrónico. Los usuarios deberán dirigirse a Python Canarias mediante:
 
 -	Envío por correo postal a la siguiente dirección: Asociación Cultural Python Canarias – Avenida de Alonso Fernández de Lugo, 4, 38300 La Orotava, Santa Cruz de Tenerife.
 -	Envío por correo electrónico a la siguiente dirección: info@pythoncanarias.org
 
-## 7. Propiedad Industrial y propiedad intelectual
+## 9. Propiedad Industrial y propiedad intelectual
 
 Todos los contenidos del sitio Web, como textos, fotografías, gráficos, imágenes, iconos, tecnología, software, así como su diseño gráfico y códigos fuente, constituyen una obra cuya propiedad pertenece a Python Canarias, sin que puedan entenderse cedidos al Usuario ninguno de los derechos de explotación sobre los mismos más allá de lo estrictamente necesario para el correcto uso de la Web.
 
@@ -80,7 +88,7 @@ Asimismo, todas las marcas, nombres comerciales o signos distintivos de cualquie
 
 Quedan prohibidas la distribución, modificación, cesión o comunicación pública de los contenidos y cualquier otro acto que no haya sido expresamente autorizado por Python Canarias. En caso de incumplimiento Python Canarias procederá a adoptar las medidas legales oportunas.
 
-## 8. Exención de responsabilidad y modificación del presente aviso legal
+## 10. Exención de responsabilidad y modificación del presente aviso legal
 
 La información que se difunde en esta web se hace única y exclusivamente a título informativo, reservándose Python Canarias el derecho de eliminar o suspender su difusión, total o parcialmente, y a modificar la estructura y contenido de este sitio Web sin aviso previo, pudiendo incluso limitar o no permitir el acceso a dicha información. Python Canarias intenta mantener la calidad y actualización de esta información y evitar y minimizar posibles errores pero Python Canarias no responderá de los daños o perjuicios causados por decisiones tomadas en base a la información difundida; ni de inexactitudes, omisiones o errores contenidos en el mismo, ni de los problemas que se originen por el uso de este sitio Web u otro de conexión externa; ni de los daños y/o perjuicios en el software o hardware del usuario que se deriven del acceso a este sitio Web.
 
@@ -88,11 +96,11 @@ Los Usuarios aceptan expresamente que Python Canarias no será responsable del
 
 Python Canarias se reserva el derecho a modificar el presente aviso legal unilateralmente y sin preaviso  en los términos y condiciones que estime conveniente con la única obligación de informar al usuario de las modificaciones efectuadas a través de www.talentedeurope.eu
 
-## 9. Nulidad parcial
+## 11. Nulidad parcial
 
 Si alguna de las presentes cláusulas fuese declarada nula y sin efecto por resolución firme dictada por autoridad competente, los restantes términos y condiciones permanecerán en vigor, sin que queden afectados por dicha declaración de nulidad.
 
-## 10. Ley aplicable y tribunales competentes
+## 12. Ley aplicable y tribunales competentes
 
 El presente sitio web queda sometido a lo establecido por la legislación española y normativa europea que resulte de aplicación.
 
