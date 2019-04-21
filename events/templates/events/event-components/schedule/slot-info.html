@@ -24,6 +24,9 @@
       <i class="fas fa-toolbox icon-slot-category"></i>
     {% endif %}
     {{ scheduled_item.slot.name }}
+    {% if scheduled_item.language == 'EN' %}
+      <span class="tag is-warning"><i class="fas fa-headphones"></i> EN</span>
+    {% endif %}
   </div>
 
   <div class="tags is-centered slot-attributes">
