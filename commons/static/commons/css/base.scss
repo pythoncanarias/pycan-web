@@ -31,7 +31,7 @@ body {
 
 .content-page {
   max-width: 59rem;
-  min-height: calc(100vh - #{$navbar-height} - #{$footer-height} - 1px);
+  min-height: calc(100vh - #{$navbar-height} - #{$footer-height} + 1px);
   padding: 2rem 0rem 5rem 0rem;
 
   @include from($custom-mobile) {
