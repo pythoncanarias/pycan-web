@@ -9,6 +9,7 @@ urlpatterns = [
     path('privacy/', views.privacy, name='privacy'),
     path('legal/', views.legal, name='legal'),  # aviso legal
     path('purchase_terms/', views.purchase_terms, name='purchase_terms'),
+    path('cookie_policy/', views.cookie_policy, name='cookie_policy'),
     path('coc/', views.coc, name='coc'),
     path('coc/<language>/', views.coc, name='coc'),
     path('<slug:slug>/', views.detail_event, name='detail_event'),
