@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sites', 'django.contrib.flatpages', 'django_extensions',
     'django_rq', 'colorfield', 'leaflet', 'import_export', 'commons',
     'homepage', 'events', 'locations', 'organizations', 'schedule', 'speakers',
-    'tickets', 'invoices', 'api', 'certificates', 'quotes', 'members', 'about'
+    'tickets', 'invoices', 'api', 'certificates', 'quotes', 'members', 'about',
+    'legal'
 ]
 
 MIDDLEWARE = [

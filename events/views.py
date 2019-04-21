@@ -252,18 +252,6 @@ def article_bought(request, id_article):
         })
 
 
-def coc(request, language='es'):
-    template = 'events/coc-{}.html'.format(language)
-    return render(request, template)
-
-
-def privacy(request):
-    event = Event.objects.all().first()
-    return render(request, 'events/privacy.html', {
-        'event': event,
-        })
-
-
 def find_tickets_by_email(event, email):
     qs = event.all_tickets().filter(customer_email=email)
     return list(qs)
@@ -291,15 +279,3 @@ def resend_confirmation(request, slug):
         'event': event,
         'contact_email': settings.CONTACT_EMAIL,
         })
-
-
-def legal(request):
-    return render(request, 'events/legal.html')
-
-
-def purchase_terms(request):
-    return render(request, 'events/purchase-terms.html')
-
-
-def cookie_policy(request):
-    return render(request, 'events/cookie-policy.html')

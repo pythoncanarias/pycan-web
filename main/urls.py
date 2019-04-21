@@ -12,6 +12,7 @@ urlpatterns = [
     path('django-rq/', include('django_rq.urls')),
     path('events/', include('events.urls', namespace='events')),
     path('about/', include('about.urls', namespace='about')),
+    path('legal/', include('legal.urls', namespace='legal')),
 ]
 
 if settings.DEBUG:

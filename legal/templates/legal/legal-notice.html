@@ -1,4 +1,4 @@
-{% extends "events/base.html" %}
+{% extends "legal/base.html" %}
 {% load utils %}
 
 {% block title %}Aviso legal - {{ block.super }}{% endblock %}
@@ -57,11 +57,11 @@ En el caso de que cualquier usuario o un tercero considere que existen hechos o 
 
 ## 4. Política de privacidad
 
-El usuario puede consultar cómo Python Canarias utiliza sus datos y las medidas de seguridad implantadas en el siguiente enlace: <a href="{% url 'events:privacy' %}">política de privacidad</a>.
+El usuario puede consultar cómo Python Canarias utiliza sus datos y las medidas de seguridad implantadas en el siguiente enlace: <a href="{% url 'legal:privacy_policy' %}">política de privacidad</a>.
 
 ## 5. Política de cookies
 
-Python Canarias instala cookies en el ordenador del usuario. Para conocer más las cookies de nuestro sitio web acuda al siguiente enlace: <a href="">política de cookies</a>.
+Python Canarias instala cookies en el ordenador del usuario. Para conocer más las cookies de nuestro sitio web acuda al siguiente enlace: <a href="{% url 'legal:cookie_policy' %}">política de cookies</a>.
 
 ## 6. Notificaciones
 
