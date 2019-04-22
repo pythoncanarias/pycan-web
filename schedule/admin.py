@@ -1,7 +1,9 @@
+from django import forms
 from django.contrib import admin
 from django.http import HttpResponse
 
 from .models import Schedule, Slot, SlotCategory, SlotLevel, SlotTag, Track
+from locations.models import Location
 
 
 class ScheduleInline(admin.StackedInline):
@@ -42,6 +44,11 @@ class TrackAdmin(admin.ModelAdmin):
     list_display = ('name', 'order')
 
 
+class LocationChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return f'{obj.name} - {obj.venue}'
+
+
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     search_fields = ['event__name', 'location__name', 'slot__name',
@@ -66,3 +73,9 @@ class ScheduleAdmin(admin.ModelAdmin):
     download_speakers_emails.short_description = "Download speakers' emails"
 
     actions = [download_speakers_emails, ]
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'location':
+            return LocationChoiceField(
+                queryset=Location.objects.all())
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
