@@ -21,3 +21,4 @@ class VenueAdmin(admin.ModelAdmin):
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
     list_display = ('name', 'capacity', 'venue')
+    ordering = ['venue', 'name']
