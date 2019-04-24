@@ -15,7 +15,7 @@ yapf = "*"
 rope = "*"
 
 [packages]
-django = ">=2.1.2"
+django = ">=2.1.6"
 stripe = "*"
 pillow = "*"
 prettyconf = "*"
