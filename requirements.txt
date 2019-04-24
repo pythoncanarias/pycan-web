@@ -5,13 +5,13 @@ pydotplus
 pytest-django
 yapf
 rope
-django==2.1.2
+django>=2.1.6
 stripe
 pillow
 prettyconf
 pyqrcode
 markdown2
-jinja2
+jinja2>=2.10.1
 pdfkit
 django-extensions
 psycopg2
