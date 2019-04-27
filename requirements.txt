@@ -24,3 +24,4 @@ sendgrid
 django-colorfield
 django-import-export
 reportlab
+cryptography
