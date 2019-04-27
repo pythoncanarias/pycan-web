@@ -13,7 +13,11 @@ MSG_STATUS_ID_CODE = "NIF para españoles o NIE si procede"
 class Member(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
 
-    email = models.EmailField(max_length=300, unique=True, default='info@pythoncanarias.es')
+    email = models.EmailField(
+        max_length=300,
+        unique=True,
+        default='info@pythoncanarias.es'
+    )
     created_on = models.DateTimeField(auto_now_add=True)
     member_until = models.DateTimeField(auto_now_add=True)
 
