@@ -254,20 +254,28 @@ LOGGING = {
 
 LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')
 
+REDIS_HOST = config('REDIS_HOST', default='localhost')
+REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
+REDIS_DB = config('REDIS_DB', default=0, cast=int)
+
 RQ_QUEUES = {
     'default': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
+        'DB': REDIS_DB,
         'DEFAULT_TIMEOUT': 360,
     },
     'low': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
+        'DB': REDIS_DB,
     }
 }
 
 CURRENT_API_VERSION = 1
 
 ORGANIZATION_NAME = 'Python Canarias'
+
+# hack for Django 2.2.0 https://code.djangoproject.com/ticket/30361
+# only for development
+DJANGO_WATCHMAN_TIMEOUT = 5
