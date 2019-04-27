@@ -9,15 +9,10 @@ from sendgrid.helpers.mail import Content, Email, Mail
 from commons.filters import as_markdown
 
 
-def create_invitation_message(key, first_name, last_name, email):
+def create_invitation_message(confirmation_url, email):
     tmpl = loader.get_template('members/email/invitation_message.md')
-    subject = f'Bienvenido/a {first_name} a Python Canarias'
-    body = tmpl.render({
-        'key': key,
-        'first_name': first_name,
-        'last_name': last_name,
-        'email': email
-    })
+    subject = f'Confirma tu correo para unirte a Python Canarias'
+    body = tmpl.render({'confirmation_url': confirmation_url})
     mail = Mail(
         from_email=Email(settings.CONTACT_EMAIL, settings.ASSOCIATION_NAME),
         subject=subject,
@@ -27,8 +22,8 @@ def create_invitation_message(key, first_name, last_name, email):
 
 
 @job
-def send_invitation(key, first_name, last_name, email):
-    msg = create_invitation_message(key, first_name, last_name, email)
+def send_invitation(confirmation_url, email):
+    msg = create_invitation_message(confirmation_url, email)
     sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
     response = sg.client.mail.send.post(request_body=msg.get())
     if response.status_code >= 400:

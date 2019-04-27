@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+from cryptography.fernet import Fernet
 from prettyconf import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -279,3 +280,5 @@ ORGANIZATION_NAME = 'Python Canarias'
 # hack for Django 2.2.0 https://code.djangoproject.com/ticket/30361
 # only for development
 DJANGO_WATCHMAN_TIMEOUT = 5
+
+CRYPT_KEY = config('CRYPT_KEY', default=Fernet.generate_key())
