@@ -1,4 +1,4 @@
-const APPS = ['commons', 'events', 'homepage', 'about', 'legal']
+const APPS = ['commons', 'events', 'homepage', 'about', 'legal', 'members']
 
 const LIBS = {
   CSS: {
