@@ -14,9 +14,8 @@ def index(request):
 
 
 def new_member(request):
-    form = NewMemberForm()
+    form = NewMemberForm(request.POST or None)
     if request.method == 'POST':
-        form = NewMemberForm(request.POST)
         if form.is_valid():
             payload = {
                 'first_name': form.cleaned_data['first_name'],
