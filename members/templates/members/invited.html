@@ -1,0 +1,15 @@
+{% extends "members/base.html" %}
+
+{% block content %}
+
+<h2>Gracias por su interes</h2>
+
+<p>Gracias por su interes en hacerse socio/a de Python Canarias. Le hemos
+enviado un mensaje de confirmación a su correo electrónico{% if email %}: <code>{{ email }}</code>{% endif %}.</p>
+
+<p>El mensaje incluye un enlace que debera pulsar para confirmar
+tanto su solicitud de socio como su dirección de correo 
+electrónico. En enlace tiene una validez de 7 días desde
+el momento de la solicitud.</p>
+
+{% endblock content %}

@@ -6,6 +6,7 @@ app_name = 'members'
 urlpatterns = [
     path('', views.index, name='index'),
     path('new/', views.new_member, name='new_member'),
+    path('invited/', views.invited, name='invited'),
     re_path(
         r'confirmation/(?P<encrypted_key>[\S]+)/', views.member_confirmation,
         name='member_confirmation'),
