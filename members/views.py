@@ -1,8 +1,7 @@
 import logging
 
 from django.conf import settings
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from . import crypt, invitation, notification
@@ -34,7 +33,7 @@ def new_member(request):
                 'password': form.cleaned_data['password'],
             }
             key = invitation.save_invitation(**payload)
-            confirmation_url=get_full_confirmation_url(key)
+            confirmation_url = get_full_confirmation_url(key)
             notification.send_invitation.delay(confirmation_url, email)
             resp = redirect('members:invited')
             resp.set_cookie('pycan.invited.email', email)
@@ -50,4 +49,4 @@ def invited(request):
     email = request.COOKIES.get('pycan.invited.email')
     return render(request, 'members/invited.html', {
         'email': email,
-        })
+    })
