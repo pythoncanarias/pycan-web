@@ -29,23 +29,31 @@ A continuación te ofrecemos enlaces en los que encontrarás información sobre 
 - Safari: [https://support.apple.com/es-es/guide/safari/sfri11471/mac](https://support.apple.com/es-es/guide/safari/sfri11471/mac)
 - Safari IOS (iPhone, iPad): [http://support.apple.com/kb/HT1677?viewlocale=es_ES&locale=es_ES](http://support.apple.com/kb/HT1677?viewlocale=es_ES&locale=es_ES)
 
-## 2. Cookies técnicas y funcionales
+## 2. Tipos de cookies
 
-### 2.1. Django
+A continuación se detallan las cookies que usamos en nuestro sitio web clasificadas según su naturaleza.
+
+### 2.1. Cookies técnicas y funcionales
+
+#### Members
+
+- `pycan.invited.email`: email de la persona que se registra como socio de Python Canarias y permite mostrar la página de invitación.
+
+### 2.2. Cookies analíticas
+
+#### Google
+
+- `_ga`
+
+### 2.3. Cookies de terceros
+
+#### Django
 
 - `cookielaw_accepted`
 - `csrftoken`
 - `sessionid`
 
-## 3. Cookies analíticas
-
-### 3.1. Google
-
-- `_ga`
-
-## 4. Cookies de terceros
-
-### 4.1. Stripe (core)
+#### Stripe
 
 - `private_machine_identifier`
 - `user`
@@ -55,14 +63,10 @@ A continuación te ofrecemos enlaces en los que encontrarás información sobre 
 - `merchant`
 - `country`
 - `machine_identifier`
-
-### 4.2. Stripe (checkout)
-
 - `__stripe_sid`
 - `__stripe_mid`
 - `checkout-live-session`
 - `checkout-test-session`
-
 
 {% endfilter %}
 
