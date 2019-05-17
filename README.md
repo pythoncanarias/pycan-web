@@ -24,7 +24,7 @@ Some of its great features are:
 ### If you prefer to use virtualenv and friends
 
 You can get a requirements file as a subproduct of the Pipfile (This is why we
-removed the 'requirements.txt` and the `requirements-dev.txt` from the repo).
+removed the `requirements.txt` and the `requirements-dev.txt` from the repo).
 
 This commands allow you to generate a proper `requirements.txt` from the Pipfile:
 
