@@ -26,11 +26,11 @@ Some of its great features are:
 You can get a requirements file as a subproduct of the Pipfile (This is why we
 removed the `requirements.txt` and the `requirements-dev.txt` from the repo).
 
-This commands allow you to generate a proper `requirements.txt` from the Pipfile:
+This command allows you to generate a proper `requirements.txt` from the Pipfile:
 
     pipenv lock --requirements > requirements.txt
 
-And use this if you want a requirements file for developers:
+Use this command if you want a requirements file for developers:
 
     pipenv lock --requirements --dev > requirements-dev.txt
     
