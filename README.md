@@ -21,6 +21,20 @@ Some of its great features are:
 - Automatically adds/removes packages to a Pipfile when they are un/installed.
 - Automatically loads .env files, if they exist.
 
+### If you prefer to use virtualenv and friends
+
+You can get a requirements file as a subproduct of the Pipfile (This is why we
+removed the `requirements.txt` and the `requirements-dev.txt` from the repo).
+
+This command allows you to generate a proper `requirements.txt` from the Pipfile:
+
+    pipenv lock --requirements > requirements.txt
+
+Use this command if you want a requirements file for developers:
+
+    pipenv lock --requirements --dev > requirements-dev.txt
+    
+
 #### Proceed
 
 After you have cloned the repo, make:
