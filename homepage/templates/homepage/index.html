@@ -45,12 +45,12 @@
           <p>&mdash; {{ quote.author }}</p>
         </div>
 
-        {% if active_events %}
         <div class="links buttons is-centered">
-          <a href="{% url 'events:index' %}" class="link button is-link is-medium is-outlined">Eventos</a>
+          {% if active_events %}
+            <a href="{% url 'events:index' %}" class="link button is-link is-medium is-outlined">Eventos</a>
+          {% endif %}
           <a href="{% url 'about:index' %}" class="link button is-link is-medium is-outlined">Asociación</a>
         </div>
-        {% endif %}
 
         <h4 class="blog-message">Para más noticias, pásate por nuestro
           <a href="https://medium.com/pythoncanarias" target="_blank" class="blog-link">
