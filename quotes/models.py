@@ -26,5 +26,7 @@ class Quote(models.Model):
 
     @classmethod
     def get_random_quote(cls):
+        """Get a random quote, or an empty dict in none available.
+        """
         quotes = cls.objects.all()
-        return random.choice(quotes)
+        return random.choice(quotes) if quotes else {}
