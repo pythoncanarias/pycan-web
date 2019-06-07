@@ -1,3 +1,8 @@
+# Requirements
+
+requirements.txt
+requirements-dev.txt
+
 ### OSX ###
 .DS_Store
 .AppleDouble
