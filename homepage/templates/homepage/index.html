@@ -40,10 +40,12 @@
 
         <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo3d-pythoncanarias.png' }}" alt="Python Canarias" />
 
+      {% if quote %}
         <div class="quote is-centered">
           <p><i class="fas fa-quote-left"></i> {{ quote.text }} <i class="fas fa-quote-right"></i></p>
           <p>&mdash; {{ quote.author }}</p>
         </div>
+      {% endif %}
 
         <div class="links buttons is-centered">
           {% if active_events %}
