@@ -151,10 +151,10 @@ class Event(models.Model):
 
     def schedule_for_display(self):
         tracks = self.tracks()
-        if not tracks:
-            result = []
-        else:
-            result = [{'type': 'tracks', 'tracks': tracks}]
+        result = []
+        if tracks:
+            if len(tracks) > 1:
+                result.append({'type': 'tracks', 'tracks': tracks})
             start, end = self.start_datetime(), None
             for psi in list(self.plenary_scheduled_items()):
                 end = psi.start
