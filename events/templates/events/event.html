@@ -96,7 +96,10 @@
 
   <section id="schedule" class="section schedule has-background-white">
     <div class="container">
-      <h1 class="title section-title">Agenda</h1>
+      <h1 class="title section-title">
+        <p>Agenda</p>
+        <p class="section-detail"><i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}</p>
+      </h1>
 
       <div class="schedule-table">
         {% for row in event.schedule_for_display %}
