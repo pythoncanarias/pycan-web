@@ -251,11 +251,9 @@ class InvoiceMaker(object):
         canvas.rect(1.2 * cm, 2.8 * cm, self.PAGE_WIDTH - 2.4 * cm, 3 * cm)
         canvas.setFont(self.bold, 12)
         canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 5.3 * cm, 'SUBTOTAL')
-        subtotal = Decimal('0.00')
         canvas.setFont(self.normal, 12)
 
-        for concept in self.invoice.concept_set.all():
-            subtotal += concept.amount * concept.quantity
+        subtotal = self.invoice.concepts_total
 
         canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm, 5.3 * cm,
                                '{} €'.format(subtotal))

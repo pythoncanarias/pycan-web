@@ -1,14 +1,16 @@
 import os
 from datetime import date
+from decimal import Decimal
 
 from django.conf import settings
 from django.db import models
 
-from invoices.constants import RETENTION_CHOICES, TAX_CHOICES
+from invoices.constants import RETENTION_CHOICES, RETENTION_MULTIPLIER, TAX_CHOICES, TAX_MULTIPLIER
 from invoices.services.invoice_maker import InvoiceMaker
 
 
 class InvoiceManager(models.Manager):
+
     def for_year(self, year):
         first_day = date(year, 1, 1)
         last_day = date(year, 12, 31)
@@ -17,8 +19,8 @@ class InvoiceManager(models.Manager):
 
 class Invoice(models.Model):
     date = models.DateField()
-    taxes = models.IntegerField(choices=TAX_CHOICES)
-    retention = models.IntegerField(choices=RETENTION_CHOICES)
+    taxes = models.IntegerField(choices=TAX_CHOICES, default=0)
+    retention = models.IntegerField(choices=RETENTION_CHOICES, default=0)
     invoice_number = models.IntegerField(blank=True)
 
     client = models.ForeignKey('invoices.Client', on_delete=models.CASCADE)
@@ -27,6 +29,22 @@ class Invoice(models.Model):
     active = models.BooleanField(default=True)
 
     objects = InvoiceManager()
+
+    @property
+    def concepts_total(self):
+        """Calculate the invoice total.
+
+        :return: total amount for invoice
+        :rtype: Decimal
+        """
+        return sum([concept.amount * concept.quantity for concept in self.concept_set.all()]).quantize(Decimal('0.01'))
+
+    @property
+    def total(self):
+        total = self.concepts_total
+        total -= self.concepts_total * RETENTION_MULTIPLIER[self.retention] / 100
+        total += self.concepts_total * TAX_MULTIPLIER[self.taxes] / 100
+        return total.quantize(Decimal('0.01'))
 
     @property
     def filename(self):
@@ -40,8 +58,7 @@ class Invoice(models.Model):
         media_root = settings.MEDIA_URL
         invoices_uri = 'invoices'
         filename = self.filename
-        return '/'.join([media_root, invoices_uri, filename]).replace(
-            '//', '/')
+        return '/'.join([media_root, invoices_uri, filename]).replace('//', '/')
 
     def save(self, *args, **kwargs):
         if not self.invoice_number:
@@ -52,8 +69,7 @@ class Invoice(models.Model):
     def next_invoice_number(self):
         year = self.date.year
         invoices_for_year = Invoice.objects.for_year(year).exclude(id=self.id)
-        return invoices_for_year.latest(
-            'id').invoice_number + 1 if invoices_for_year else 1
+        return invoices_for_year.latest('id').invoice_number + 1 if invoices_for_year else 1
 
     @property
     def verbose_invoice_number(self):
