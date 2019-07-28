@@ -217,7 +217,7 @@ class Event(models.Model):
 
     @property
     def twitter_hashtag_url(self):
-        return f'https://twitter.com/hashtag/{self.slug}?f=tweets'
+        return f'https://twitter.com/hashtag/{self.slug}?f=live'
 
     def render_all_badges(self, pdf_only=False, remove_badges=True):
         """
