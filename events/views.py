@@ -191,7 +191,7 @@ def ticket_purchase(request, id_article):
                 amount=article.price_in_cents,
                 currency='EUR',
                 description='{}/{}, {}'.format(
-                    event.slug,
+                    event.hashtag,
                     surname,
                     name,
                 )
