@@ -28,13 +28,15 @@
 
       {% if event.opened_ticket_sales %}
         <a href="{% url 'events:buy_ticket' slug=event.slug %}" class="button is-warning">Comprar entrada</a>
-        <br>
-        <a href="{% url 'events:resend_ticket' slug=event.slug %}" class="link-to-resend-ticket">¿Has perdido tu entrada?</a>
-        <br>
-        <div class="tags has-addons ticket-availability">
-          <span class="tag num-available-tickets">{{ event.num_available_tickets }} disponible{{ event.num_available_tickets|pluralize }}</span>
-          <span class="tag is-primary num-sold-tickets">{{ event.num_sold_tickets }} vendida{{ event.num_sold_tickets|pluralize }}</span>
-        </div>
+        {% if not event.external_tickets_url %}
+          <br>
+          <a href="{% url 'events:resend_ticket' slug=event.slug %}" class="link-to-resend-ticket">¿Has perdido tu entrada?</a>
+          <br>
+          <div class="tags has-addons ticket-availability">
+            <span class="tag num-available-tickets">{{ event.num_available_tickets }} disponible{{ event.num_available_tickets|pluralize }}</span>
+            <span class="tag is-primary num-sold-tickets">{{ event.num_sold_tickets }} vendida{{ event.num_sold_tickets|pluralize }}</span>
+          </div>
+        {% endif %}
       {% endif %}
     </div>
   </div>
