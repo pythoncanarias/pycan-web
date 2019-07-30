@@ -64,6 +64,9 @@ class Event(models.Model):
         blank=True,
         help_text='Enough 1200px wide. Shown shaded in main page of event'
     )
+    external_tickets_url = models.URLField(
+        blank=True,
+        help_text='Should be filled if tickets are sold outside our site')
 
     def __str__(self):
         return self.name

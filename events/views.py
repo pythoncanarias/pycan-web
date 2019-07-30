@@ -141,6 +141,10 @@ def stripe_payment_error(request, exception):
 def buy_ticket(request, slug):
     logger.debug("buy_tickts starts : slug={}".format(slug))
     event = Event.get_by_slug(slug)
+    if event.external_tickets_url:
+        logger.debug('Redirecting to external URL for selling tickets: url={}'.
+                     format(event.external_tickets_url))
+        return redirect(event.external_tickets_url)
     all_articles = [a for a in event.all_articles()]
     active_articles = [a for a in all_articles if a.is_active()]
     num_active_articles = len(active_articles)
@@ -191,7 +195,7 @@ def ticket_purchase(request, id_article):
                 amount=article.price_in_cents,
                 currency='EUR',
                 description='{}/{}, {}'.format(
-                    event.slug,
+                    event.hashtag,
                     surname,
                     name,
                 )
