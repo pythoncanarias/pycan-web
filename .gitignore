@@ -84,6 +84,7 @@ target/
 
 ### Django ###
 *.log
+*.log.*
 *.pot
 *.pyc
 __pycache__/
@@ -100,3 +101,5 @@ node_modules
 .media
 .idea
 tags
+
+certificates/media
