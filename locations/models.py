@@ -16,6 +16,7 @@ class Venue(models.Model):
         upload_to='locations/venue/',
         blank=True
     )
+    website = models.URLField(blank=True)
 
     def __str__(self):
         return self.name

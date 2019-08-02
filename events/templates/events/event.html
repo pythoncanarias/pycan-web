@@ -139,7 +139,11 @@
             </div>
             <div class="column is-12-tablet is-6-desktop">
               <strong class="venue-name">
-                <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
+                {% if event.venue.website %}
+                  <a href="{{ event.venue.website }}"><i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}</a>
+                {% else %}
+                  <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
+                {% endif %}
               </strong>
               <address>
                 <p class="venue-address">{{ event.venue.address }}</p>
