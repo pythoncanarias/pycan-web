@@ -146,7 +146,12 @@
                 {% endif %}
               </strong>
               <address>
-                <p class="venue-address">{{ event.venue.address }}</p>
+                <a class="venue-address">
+                  <a href="https://maps.google.com/maps?q={{ event.venue.latitude }},{{ event.venue.longitude }}">
+                    {{ event.venue.address }}
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                </p>
               </address>
               <hr/>
               <p class="venue-description">{{ event.venue.description }}</p>
