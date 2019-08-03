@@ -39,4 +39,13 @@
   .venue-description {
     font-size: 0.9em;
   }
+
+  .venue-photo {
+    width: 100%;
+    border-radius: 3%;
+
+    @include from($custom-mobile) {
+      width: 60%;
+    }
+  }
 }
