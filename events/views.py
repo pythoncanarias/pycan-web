@@ -283,3 +283,11 @@ def resend_confirmation(request, slug):
         'event': event,
         'contact_email': settings.CONTACT_EMAIL,
         })
+
+
+def past_events(request):
+    events = Event.objects.filter(active=False).order_by('-start_date')
+    return render(request, 'events/list-events.html', {
+        'events': events.all(),
+        'archive': True
+    })
