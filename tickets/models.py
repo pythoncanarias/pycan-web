@@ -57,7 +57,10 @@ class Article(models.Model):
     price = models.DecimalField(max_digits=9, decimal_places=2)
     stock = models.PositiveIntegerField()
     release_at = models.DateTimeField(null=True, blank=True)
-    can_be_awarded = models.BooleanField(default=True)
+    participate_in_raffle = models.BooleanField(
+        default=True,
+        help_text=('Indicates if people with this article can be awarded in a '
+                   'potential raffle at event'))
 
     def __str__(self):
         return '{} [{}]'.format(self.category, self.event)
