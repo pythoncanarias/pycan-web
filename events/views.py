@@ -31,8 +31,11 @@ def index(request):
 
 def detail_event(request, slug):
     event = Event.get_by_slug(slug)
+    past_events = Event.objects.filter(
+        active=False).exclude(pk=event.id).order_by('-start_date')[:3]
     return render(request, 'events/event.html', {
         'event': event,
+        'past_events': past_events
     })
 
 
@@ -283,3 +286,11 @@ def resend_confirmation(request, slug):
         'event': event,
         'contact_email': settings.CONTACT_EMAIL,
         })
+
+
+def past_events(request):
+    events = Event.objects.filter(active=False).order_by('-start_date')
+    return render(request, 'events/list-events.html', {
+        'events': events.all(),
+        'archive': True
+    })
