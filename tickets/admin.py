@@ -18,6 +18,7 @@ class TicketCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
+    list_filter = ['event']
     list_display = (
         'event', 'category', 'price', 'stock',
         'sold_vs_available',
