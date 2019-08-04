@@ -294,3 +294,10 @@ def past_events(request):
         'events': events.all(),
         'archive': True
     })
+
+
+def raffle(request, slug):
+    event = Event.get_by_slug(slug)
+    return render(request, 'events/raffle.html', {
+        'event': event,
+    })

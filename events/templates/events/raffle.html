@@ -1,0 +1,17 @@
+{% extends "events/base.html" %}
+
+{% load static %}
+
+{% block title %}{{event.name}}Sorteo - {{ block.super }}{% endblock %}
+
+{% block body_class %}raffle-page{% endblock %}
+{% block content_class %}is-narrow{% endblock %}
+
+{% block content %}
+
+<div class="box">
+  <h1 class="title is-blue">Sorteo</h1>
+  <h2 class="subtitle">{{ event.name }}</h2>
+</div>
+
+{% endblock content %}
