@@ -57,6 +57,7 @@ class Article(models.Model):
     price = models.DecimalField(max_digits=9, decimal_places=2)
     stock = models.PositiveIntegerField()
     release_at = models.DateTimeField(null=True, blank=True)
+    can_be_awarded = models.BooleanField(default=True)
 
     def __str__(self):
         return '{} [{}]'.format(self.category, self.event)
@@ -167,3 +168,30 @@ class Ticket(models.Model):
             tm = TicketMaker(full_name, self)
             tm.create()
         return full_name
+
+
+class Raffle(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    event = models.OneToOneField('events.Event',
+                                 related_name='raffle',
+                                 on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Sorteo para {self.event.qualified_hashtag}'
+
+
+class Present(models.Model):
+    name = models.CharField(max_length=256)
+    description = models.TextField(blank=True)
+    raffle = models.ForeignKey('tickets.Raffle',
+                               related_name='presents',
+                               on_delete=models.CASCADE)
+    awarded_ticket = models.OneToOneField('tickets.Ticket',
+                                          related_name='present',
+                                          null=True,
+                                          blank=True,
+                                          on_delete=models.CASCADE)
+    awarded_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name

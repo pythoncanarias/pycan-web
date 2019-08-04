@@ -5,12 +5,8 @@ from import_export.admin import ImportExportActionModelAdmin
 from certificates.utils import create_certificate
 from events.tasks import send_ticket
 
-from .models import Article, Ticket, TicketCategory
-
-
-class ArticleInline(admin.StackedInline):
-    model = Article
-    extra = 0
+from .admin_inlines import ArticleInline, PresentInline
+from .models import Article, Present, Raffle, Ticket, TicketCategory
 
 
 @admin.register(TicketCategory)
@@ -102,3 +98,14 @@ class TicketAdmin(ImportExportActionModelAdmin):
         download_emails,
         gen_certificate,
         ]
+
+
+@admin.register(Raffle)
+class RaffleAdmin(admin.ModelAdmin):
+    inlines = [PresentInline]
+    pass
+
+
+@admin.register(Present)
+class PresentAdmin(admin.ModelAdmin):
+    pass
