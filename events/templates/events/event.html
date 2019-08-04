@@ -38,6 +38,10 @@
           </div>
         {% endif %}
       {% endif %}
+
+      {% if not event.active %}
+        <span class="tag is-danger is-medium">Evento cerrado</span>
+      {% endif %}
     </div>
   </div>
 
