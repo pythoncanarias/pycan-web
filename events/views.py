@@ -32,7 +32,7 @@ def index(request):
 def detail_event(request, slug):
     event = Event.get_by_slug(slug)
     past_events = Event.objects.filter(
-        active=False).order_by('-start_date')[:3]
+        active=False).exclude(pk=event.id).order_by('-start_date')[:3]
     return render(request, 'events/event.html', {
         'event': event,
         'past_events': past_events
