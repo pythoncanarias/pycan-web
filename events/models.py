@@ -67,6 +67,7 @@ class Event(models.Model):
     external_tickets_url = models.URLField(
         blank=True,
         help_text='Should be filled if tickets are sold outside our site')
+    closed_schedule = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

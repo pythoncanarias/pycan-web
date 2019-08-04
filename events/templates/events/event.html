@@ -105,6 +105,12 @@
       <h1 class="title section-title">
         <p>Agenda</p>
         <p class="section-detail"><i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}</p>
+        {% if event.schedule_for_display and not event.closed_schedule %}
+          <span class="tag is-warning is-medium not-closed-schedule">
+            <i class="fas fa-info-circle"></i>
+            La agenda aún no está cerrada!
+          </span>
+        {% endif %}
       </h1>
 
       <div class="schedule-table">
