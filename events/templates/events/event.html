@@ -214,6 +214,33 @@
     </div>
   </section>
 
+  <section id="past-events" class="section past-events">
+    <div class="container">
+      <h1 class="title section-title">Eventos pasados</h1>
+      <div class="columns is-centered">
+        {% for past_event in past_events %}
+          <div class="column has-text-centered">
+            <div class="past-event-box">
+              <a href="{% url 'events:detail_event' slug=past_event.slug %}">
+                <img src="{{ past_event.cover.url }}">
+                <p class="past-event-details">
+                  <i class="fas fa-link"></i>
+                  {{ past_event.name }}
+                  <div class="tag is-rounded is-light">
+                    {{ past_event.start_date|as_date }}
+                  </div>
+                </p>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="more-past-events has-text-centered">
+        <a class="button is-info is-outlined" href="{% url 'events:past_events' %}">Ver más eventos pasados!</a>
+      </div>
+    </div>
+  </section>
+
 </div>
 
 {% endblock content %}
