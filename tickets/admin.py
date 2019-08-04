@@ -5,8 +5,8 @@ from import_export.admin import ImportExportActionModelAdmin
 from certificates.utils import create_certificate
 from events.tasks import send_ticket
 
-from .admin_inlines import ArticleInline, PresentInline
-from .models import Article, Present, Raffle, Ticket, TicketCategory
+from .admin_inlines import ArticleInline, GiftInline
+from .models import Article, Gift, Raffle, Ticket, TicketCategory
 
 
 @admin.register(TicketCategory)
@@ -103,10 +103,10 @@ class TicketAdmin(ImportExportActionModelAdmin):
 
 @admin.register(Raffle)
 class RaffleAdmin(admin.ModelAdmin):
-    inlines = [PresentInline]
+    inlines = [GiftInline]
     pass
 
 
-@admin.register(Present)
-class PresentAdmin(admin.ModelAdmin):
+@admin.register(Gift)
+class GiftAdmin(admin.ModelAdmin):
     pass

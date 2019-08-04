@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Present
+from .models import Article, Gift
 
 
 class ArticleInline(admin.StackedInline):
@@ -7,6 +7,6 @@ class ArticleInline(admin.StackedInline):
     extra = 0
 
 
-class PresentInline(admin.StackedInline):
-    model = Present
+class GiftInline(admin.StackedInline):
+    model = Gift
     extra = 0

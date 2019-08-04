@@ -13,14 +13,14 @@
   <h1 class="title is-blue">Sorteo</h1>
   <h2 class="subtitle">{{ event.name }}</h2>
 
-  <div class="presents">
+  <div class="gifts">
     <span class="tag is-dark is-medium">
       <i class="fas fa-gift"></i>
       REGALOS
     </span>
     <ol>
-      {% for present in presents %}
-        <li>{{ present }}</li>
+      {% for gift in gifts %}
+        <li>{{ gift }}</li>
       {% endfor %}
     </ol>
   </div>
@@ -29,7 +29,7 @@
 
   <div class="candidate_tickets">
     <p>
-      Se sortearán <strong>{{ presents.count }} regalos</strong> entre <strong>{{ candidate_tickets.count }} tickets</strong> candidatos!
+      Se sortearán <strong>{{ gifts.count }} regalos</strong> entre <strong>{{ candidate_tickets.count }} tickets</strong> candidatos!
     </p>
     <p>
       Probabilidad de que te toque algo: <span class="tag is-info">{{ success_probability|floatformat:2 }} %</span>

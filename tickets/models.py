@@ -190,14 +190,14 @@ class Raffle(models.Model):
             article__participate_in_raffle=True)
 
 
-class Present(models.Model):
+class Gift(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True)
     raffle = models.ForeignKey('tickets.Raffle',
-                               related_name='presents',
+                               related_name='gifts',
                                on_delete=models.CASCADE)
     awarded_ticket = models.OneToOneField('tickets.Ticket',
-                                          related_name='present',
+                                          related_name='gift',
                                           null=True,
                                           blank=True,
                                           on_delete=models.CASCADE)

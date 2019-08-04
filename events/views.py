@@ -298,12 +298,12 @@ def past_events(request):
 
 def raffle(request, slug):
     event = Event.get_by_slug(slug)
-    presents = event.raffle.presents.all()
+    gifts = event.raffle.gifts.all()
     candidate_tickets = event.raffle.get_candidate_tickets()
-    success_probability = presents.count() / candidate_tickets.count() * 100
+    success_probability = gifts.count() / candidate_tickets.count() * 100
     return render(request, 'events/raffle.html', {
         'event': event,
-        'presents': presents,
+        'gifts': gifts,
         'candidate_tickets': candidate_tickets,
         'success_probability': success_probability,
     })
