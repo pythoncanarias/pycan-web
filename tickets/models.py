@@ -182,6 +182,13 @@ class Raffle(models.Model):
     def __str__(self):
         return f'Sorteo para {self.event.qualified_hashtag}'
 
+    class Meta:
+        ordering = ['created_at']
+
+    def get_candidate_tickets(self):
+        return self.event.all_tickets().filter(
+            article__participate_in_raffle=True)
+
 
 class Present(models.Model):
     name = models.CharField(max_length=256)
@@ -198,3 +205,6 @@ class Present(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['awarded_at', 'name', 'description']
