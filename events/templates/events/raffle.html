@@ -29,15 +29,20 @@
 
   <div class="candidate_tickets">
     <p>
-      Se sortearán <strong>{{ gifts.count }} regalos</strong> entre <strong>{{ candidate_tickets.count }} tickets</strong> candidatos!
+      Se sortearán <strong>{{ gifts.count }} regalos</strong> entre <strong>{{ candidate_tickets.count }} tickets</strong> candidatos sin reemplazo!
     </p>
     <p>
       Probabilidad de que te toque algo: <span class="tag is-info">{{ success_probability|floatformat:2 }} %</span>
     </p>
   </div>
 
+  <div class="launch-raffle has-text-centered">
+    <a class="button is-primary is-outlined">
+      <i class="fas fa-atom"></i>
+      Comenzar sorteo!
+    </a>
+  </div>
 
-    </div>
   </div>
 </div>
 
