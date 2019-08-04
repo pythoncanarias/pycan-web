@@ -1,4 +1,6 @@
 .section.past-events {
+  border-top: 1px solid $blue-bg;
+
   .title {
     margin-bottom: 3rem;
   }
@@ -11,5 +13,9 @@
     .past-event-details {
       padding: .3rem 0;
     }
+  }
+
+  .more-past-events {
+    margin: 2rem 0;
   }
 }
