@@ -19,14 +19,18 @@
   "homepage": "https://github.com/pythoncanarias/web#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.2.0",
-    "bulma": "0.7.1"
+    "ajv": "^6.10.0",
+    "babel-register": "^6.26.0",
+    "bulma": "0.7.1",
+    "mermaid.cli": "^0.5.1",
+    "sass": "^1.21.0"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
     "del": "3.0.0",
     "eslint": "5.2.0",
-    "gulp": "4.0.0",
+    "gulp": "^4.0.2",
     "gulp-babel": "7.0.1",
     "gulp-concat": "2.6.1",
     "gulp-noop": "1.0.0",

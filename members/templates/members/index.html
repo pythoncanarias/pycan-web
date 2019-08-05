@@ -1,0 +1,31 @@
+{% extends 'members/base.html' %}
+{% load utils %}
+
+{% block title %} Lista de socios activos {% endblock title %}
+
+{% block content %}
+
+<h2 class="title"> Miembros de la asociación </h2>
+
+        <h4 class="subtitle">Actualmente ({{today|as_date }}) hay
+            {{ members|length }} socios activos</h4>
+<table class="table">
+  <thead>
+    <tr>
+        <th>Núm. de socio</th>
+        <th>Nombre</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for member in members %}
+    <tr>
+      <td>{{ member.pk }}</td>
+      <td>
+          {% if member.public_membership %}{{ member.full_name }}{% else %}---{% endif %}
+      </td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

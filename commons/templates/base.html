@@ -1,6 +1,5 @@
 {% load static %}
 {% load utils %}
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -9,12 +8,14 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <link rel="icon" href="{{ assets|get_asset_key:'commons/img/favicon.ico' }}">
+  <link rel="icon" href="favicon.ico">
 
   <title>{% block title %}Python Canarias{% endblock title %}</title>
 
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">
 
+  <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
   <link rel="stylesheet" href="{{ assets|get_asset_key:'commons/vendor.min.css' }}">
   {% block style %}{% endblock %}
 </head>

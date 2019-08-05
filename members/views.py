@@ -1,4 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import logging
+import datetime
 
 from django.conf import settings
 from django.shortcuts import redirect, render
@@ -6,12 +10,24 @@ from django.urls import reverse
 
 from . import crypt, invitation, notification
 from .forms import NewMemberForm
+from .models import Member
+
 
 logger = logging.getLogger(__name__)
 
 
 def index(request):
-    return render(request, 'members/index.html', {})
+    today = datetime.date.today()
+    members = (
+        Member.objects.all()
+        .select_related('user')
+        .filter(member_until__gt=today)
+        .order_by('user__first_name', 'user__last_name')
+        )
+    return render(request, 'members/index.html', {
+        'members': members,
+        'today': today,
+        })
 
 
 def new_member(request):
