@@ -40,15 +40,21 @@
         </a>
       </div>
     </div>
-    {% if match and next_gift %}
-      <div class="column">
-        <div class="next-gift has-text-centered">
+    {% if match %}
+      {% if next_gift %}
+        <div class="column has-text-right">
           <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug next_gift.id %}">
             <i class="fas fa-arrow-circle-right"></i>
             Siguiente regalo!
           </a>
         </div>
-      </div>
+      {% else %}
+        <div class="column has-text-right">
+          <a class="button is-danger is-outlined" href="">
+            Finalizar sorteo
+          </a>
+        </div>
+      {% endif %}
     {% endif %}
   </div>
 

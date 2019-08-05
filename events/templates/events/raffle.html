@@ -20,7 +20,7 @@
     </span>
     <ol>
       {% for gift in gifts %}
-        <li>{{ gift }}</li>
+        <li><p>{{ gift }}</p></li>
       {% endfor %}
     </ol>
   </div>
@@ -36,7 +36,7 @@
     </p>
   </div>
 
-  <div class="launch-raffle has-text-centered">
+  <div class="launch-raffle">
     <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug gifts.0.id %}">
       <i class="fas fa-atom"></i>
       Comenzar sorteo!
