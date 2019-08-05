@@ -10,7 +10,7 @@
 {% block content %}
 
 <div class="box">
-  <h1 class="title is-blue">Sorteo</h1>
+  <h1 class="title is-blue"><a href="{% url 'events:raffle' event.slug %}">Sorteo</a></h1>
   <h2 class="subtitle">{{ event.name }}</h2>
 
   <div class="current-gift">
@@ -30,8 +30,13 @@
     <div class="column">
       <div class="make-matching">
         <a class="button is-link is-outlined" href="{% url 'events:raffle_gift_match' event.slug current_gift.id %}">
-          <i class="fas fa-gavel"></i>
-          Buscar ticket afortunado!
+          {% if match %}
+            <i class="fas fa-sync"></i>
+            ¿La persona no está? Buscar de nuevo
+          {% else %}
+            <i class="fas fa-gavel"></i>
+            Buscar ticket afortunado!
+          {% endif %}
         </a>
       </div>
     </div>
