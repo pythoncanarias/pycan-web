@@ -64,7 +64,9 @@ urlpatterns = [
          views.raffle_gift,
          name='raffle_gift'),
     path('<slug:slug>/raffle/<int:gift_id>/match/',
-         views.raffle_gift,
-         {'match': True},
+         views.raffle_gift, {'match': True},
          name='raffle_gift_match'),
+    path('<slug:slug>/raffle/results/',
+         views.raffle_results,
+         name='raffle_results'),
 ]

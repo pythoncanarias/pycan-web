@@ -244,3 +244,7 @@ class Gift(models.Model):
         gifts_ids = list(Gift.objects.filter(raffle=self.raffle).values_list(
             'pk', flat=True))
         return gifts_ids.index(self.id) + 1
+
+    def awarded_ticket_for_display(self):
+        return f'{self.awarded_ticket.customer_full_name} \
+            (#{self.awarded_ticket.number})'
