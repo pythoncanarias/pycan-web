@@ -319,9 +319,12 @@ def raffle_gift(request, slug, gift_id, match=False):
         current_gift.awarded_at = datetime.datetime.now()
         current_gift.save()
     next_gift = event.raffle.get_undelivered_gifts().first()
+    progress_value = current_gift.order() / event.raffle.gifts.count() * 100
+
     return render(request, 'events/raffle-gift.html', {
         'event': event,
         'current_gift': current_gift,
         'next_gift': next_gift,
         'match': match,
+        'progress_value': progress_value
     })

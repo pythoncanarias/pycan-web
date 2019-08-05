@@ -190,8 +190,11 @@ class Raffle(models.Model):
         return self.event.all_tickets().filter(
             article__participate_in_raffle=True)
 
+    def get_delivered_gifts(self):
+        return self.gifts.filter(awarded_ticket__isnull=False)
+
     def get_undelivered_gifts(self):
-        return self.gifts.exclude(awarded_ticket__isnull=False)
+        return self.gifts.filter(awarded_ticket__isnull=True)
 
     def get_awarded_tickets(self):
         return [
@@ -235,4 +238,9 @@ class Gift(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['awarded_at', 'name', 'description']
+        ordering = ['name', 'description']
+
+    def order(self):
+        gifts_ids = list(Gift.objects.filter(raffle=self.raffle).values_list(
+            'pk', flat=True))
+        return gifts_ids.index(self.id) + 1
