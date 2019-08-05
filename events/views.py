@@ -299,6 +299,7 @@ def past_events(request):
 
 def raffle(request, slug):
     event = Event.get_by_slug(slug)
+    event.raffle.clean_awarded_tickets()
     gifts = event.raffle.gifts.all()
     candidate_tickets = event.raffle.get_candidate_tickets()
     success_probability = gifts.count() / candidate_tickets.count() * 100

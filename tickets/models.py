@@ -211,6 +211,12 @@ class Raffle(models.Model):
             candidate_tickets = self.get_unawarded_tickets()
         return random.choice(candidate_tickets)
 
+    def clean_awarded_tickets(self):
+        for gift in self.gifts.all():
+            gift.awarded_ticket = None
+            gift.awarded_at = None
+            gift.save()
+
 
 class Gift(models.Model):
     name = models.CharField(max_length=256)
