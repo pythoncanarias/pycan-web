@@ -1,5 +1,6 @@
 import io
 import os
+import random
 import uuid
 from decimal import Decimal
 
@@ -188,6 +189,27 @@ class Raffle(models.Model):
     def get_candidate_tickets(self):
         return self.event.all_tickets().filter(
             article__participate_in_raffle=True)
+
+    def get_undelivered_gifts(self):
+        return self.gifts.exclude(awarded_ticket__isnull=False)
+
+    def get_awarded_tickets(self):
+        return [
+            gift.awarded_ticket
+            for gift in self.gifts.filter(awarded_ticket__isnull=False)
+        ]
+
+    def get_unawarded_tickets(self):
+        awarded_tickets_ids = [t.id for t in self.get_awarded_tickets()]
+        candidate_tickets = self.get_candidate_tickets()
+        return candidate_tickets.exclude(pk__in=awarded_tickets_ids)
+
+    def get_random_ticket(self, with_replacement=False):
+        if with_replacement:
+            candidate_tickets = self.get_candidate_tickets()
+        else:
+            candidate_tickets = self.get_unawarded_tickets()
+        return random.choice(candidate_tickets)
 
 
 class Gift(models.Model):

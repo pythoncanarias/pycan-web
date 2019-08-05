@@ -2,9 +2,9 @@
 
 {% load static %}
 
-{% block title %}{{event.name}}Sorteo - {{ block.super }}{% endblock %}
+{% block title %}Sorteo {{event.name}} - {{ block.super }}{% endblock %}
 
-{% block body_class %}raffle-page{% endblock %}
+{% block body_class %}raffle-base raffle-page{% endblock %}
 {% block content_class %}is-narrow{% endblock %}
 
 {% block content %}
@@ -37,13 +37,12 @@
   </div>
 
   <div class="launch-raffle has-text-centered">
-    <a class="button is-primary is-outlined">
+    <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug gifts.0.id %}">
       <i class="fas fa-atom"></i>
       Comenzar sorteo!
     </a>
   </div>
 
-  </div>
 </div>
 
 {% endblock content %}

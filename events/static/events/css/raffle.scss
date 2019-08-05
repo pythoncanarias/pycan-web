@@ -1,8 +1,10 @@
-.raffle-page {
+.raffle-base {
   i {
     margin-right: .5rem;
   }
+}
 
+.raffle-page {
   .gifts {
     ol {
       margin-top: 1rem;
@@ -14,6 +16,25 @@
   }
 
   .launch-raffle {
+    margin-top: 2rem;
+  }
+}
+
+.raffle-gift-page {
+  .current-gift {
+    font-size: 2rem;
+  }
+
+  .awarded-ticket {
+    font-size: 1.8rem;
+    background-color: $yellow-bg;
+    display: inline-block;
+    padding: .4rem;
+    border-radius: .3rem;
+    margin-top: .5rem;
+  }
+
+  .raffle-buttons {
     margin-top: 2rem;
   }
 }

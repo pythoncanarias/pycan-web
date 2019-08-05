@@ -1,0 +1,52 @@
+{% extends "events/base.html" %}
+
+{% load static %}
+
+{% block title %}Sorteo {{event.name}} - {{ block.super }}{% endblock %}
+
+{% block body_class %}raffle-base raffle-gift-page{% endblock %}
+{% block content_class %}is-narrow{% endblock %}
+
+{% block content %}
+
+<div class="box">
+  <h1 class="title is-blue">Sorteo</h1>
+  <h2 class="subtitle">{{ event.name }}</h2>
+
+  <div class="current-gift">
+    <i class="fas fa-gift"></i>
+    {{ current_gift }}
+  </div>
+
+  {% if current_gift.awarded_ticket %}
+    <div class="awarded-ticket">
+      <i class="fas fa-child"></i>
+      {{ current_gift.awarded_ticket.customer_full_name|capfirst }}
+      (#{{ current_gift.awarded_ticket.number }})
+    </div>
+  {% endif %}
+
+  <div class="columns raffle-buttons">
+    <div class="column">
+      <div class="make-matching">
+        <a class="button is-link is-outlined" href="{% url 'events:raffle_gift_match' event.slug current_gift.id %}">
+          <i class="fas fa-gavel"></i>
+          Buscar ticket afortunado!
+        </a>
+      </div>
+    </div>
+    {% if match and next_gift %}
+      <div class="column">
+        <div class="next-gift has-text-centered">
+          <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug next_gift.id %}">
+            <i class="fas fa-arrow-circle-right"></i>
+            Siguiente regalo!
+          </a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock content %}

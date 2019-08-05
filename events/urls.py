@@ -60,4 +60,11 @@ urlpatterns = [
         name='ticket_purchase_nocc',
     ),
     path('<slug:slug>/raffle/', views.raffle, name='raffle'),
+    path('<slug:slug>/raffle/<int:gift_id>/',
+         views.raffle_gift,
+         name='raffle_gift'),
+    path('<slug:slug>/raffle/<int:gift_id>/match/',
+         views.raffle_gift,
+         {'match': True},
+         name='raffle_gift_match'),
 ]

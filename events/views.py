@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 import stripe
@@ -8,7 +9,7 @@ from django.shortcuts import redirect, render
 from events.models import Event, Refund, WaitingList
 from events.tasks import send_ticket
 from organizations.models import Organization
-from tickets.models import Article, Ticket
+from tickets.models import Article, Gift, Ticket
 
 from . import forms, links, stripe_utils
 
@@ -306,4 +307,20 @@ def raffle(request, slug):
         'gifts': gifts,
         'candidate_tickets': candidate_tickets,
         'success_probability': success_probability,
+    })
+
+
+def raffle_gift(request, slug, gift_id, match=False):
+    event = Event.get_by_slug(slug)
+    current_gift = Gift.objects.get(pk=gift_id)
+    if match:
+        current_gift.awarded_ticket = event.raffle.get_random_ticket()
+        current_gift.awarded_at = datetime.datetime.now()
+        current_gift.save()
+    next_gift = event.raffle.get_undelivered_gifts().first()
+    return render(request, 'events/raffle-gift.html', {
+        'event': event,
+        'current_gift': current_gift,
+        'next_gift': next_gift,
+        'match': match,
     })
