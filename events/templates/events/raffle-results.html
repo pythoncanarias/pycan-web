@@ -10,8 +10,7 @@
 {% block content %}
 
 <div class="box">
-  <h1 class="title is-blue">Sorteo</h1>
-  <h2 class="subtitle">{{ event.name }}</h2>
+  {% include 'events/includes/raffle-header.html' %}
 
   <table class="table is-bordered is-striped is-hoverable is-fullwidth">
     <thead>

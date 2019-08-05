@@ -10,8 +10,7 @@
 {% block content %}
 
 <div class="box">
-  <h1 class="title is-blue"><a href="{% url 'events:raffle' event.slug %}">Sorteo</a></h1>
-  <h2 class="subtitle">{{ event.name }}</h2>
+  {% include 'events/includes/raffle-header.html' %}
 
   <progress class="progress is-primary" value="{{ progress_value }}" max="100">{{ progress_value }}%</progress>
 
