@@ -22,7 +22,7 @@
     {% for gift in gifts %}
       <tr>
         <td>{{ gift }}</td>
-        <td>{{ gift.awarded_ticket_for_display }}</td>
+        <td>{{ gift.awarded_ticket_for_display|title }}</td>
       </tr>
     {% endfor %}
   </table>
