@@ -304,11 +304,13 @@ def raffle(request, slug):
         event = Event.get_by_slug(slug)
     except Event.DoesNotExist:
         return redirect('/')
-    gifts = event.raffle.gifts.all()
-    candidate_tickets = event.raffle.get_candidate_tickets()
+    raffle = event.raffle
+    gifts = raffle.gifts.all()
+    candidate_tickets = raffle.get_candidate_tickets()
     success_probability = gifts.count() / candidate_tickets.count() * 100
     return render(request, 'events/raffle.html', {
         'event': event,
+        'raffle': raffle,
         'gifts': gifts,
         'candidate_tickets': candidate_tickets,
         'success_probability': success_probability,
@@ -321,16 +323,17 @@ def raffle_gift(request, slug, gift_id, match=False):
         event = Event.get_by_slug(slug)
     except Event.DoesNotExist:
         return redirect('/')
+    raffle = event.raffle
     current_gift = Gift.objects.get(pk=gift_id)
     if match:
         if current_gift.awarded_ticket:
             current_gift.missing_tickets.add(current_gift.awarded_ticket)
-        current_gift.awarded_ticket = event.raffle.get_random_ticket()
+        current_gift.awarded_ticket = raffle.get_random_ticket()
         current_gift.awarded_at = datetime.datetime.now()
         current_gift.save()
-    next_gift = event.raffle.get_undelivered_gifts().first()
-    progress_value = current_gift.order() / event.raffle.gifts.count() * 100
-    exist_available_tickets = event.raffle.get_available_tickets().count() > 0
+    next_gift = raffle.get_undelivered_gifts().first()
+    progress_value = current_gift.order() / raffle.gifts.count() * 100
+    exist_available_tickets = raffle.get_available_tickets().count() > 0
     return render(request, 'events/raffle-gift.html', {
         'event': event,
         'current_gift': current_gift,

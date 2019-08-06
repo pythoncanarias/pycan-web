@@ -41,7 +41,7 @@
     </p>
   </div>
 
-  {% if event.raffle.opened %}
+  {% if raffle.opened %}
     {% if gifts %}
       <div class="launch-raffle">
         <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug gifts.0.id %}">
@@ -54,7 +54,7 @@
     <div class="closed-raffle">
       <span class="tag is-warning is-medium">
         <i class="fas fa-lock"></i>
-        Este sorteo está cerrado! Se realizó el {{ event.raffle.closed_at|as_date }}
+        Este sorteo está cerrado! Se realizó el {{ raffle.closed_at|as_date }}
       </span>
       <a class="view-results" href="{% url 'events:raffle_results' event.slug %}">
         <i class="fas fa-table"></i>
