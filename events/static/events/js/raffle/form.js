@@ -7,7 +7,7 @@ function init() {
       awardedTicket.style.display = 'none'
 
     let button = document.getElementById('btn-make-matching')
-    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sorteando!'
+    button.innerHTML = '<i class="fas fa-dice-five fa-spin"></i> Sorteando!'
     button.setAttribute('disabled', 'disabled')
 
     setTimeout(function () {
