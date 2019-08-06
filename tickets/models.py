@@ -207,17 +207,30 @@ class Raffle(models.Model):
         candidate_tickets = self.get_candidate_tickets()
         return candidate_tickets.exclude(pk__in=awarded_tickets_ids)
 
+    def get_missing_tickets(self):
+        missing_tickets_ids = {
+            missing_ticket.id
+            for gift in self.gifts.all()
+            for missing_ticket in gift.missing_tickets.all()
+        }
+        return Ticket.objects.filter(pk__in=missing_tickets_ids)
+
+    def get_available_tickets(self):
+        return self.get_unawarded_tickets().exclude(
+            pk__in=self.get_missing_tickets())
+
     def get_random_ticket(self, with_replacement=False):
         if with_replacement:
             candidate_tickets = self.get_candidate_tickets()
         else:
-            candidate_tickets = self.get_unawarded_tickets()
+            candidate_tickets = self.get_available_tickets()
         return random.choice(candidate_tickets)
 
     def clean_awarded_tickets(self):
         for gift in self.gifts.all():
             gift.awarded_ticket = None
             gift.awarded_at = None
+            gift.missing_tickets.clear()
             gift.save()
 
     def get_absolute_url(self):
@@ -236,6 +249,8 @@ class Gift(models.Model):
                                           blank=True,
                                           on_delete=models.CASCADE)
     awarded_at = models.DateTimeField(null=True, blank=True)
+    missing_tickets = models.ManyToManyField('tickets.Ticket',
+                                             related_name='missing_gifts')
 
     def __str__(self):
         return self.name

@@ -30,19 +30,26 @@
   <div class="columns raffle-buttons">
     <div class="column">
       <div class="make-matching">
-        <a id="btn-make-matching" class="button is-link is-outlined" href="{% url 'events:raffle_gift_match' event.slug current_gift.id %}">
-          {% if match %}
-            <i class="fas fa-sync"></i>
-            ¿La persona no está? Buscar de nuevo
-          {% else %}
-            <i class="fas fa-gavel"></i>
-            Buscar ticket afortunado!
-          {% endif %}
-        </a>
+        {% if exist_available_tickets %}
+          <a id="btn-make-matching" class="button is-link is-outlined" href="{% url 'events:raffle_gift_match' event.slug current_gift.id %}">
+            {% if match %}
+              <i class="fas fa-sync"></i>
+              ¿La persona no está? Buscar de nuevo
+            {% else %}
+              <i class="fas fa-gavel"></i>
+              Buscar ticket afortunado!
+            {% endif %}
+          </a>
+        {% else %}
+          <span class="tag is-danger is-medium">
+            <i class="far fa-frown-open"></i>
+            No quedan tickets disponibles para el sorteo!
+          </span>
+        {% endif %}
       </div>
     </div>
     {% if match %}
-      {% if next_gift %}
+      {% if next_gift and exist_available_tickets %}
         <div class="column has-text-right">
           <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug next_gift.id %}">
             <i class="fas fa-arrow-circle-right"></i>
@@ -52,7 +59,7 @@
       {% else %}
         <div class="column has-text-right">
           <a class="button is-danger is-outlined" href="{% url 'events:raffle_results' event.slug %}">
-            Resumen del sorteo
+            Resultados del sorteo
           </a>
         </div>
       {% endif %}

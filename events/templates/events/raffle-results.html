@@ -22,7 +22,14 @@
     {% for gift in gifts %}
       <tr>
         <td>{{ gift }}</td>
-        <td>{{ gift.awarded_ticket_for_display|title }}</td>
+        <td>
+          {% if gift.awarded_ticket %}
+            {{ gift.awarded_ticket_for_display|title }}
+          {% else %}
+            <i class="far fa-frown-open"></i>
+            Desierto!
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
   </table>

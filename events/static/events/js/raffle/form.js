@@ -12,7 +12,7 @@ function init() {
 
     setTimeout(function () {
       window.location.href = button.href
-    }, 2000);
+    }, 0);
   })
 }
 
