@@ -47,10 +47,12 @@
           <i class="fas fa-atom"></i>
           Comenzar sorteo!
         </a>
-        <div class="delete-reminder">
-          <i class="far fa-trash-alt"></i>
-          Recuerde que, al lanzar el sorteo, se borrarán los datos existentes (si los hubiera)
-        </div>
+        {% if exist_awarded_tickets %}
+          <div class="delete-reminder">
+            <i class="far fa-trash-alt"></i>
+            Este sorteo ya se ha realizado. Consulte los <a href="{% url 'events:raffle_results' event.slug %}">resultados aquí</a> y recuerde que si lanza de nuevo el sorteo se borrarán las asignaciones guardadas de premio-ticket.
+          </div>
+        {% endif %}
       </div>
     {% endif %}
   {% else %}
