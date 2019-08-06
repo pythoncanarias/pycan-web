@@ -14,13 +14,13 @@
 
   <progress class="progress is-primary" value="{{ progress_value }}" max="100">{{ progress_value }}%</progress>
 
-  <div class="current-gift">
+  <div id="current-gift" class="current-gift">
     <i class="fas fa-gift"></i>
     {{ current_gift }}
   </div>
 
   {% if current_gift.awarded_ticket %}
-    <div class="awarded-ticket">
+    <div id="awarded-ticket" class="awarded-ticket">
       <i class="fas fa-child"></i>
       {{ current_gift.awarded_ticket.customer_full_name|title }}
       (#{{ current_gift.awarded_ticket.number }})
@@ -30,7 +30,7 @@
   <div class="columns raffle-buttons">
     <div class="column">
       <div class="make-matching">
-        <a class="button is-link is-outlined" href="{% url 'events:raffle_gift_match' event.slug current_gift.id %}">
+        <a id="btn-make-matching" class="button is-link is-outlined" href="{% url 'events:raffle_gift_match' event.slug current_gift.id %}">
           {% if match %}
             <i class="fas fa-sync"></i>
             ¿La persona no está? Buscar de nuevo
