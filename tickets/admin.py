@@ -8,6 +8,7 @@ from events.tasks import send_ticket
 
 from .admin_inlines import ArticleInline, GiftInline
 from .models import Article, Gift, Raffle, Ticket, TicketCategory
+from .admin_actions import reset_raffle
 
 
 @admin.register(TicketCategory)
@@ -109,6 +110,7 @@ class RaffleAdmin(admin.ModelAdmin):
         'event', 'is_opened', 'delivered_vs_total_gifts', 'created_at',
         'raffle_url'
     ]
+    actions = [reset_raffle]
 
     def raffle_url(self, obj):
         return format_html(
