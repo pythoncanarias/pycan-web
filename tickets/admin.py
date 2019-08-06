@@ -105,14 +105,26 @@ class TicketAdmin(ImportExportActionModelAdmin):
 @admin.register(Raffle)
 class RaffleAdmin(admin.ModelAdmin):
     inlines = [GiftInline]
-    list_display = ['event', 'created_at', 'raffle_url']
+    list_display = [
+        'event', 'delivered_vs_total_gifts', 'created_at', 'raffle_url'
+    ]
 
     def raffle_url(self, obj):
         return format_html(
             f'<a href="{obj.get_absolute_url()}">{obj.get_absolute_url()}</a>')
 
+    def delivered_vs_total_gifts(self, obj):
+        return f'{obj.get_delivered_gifts().count()}/{obj.gifts.count()}'
+
 
 @admin.register(Gift)
 class GiftAdmin(admin.ModelAdmin):
-    list_display = ['name', 'raffle']
+    list_display = ['name', 'awarded_participant', 'awarded_at', 'raffle']
     list_filter = ('raffle',)
+    exclude = ('missing_tickets',)
+
+    def awarded_participant(self, obj):
+        if obj.awarded_ticket:
+            return obj.awarded_ticket.customer_full_name
+        else:
+            return None
