@@ -104,9 +104,10 @@ class TicketAdmin(ImportExportActionModelAdmin):
 @admin.register(Raffle)
 class RaffleAdmin(admin.ModelAdmin):
     inlines = [GiftInline]
-    pass
+    list_display = ['event', 'created_at']
 
 
 @admin.register(Gift)
 class GiftAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name', 'raffle']
+    list_filter = ('raffle',)
