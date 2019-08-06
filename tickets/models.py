@@ -220,6 +220,9 @@ class Raffle(models.Model):
             gift.awarded_at = None
             gift.save()
 
+    def get_absolute_url(self):
+        return reverse('events:raffle', args=(self.event.slug,))
+
 
 class Gift(models.Model):
     name = models.CharField(max_length=256)

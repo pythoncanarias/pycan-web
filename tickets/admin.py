@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.http import HttpResponse
+from django.utils.html import format_html
 from import_export.admin import ImportExportActionModelAdmin
 
 from certificates.utils import create_certificate
@@ -104,7 +105,11 @@ class TicketAdmin(ImportExportActionModelAdmin):
 @admin.register(Raffle)
 class RaffleAdmin(admin.ModelAdmin):
     inlines = [GiftInline]
-    list_display = ['event', 'created_at']
+    list_display = ['event', 'created_at', 'raffle_url']
+
+    def raffle_url(self, obj):
+        return format_html(
+            f'<a href="{obj.get_absolute_url()}">{obj.get_absolute_url()}</a>')
 
 
 @admin.register(Gift)
