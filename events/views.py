@@ -347,6 +347,8 @@ def raffle_results(request, slug):
         event = Event.get_by_slug(slug)
     except Event.DoesNotExist:
         return redirect('/')
+    event.raffle.active = False
+    event.raffle.save()
     gifts = event.raffle.gifts.all()
     return render(request, 'events/raffle-results.html', {
         'event': event,
