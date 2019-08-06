@@ -1,6 +1,7 @@
 {% extends "events/base.html" %}
 
 {% load static %}
+{% load utils %}
 
 {% block title %}Sorteo {{event.name}} - {{ block.super }}{% endblock %}
 
@@ -40,26 +41,20 @@
     </p>
   </div>
 
-  {% if event.raffle.active %}
+  {% if event.raffle.opened %}
     {% if gifts %}
       <div class="launch-raffle">
         <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug gifts.0.id %}">
           <i class="fas fa-atom"></i>
           Comenzar sorteo!
         </a>
-        {% if exist_awarded_tickets %}
-          <div class="delete-reminder">
-            <i class="far fa-trash-alt"></i>
-            Este sorteo ya se ha realizado. Consulte los <a href="{% url 'events:raffle_results' event.slug %}">resultados aquí</a> y recuerde que si lanza de nuevo el sorteo se borrarán las asignaciones guardadas de premio-ticket.
-          </div>
-        {% endif %}
       </div>
     {% endif %}
   {% else %}
     <div class="closed-raffle">
       <span class="tag is-warning is-medium">
         <i class="fas fa-lock"></i>
-        Este sorteo está cerrado!
+        Este sorteo está cerrado! Se realizó el {{ event.raffle.closed_at|as_date }}
       </span>
       <a class="view-results" href="{% url 'events:raffle_results' event.slug %}">
         <i class="fas fa-table"></i>

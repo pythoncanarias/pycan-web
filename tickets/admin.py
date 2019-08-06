@@ -106,7 +106,7 @@ class TicketAdmin(ImportExportActionModelAdmin):
 class RaffleAdmin(admin.ModelAdmin):
     inlines = [GiftInline]
     list_display = [
-        'event', 'active', 'delivered_vs_total_gifts', 'created_at',
+        'event', 'is_opened', 'delivered_vs_total_gifts', 'created_at',
         'raffle_url'
     ]
 
@@ -116,6 +116,11 @@ class RaffleAdmin(admin.ModelAdmin):
 
     def delivered_vs_total_gifts(self, obj):
         return f'{obj.get_delivered_gifts().count()}/{obj.gifts.count()}'
+
+    def is_opened(self, obj):
+        return obj.opened
+    is_opened.short_description = 'opened'
+    is_opened.boolean = True
 
 
 @admin.register(Gift)
