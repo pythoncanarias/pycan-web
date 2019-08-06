@@ -20,6 +20,11 @@
     <ol>
       {% for gift in gifts %}
         <li><p>{{ gift }}</p></li>
+      {% empty %}
+        <span class="tag is-warning is-medium">
+          <i class="fas fa-exclamation-triangle"></i>
+          No se ha definido aún ningún regalo para este sorteo!
+        </span>
       {% endfor %}
     </ol>
   </div>
@@ -35,12 +40,14 @@
     </p>
   </div>
 
-  <div class="launch-raffle">
-    <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug gifts.0.id %}">
-      <i class="fas fa-atom"></i>
-      Comenzar sorteo!
-    </a>
-  </div>
+  {% if gifts %}
+    <div class="launch-raffle">
+      <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug gifts.0.id %}">
+        <i class="fas fa-atom"></i>
+        Comenzar sorteo!
+      </a>
+    </div>
+  {% endif %}
 
 </div>
 

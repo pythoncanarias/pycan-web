@@ -300,7 +300,10 @@ def past_events(request):
 
 @staff_member_required
 def raffle(request, slug):
-    event = Event.get_by_slug(slug)
+    try:
+        event = Event.get_by_slug(slug)
+    except Event.DoesNotExist:
+        return redirect('/')
     event.raffle.clean_awarded_tickets()
     gifts = event.raffle.gifts.all()
     candidate_tickets = event.raffle.get_candidate_tickets()
@@ -315,7 +318,10 @@ def raffle(request, slug):
 
 @staff_member_required
 def raffle_gift(request, slug, gift_id, match=False):
-    event = Event.get_by_slug(slug)
+    try:
+        event = Event.get_by_slug(slug)
+    except Event.DoesNotExist:
+        return redirect('/')
     current_gift = Gift.objects.get(pk=gift_id)
     if match:
         current_gift.awarded_ticket = event.raffle.get_random_ticket()
@@ -333,7 +339,10 @@ def raffle_gift(request, slug, gift_id, match=False):
 
 
 def raffle_results(request, slug):
-    event = Event.get_by_slug(slug)
+    try:
+        event = Event.get_by_slug(slug)
+    except Event.DoesNotExist:
+        return redirect('/')
     gifts = event.raffle.gifts.all()
     return render(request, 'events/raffle-results.html', {
         'event': event,
