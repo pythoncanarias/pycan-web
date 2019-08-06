@@ -20,6 +20,14 @@
 
   .launch-raffle {
     margin-top: 2rem;
+
+    .delete-reminder {
+      margin-top: .5rem;
+      font-size: .8rem;
+      i {
+        margin-right: .1rem;
+      }
+    }
   }
 
   .closed-raffle {
