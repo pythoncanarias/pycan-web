@@ -4,6 +4,7 @@ import logging
 import stripe
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect, render
 
 from events.models import Event, Refund, WaitingList
@@ -297,6 +298,7 @@ def past_events(request):
     })
 
 
+@staff_member_required
 def raffle(request, slug):
     event = Event.get_by_slug(slug)
     event.raffle.clean_awarded_tickets()
@@ -311,6 +313,7 @@ def raffle(request, slug):
     })
 
 
+@staff_member_required
 def raffle_gift(request, slug, gift_id, match=False):
     event = Event.get_by_slug(slug)
     current_gift = Gift.objects.get(pk=gift_id)
