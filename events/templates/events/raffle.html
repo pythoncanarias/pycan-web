@@ -32,17 +32,16 @@
 
   <hr>
 
-  <div class="candidate_tickets">
-    <p>
-      Se sortearán <strong>{{ gifts.count }} regalos</strong> entre <strong>{{ candidate_tickets.count }} tickets</strong> candidatos sin reemplazo!
-    </p>
-    <p>
-      Probabilidad de que te toque algo: <span class="tag is-info">{{ success_probability|floatformat:2 }} %</span>
-    </p>
-  </div>
-
   {% if raffle.opened %}
     {% if gifts %}
+      <div class="candidate_tickets">
+        <p>
+          Se sortearán <strong>{{ gifts.count }} regalos</strong> entre <strong>{{ candidate_tickets.count }} tickets</strong> candidatos sin reemplazo!
+        </p>
+        <p>
+          Probabilidad de que te toque algo: <span class="tag is-info">{{ success_probability|floatformat:2 }} %</span>
+        </p>
+      </div>
       <div class="launch-raffle">
         <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug gifts.0.id %}">
           <i class="fas fa-atom"></i>
