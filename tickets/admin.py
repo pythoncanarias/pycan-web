@@ -106,7 +106,8 @@ class TicketAdmin(ImportExportActionModelAdmin):
 class RaffleAdmin(admin.ModelAdmin):
     inlines = [GiftInline]
     list_display = [
-        'event', 'delivered_vs_total_gifts', 'created_at', 'raffle_url'
+        'event', 'active', 'delivered_vs_total_gifts', 'created_at',
+        'raffle_url'
     ]
 
     def raffle_url(self, obj):

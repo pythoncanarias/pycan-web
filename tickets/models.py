@@ -179,6 +179,7 @@ class Raffle(models.Model):
     event = models.OneToOneField('events.Event',
                                  related_name='raffle',
                                  on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'Sorteo para {self.event.qualified_hashtag}'

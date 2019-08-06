@@ -9,4 +9,5 @@ class ArticleInline(admin.StackedInline):
 
 class GiftInline(admin.StackedInline):
     model = Gift
+    exclude = ('missing_tickets',)
     extra = 0
