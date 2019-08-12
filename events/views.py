@@ -10,7 +10,7 @@ from django.shortcuts import redirect, render
 from events.models import Event, Refund, WaitingList
 from events.tasks import send_ticket
 from organizations.models import Organization
-from tickets.models import Article, Gift, Ticket
+from tickets.models import Article, Gift, Ticket, Raffle
 
 from . import forms, links, stripe_utils
 
@@ -302,9 +302,9 @@ def past_events(request):
 def raffle(request, slug):
     try:
         event = Event.get_by_slug(slug)
-    except Event.DoesNotExist:
+        raffle = event.raffle
+    except (Event.DoesNotExist, Raffle.DoesNotExist):
         return redirect('/')
-    raffle = event.raffle
     gifts = raffle.gifts.all()
     candidate_tickets = raffle.get_candidate_tickets()
     success_probability = gifts.count() / candidate_tickets.count() * 100
@@ -321,9 +321,9 @@ def raffle(request, slug):
 def raffle_gift(request, slug, gift_id, match=False):
     try:
         event = Event.get_by_slug(slug)
-    except Event.DoesNotExist:
+        raffle = event.raffle
+    except (Event.DoesNotExist, Raffle.DoesNotExist):
         return redirect('/')
-    raffle = event.raffle
     current_gift = Gift.objects.get(pk=gift_id)
     if match:
         if current_gift.awarded_ticket:
@@ -347,9 +347,9 @@ def raffle_gift(request, slug, gift_id, match=False):
 def raffle_results(request, slug):
     try:
         event = Event.get_by_slug(slug)
-    except Event.DoesNotExist:
+        raffle = event.raffle
+    except (Event.DoesNotExist, Raffle.DoesNotExist):
         return redirect('/')
-    raffle = event.raffle
     if request.user.is_staff and raffle.opened:
         raffle.closed_at = datetime.datetime.now()
         raffle.save()
