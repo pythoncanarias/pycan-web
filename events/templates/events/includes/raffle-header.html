@@ -1,2 +1,2 @@
 <h1 class="title is-blue"><a href="{% url 'events:raffle' event.slug %}">Sorteo</a></h1>
-<h2 class="subtitle">{{ event.name }}</h2>
+<h2 class="subtitle"><a href="{% url 'events:detail_event' event.slug %}">{{ event.name }}</a></h2>
