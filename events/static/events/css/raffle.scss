@@ -1,0 +1,63 @@
+.raffle-base {
+  i {
+    margin-right: .5rem;
+  }
+}
+
+.raffle-page {
+  .gifts {
+    ol {
+      margin-top: 1rem;
+    }
+    li {
+      margin-left: 3rem;
+      font-size: 2rem;
+      p {
+        line-height: 2rem;
+      }
+    }
+  }
+
+  .launch-raffle {
+    margin-top: 2rem;
+
+    .delete-reminder {
+      margin-top: .5rem;
+      font-size: .8rem;
+      i {
+        margin-right: .1rem;
+      }
+    }
+  }
+
+  .closed-raffle {
+    margin-top: 1rem;
+
+    .view-results {
+      margin-left: 2rem;
+      i {
+        margin-right: .2rem;
+      }
+    }
+  }
+}
+
+.raffle-gift-page {
+  .current-gift {
+    font-size: 2rem;
+    line-height: 2.3rem;
+  }
+
+  .awarded-ticket {
+    font-size: 1.7rem;
+    background-color: $yellow-bg;
+    display: inline-block;
+    padding: .4rem;
+    border-radius: .3rem;
+    margin-top: .5rem;
+  }
+
+  .raffle-buttons {
+    margin-top: 2rem;
+  }
+}

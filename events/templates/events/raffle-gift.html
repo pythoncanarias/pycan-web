@@ -1,0 +1,71 @@
+{% extends "events/base.html" %}
+
+{% load static %}
+
+{% block title %}Sorteo {{event.name}} - {{ block.super }}{% endblock %}
+
+{% block body_class %}raffle-base raffle-gift-page{% endblock %}
+{% block content_class %}is-narrow{% endblock %}
+
+{% block content %}
+
+<div class="box">
+  {% include 'events/includes/raffle-header.html' %}
+
+  <progress class="progress is-primary" value="{{ progress_value }}" max="100">{{ progress_value }}%</progress>
+
+  <div id="current-gift" class="current-gift">
+    <i class="fas fa-gift"></i>
+    {{ current_gift }}
+  </div>
+
+  {% if current_gift.awarded_ticket %}
+    <div id="awarded-ticket" class="awarded-ticket">
+      <i class="fas fa-child"></i>
+      {{ current_gift.awarded_ticket.customer_full_name|title }}
+      (ticket #{{ current_gift.awarded_ticket.number }})
+    </div>
+  {% endif %}
+
+  <div class="columns raffle-buttons">
+    <div class="column">
+      <div class="make-matching">
+        {% if exist_available_tickets %}
+          <a id="btn-make-matching" class="button is-link is-outlined" href="{% url 'events:raffle_gift_match' event.slug current_gift.id %}">
+            {% if match %}
+              <i class="fas fa-sync"></i>
+              ¿La persona no está? Buscar de nuevo
+            {% else %}
+              <i class="fas fa-gavel"></i>
+              Buscar ticket afortunado!
+            {% endif %}
+          </a>
+        {% else %}
+          <span class="tag is-danger is-medium">
+            <i class="far fa-frown-open"></i>
+            No quedan tickets disponibles para el sorteo!
+          </span>
+        {% endif %}
+      </div>
+    </div>
+    {% if match %}
+      {% if next_gift and exist_available_tickets %}
+        <div class="column has-text-right">
+          <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug next_gift.id %}">
+            <i class="fas fa-arrow-circle-right"></i>
+            Siguiente regalo!
+          </a>
+        </div>
+      {% else %}
+        <div class="column has-text-right">
+          <a class="button is-danger is-outlined" href="{% url 'events:raffle_results' event.slug %}">
+            Resultados del sorteo
+          </a>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock content %}

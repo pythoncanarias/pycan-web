@@ -338,7 +338,7 @@ class Badge(models.Model):
         return f"{name} \n{surname}"
 
     @staticmethod
-    def _hex_to_rgb(color: str)-> tuple:
+    def _hex_to_rgb(color: str) -> tuple:
         return tuple(int(color.lstrip("#")[i: i + 2], 16) for i in (0, 2, 4))
 
     def add_field(self, image_draw: ImageDraw, text: str, coord: str,

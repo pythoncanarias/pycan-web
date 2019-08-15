@@ -1,14 +1,16 @@
+import datetime
 import logging
 
 import stripe
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect, render
 
 from events.models import Event, Refund, WaitingList
 from events.tasks import send_ticket
 from organizations.models import Organization
-from tickets.models import Article, Ticket
+from tickets.models import Article, Gift, Ticket, Raffle
 
 from . import forms, links, stripe_utils
 
@@ -293,4 +295,66 @@ def past_events(request):
     return render(request, 'events/list-events.html', {
         'events': events.all(),
         'archive': True
+    })
+
+
+@staff_member_required
+def raffle(request, slug):
+    try:
+        event = Event.get_by_slug(slug)
+        raffle = event.raffle
+    except (Event.DoesNotExist, Raffle.DoesNotExist):
+        return redirect('/')
+    gifts = raffle.gifts.all()
+    candidate_tickets = raffle.get_candidate_tickets()
+    success_probability = gifts.count() / candidate_tickets.count() * 100
+    return render(request, 'events/raffle.html', {
+        'event': event,
+        'raffle': raffle,
+        'gifts': gifts,
+        'candidate_tickets': candidate_tickets,
+        'success_probability': success_probability,
+    })
+
+
+@staff_member_required
+def raffle_gift(request, slug, gift_id, match=False):
+    try:
+        event = Event.get_by_slug(slug)
+        raffle = event.raffle
+    except (Event.DoesNotExist, Raffle.DoesNotExist):
+        return redirect('/')
+    current_gift = Gift.objects.get(pk=gift_id)
+    if match:
+        if current_gift.awarded_ticket:
+            current_gift.missing_tickets.add(current_gift.awarded_ticket)
+        current_gift.awarded_ticket = raffle.get_random_ticket()
+        current_gift.awarded_at = datetime.datetime.now()
+        current_gift.save()
+    next_gift = raffle.get_undelivered_gifts().first()
+    progress_value = current_gift.order() / raffle.gifts.count() * 100
+    exist_available_tickets = raffle.get_available_tickets().count() > 0
+    return render(request, 'events/raffle-gift.html', {
+        'event': event,
+        'current_gift': current_gift,
+        'next_gift': next_gift,
+        'match': match,
+        'progress_value': progress_value,
+        'exist_available_tickets': exist_available_tickets
+    })
+
+
+def raffle_results(request, slug):
+    try:
+        event = Event.get_by_slug(slug)
+        raffle = event.raffle
+    except (Event.DoesNotExist, Raffle.DoesNotExist):
+        return redirect('/')
+    if request.user.is_staff and raffle.opened:
+        raffle.closed_at = datetime.datetime.now()
+        raffle.save()
+    gifts = raffle.gifts.all()
+    return render(request, 'events/raffle-results.html', {
+        'event': event,
+        'gifts': gifts
     })

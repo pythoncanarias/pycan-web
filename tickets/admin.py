@@ -1,16 +1,14 @@
 from django.contrib import admin
 from django.http import HttpResponse
+from django.utils.html import format_html
 from import_export.admin import ImportExportActionModelAdmin
 
 from certificates.utils import create_certificate
 from events.tasks import send_ticket
 
-from .models import Article, Ticket, TicketCategory
-
-
-class ArticleInline(admin.StackedInline):
-    model = Article
-    extra = 0
+from .admin_inlines import ArticleInline, GiftInline
+from .models import Article, Gift, Raffle, Ticket, TicketCategory
+from .admin_actions import reset_raffle
 
 
 @admin.register(TicketCategory)
@@ -22,6 +20,7 @@ class TicketCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
+    list_filter = ['event']
     list_display = (
         'event', 'category', 'price', 'stock',
         'sold_vs_available',
@@ -102,3 +101,38 @@ class TicketAdmin(ImportExportActionModelAdmin):
         download_emails,
         gen_certificate,
         ]
+
+
+@admin.register(Raffle)
+class RaffleAdmin(admin.ModelAdmin):
+    inlines = [GiftInline]
+    list_display = [
+        'event', 'is_opened', 'delivered_vs_total_gifts', 'created_at',
+        'raffle_url'
+    ]
+    actions = [reset_raffle]
+
+    def raffle_url(self, obj):
+        return format_html(
+            f'<a href="{obj.get_absolute_url()}">{obj.get_absolute_url()}</a>')
+
+    def delivered_vs_total_gifts(self, obj):
+        return f'{obj.get_delivered_gifts().count()}/{obj.gifts.count()}'
+
+    def is_opened(self, obj):
+        return obj.opened
+    is_opened.short_description = 'opened'
+    is_opened.boolean = True
+
+
+@admin.register(Gift)
+class GiftAdmin(admin.ModelAdmin):
+    list_display = ['name', 'awarded_participant', 'awarded_at', 'raffle']
+    list_filter = ('raffle',)
+    exclude = ('missing_tickets',)
+
+    def awarded_participant(self, obj):
+        if obj.awarded_ticket:
+            return obj.awarded_ticket.customer_full_name
+        else:
+            return None
