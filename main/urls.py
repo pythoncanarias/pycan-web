@@ -7,7 +7,7 @@ from homepage import views
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
-    path('admin/', admin.site.urls),
+    path('python-canarias-admin-zone/', admin.site.urls),
     path('api/', include('api.urls', namespace='api')),
     path('django-rq/', include('django_rq.urls')),
     path('events/', include('events.urls', namespace='events')),
