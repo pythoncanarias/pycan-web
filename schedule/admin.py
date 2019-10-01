@@ -55,7 +55,7 @@ class ScheduleAdmin(admin.ModelAdmin):
                      'track__name', 'speakers__name', 'speakers__surname']
     list_display = ('slot', 'event', 'location', 'start')
     autocomplete_fields = ['speakers', 'slot']
-    list_filter = ['event__name']
+    list_filter = ['event']
 
     def download_speakers_emails(self, request, queryset):
         emails = set()
