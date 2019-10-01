@@ -25,6 +25,9 @@ class SlotTag(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
 
 class SlotLevel(models.Model):
     # Basic, Intermediate, Advanced, ...
