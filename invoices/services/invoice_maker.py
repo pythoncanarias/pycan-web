@@ -12,8 +12,7 @@ from reportlab.lib.units import cm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.pdfmetrics import registerFontFamily
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import (BaseDocTemplate, Frame, PageTemplate,
-                                Paragraph, Table, TableStyle)
+from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate, Paragraph, Table, TableStyle
 
 from organizations.models import Organization
 
@@ -307,7 +306,7 @@ class InvoiceMaker(object):
                                  self.python_canarias.url)
 
         # watermark proforma
-        if self.invoice.proforma:
+        if not self.invoice.active:
             canvas.setFont(self.normal, 80)
             canvas.rotate(45)
             canvas.setFillGray(0.75)

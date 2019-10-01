@@ -25,7 +25,6 @@ class Invoice(models.Model):
 
     client = models.ForeignKey('invoices.Client', on_delete=models.CASCADE)
 
-    proforma = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
 
     objects = InvoiceManager()
