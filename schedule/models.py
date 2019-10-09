@@ -68,11 +68,17 @@ class Slot(models.Model):
     def __str__(self):
         return self.name
 
+    def get_level(self):
+        return self.level.name
+
     def get_tags(self):
         return [
             t.slug
             for t in self.tags.all().order_by('slug')
             ]
+
+    def is_talk(self):
+        return self.category_id in (1, 2)
 
 
 class Track(models.Model):
@@ -180,3 +186,10 @@ class Schedule(models.Model):
     def size_for_display(self):
         t = round((self.end - self.start) / self.event.default_slot_duration)
         return t if t > 0 else 1
+
+    def track_name(self):
+        if self.track:
+            return self.track.name
+        else:
+            return 'No track'
+

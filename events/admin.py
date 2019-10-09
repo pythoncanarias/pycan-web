@@ -21,6 +21,12 @@ class BadgeInline(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
+    date_hierarchy = 'start_date'
+    list_filter = [
+        'active',
+        'venue',
+        'closed_schedule',
+        ]
     prepopulated_fields = {'hashtag': ('name', ), }
     actions = [render_event_badges]
     list_display = ('name', 'hashtag', 'active',

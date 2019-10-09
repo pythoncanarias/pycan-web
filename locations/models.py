@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.db import models
 
 # Nomenclature of classes based on https://goo.gl/2B5Q4U
@@ -20,6 +24,13 @@ class Venue(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def photo_url(self):
+        if self.photo:
+            return self.photo.url
+        else:
+            return static('locations/img/noplace.png')
 
 
 class Location(models.Model):

@@ -32,6 +32,12 @@ class Speaker(models.Model):
     def __str__(self):
         return '{} {}'.format(self.name, self.surname)
 
+    def socials(self):
+        return {
+            c.social.code: c.href
+            for c in self.contacts.order_by('social__name')
+            }
+
     def socials_for_display(self):
         return [{'code': c.social.code, 'href': c.href}
                 for c in self.contacts.order_by('social__name')]
@@ -42,6 +48,21 @@ class Speaker(models.Model):
             return self.photo.url
         else:
             return static('speakers/img/noavatar.png')
+
+    def talks(self):
+        """Returns a list with all the talks (schedule & slot) for a given speaker.
+        """
+        return [
+            {
+                'id': talk.id,
+                'name': talk.slot.name,
+                'description': talk.slot.description,
+                'start': talk.start.strftime('%H:%M'),
+                'end': talk.end.strftime('%H:%M'),
+                'track': str(talk.track or 'Unknown'),
+                'tags': talk.slot.get_tags(),
+            } for talk in self.schedule.select_related('slot').all()
+            ]
 
 
 class Contact(models.Model):
