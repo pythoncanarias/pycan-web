@@ -39,6 +39,7 @@ def status(request):
         "version": settings.CURRENT_API_VERSION,
         "entry_points": [
             reverse('api:status'),
+            reverse('api:list_venues'),
             reverse('api:active_events'),
             reverse('api:all_events'),
             ]
