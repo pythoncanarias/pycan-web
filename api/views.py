@@ -79,9 +79,10 @@ def serialize_event(event):
         'short_description': event.short_description,
         'description': event.description,
         'venue': reverse('api:detail_venue', args=[event.venue.slug]),
-        'speakers': reverse('api:list_speakers', args=[event.hashtag]),
-        'talks': reverse('api:list_talks', args=[event.hashtag]),
-        'tracks': reverse('api:list_tracks', args=[event.hashtag]),
+        'speakers': reverse('api:list_speakers', args=[event.slug]),
+        'talks': reverse('api:list_talks', args=[event.slug]),
+        'tracks': reverse('api:list_tracks', args=[event.slug]),
+        'sponsors': reverse('api:list_sponsors', args=[event.slug]),
     }
 
 
@@ -109,6 +110,17 @@ def serialize_talk(talk):
         'end': talk.end.strftime('%H:%M'),
         'level': talk.slot.get_level(),
         'speakers': talk.get_speakers(),
+    }
+
+
+def serializer_sponsor(sponsor):
+    return {
+        'organization_id': sponsor.organization.pk,
+        'name': sponsor.organization.name,
+        'url': sponsor.organization.url,
+        'logo': sponsor.organization.logo.url if sponsor.organization.logo else '',
+        'category': str(sponsor.category),
+        'role': str(sponsor.category.role),
     }
 
 
@@ -205,4 +217,14 @@ def list_tracks(request, slug):
     return [
         {'name': track.name, 'schedule': track.get_talks()}
         for track in tracks
+        ]
+
+
+@api
+def list_sponsors(request, slug):
+    event = Event.get_by_slug(slug)
+    sponsors = event.memberships.all().order_by('category__role__order')
+    return [
+        serializer_sponsor(sponsor)
+        for sponsor in sponsors
         ]
