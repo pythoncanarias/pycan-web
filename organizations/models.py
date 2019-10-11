@@ -4,18 +4,9 @@ from commons.constants import PRIORITY
 
 
 class Organization(models.Model):
+
     name = models.CharField(max_length=256)
     logo = models.FileField(upload_to='organizations/organization/')
-
-    def __str__(self):
-        return self.name
-
-    def joint_organizations(self):
-        return [
-            m.organization for m in self.joint_memberships.
-            order_by('-amount', 'order', 'organization__name')
-        ]
-
     address = models.CharField(max_length=100, blank=True, null=True)
     rest_address = models.CharField(max_length=100, blank=True, null=True)
     po_box = models.CharField(max_length=10, blank=True, null=True)
@@ -28,6 +19,15 @@ class Organization(models.Model):
     registration_date = models.DateField(blank=True, null=True)
     registration_number = models.CharField(max_length=50, blank=True)
     paypal_username = models.CharField(max_length=50, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def joint_organizations(self):
+        return [
+            m.organization for m in self.joint_memberships.
+            order_by('-amount', 'order', 'organization__name')
+        ]
 
     @property
     def paypal_me(self):
