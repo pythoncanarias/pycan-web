@@ -11,5 +11,7 @@ class Client(models.Model):
     po_box = models.CharField(max_length=15, blank=True, null=True)
     city = models.CharField(max_length=30)
 
+    email = models.EmailField(max_length=150, blank=True, null=True)
+
     def __str__(self):
         return '{} nif: {}'.format(self.name, self.nif)
