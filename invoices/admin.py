@@ -19,6 +19,20 @@ class ConceptInline(admin.StackedInline):
     ordering = ('-amount', )
 
 
+def set_active(modeladmin, request, queryset):
+    queryset.update(active=True)
+
+
+set_active.short_description = 'Activate selected invoices.'
+
+
+def set_inactive(modeladmin, request, queryset):
+    queryset.update(active=False)
+
+
+set_inactive.short_description = 'Deactivate selected invoices.'
+
+
 @admin.register(Invoice)
 class InvoiceAdmin(admin.ModelAdmin):
     inlines = [
@@ -30,6 +44,8 @@ class InvoiceAdmin(admin.ModelAdmin):
     fields = ('client', ('invoice_number', 'active'), 'date', ('taxes', 'retention'))
     readonly_fields = ('invoice_number', )
     ordering = ('-date', )
+
+    actions = [set_active, set_inactive]
 
     def invoice_pdf(self, invoice):
         if not os.path.isfile(invoice.path):
