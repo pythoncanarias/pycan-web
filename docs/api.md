@@ -31,7 +31,7 @@ Que te daría un listado abreviado de todas los eventos activos en la fecha actu
     }
 ```
 
-> Nota: Se pueden obtener _todos_ los eventos, incluyendo los pasados, con `/api/v1/events/all\`.
+> Nota: Se pueden obtener _todos_ los eventos, incluyendo los pasados, con `/api/v1/events/all/`.
 
 Todas las llamadas tienen como resultado un Json similar a este, en el sentido de que todas son un
 diccionario con, como mínimo, el campo `status`. Si el valor en `status` es `ok`, entonces hay
