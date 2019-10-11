@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from urllib.parse import urljoin
 
 from django.contrib.staticfiles.templatetags.staticfiles import static
@@ -5,6 +7,11 @@ from django.db import models
 
 
 class Social(models.Model):
+
+    class Meta:
+        verbose_name = 'social network'
+        verbose_name_plural = 'social networks'
+
     name = models.CharField(max_length=256)
     code = models.CharField(max_length=32, unique=True)
     base_url = models.CharField(max_length=128)
@@ -12,12 +19,9 @@ class Social(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
-        verbose_name = 'social network'
-        verbose_name_plural = 'social networks'
-
 
 class Speaker(models.Model):
+
     name = models.CharField(max_length=256)
     surname = models.CharField(max_length=256)
     slug = models.SlugField(unique=True)
@@ -49,23 +53,30 @@ class Speaker(models.Model):
         else:
             return static('speakers/img/noavatar.png')
 
-    def talks(self):
+    def talks(self, event=None):
         """Returns a list with all the talks (schedule & slot) for a given speaker.
+        If we pass an event as a parameter, it returns only a list of the
+        speaker's talks given in this event.
+
+        Params:
+
+        - event (class Event) [optional]: if provided, if filter the talks to be
+          from this event.
+
+        Return:
+
+        - A list of talks from this speaker (and event, if provided). Empty
+        list if no talks from this speaker.
         """
-        return [
-            {
-                'id': talk.id,
-                'name': talk.slot.name,
-                'description': talk.slot.description,
-                'start': talk.start.strftime('%H:%M'),
-                'end': talk.end.strftime('%H:%M'),
-                'track': str(talk.track or 'Unknown'),
-                'tags': talk.slot.get_tags(),
-            } for talk in self.schedule.select_related('slot').all()
-            ]
+        qs = self.schedule.select_related('slot')
+        if event:
+            qs = qs.filter(event=event)
+        qs = qs.order_by('slot__name')
+        return list(qs)
 
 
 class Contact(models.Model):
+
     social = models.ForeignKey(
         Social,
         on_delete=models.PROTECT,

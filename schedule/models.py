@@ -69,7 +69,7 @@ class Slot(models.Model):
         return self.name
 
     def get_level(self):
-        return self.level.name
+        return self.level.name if self.level else 'N/A'
 
     def get_tags(self):
         return [

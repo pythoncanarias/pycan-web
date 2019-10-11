@@ -33,7 +33,7 @@ This command allows you to generate a proper `requirements.txt` from the Pipfile
 Use this command if you want a requirements file for developers:
 
     pipenv lock --requirements --dev > requirements-dev.txt
-    
+
 
 #### Proceed
 
@@ -128,3 +128,7 @@ The changes made both in Python files or static files will be detected by the se
 ~~~console
 $ pipenv run python manage.py graph_models events organizations locations speakers tickets schedule -g -S -o models.png
 ~~~
+
+### API
+
+There are new documentation about the [public API](./docs/api.md).
