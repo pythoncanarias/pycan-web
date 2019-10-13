@@ -45,7 +45,7 @@ class OrganizationCategoryAdmin(admin.ModelAdmin):
 @admin.register(Membership)
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ('event', 'organization', 'category', 'amount', 'order')
-    list_filter = ('category__name',)
+    list_filter = ('category__name', 'event')
     search_fields = ['organization__name']
     autocomplete_fields = ['organization', 'joint_organization']
 
