@@ -23,6 +23,7 @@ class Invoice(models.Model):
     retention = models.IntegerField(choices=RETENTION_CHOICES, default=0)
     invoice_number = models.IntegerField(blank=True)
 
+    organization = models.ForeignKey('organizations.Organization', on_delete=models.CASCADE, blank=True, null=True)
     client = models.ForeignKey('invoices.Client', on_delete=models.CASCADE)
 
     active = models.BooleanField(default=True)
@@ -43,6 +44,7 @@ class Invoice(models.Model):
         total = self.concepts_total
         total -= self.concepts_total * RETENTION_MULTIPLIER[self.retention] / 100
         total += self.concepts_total * TAX_MULTIPLIER[self.taxes] / 100
+
         return total.quantize(Decimal('0.01'))
 
     @property
