@@ -30,6 +30,9 @@ class Organization(models.Model):
     def paypal_me(self):
         return f'https://paypal.me/{self.paypal_username}'
 
+    class Meta:
+        ordering = ['name']
+
 
 class OrganizationRole(models.Model):
     # Sponsor, Collaborator, Organizer, ...
