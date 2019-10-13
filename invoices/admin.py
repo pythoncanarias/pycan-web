@@ -38,10 +38,10 @@ class InvoiceAdmin(admin.ModelAdmin):
     inlines = [
         ConceptInline,
     ]
-    list_filter = ('date', 'client', 'active')
-    list_display = ('__str__', 'date', 'client', 'total', 'active', 'invoice_pdf')
+    list_filter = ('date', 'organization', 'active')
+    list_display = ('__str__', 'date', 'organization', 'total', 'active', 'invoice_pdf')
 
-    fields = ('client', ('invoice_number', 'active'), 'date', ('taxes', 'retention'))
+    fields = ('client', 'organization', ('invoice_number', 'active'), 'date', ('taxes', 'retention'))
     readonly_fields = ('invoice_number', )
     ordering = ('-date', )
 
