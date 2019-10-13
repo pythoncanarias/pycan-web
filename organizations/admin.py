@@ -21,8 +21,8 @@ class OrganizationCategoryInline(admin.StackedInline):
 class OrganizationAdmin(admin.ModelAdmin):
     inlines = [MembershipInline]
     search_fields = ['name']
-    list_display = ('name', 'url', 'memberships')
-    list_filter = ('memberships__event', )
+    list_display = ('name', 'url', 'cif', 'address')
+    list_filter = ('memberships__event', 'city')
 
     def memberships(self, obj):
         return (', '.join('[{}] {}'.format(x.event, x.category)
