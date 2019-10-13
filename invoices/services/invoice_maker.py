@@ -204,25 +204,25 @@ class InvoiceMaker(object):
                           self.PAGE_HEIGHT - 2.7 * cm, 'CLIENTE')
         canvas.drawString(self.PAGE_WIDTH / 2 + 0.6 * cm,
                           self.PAGE_HEIGHT - 3.2 * cm,
-                          self.invoice.client.name)
+                          self.invoice.organization.name)
         canvas.setFont(self.normal, 9)
         canvas.drawString(self.PAGE_WIDTH / 2 + 0.6 * cm,
                           self.PAGE_HEIGHT - 3.55 * cm,
-                          self.invoice.client.address)
+                          self.invoice.organization.address)
 
         vertical_2 = self.PAGE_HEIGHT - 3.9 * cm
-        if self.invoice.client.rest_address:
+        if self.invoice.organization.rest_address:
             vertical_1 = self.PAGE_HEIGHT - 3.9 * cm
             vertical_2 = self.PAGE_HEIGHT - 4.25 * cm
             canvas.drawString(self.PAGE_WIDTH / 2 + 0.6 * cm, vertical_1,
-                              self.invoice.client.rest_address)
+                              self.invoice.organization.rest_address)
         canvas.drawString(
             self.PAGE_WIDTH / 2 + 0.6 * cm, vertical_2, '{} {}'.format(
-                self.invoice.client.po_box, self.invoice.client.city))
+                self.invoice.organization.po_box, self.invoice.organization.city))
         canvas.setFont(self.bold, 9)
         canvas.drawRightString(self.PAGE_WIDTH - 1.5 * cm,
                                self.PAGE_HEIGHT - 4.8 * cm,
-                               self.invoice.client.nif)
+                               self.invoice.organization.cif)
 
         # CONCEPTS
         canvas.setFont(self.normal, 8)
