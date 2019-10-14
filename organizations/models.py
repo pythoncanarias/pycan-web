@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 
 from commons.constants import PRIORITY
@@ -75,7 +77,7 @@ class Membership(models.Model):
     event = models.ForeignKey('events.Event', on_delete=models.PROTECT, related_name='memberships')
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT, related_name='memberships')
     category = models.ForeignKey(OrganizationCategory, on_delete=models.PROTECT, related_name='memberships')
-    amount = models.DecimalField(max_digits=9, decimal_places=2, default=0)
+    _amount = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     description = models.TextField(blank=True)
     order = models.PositiveIntegerField(choices=PRIORITY.CHOICES, default=PRIORITY.MEDIUM)
     management_email = models.EmailField(
@@ -89,6 +91,19 @@ class Membership(models.Model):
         blank=True,
         null=True
     )
+
+    @property
+    def amount(self):
+        """Return how much funds has the organization provided to the event.
+
+        :return: How much has the organization funded.
+        :rtype: Decimal
+        """
+        invoices = self.event.invoices.for_organization(self.organization)
+
+        if not invoices:
+            return self._amount
+        return invoices.get().concepts_total
 
     def __str__(self):
         return "{} {} {}".format(self.organization, self.category, self.amount)

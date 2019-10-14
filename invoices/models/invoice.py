@@ -16,6 +16,12 @@ class InvoiceManager(models.Manager):
         last_day = date(year, 12, 31)
         return self.filter(date__gte=first_day, date__lte=last_day)
 
+    def for_event(self, event):
+        return self.filter(event=event)
+
+    def for_organization(self, organization):
+        return self.filter(organization=organization)
+
 
 class Invoice(models.Model):
     date = models.DateField()
@@ -24,7 +30,8 @@ class Invoice(models.Model):
     invoice_number = models.IntegerField(blank=True)
 
     organization = models.ForeignKey('organizations.Organization', on_delete=models.CASCADE, blank=True, null=True)
-    client = models.ForeignKey('invoices.Client', on_delete=models.CASCADE)
+    event = models.ForeignKey('events.Event', on_delete=models.PROTECT, related_name='invoices', null=True)
+    client = models.ForeignKey('invoices.Client', on_delete=models.CASCADE)  # deprecated
 
     active = models.BooleanField(default=True)
 
