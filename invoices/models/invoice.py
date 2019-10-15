@@ -31,7 +31,6 @@ class Invoice(models.Model):
 
     organization = models.ForeignKey('organizations.Organization', on_delete=models.CASCADE, blank=True, null=True)
     event = models.ForeignKey('events.Event', on_delete=models.PROTECT, related_name='invoices', null=True)
-    client = models.ForeignKey('invoices.Client', on_delete=models.CASCADE)  # deprecated
 
     active = models.BooleanField(default=True)
 
