@@ -26,7 +26,7 @@ class Organization(models.Model):
         return self.name
 
     def joint_organizations(self):
-        return [m.organization for m in self.joint_memberships.order_by('-amount', 'order', 'organization__name')]
+        return [m.organization for m in self.joint_memberships.order_by('-_amount', 'order', 'organization__name')]
 
     @property
     def paypal_me(self):
@@ -65,7 +65,7 @@ class OrganizationCategory(models.Model):
         verbose_name_plural = "organization categories"
 
     def organizations(self, event=None, exclude_joint_organizations=True):
-        memberships = self.memberships.order_by('-amount', 'order', 'organization__name')
+        memberships = self.memberships.order_by('-_amount', 'order', 'organization__name')
         if event:
             memberships = memberships.filter(event=event)
         if exclude_joint_organizations:
