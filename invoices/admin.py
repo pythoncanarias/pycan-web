@@ -41,7 +41,7 @@ class InvoiceAdmin(admin.ModelAdmin):
     list_filter = ('date', 'organization', 'event', 'active')
     list_display = ('__str__', 'date', 'organization', 'event', 'total', 'active', 'invoice_pdf')
 
-    fields = ('client', 'organization', 'event', ('invoice_number', 'active'), 'date', ('taxes', 'retention'))
+    fields = ('organization', 'event', ('invoice_number', 'active'), 'date', ('taxes', 'retention'))
     readonly_fields = ('invoice_number', )
     ordering = ('-date', )
 
