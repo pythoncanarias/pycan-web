@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from collections import defaultdict
 import functools
 import traceback
 
@@ -82,6 +83,7 @@ def serialize_event(event):
         'speakers': reverse('api:list_speakers', args=[event.slug]),
         'talks': reverse('api:list_talks', args=[event.slug]),
         'tracks': reverse('api:list_tracks', args=[event.slug]),
+        'tags': reverse('api:list_tags', args=[event.slug]),
         'sponsors': reverse('api:list_sponsors', args=[event.slug]),
     }
 
@@ -228,3 +230,25 @@ def list_sponsors(request, slug):
         serializer_sponsor(sponsor)
         for sponsor in sponsors
         ]
+
+
+@api
+def list_tags(request, slug):
+    event = Event.get_by_slug(slug)
+    talks = [
+        s for s in event
+        .schedule
+        .select_related('slot')
+        .order_by('start')
+        if s.slot.is_talk()
+        ]
+    result = defaultdict(list)
+    for talk in talks:
+        for tag in talk.slot.get_tags():
+            result[tag].append(talk)
+    return {
+        tag: [serialize_talk(talk) for talk in result[tag]]
+        for tag in sorted(result)
+        }
+
+

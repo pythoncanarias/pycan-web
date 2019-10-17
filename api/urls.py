@@ -18,6 +18,7 @@ urlpatterns = [
     path('v1/events/<slug>/talks/', views.list_talks, name='list_talks'),
     path('v1/events/<slug>/tracks/', views.list_tracks, name='list_tracks'),
     path('v1/events/<slug>/sponsors/', views.list_sponsors, name='list_sponsors'),
+    path('v1/events/<slug>/tags/', views.list_tags, name='list_tags'),
     path('v1/events/<slug>/', views.detail_event, name='detail_event'),
     path('v1/events/all/', views.all_events, name='all_events'),
     path('v1/events/', views.active_events, name='active_events'),
