@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from collections import defaultdict
 import functools
 import traceback
+from collections import defaultdict
 
-from django.urls import reverse
 from django.conf import settings
 from django.http import JsonResponse
+from django.urls import reverse
 
 from events.models import Event
 from locations.models import Venue
-
+from members.models import Position
 
 # API decorator
+
 
 def api(func):
 
@@ -39,13 +40,14 @@ def api(func):
 
 # Serializars
 
+
 def serialize_venue_short(venue):
     return {
         'venue_id': venue.pk,
         'name': venue.name,
         'slug': venue.slug,
         'detail': reverse('api:detail_venue', args=[venue.slug]),
-        }
+    }
 
 
 def serialize_venue(venue):
@@ -54,9 +56,12 @@ def serialize_venue(venue):
         'name': venue.name,
         'description': venue.description,
         'address': venue.address,
-        'coords': {'lat': venue.latitude, 'long': venue.longitude},
+        'coords': {
+            'lat': venue.latitude,
+            'long': venue.longitude
+        },
         'photo': venue.photo_url,
-        }
+    }
 
 
 def serialize_event_short(event):
@@ -126,28 +131,45 @@ def serializer_sponsor(sponsor):
     }
 
 
+def serializer_staff(position):
+    return {
+        'position': position.get_position_display(),
+        'first_name': position.member.user.first_name,
+        'last_name': position.member.user.last_name,
+        'email': position.member.user.email,
+    }
+
+
 @api
 def status(request):
     return {
-        "active": True,
-        "version": settings.CURRENT_API_VERSION,
+        "active":
+            True,
+        "version":
+            settings.CURRENT_API_VERSION,
         "entry_points": [
             reverse('api:status'),
             reverse('api:list_venues'),
             reverse('api:active_events'),
             reverse('api:all_events'),
-            ]
-        }
+        ]
+    }
+
+
+@api
+def list_staff_members(request):
+    """List of active staff members."""
+    return [
+        serializer_staff(staff_member)
+        for staff_member in Position.objects.filter(active=True).select_related('member__user')
+    ]
 
 
 @api
 def list_venues(request):
     """List of all venues.
     """
-    return [
-        serialize_venue_short(venue)
-        for venue in Venue.objects.all()
-        ]
+    return [serialize_venue_short(venue) for venue in Venue.objects.all()]
 
 
 @api
@@ -161,10 +183,7 @@ def all_events(request):
     """Return a list with some data of all events, past, present or future'
     """
     events = Event.objects.all().order_by('-start_date')
-    return [
-        serialize_event_short(event)
-        for event in events
-        ]
+    return [serialize_event_short(event) for event in events]
 
 
 @api
@@ -172,10 +191,7 @@ def active_events(request):
     """Return a list with some data of active events (present or future)'
     """
     events = Event.objects.filter(active=True).order_by('start_date')
-    return [
-        serialize_event_short(event)
-        for event in events
-        ]
+    return [serialize_event_short(event) for event in events]
 
 
 @api
@@ -190,65 +206,25 @@ def detail_event(request, slug):
 def list_speakers(request, slug):
     event = Event.get_by_slug(slug)
     speakers = event.speakers()
-    return [
-        serialize_speaker(event, speaker)
-        for speaker in speakers
-    ]
+    return [serialize_speaker(event, speaker) for speaker in speakers]
 
 
 @api
 def list_talks(request, slug):
     event = Event.get_by_slug(slug)
-    talks = [
-        s for s in event
-        .schedule
-        .select_related('slot')
-        .order_by('slot__name')
-        if s.slot.is_talk()
-        ]
-    return [
-        serialize_talk(talk)
-        for talk in talks
-    ]
+    talks = [s for s in event.schedule.select_related('slot').order_by('slot__name') if s.slot.is_talk()]
+    return [serialize_talk(talk) for talk in talks]
 
 
 @api
 def list_tracks(request, slug):
     event = Event.get_by_slug(slug)
     tracks = event.tracks()
-    return [
-        {'name': track.name, 'schedule': track.get_talks()}
-        for track in tracks
-        ]
+    return [{'name': track.name, 'schedule': track.get_talks()} for track in tracks]
 
 
 @api
 def list_sponsors(request, slug):
     event = Event.get_by_slug(slug)
     sponsors = event.memberships.all().order_by('category__role__order')
-    return [
-        serializer_sponsor(sponsor)
-        for sponsor in sponsors
-        ]
-
-
-@api
-def list_tags(request, slug):
-    event = Event.get_by_slug(slug)
-    talks = [
-        s for s in event
-        .schedule
-        .select_related('slot')
-        .order_by('start')
-        if s.slot.is_talk()
-        ]
-    result = defaultdict(list)
-    for talk in talks:
-        for tag in talk.slot.get_tags():
-            result[tag].append(talk)
-    return {
-        tag: [serialize_talk(talk) for talk in result[tag]]
-        for tag in sorted(result)
-        }
-
-
+    return [serializer_sponsor(sponsor) for sponsor in sponsors]

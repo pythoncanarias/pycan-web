@@ -7,9 +7,11 @@ from . import views
 
 app_name = 'api'
 
-
 urlpatterns = [
     path('v1/status/', views.status, name='status'),
+
+    # organization
+    path('v1/organization/staff/', views.list_staff_members, name='list_staff_members'),
     # Venues
     path('v1/venues/', views.list_venues, name='list_venues'),
     path('v1/venues/<slug>/', views.detail_venue, name='detail_venue'),
