@@ -3,6 +3,7 @@
 
 import functools
 import traceback
+from collections import defaultdict
 
 from django.conf import settings
 from django.http import JsonResponse
@@ -87,6 +88,7 @@ def serialize_event(event):
         'speakers': reverse('api:list_speakers', args=[event.slug]),
         'talks': reverse('api:list_talks', args=[event.slug]),
         'tracks': reverse('api:list_tracks', args=[event.slug]),
+        'tags': reverse('api:list_tags', args=[event.slug]),
         'sponsors': reverse('api:list_sponsors', args=[event.slug]),
     }
 
