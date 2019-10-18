@@ -228,3 +228,8 @@ def list_sponsors(request, slug):
     event = Event.get_by_slug(slug)
     sponsors = event.memberships.all().order_by('category__role__order')
     return [serializer_sponsor(sponsor) for sponsor in sponsors]
+
+# TODO
+@api
+def list_tags(request, slug):
+    return []
