@@ -3,7 +3,6 @@
 
 import functools
 import traceback
-from collections import defaultdict
 
 from django.conf import settings
 from django.http import JsonResponse
@@ -149,6 +148,7 @@ def status(request):
             settings.CURRENT_API_VERSION,
         "entry_points": [
             reverse('api:status'),
+            reverse('api:list_staff_members'),
             reverse('api:list_venues'),
             reverse('api:active_events'),
             reverse('api:all_events'),
@@ -161,7 +161,9 @@ def list_staff_members(request):
     """List of active staff members."""
     return [
         serializer_staff(staff_member)
-        for staff_member in Position.objects.filter(active=True).select_related('member__user')
+        for staff_member in Position.objects
+            .filter(active=True)
+            .select_related('member__user')
     ]
 
 
@@ -220,7 +222,10 @@ def list_talks(request, slug):
 def list_tracks(request, slug):
     event = Event.get_by_slug(slug)
     tracks = event.tracks()
-    return [{'name': track.name, 'schedule': track.get_talks()} for track in tracks]
+    return [{
+        'name': track.name,
+        'schedule': track.get_talks(event)
+    } for track in tracks]
 
 
 @api
