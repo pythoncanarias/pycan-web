@@ -222,7 +222,10 @@ def list_talks(request, slug):
 def list_tracks(request, slug):
     event = Event.get_by_slug(slug)
     tracks = event.tracks()
-    return [{'name': track.name, 'schedule': track.get_talks()} for track in tracks]
+    return [{
+        'name': track.name,
+        'schedule': track.get_talks(event)
+    } for track in tracks]
 
 
 @api
