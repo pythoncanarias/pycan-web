@@ -32,7 +32,10 @@ class SlotTag(models.Model):
 class SlotLevel(models.Model):
     # Basic, Intermediate, Advanced, ...
     name = models.CharField(max_length=256)
-    order = models.PositiveIntegerField(choices=PRIORITY.CHOICES, default=PRIORITY.MEDIUM)
+    order = models.PositiveIntegerField(
+        choices=PRIORITY.CHOICES,
+        default=PRIORITY.MEDIUM,
+        )
     description = models.TextField(blank=True)
 
     def __str__(self):
@@ -44,8 +47,18 @@ class Slot(models.Model):
     description = models.TextField(blank=True)
     repo = models.URLField(blank=True)
     slides = models.URLField(blank=True)
-    category = models.ForeignKey(SlotCategory, on_delete=models.PROTECT, related_name='slots')
-    level = models.ForeignKey(SlotLevel, on_delete=models.PROTECT, related_name='slots', blank=True, null=True)
+    category = models.ForeignKey(
+        SlotCategory,
+        on_delete=models.PROTECT,
+        related_name='slots',
+    )
+    level = models.ForeignKey(
+        SlotLevel,
+        on_delete=models.PROTECT,
+        related_name='slots',
+        blank=True,
+        null=True,
+    )
     tags = models.ManyToManyField(SlotTag, related_name='slots', blank=True)
 
     def __str__(self):
@@ -63,7 +76,10 @@ class Slot(models.Model):
 
 class Track(models.Model):
     name = models.CharField(max_length=256)
-    order = models.PositiveIntegerField(choices=PRIORITY.CHOICES, default=PRIORITY.MEDIUM)
+    order = models.PositiveIntegerField(
+        choices=PRIORITY.CHOICES,
+        default=PRIORITY.MEDIUM,
+    )
     description = models.TextField(blank=True)
 
     def __str__(self):
@@ -79,8 +95,11 @@ class Track(models.Model):
             queryset = queryset.filter(event=event)
         return queryset
 
-    def get_talks(self):
-        qs = self.schedule.all().select_related('slot').order_by('start')
+    def get_talks(self, event=None):
+        qs = self.schedule.select_related('slot')
+        if event:
+            qs = qs.filter(event=event)
+        qs = qs.order_by('start')
         return [{
             'talk_id': t.slot.pk,
             'name': t.slot.name,
@@ -98,18 +117,48 @@ class Schedule(models.Model):
     ENGLISH = 'EN'
     LANGUAGE_CHOICES = ((SPANISH, 'Español'), (ENGLISH, 'Inglés'))
 
-    event = models.ForeignKey('events.Event', on_delete=models.PROTECT, related_name='schedule')
-    location = models.ForeignKey('locations.Location', on_delete=models.PROTECT, related_name='schedule')
+    event = models.ForeignKey(
+        'events.Event',
+        on_delete=models.PROTECT,
+        related_name='schedule',
+    )
+    location = models.ForeignKey(
+        'locations.Location',
+        on_delete=models.PROTECT,
+        related_name='schedule',
+    )
     # if track is null the slot is plenary
-    track = models.ForeignKey(Track, on_delete=models.PROTECT, related_name='schedule', null=True, blank=True)
-    speakers = models.ManyToManyField('speakers.Speaker', related_name='schedule', blank=True)
-    slot = models.ForeignKey(Slot, on_delete=models.PROTECT, related_name='schedule')
+    track = models.ForeignKey(
+        Track,
+        on_delete=models.PROTECT,
+        related_name='schedule',
+        null=True,
+        blank=True,
+    )
+    speakers = models.ManyToManyField(
+        'speakers.Speaker',
+        related_name='schedule',
+        blank=True,
+    )
+    slot = models.ForeignKey(
+        Slot,
+        on_delete=models.PROTECT,
+        related_name='schedule',
+    )
     start = models.DateTimeField()
     end = models.DateTimeField()
-    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default=SPANISH)
+    language = models.CharField(
+        max_length=2,
+        choices=LANGUAGE_CHOICES,
+        default=SPANISH,
+    )
 
     def __str__(self):
-        return "{} {}-{}".format(self.start.date(), self.start.time(), self.end.time())
+        return "{} {}-{}".format(
+            self.start.date(),
+            self.start.time(),
+            self.end.time(),
+        )
 
     def get_speakers(self):
         qs = self.speakers.all().order_by('surname', 'name')
