@@ -38,6 +38,7 @@ class SlotAdmin(admin.ModelAdmin):
     inlines = [ScheduleInline]
     list_display = ('name', 'has_slides', 'level', '_tags')
     search_fields = ['name']
+    list_filter = ['level', 'tags']
 
     def _tags(self, obj):
         return ', '.join(tag.name for tag in obj.tags.all())
