@@ -31,9 +31,14 @@ class SlotLevelAdmin(admin.ModelAdmin):
 
 @admin.register(Slot)
 class SlotAdmin(admin.ModelAdmin):
+    def has_slides(self, obj):
+        return obj.slides != ''
+    has_slides.boolean = True
+
     inlines = [ScheduleInline]
-    list_display = ('name', 'category', 'level', '_tags')
+    list_display = ('name', 'has_slides', 'level', '_tags')
     search_fields = ['name']
+    list_filter = ['level', 'tags']
 
     def _tags(self, obj):
         return ', '.join(tag.name for tag in obj.tags.all())
