@@ -4,6 +4,10 @@ from django.db import models
 
 
 class Author(models.Model):
+
+    class Meta:
+        ordering = ['name', 'surname']
+
     name = models.CharField(max_length=120)
     surname = models.CharField(max_length=230)
     url = models.URLField(blank=True)
