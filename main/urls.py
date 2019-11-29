@@ -13,6 +13,7 @@ urlpatterns = [
     path('events/', include('events.urls', namespace='events')),
     path('about/', include('about.urls', namespace='about')),
     path('legal/', include('legal.urls', namespace='legal')),
+    path('members/', include('members.urls', namespace='members')),
 ]
 
 if settings.DEBUG:
