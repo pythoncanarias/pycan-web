@@ -1,0 +1,67 @@
+{% extends "members/base.html" %}
+{% load utils %}
+{% load static %}
+
+{% block title %}Socios/as - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="content box">
+
+<h1>No nos mires, ¡únete! <i class="fas fa-people-carry"></i></h1>
+
+<p>
+Python Canarias es una <strong>asociación sin ánimo de lucro</strong>. Para desarrollar nuestras actividades necesitamos un <strong>soporte económico</strong> que se convierte en servicios para la comunidad, principalmente en <a href="{% url 'events:past_events' %}">forma de eventos</a>. Las aportaciones de empresas colaboradoras y patrocinios son super importantes, pero aún así seguimos necesitando de otras ayudas.
+</p>
+
+<article class="message">
+  <div class="message-body">
+    Ser socio o socia de Python Canarias es apoyar el desarrollo tecnológico en nuestra región. Significa creer en un proyecto de la comunidad para la comunidad. Cada nueva persona que se une es un empujón que nos impulsa a seguir adelante.
+  </div>
+</article>
+
+<p>
+Si te animas a formar parte de Python Canarias, también queremos devolverte algo. En este sentido habrá <strong>descuentos en eventos y promociones con prioridad para socios y socias</strong>.
+</p>
+
+<h2>Cuota</h2>
+
+La cuota de socio/socia es anual y su cuantía está recogida en el <a href="https://github.com/pythoncanarias/docs/raw/master/asociacion/estatutos/estatutos.pdf">artículo 24 de los estatutos de la asociación</a>:
+<ul>
+  <li><span class="tag is-info is-medium">20€</span> Importe general.</li>
+  <li><span class="tag is-primary is-medium">10€</span> Estudiantes y/o personas desempleadas.</li>
+</ul>
+
+<h2>Procedimiento para convertirse en socio o socia</h2>
+
+<ol>
+  <li>
+    Realiza una transferencia bancaria indicando los siguientes datos:
+    <ul>
+      <li><strong>Banco</strong>: {{ pythoncanarias.bank}}</li>
+      <li><strong>IBAN</strong>: {{ pythoncanarias.iban }}</li>
+      <li><strong>Importe</strong>: <em>el de la cuota seleccionada</em></li>
+      <li><strong>Concepto</strong>: Alta de socio/a</li>
+      <li><strong>Beneficiario</strong>: {{ pythoncanarias.name }}</li>
+    </ul>
+  </li>
+
+  <li>Envía un correo a <a href="mailto:{{ pythoncanarias.email }}">{{ pythoncanarias.email }}</a> indicando los siguientes datos:
+    <ul>
+      <li><strong>Asunto</strong>: Alta de socio/a</li>
+      <li><strong>Cuerpo</strong>:
+      <p>
+      Nombre y apellidos<br>
+      Teléfono de contacto<br>
+      Dirección<br>
+      </p>
+      </li>
+    </ul>
+    <span class="tag is-warning">IMPORTANTE</span> Adjuntar el justificante de la transferencia en formato PDF
+  </li>
+
+  <li>Una vez que recibamos este email te responderemos indicando que tu solicitud de alta (o continuidad) se ha procesado correctamente, y pasarás a formar parte de la <strong>comunidad pitónica</strong> 🎉</li>
+</ol>
+</div>
+
+{% endblock content %}
