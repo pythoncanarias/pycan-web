@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, reverse
+from django.views.generic.base import RedirectView
 
 from homepage import views
 
@@ -14,6 +15,13 @@ urlpatterns = [
     path('about/', include('about.urls', namespace='about')),
     path('legal/', include('legal.urls', namespace='legal')),
     path('members/', include('members.urls', namespace='members')),
+]
+
+# redirections
+urlpatterns += [
+    path('join',
+         RedirectView.as_view(url=reverse('members:join')),
+         name='goto_join_members')
 ]
 
 if settings.DEBUG:
