@@ -13,6 +13,21 @@ class Member(models.Model):
     city = models.CharField(max_length=20, blank=True)
     phone = models.CharField(max_length=20, blank=True)
 
+    @property
+    def full_name(self):
+        return self.user.first_name + ' ' + self.user.last_name
+
+    @property
+    def email(self):
+        return self.user.email
+
+    @property
+    def member_id(self):
+        return self.id
+
+    def __str__(self):
+        return self.full_name
+
 
 class Position(models.Model):
     position = models.IntegerField(choices=MEMBER_POSITION.CHOICES)
