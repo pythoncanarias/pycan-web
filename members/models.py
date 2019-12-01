@@ -68,7 +68,7 @@ class Position(models.Model):
 
     @property
     def active(self):
-        return self.until is None
+        return (self.until is None or datetime.date.today() <= self.until)
 
 
 class Membership(models.Model):
