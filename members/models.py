@@ -54,7 +54,7 @@ class Membership(models.Model):
                                        default=MEMBER_CATEGORY.NUMBER)
     valid_from = models.DateField()
     valid_until = models.DateField(blank=True, null=True)
-    fee_received_at = models.DateTimeField(blank=True)
+    fee_received_at = models.DateTimeField(blank=True, null=True)
     fee_amount = models.FloatField(choices=FEE_AMOUNT.CHOICES,
                                    default=FEE_AMOUNT.GENERAL,
                                    blank=True,
@@ -62,5 +62,6 @@ class Membership(models.Model):
     fee_payment_type = models.CharField(
         max_length=2,
         choices=FEE_PAYMENT_TYPE.CHOICES,
-        default=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE)
+        default=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE,
+        blank=True)
     fee_payment_reference = models.CharField(max_length=128, blank=True)

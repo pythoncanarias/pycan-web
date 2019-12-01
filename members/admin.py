@@ -22,4 +22,8 @@ class PositionAdmin(admin.ModelAdmin):
 
 @admin.register(Membership)
 class MembershipAdmin(admin.ModelAdmin):
-    pass
+    raw_id_fields = ['member']
+    list_display = ('member', 'member_category', 'valid_from', 'valid_until')
+    search_fields = ('member__user__first_name', 'member__user__last_name',
+                     'member__user__username', 'member__user__email')
+    list_filter = ('member_category', 'fee_amount')
