@@ -13,7 +13,11 @@ class MemberAdmin(admin.ModelAdmin):
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
-    pass
+    raw_id_fields = ['member']
+    list_display = ('member', 'position', 'since', 'until', 'active')
+    list_filter = ('active', 'since', 'until')
+    search_fields = ('member__user__first_name', 'member__user__last_name',
+                     'member__user__username', 'member__user__email')
 
 
 @admin.register(Membership)

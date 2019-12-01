@@ -30,12 +30,10 @@ class Member(models.Model):
 
 
 class Position(models.Model):
-    position = models.IntegerField(choices=MEMBER_POSITION.CHOICES)
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
-
-    since = models.DateField(auto_now_add=True)
+    position = models.CharField(max_length=3, choices=MEMBER_POSITION.CHOICES)
+    since = models.DateField()
     until = models.DateField(blank=True, null=True)
-
     active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
@@ -43,9 +41,10 @@ class Position(models.Model):
         super().save(*args, **kwargs)
 
         if created and self.active:
-            Position.objects.filter(
-                active=True, position=self.position).update(until=self.since,
-                                                            active=False)
+            Position.objects.filter(active=True,
+                                    position=self.position).exclude(
+                                        id=self.id).update(until=self.since,
+                                                           active=False)
 
 
 class Membership(models.Model):
