@@ -28,6 +28,9 @@ class Member(models.Model):
     def __str__(self):
         return self.full_name
 
+    class Meta:
+        ordering = ('id', 'user__first_name', 'user__last_name')
+
 
 class Position(models.Model):
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
@@ -45,6 +48,9 @@ class Position(models.Model):
                                     position=self.position).exclude(
                                         id=self.id).update(until=self.since,
                                                            active=False)
+
+    class Meta:
+        ordering = ('since', 'position', 'member')
 
 
 class Membership(models.Model):
@@ -65,3 +71,6 @@ class Membership(models.Model):
         default=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE,
         blank=True)
     fee_payment_reference = models.CharField(max_length=128, blank=True)
+
+    class Meta:
+        ordering = ('valid_from', 'member')
