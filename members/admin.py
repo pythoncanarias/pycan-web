@@ -6,6 +6,7 @@ from members.models import Member, Position, Membership
 class MembershipInline(admin.StackedInline):
     model = Membership
     extra = 0
+    classes = ['collapse']
 
 
 @admin.register(Member)
