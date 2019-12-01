@@ -49,6 +49,9 @@ class Position(models.Model):
                                         id=self.id).update(until=self.since,
                                                            active=False)
 
+    def __str__(self):
+        return f'{self.member.full_name} as {self.position}'
+
     class Meta:
         ordering = ('since', 'position', 'member')
 
@@ -61,16 +64,17 @@ class Membership(models.Model):
     valid_from = models.DateField()
     valid_until = models.DateField(blank=True, null=True)
     fee_received_at = models.DateTimeField(blank=True, null=True)
-    fee_amount = models.FloatField(choices=FEE_AMOUNT.CHOICES,
-                                   default=FEE_AMOUNT.GENERAL,
-                                   blank=True,
-                                   null=True)
+    fee_amount = models.IntegerField(choices=FEE_AMOUNT.CHOICES,
+                                     default=FEE_AMOUNT.GENERAL)
     fee_payment_type = models.CharField(
         max_length=2,
         choices=FEE_PAYMENT_TYPE.CHOICES,
         default=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE,
         blank=True)
     fee_payment_reference = models.CharField(max_length=128, blank=True)
+
+    def __str__(self):
+        return f'{self.member.full_name} from {self.valid_from}'
 
     class Meta:
         ordering = ('valid_from', 'member')
