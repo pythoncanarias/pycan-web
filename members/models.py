@@ -39,7 +39,7 @@ class Member(models.Model):
         if last_membership is None:
             return False
         valid_until = last_membership.valid_until
-        return (valid_until is None or datetime.date.today() < valid_until)
+        return (valid_until is None or datetime.date.today() <= valid_until)
 
 
 class Position(models.Model):
