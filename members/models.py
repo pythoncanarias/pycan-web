@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from pytz import utc
 
-from .constants import MEMBER_POSITION, FEE_PAYMENT_TYPE, FEE_AMOUNT
+from .constants import (MEMBER_POSITION, FEE_PAYMENT_TYPE, FEE_AMOUNT,
+                        MEMBER_CATEGORY)
 
 
 class Member(models.Model):
@@ -47,14 +48,20 @@ class Position(models.Model):
                                                             active=False)
 
 
-class Fee(models.Model):
+class Membership(models.Model):
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
-    received_at = models.DateTimeField()
+    member_category = models.CharField(max_length=1,
+                                       choices=MEMBER_CATEGORY.CHOICES,
+                                       default=MEMBER_CATEGORY.NUMBER)
     valid_from = models.DateField()
-    valid_until = models.DateField()
-    amount = models.FloatField(choices=FEE_AMOUNT.CHOICES,
-                               default=FEE_AMOUNT.GENERAL)
-    payment_type = models.CharField(max_length=2,
-                                    choices=FEE_PAYMENT_TYPE.CHOICES,
-                                    default=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE)
-    payment_reference = models.CharField(max_length=128, blank=True)
+    valid_until = models.DateField(blank=True, null=True)
+    fee_received_at = models.DateTimeField(blank=True)
+    fee_amount = models.FloatField(choices=FEE_AMOUNT.CHOICES,
+                                   default=FEE_AMOUNT.GENERAL,
+                                   blank=True,
+                                   null=True)
+    fee_payment_type = models.CharField(
+        max_length=2,
+        choices=FEE_PAYMENT_TYPE.CHOICES,
+        default=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE)
+    fee_payment_reference = models.CharField(max_length=128, blank=True)
