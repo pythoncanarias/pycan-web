@@ -4,18 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from pytz import utc
 
-from .constants import FEE_PAYMENT_TYPE, FEE_AMOUNT
-
-POSITION_CHOICES = (
-    (0, 'Presidente'),
-    (0, 'Vicepresidente'),
-    (1, 'Secretario'),
-    (2, 'Tesorero'),
-    (3, 'Vocal 1'),
-    (4, 'Vocal 2'),
-    (5, 'Vocal 3'),
-    (5, 'Vocal 4'),
-)
+from .constants import MEMBER_POSITION, FEE_PAYMENT_TYPE, FEE_AMOUNT
 
 
 class Member(models.Model):
@@ -40,7 +29,7 @@ class Member(models.Model):
 
 
 class Position(models.Model):
-    position = models.IntegerField(choices=POSITION_CHOICES)
+    position = models.IntegerField(choices=MEMBER_POSITION.CHOICES)
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
 
     since = models.DateField(auto_now_add=True)
