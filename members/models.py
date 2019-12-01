@@ -15,6 +15,7 @@ class Member(models.Model):
     po_box = models.CharField(max_length=10, blank=True)
     city = models.CharField(max_length=64, blank=True)
     phone = models.CharField(max_length=20, blank=True)
+    remarks = models.CharField(max_length=512, blank=True)
 
     @property
     def full_name(self):
@@ -48,6 +49,7 @@ class Position(models.Model):
     position = models.CharField(max_length=3, choices=MEMBER_POSITION.CHOICES)
     since = models.DateField()
     until = models.DateField(blank=True, null=True)
+    remarks = models.CharField(max_length=512, blank=True)
 
     def save(self, *args, **kwargs):
         created = not self.id
@@ -87,6 +89,7 @@ class Membership(models.Model):
         default=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE,
         blank=True)
     fee_payment_reference = models.CharField(max_length=128, blank=True)
+    remarks = models.CharField(max_length=512, blank=True)
 
     def __str__(self):
         return f'{self.member.full_name} from {self.valid_from}'
