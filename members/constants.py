@@ -50,3 +50,7 @@ class MEMBER_CATEGORY:
         (NUMBER, 'Socio/a de número'),
         (HONORARY, 'Socio/a honorífico/a')
     )
+
+
+# days for default membership period
+DEFAULT_MEMBERSHIP_PERIOD = 365

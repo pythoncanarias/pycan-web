@@ -1,8 +1,10 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 
 from .constants import (FEE_AMOUNT, FEE_PAYMENT_TYPE, MEMBER_CATEGORY,
-                        MEMBER_POSITION)
+                        MEMBER_POSITION, DEFAULT_MEMBERSHIP_PERIOD)
 
 
 class Member(models.Model):
@@ -78,3 +80,10 @@ class Membership(models.Model):
 
     class Meta:
         ordering = ('valid_from', 'member')
+
+    def save(self, *args, **kwargs):
+        if (self.fee_amount != FEE_AMOUNT.EXEMPT
+                and self.valid_until is None):
+            self.valid_until = self.valid_from + datetime.timedelta(
+                days=DEFAULT_MEMBERSHIP_PERIOD)
+        super().save(args, kwargs)
