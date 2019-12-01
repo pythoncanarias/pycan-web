@@ -3,8 +3,9 @@ import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
-from .constants import (DEFAULT_MEMBERSHIP_PERIOD, FEE_AMOUNT,
-                        FEE_PAYMENT_TYPE, MEMBER_CATEGORY, MEMBER_POSITION)
+from .constants import (DEFAULT_MEMBERSHIP_PERIOD, DEFAULT_POSITION_PERIOD,
+                        FEE_AMOUNT, FEE_PAYMENT_TYPE, MEMBER_CATEGORY,
+                        MEMBER_POSITION)
 
 
 class Member(models.Model):
@@ -50,6 +51,10 @@ class Position(models.Model):
 
     def save(self, *args, **kwargs):
         created = not self.id
+        if self.until is None:
+            # set 4 years period for the position
+            self.until = self.since + datetime.timedelta(
+                days=DEFAULT_POSITION_PERIOD)
         super().save(*args, **kwargs)
         if created:
             Position.objects.filter(position=self.position).exclude(

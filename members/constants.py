@@ -54,3 +54,6 @@ class MEMBER_CATEGORY:
 
 # days for default membership period
 DEFAULT_MEMBERSHIP_PERIOD = 365
+
+# days por default position period
+DEFAULT_POSITION_PERIOD = 4 * 365
