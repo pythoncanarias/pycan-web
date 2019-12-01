@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from pytz import utc
 
+from .constants import FEE_PAYMENT_TYPE, FEE_AMOUNT
+
 POSITION_CHOICES = (
     (0, 'Presidente'),
     (0, 'Vicepresidente'),
@@ -54,3 +56,16 @@ class Position(models.Model):
             Position.objects.filter(
                 active=True, position=self.position).update(until=self.since,
                                                             active=False)
+
+
+class Fee(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.PROTECT)
+    payment_date = models.DateTimeField()
+    valid_from = models.DateTimeField()
+    valid_until = models.DateField()
+    amount = models.FloatField(choices=FEE_AMOUNT.CHOICES,
+                               default=FEE_AMOUNT.GENERAL)
+    payment_type = models.CharField(max_length=2,
+                                    choices=FEE_PAYMENT_TYPE.CHOICES,
+                                    default=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE)
+    payment_reference = models.CharField(max_length=128, blank=True)
