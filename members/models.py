@@ -33,7 +33,8 @@ class Member(models.Model):
         return datetime.now(tz=utc) < self.member_until
 
     def __str__(self):
-        return (f'{self.user.first_name} {self.user.last_name} ' 'member until {self.member_until}')
+        return (f'{self.user.first_name} {self.user.last_name} '
+                'member until {self.member_until}')
 
 
 class Position(models.Model):
@@ -50,4 +51,6 @@ class Position(models.Model):
         super().save(*args, **kwargs)
 
         if created and self.active:
-            Position.objects.filter(active=True, position=self.position).update(until=self.since, active=False)
+            Position.objects.filter(
+                active=True, position=self.position).update(until=self.since,
+                                                            active=False)
