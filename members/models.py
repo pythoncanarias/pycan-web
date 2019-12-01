@@ -60,8 +60,8 @@ class Position(models.Model):
 
 class Fee(models.Model):
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
-    payment_date = models.DateTimeField()
-    valid_from = models.DateTimeField()
+    received_at = models.DateTimeField()
+    valid_from = models.DateField()
     valid_until = models.DateField()
     amount = models.FloatField(choices=FEE_AMOUNT.CHOICES,
                                default=FEE_AMOUNT.GENERAL)
