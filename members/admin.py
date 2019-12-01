@@ -3,6 +3,11 @@ from django.contrib import admin
 from members.models import Member, Position, Membership
 
 
+class MembershipInline(admin.StackedInline):
+    model = Membership
+    extra = 0
+
+
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
     def active(self, obj):
@@ -13,6 +18,7 @@ class MemberAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'user', 'email', 'member_id', 'active')
     search_fields = ('id', 'user__first_name', 'user__last_name',
                      'user__email')
+    inlines = (MembershipInline, )
 
 
 @admin.register(Position)
