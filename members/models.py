@@ -3,8 +3,8 @@ import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
-from .constants import (FEE_AMOUNT, FEE_PAYMENT_TYPE, MEMBER_CATEGORY,
-                        MEMBER_POSITION, DEFAULT_MEMBERSHIP_PERIOD)
+from .constants import (DEFAULT_MEMBERSHIP_PERIOD, FEE_AMOUNT,
+                        FEE_PAYMENT_TYPE, MEMBER_CATEGORY, MEMBER_POSITION)
 
 
 class Member(models.Model):
@@ -33,29 +33,37 @@ class Member(models.Model):
     class Meta:
         ordering = ('id', 'user__first_name', 'user__last_name')
 
+    @property
+    def active(self):
+        last_membership = self.membership_set.last()
+        if last_membership is None:
+            return False
+        valid_until = last_membership.valid_until
+        return (valid_until is None or datetime.date.today() < valid_until)
+
 
 class Position(models.Model):
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
     position = models.CharField(max_length=3, choices=MEMBER_POSITION.CHOICES)
     since = models.DateField()
     until = models.DateField(blank=True, null=True)
-    active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         created = not self.id
         super().save(*args, **kwargs)
-
-        if created and self.active:
-            Position.objects.filter(active=True,
-                                    position=self.position).exclude(
-                                        id=self.id).update(until=self.since,
-                                                           active=False)
+        if created:
+            Position.objects.filter(position=self.position).exclude(
+                id=self.id).update(until=self.since)
 
     def __str__(self):
         return f'{self.member.full_name} as {self.position}'
 
     class Meta:
         ordering = ('since', 'position', 'member')
+
+    @property
+    def active(self):
+        return self.until is None
 
 
 class Membership(models.Model):

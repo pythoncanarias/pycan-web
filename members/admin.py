@@ -5,17 +5,25 @@ from members.models import Member, Position, Membership
 
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
+    def active(self, obj):
+        return obj.active
+    active.boolean = True
+
     raw_id_fields = ['user']
-    list_display = ('full_name', 'user', 'email', 'member_id')
+    list_display = ('full_name', 'user', 'email', 'member_id', 'active')
     search_fields = ('id', 'user__first_name', 'user__last_name',
                      'user__email')
 
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
+    def active(self, obj):
+        return obj.active
+    active.boolean = True
+
     raw_id_fields = ['member']
     list_display = ('member', 'position', 'since', 'until', 'active')
-    list_filter = ('active', 'since', 'until')
+    list_filter = ('since', 'until')
     search_fields = ('member__user__first_name', 'member__user__last_name',
                      'member__user__username', 'member__user__email')
 
