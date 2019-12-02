@@ -4,8 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from .constants import (DEFAULT_MEMBERSHIP_PERIOD, DEFAULT_POSITION_PERIOD,
-                        FEE_AMOUNT, FEE_PAYMENT_TYPE, MEMBER_CATEGORY,
-                        MEMBER_POSITION)
+                        FEE_AMOUNT, FEE_PAYMENT_TYPE, MEMBER_POSITION)
 
 
 class Member(models.Model):
@@ -15,6 +14,8 @@ class Member(models.Model):
     po_box = models.CharField(max_length=10, blank=True)
     city = models.CharField(max_length=64, blank=True)
     phone = models.CharField(max_length=20, blank=True)
+    is_founder = models.BooleanField(default=False)
+    is_honorary = models.BooleanField(default=False)
     remarks = models.CharField(max_length=512, blank=True)
 
     @property
@@ -75,9 +76,6 @@ class Position(models.Model):
 
 class Membership(models.Model):
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
-    member_category = models.CharField(max_length=1,
-                                       choices=MEMBER_CATEGORY.CHOICES,
-                                       default=MEMBER_CATEGORY.NUMBER)
     valid_from = models.DateField()
     valid_until = models.DateField(blank=True, null=True)
     fee_received_at = models.DateTimeField(blank=True, null=True)
@@ -98,8 +96,7 @@ class Membership(models.Model):
         ordering = ('valid_from', 'member')
 
     def save(self, *args, **kwargs):
-        if (self.fee_amount != FEE_AMOUNT.EXEMPT
-                and self.valid_until is None):
+        if self.valid_until is None:
             self.valid_until = self.valid_from + datetime.timedelta(
                 days=DEFAULT_MEMBERSHIP_PERIOD)
         super().save(args, kwargs)

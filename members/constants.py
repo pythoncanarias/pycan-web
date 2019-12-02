@@ -33,22 +33,9 @@ class FEE_PAYMENT_TYPE:
 class FEE_AMOUNT:
     GENERAL = 20
     STUDENT = 10
-    EXEMPT = 0
     CHOICES = (
         (GENERAL, 'General'),
-        (STUDENT, 'Estudiante y/o Desempleado'),
-        (EXEMPT, 'Exento')
-    )
-
-
-class MEMBER_CATEGORY:
-    FOUNDER = 'F'
-    NUMBER = 'N'
-    HONORARY = 'H'
-    CHOICES = (
-        (FOUNDER, 'Socio/a fundador/a'),
-        (NUMBER, 'Socio/a de número'),
-        (HONORARY, 'Socio/a honorífico/a')
+        (STUDENT, 'Estudiante y/o Desempleado')
     )
 
 

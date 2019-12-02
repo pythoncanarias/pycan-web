@@ -16,7 +16,8 @@ class MemberAdmin(admin.ModelAdmin):
     active.boolean = True
 
     raw_id_fields = ['user']
-    list_display = ('full_name', 'user', 'email', 'member_id', 'active')
+    list_display = ('full_name', 'user', 'email', 'member_id', 'active',
+                    'is_founder')
     search_fields = ('id', 'user__first_name', 'user__last_name',
                      'user__email')
     inlines = (MembershipInline, )
@@ -38,8 +39,7 @@ class PositionAdmin(admin.ModelAdmin):
 @admin.register(Membership)
 class MembershipAdmin(admin.ModelAdmin):
     raw_id_fields = ['member']
-    list_display = ('member', 'member_category', 'valid_from', 'valid_until',
-                    'fee_amount')
+    list_display = ('member', 'valid_from', 'valid_until', 'fee_amount')
     search_fields = ('member__user__first_name', 'member__user__last_name',
                      'member__user__username', 'member__user__email')
-    list_filter = ('member_category', 'fee_amount')
+    list_filter = ('fee_amount',)
