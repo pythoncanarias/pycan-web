@@ -78,7 +78,7 @@ class Membership(models.Model):
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
     valid_from = models.DateField()
     valid_until = models.DateField(blank=True, null=True)
-    fee_received_at = models.DateTimeField(blank=True, null=True)
+    fee_received_at = models.DateField(blank=True, null=True)
     fee_amount = models.IntegerField(choices=FEE_AMOUNT.CHOICES,
                                      default=FEE_AMOUNT.GENERAL)
     fee_payment_type = models.CharField(
