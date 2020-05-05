@@ -1,6 +1,6 @@
 requirements:
 	 pipenv lock --requirements > requirements.txt
-	 pipenv lock --requirements --dev > dev-requirements.txt
+	 pipenv lock --requirements --dev > requirements-dev.txt
 
 clean:
 	find . -name "*.pyc" -delete
