@@ -15,6 +15,7 @@ register = template.Library()
 
 register.filter('as_month', filters.as_month)
 register.filter('as_date', filters.as_date)
+register.filter('date_from_now', filters.date_from_now)
 register.filter('get_key', filters.get_key)
 register.filter('get_asset_key', filters.get_asset_key)
 register.filter('as_markdown', compose2(mark_safe, filters.as_markdown))

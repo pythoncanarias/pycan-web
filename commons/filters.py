@@ -32,6 +32,12 @@ def as_date(f):
         return '{}/{}/{}'.format(f.day, as_month(f, 3), f.year)
 
 
+def date_from_now(days=1):
+    today = datetime.date.today()
+    delta = datetime.timedelta(days=days)
+    return today + delta
+
+
 def get_key(dictionary, key):
     return dictionary.get(key, "")
 

@@ -15,6 +15,7 @@ urlpatterns = [
     path('about/', include('about.urls', namespace='about')),
     path('legal/', include('legal.urls', namespace='legal')),
     path('members/', include('members.urls', namespace='members')),
+    path('jobs/', include('jobs.urls', namespace='jobs')),
 ]
 
 # redirections

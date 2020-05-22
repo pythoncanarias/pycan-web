@@ -1,0 +1,47 @@
+{% extends 'base.html' %}{% load utils %}
+
+{% block content %}
+
+<h1 class="title">Ofertas de empleo</h1>
+
+  {% for job in jobs %}
+  <div class="card is-success">
+    <div class="card-header">
+      <h2 class="card-header-title is-centered has-background-success has-text-white">{{ job }}</h2>
+    </div>
+    <div class="card-content as-markdown">
+      {{ job.description|as_markdown }}
+    </div>
+    <div class="card-content">
+      <ul>
+
+        <li class="list-item">
+          Salario: <strong>{{ job.salary }}</strong>
+        </li>
+        <li class="list-item">
+          Puesto: {{ job.title }}
+        </li>
+        <li class="list-item">
+          Tipo de contrato: <strong>{{ job.get_contract_type_display }}</strong>
+        </li>
+        <li class="list-item">
+          Modo de trabajo: <strong>{{ job.get_work_mode_display }}</strong>
+        </li>
+        <li class="list-item">
+          Jornada  parcial: <strong>{{ job.part_time|yesno:"Si,No" }}</strong>
+        </li>
+        <li class="list-item">
+          Más información: <strong><a href="{{ job.more_info }}" target="_blank">
+              {{ job.more_info }}
+            </a></strong>
+        </li>
+      </ul>
+    </div>
+
+
+  </div>
+  {% endfor %}
+
+{% endblock content %}
+
+
