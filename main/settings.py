@@ -37,15 +37,41 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin', 'django.contrib.auth',
-    'django.contrib.contenttypes', 'django.contrib.sessions',
-    'django.contrib.messages', 'django.contrib.staticfiles',
-    'django.contrib.sites', 'django.contrib.flatpages', 'django_extensions',
-    'django_rq', 'colorfield', 'leaflet', 'import_export', 'commons',
-    'homepage', 'events', 'locations', 'organizations', 'schedule', 'speakers',
-    'tickets', 'invoices', 'api', 'certificates', 'quotes', 'members', 'about',
-    'legal'
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    'django_rq',
+    'colorfield',
+    'leaflet',
+    'import_export',
+    'commons',
+    'homepage',
+    'jobs',
+    'events',
+    'locations',
+    'organizations',
+    'schedule',
+    'speakers',
+    'tickets',
+    'invoices',
+    'api',
+    'certificates',
+    'quotes',
+    'members',
+    'about',
+    'legal',
 ]
+
+if DEBUG:
+    INSTALLED_APPS += [
+        'django_extensions',
+        'debug_toolbar',
+        ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,6 +82,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
 
 ROOT_URLCONF = 'main.urls'
 
@@ -140,12 +171,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
 STATIC_ROOT = config('STATIC_ROOT', default=os.path.join(BASE_DIR, '.static'))
-MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, '.media'))
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, '.media'))
+
 
 SITE_ID = 1
 
