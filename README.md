@@ -34,6 +34,9 @@ Use this command if you want a requirements file for developers:
 
     pipenv lock --requirements --dev > requirements-dev.txt
 
+If you have `make` installed , you can generate this two files with:
+
+    make requirements
 
 #### Proceed
 
