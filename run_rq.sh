@@ -1,4 +1,5 @@
 #!/bin/bash
 
-cd "$(dirname "$0")"
-pipenv run python manage.py rqworker default low
+source ~/.virtualenvs/web/bin/activate
+cd $(dirname $0)
+exec python manage.py rqworker default low
