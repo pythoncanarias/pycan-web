@@ -6,47 +6,39 @@ Web for Python Canarias made in Django.
 
 ### Pipenv
 
-This projects uses [Pipenv](https://pipenv.readthedocs.io/en/latest/).
+This projects recomend the use of virtual environments. The `requiremens.txt`
+containst the packages for production,  `requiremens-dev.txt` the aditional
+requirements for development.
 
-> Pipenv is a tool that aims to bring the best of all packaging worlds (bundler, composer, npm, cargo, yarn, etc.) to the Python world.
+Some of the advantages of using virtual environment are:
 
-Some of its great features are:
-
-- Enables truly deterministic builds, while easily specifying only what you want.
-- Generates and checks file hashes for locked dependencies.
-- Automatically install required Pythons, if pyenv is available.
-- Automatically finds your project home, recursively, by looking for a Pipfile.
-- Automatically generates a Pipfile, if one doesn’t exist.
-- Automatically creates a virtualenv in a standard location.
-- Automatically adds/removes packages to a Pipfile when they are un/installed.
-- Automatically loads .env files, if they exist.
-
-### If you prefer to use virtualenv and friends
-
-You can get a requirements file as a subproduct of the Pipfile (This is why we
-removed the `requirements.txt` and the `requirements-dev.txt` from the repo).
-
-This command allows you to generate a proper `requirements.txt` from the Pipfile:
-
-    pipenv lock --requirements > requirements.txt
-
-Use this command if you want a requirements file for developers:
-
-    pipenv lock --requirements --dev > requirements-dev.txt
-
-If you have `make` installed , you can generate this two files with:
-
-    make requirements
+- Isolates the Python environment from the system
+- It is easy to duplicate the production environment
+- It is easy to duplicate tne development environment
+- GitHub enables security checks on the requirements files
+- You can use [virtualenv-wrapper](https://virtualenvwrapper.readthedocs.io/en/latest/), which is ❤️
 
 #### Proceed
 
-After you have cloned the repo, make:
+Note: The procedure assumes `python3` in your system executes a version of
+Python 3.6 or upper.
+
+
+1) Install virtualenv and virtualenv-wrapper.
+
+2) Clone the repository.
+
+3) Change to the project directory. Create the virtual environment and install all
+the dependencies for the project with the next lines:
 
 ~~~console
-$ pipenv install --python 3.6
+    $ mkvirtualenv -a . -p $(which python3) pycanweb
+    $ pip install requirements.txt
+    $ pip install requirements-dev.txt  # For developers
 ~~~
 
-This will install a virtual environment for the project, with Python 3.6, Django and all the rest Python dependencies.
+This will install a virtual environment for the project, with Python 3, Django
+and all the rest Python dependencies.
 
 ## Node.js dependencies
 

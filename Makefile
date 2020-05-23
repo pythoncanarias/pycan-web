@@ -1,7 +1,3 @@
-requirements:
-	pipenv lock --requirements > requirements.txt
-	pipenv lock --requirements --dev > requirements-dev.txt
-
 clean:
 	find . -type f -name "*.pyc" -delete
 	find . -type d -name "__pycache__" -exec rm -r "{}" \;
