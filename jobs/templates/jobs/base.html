@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% load utils %}
+
+{% block style %}
+  <link rel="stylesheet" href="{{ assets|get_asset_key:'jobs/custom.min.css' }}">
+{% endblock style %}
