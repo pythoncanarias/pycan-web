@@ -1,6 +1,6 @@
 #!/bin/bash
 # Master script.
 
-cd "$(dirname "$0")"
-PYTHON_VENV=$(pipenv --venv)
-exec uwsgi --home $PYTHON_VENV --ini uwsgi.ini
+source ~/.virtualenvs/web/bin/activate
+cd $(dirname $0)
+exec uwsgi --ini uwsgi.ini
