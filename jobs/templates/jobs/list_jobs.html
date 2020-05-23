@@ -1,4 +1,10 @@
-{% extends 'base.html' %}{% load utils %}
+{% extends "jobs/base.html" %}
+
+{% load utils %}
+
+{% block title %}Empleo - {{ block.super }}{% endblock %}
+
+{% block body_class %}jobs-index{% endblock %}
 
 {% block content %}
 
