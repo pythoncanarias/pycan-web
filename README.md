@@ -1,41 +1,36 @@
 # Web
 
-Web for Python Canarias made in Django.
+Web for [Python Canarias](pythoncanarias.es) (happily made with Django).
 
 ## Python dependencies
 
-### Pipenv
+### Virtual environment
 
-This projects recomend the use of virtual environments. The `requiremens.txt`
-containst the packages for production,  `requiremens-dev.txt` the aditional
-requirements for development.
+This project recommends the use of virtual environments. The [requirements.txt](requirements.txt) contains the packages for _production_, while [requirements-dev.txt](requirements-dev.txt) includes the additional requirements for _development_.
 
-Some of the advantages of using virtual environment are:
+Some advantages of using **virtual environment** are:
 
-- Isolates the Python environment from the system
-- It is easy to duplicate the production environment
-- It is easy to duplicate tne development environment
-- GitHub enables security checks on the requirements files
-- You can use [virtualenv-wrapper](https://virtualenvwrapper.readthedocs.io/en/latest/), which is ❤️
+- Isolates the Python environment from the system.
+- It is easy to duplicate the production environment.
+- It is easy to duplicate tne development environment.
+- GitHub enables security checks on the requirements files.
+- You can use [virtualenv-wrapper](https://virtualenvwrapper.readthedocs.io/en/latest/), which is ❤️.
 
 #### Proceed
 
 Note: The procedure assumes `python3` in your system executes a version of
-Python 3.6 or upper.
+**Python 3.6** or upper.
 
+1. Install `virtualenv` and `virtualenv-wrapper`.
+2. Clone the repository.
+3. Change to the project directory. Create the virtual environment and install all
+   the dependencies for the project with the next lines:
 
-1) Install virtualenv and virtualenv-wrapper.
-
-2) Clone the repository.
-
-3) Change to the project directory. Create the virtual environment and install all
-the dependencies for the project with the next lines:
-
-~~~console
+```console
     $ mkvirtualenv -a . -p $(which python3) pycanweb
     $ pip install requirements.txt
     $ pip install requirements-dev.txt  # For developers
-~~~
+```
 
 This will install a virtual environment for the project, with Python 3, Django
 and all the rest Python dependencies.
@@ -49,53 +44,55 @@ Minimal versions:
 - `gulp (cli) >= 2.0.1`
 - `gulp (local version) >= 4.0.0`
 
-There are some libraries (*css, js*) used on either the *frontend* or the *development phase*. To install them, make:
+There are some libraries (_css, js_) used on either the _frontend_ or the _development phase_. To install them, make:
 
-~~~console
+```console
 $ npm install
-~~~
+```
 
-> This will create a bunch of folders and files under `node_modules`.
+> ⚠️ This will create a bunch of folders and files under `node_modules`.
 
 In order to use `gulp` correctly it is necessary to install:
 
-~~~console
+```console
 $ sudo npm install --global gulp-cli
-~~~
+```
 
 ## Developing
 
 ### EditorConfig
 
-Please install the corresponding extension of [EditorConfig](https://editorconfig.org/) in your favourite editor. Thus your editor will pick the settings stored in `.editorconfig`.
+Please install the corresponding extension of [EditorConfig](https://editorconfig.org/) in your favorite editor. Thus your editor will pick the settings stored in `.editorconfig`.
 
 This configuration avoids conflicts with a lot of settings, mainly with tabs widths.
 
 ### Customize your settings
 
-Feel free to change some of the settings creating a file called `.venv` on the root of the project.
+Feel free to change some of the settings creating a file called `.env` on the root of the project.
 
 ### Database
 
-We are using **PostgreSQL** as *database management system*. In order to configure the project correctly it is important to follow some indications:
+We are using **PostgreSQL** as _database management system_. In order to configure the project correctly it is important to follow some indications:
 
 1. Install [PostgreSQL](https://www.postgresql.org/download/).
-2. Create a *database* and a *user/password* with full access to that database.
+2. Create a _database_ and a _user/password_ with full access to that database.
 3. Set the following keys in the `.env` file: `DATABASE_NAME`, `DATABASE_USER` and `DATABASE_PASSWORD`.
 
 Afterwards you can apply migrations with:
 
-~~~console
-$ pipenv run python manage.py migrate
-~~~
+```console
+$ workon pycanweb
+$ ./manage.py migrate
+```
 
 #### Admin user
 
 In order to create a user for the admin site of Django you should:
 
-~~~console
-$ pipenv run python manage.py createsuperuser
-~~~
+```console
+$ workon pycanweb
+$ ./manage.py createsuperuser
+```
 
 #### Fixtures
 
@@ -109,21 +106,38 @@ It is important to set property the key `MEDIA_ROOT` in the file `.env`
 
 In order to develop, you have to launch the following services:
 
-~~~console
-$ pipenv run python manage.py runserver # on one terminal
-$ gulp watch                 # on another terminal
-~~~
+- _Django_ development server:
 
-After that, you'll be able to access the project on http://127.0.0.1:8000
+```console
+    $ workon pycanweb
+    $ ./manage.py runserver
+```
+
+- _Gulp_ build system for static assets:
+
+```console
+    $ gulp watch
+```
+
+After that, you'll be able to access the project on: http://127.0.0.1:8000
 
 The changes made both in Python files or static files will be detected by the services and will reload them.
 
-### Model graphs
-
-~~~console
-$ pipenv run python manage.py graph_models events organizations locations speakers tickets schedule -g -S -o models.png
-~~~
-
 ### API
 
-There are new documentation about the [public API](./docs/api.md).
+You can check the documentation of the [public API](./docs/api.md).
+
+### Adding a new section (app) on the project
+
+Normally, when a new app (section) is needed in a Django project, it can be created as follows:
+
+```console
+$ ./manage.py startapp <app>
+```
+
+Based on the design of our project, some further steps must be taken in order to get the app well visualized:
+
+1. Add `<app>` to the `APPS` constant on [gulp/config.js](gulp/config.js).
+2. Create the file `<app>/static/<app>/css/main.scss` with, at least, the content: `@import "commons/static/commons/css/base";`
+3. Create the base template file at `<app>/templates/<app>/base.html` which extends from [commons/templates/base.html](commons/templates/base.html) as `base.html` and links to the stylesheet `<app>/custom.min.css` (_this file is generated by gulp_)
+4. In order to create the corresponding item on header menu, add the app entry at [commons/templates/header.html](commons/templates/header.html).
