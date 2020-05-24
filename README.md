@@ -12,7 +12,7 @@ Some advantages of using **virtual environment** are:
 
 - Isolates the Python environment from the system.
 - It is easy to duplicate the production environment.
-- It is easy to duplicate tne development environment.
+- It is easy to duplicate the development environment.
 - GitHub enables security checks on the requirements files.
 - You can use [virtualenv-wrapper](https://virtualenvwrapper.readthedocs.io/en/latest/), which is ❤️.
 
