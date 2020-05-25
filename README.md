@@ -1,12 +1,24 @@
-# Web
+![Python Canarias Logo](https://github.com/pythoncanarias/docs/raw/master/logos/python-canarias/bitmaps/logo-python-canarias-color-372x128.png)
 
-Web for [Python Canarias](pythoncanarias.es) (happily made with Django).
+Website of [Python Canarias](pythoncanarias.es) 🚀 happily made with [Django](https://www.djangoproject.com/).
+
+---
+
+## Table of contents <!-- omit in TOC -->
+
+- [Python dependencies](#python-dependencies)
+- [Node.js dependencies](#nodejs-dependencies)
+- [EditorConfig](#editorconfig)
+- [Customize your settings](#customize-your-settings)
+- [Database](#database)
+- [Media](#media)
+- [Launching services](#launching-services)
+- [API](#api)
+- [Adding a new section (app) to the project](#adding-a-new-section-app-to-the-project)
 
 ## Python dependencies
 
-### Virtual environment
-
-This project recommends the use of virtual environments. The [requirements.txt](requirements.txt) contains the packages for _production_, while [requirements-dev.txt](requirements-dev.txt) includes the additional requirements for _development_.
+This project recommends the use of virtual environments. The [`requirements.txt`](requirements.txt) contains the packages for _production_, while [`requirements-dev.txt`](requirements-dev.txt) includes the additional requirements for _development_.
 
 Some advantages of using **virtual environment** are:
 
@@ -14,15 +26,13 @@ Some advantages of using **virtual environment** are:
 - It is easy to duplicate the production environment.
 - It is easy to duplicate the development environment.
 - GitHub enables security checks on the requirements files.
-- You can use [virtualenv-wrapper](https://virtualenvwrapper.readthedocs.io/en/latest/), which is ❤️.
+- You can use [`virtualenv-wrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/), which is ❤️.
 
-#### Proceed
-
-Note: The procedure assumes `python3` in your system executes a version of
+🐍 **Note**: The procedure assumes `python3` in your system executes a version of
 **Python 3.6** or upper.
 
-1. Install `virtualenv` and `virtualenv-wrapper`.
-2. Clone the repository.
+1. Install [`virtualenv`](https://virtualenv.pypa.io/en/latest/) and (encouragingly) [`virtualenv-wrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/).
+2. Clone the repository: `git clone git@github.com:pythoncanarias/web.git`
 3. Change to the project directory. Create the virtual environment and install all
    the dependencies for the project with the next lines:
 
@@ -32,12 +42,11 @@ Note: The procedure assumes `python3` in your system executes a version of
     $ pip install requirements-dev.txt  # For developers
 ```
 
-This will install a virtual environment for the project, with Python 3, Django
-and all the rest Python dependencies.
+> This will install a virtual environment called `pycanweb` for the project, with Python 3, Django and all the rest Python dependencies.
 
 ## Node.js dependencies
 
-Minimal versions:
+Minimal versions of the required tools:
 
 - `npm >= 5.6.0`
 - `node >= 9.11.2`
@@ -58,19 +67,17 @@ In order to use `gulp` correctly it is necessary to install:
 $ sudo npm install --global gulp-cli
 ```
 
-## Developing
-
-### EditorConfig
+## EditorConfig
 
 Please install the corresponding extension of [EditorConfig](https://editorconfig.org/) in your favorite editor. Thus your editor will pick the settings stored in `.editorconfig`.
 
 This configuration avoids conflicts with a lot of settings, mainly with tabs widths.
 
-### Customize your settings
+## Customize your settings
 
 Feel free to change some of the settings creating a file called `.env` on the root of the project.
 
-### Database
+## Database
 
 We are using **PostgreSQL** as _database management system_. In order to configure the project correctly it is important to follow some indications:
 
@@ -81,11 +88,11 @@ We are using **PostgreSQL** as _database management system_. In order to configu
 Afterwards you can apply migrations with:
 
 ```console
-$ workon pycanweb
+$ workon pycanweb  # Activation of virtualenv
 $ ./manage.py migrate
 ```
 
-#### Admin user
+### Admin user <!-- omit in TOC -->
 
 In order to create a user for the admin site of Django you should:
 
@@ -94,17 +101,17 @@ $ workon pycanweb
 $ ./manage.py createsuperuser
 ```
 
-#### Fixtures
+### Fixtures <!-- omit in TOC -->
 
 Initially (and obviously) the database will be empty. Some `fixtures` will be needed to work with.
 
-### Media
+## Media
 
-It is important to set property the key `MEDIA_ROOT` in the file `.env`
+It is important to properly set the key `MEDIA_ROOT` in the file `.env` for the server to locate the media assets.
 
-### Launching services
+## Launching services
 
-In order to develop, you have to launch the following services:
+In order to properly develop, you have to launch the following services:
 
 - _Django_ development server:
 
@@ -121,13 +128,13 @@ In order to develop, you have to launch the following services:
 
 After that, you'll be able to access the project on: http://127.0.0.1:8000
 
-The changes made both in Python files or static files will be detected by the services and will reload them.
+> The changes made both in Python files or static files will be detected by the services and will reload them.
 
-### API
+## API
 
 You can check the documentation of the [public API](./docs/api.md).
 
-### Adding a new section (app) on the project
+## Adding a new section (app) to the project
 
 Normally, when a new app (section) is needed in a Django project, it can be created as follows:
 
@@ -138,6 +145,6 @@ $ ./manage.py startapp <app>
 Based on the design of our project, some further steps must be taken in order to get the app well visualized:
 
 1. Add `<app>` to the `APPS` constant on [gulp/config.js](gulp/config.js).
-2. Create the file `<app>/static/<app>/css/main.scss` with, at least, the content: `@import "commons/static/commons/css/base";`
+2. Create the file `<app>/static/<app>/css/main.scss` with, at least, the following content: `@import "commons/static/commons/css/base";`
 3. Create the base template file at `<app>/templates/<app>/base.html` which extends from [commons/templates/base.html](commons/templates/base.html) as `base.html` and links to the stylesheet `<app>/custom.min.css` (_this file is generated by gulp_)
 4. In order to create the corresponding item on header menu, add the app entry at [commons/templates/header.html](commons/templates/header.html).
