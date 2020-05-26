@@ -22,7 +22,7 @@
       <ul>
 
         <li class="list-item">
-          Salario: <strong>{{ job.salary }}</strong>
+          Salario: <strong>{{ job.salary|default:"No se especifica" }}</strong>
         </li>
         <li class="list-item">
           Puesto: {{ job.title }}
