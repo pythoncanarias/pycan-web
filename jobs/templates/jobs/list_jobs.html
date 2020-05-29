@@ -10,7 +10,7 @@
 
 <h1 class="title">Ofertas de empleo</h1>
   {% for job in jobs %}
-  <div class="card">
+  <div class="card" id="#job{{ job.id }}">
     <div class="card-header job-title">
       <a href="" class="subtitle card-header-title is-centered has-background-info has-text-white">
         {{ job }} ({{ job.created|date:"d/m/Y" }})
@@ -41,8 +41,9 @@
         </div>
       </article>
     </div>
-    <div class="content card-content job-description">
-      {{ job.description|as_markdown }}
+    <div class="card-content job-description">
+      <a class="btn-toggle-job-description"><i class="fas fa-chevron-circle-down"></i> Mostrar descripción</a>
+      <div class="content job-description-text">{{ job.description|as_markdown }}</div>
     </div>
   </div>
   {% endfor %}
