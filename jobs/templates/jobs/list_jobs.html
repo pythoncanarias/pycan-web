@@ -9,42 +9,41 @@
 {% block content %}
 
 <h1 class="title">Ofertas de empleo</h1>
-
   {% for job in jobs %}
-  <div class="card is-success">
-    <div class="card-header">
-      <h2 class="card-header-title is-centered has-background-success has-text-white">{{ job }}</h2>
+  <div class="card">
+    <div class="card-header job-title">
+      <a href="" class="subtitle card-header-title is-centered has-background-info has-text-white">
+        {{ job }} ({{ job.created|date:"d/m/Y" }})
+      </a>
     </div>
-    <div class="card-content as-markdown">
+    <div class="card-content job-details">
+      <article class="message is-info">
+        <div class="message-body">
+          <ul>
+            <li>
+              <i class="far fa-dot-circle"></i> Salario: <strong>{{ job.salary|default:"No se especifica" }}</strong>
+            </li>
+            <li>
+              <i class="far fa-dot-circle"></i> Tipo de contrato: <strong>{{ job.get_contract_type_display }}</strong>
+            </li>
+            <li>
+              <i class="far fa-dot-circle"></i> Modo de trabajo: <strong>{{ job.get_work_mode_display }}</strong>
+            </li>
+            <li>
+              <i class="far fa-dot-circle"></i> Jornada  parcial: <strong>{{ job.part_time|yesno:"Sí,No" }}</strong>
+            </li>
+            <li>
+              <i class="far fa-dot-circle"></i> Más información: <strong><a href="{{ job.more_info }}" target="_blank">
+                  {{ job.more_info }}
+                </a></strong>
+            </li>
+          </ul>
+        </div>
+      </article>
+    </div>
+    <div class="content card-content job-description">
       {{ job.description|as_markdown }}
     </div>
-    <div class="card-content">
-      <ul>
-
-        <li class="list-item">
-          Salario: <strong>{{ job.salary|default:"No se especifica" }}</strong>
-        </li>
-        <li class="list-item">
-          Puesto: {{ job.title }}
-        </li>
-        <li class="list-item">
-          Tipo de contrato: <strong>{{ job.get_contract_type_display }}</strong>
-        </li>
-        <li class="list-item">
-          Modo de trabajo: <strong>{{ job.get_work_mode_display }}</strong>
-        </li>
-        <li class="list-item">
-          Jornada  parcial: <strong>{{ job.part_time|yesno:"Si,No" }}</strong>
-        </li>
-        <li class="list-item">
-          Más información: <strong><a href="{{ job.more_info }}" target="_blank">
-              {{ job.more_info }}
-            </a></strong>
-        </li>
-      </ul>
-    </div>
-
-
   </div>
   {% endfor %}
 
