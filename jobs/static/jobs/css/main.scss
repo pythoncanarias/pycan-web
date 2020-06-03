@@ -21,3 +21,18 @@
   max-height: 2000px;
   transition: padding-top 0.1s ease-in, max-height 1s ease-in;
 }
+
+.details {
+  display: flex;
+  justify-content: space-between;
+
+  .collab {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+
+    a {
+      padding-top: 4px;
+    }
+  }
+}
