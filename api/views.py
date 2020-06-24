@@ -161,9 +161,10 @@ def list_staff_members(request):
     """List of active staff members."""
     return [
         serializer_staff(staff_member)
-        for staff_member in Position.objects
-            .filter(active=True)
-            .select_related('member__user')
+        for staff_member
+        in Position.objects
+                   .filter(active=True)
+                   .select_related('member__user')
     ]
 
 
@@ -214,7 +215,14 @@ def list_speakers(request, slug):
 @api
 def list_talks(request, slug):
     event = Event.get_by_slug(slug)
-    talks = [s for s in event.schedule.select_related('slot').order_by('slot__name') if s.slot.is_talk()]
+    talks = (
+        s
+        for s
+        in event.schedule
+                .select_related('slot')
+                .order_by('slot__name')
+        if s.slot.is_talk()
+    )
     return [serialize_talk(talk) for talk in talks]
 
 
