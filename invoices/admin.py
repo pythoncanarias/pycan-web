@@ -39,9 +39,22 @@ class InvoiceAdmin(admin.ModelAdmin):
         ConceptInline,
     ]
     list_filter = ('date', 'organization', 'event', 'active')
-    list_display = ('__str__', 'date', 'organization', 'event', 'total', 'active', 'invoice_pdf')
-
-    fields = ('organization', 'event', ('invoice_number', 'active'), 'date', ('taxes', 'retention'))
+    list_display = (
+        '__str__',
+        'date',
+        'organization',
+        'event',
+        'total',
+        'active',
+        'invoice_pdf',
+    )
+    fields = (
+        'organization',
+        'event',
+        ('invoice_number', 'active'),
+        'date',
+        ('taxes', 'retention'),
+    )
     readonly_fields = ('invoice_number', )
     ordering = ('-date', )
 
@@ -50,7 +63,7 @@ class InvoiceAdmin(admin.ModelAdmin):
     def invoice_pdf(self, invoice):
         if not os.path.isfile(invoice.path):
             invoice.render()
-
-        return mark_safe('<a href="{}" download>Download</a>'.format(invoice.filename_url()))
+        url = invoice.filename_url()
+        return mark_safe('<a href="{}" download>Download</a>'.format(url))
 
     invoice_pdf.short_description = 'File Download'
