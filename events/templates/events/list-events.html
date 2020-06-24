@@ -17,34 +17,6 @@
   {% endif %}
 </h1>
 
-<section>
-  {% for event in events %}
-    <a class="box event-box" href="{% url 'events:detail_event' slug=event.slug %}">
-      <div class="columns is-mobile">
-        <div class="column is-3-mobile is-2-tablet">
-          {% if event.cover %}
-            <img src="{{ event.cover.url }}" alt="{{ event.name }}">
-          {% endif %}
-        </div>
+{% include "events/includes/events-list.html" %}
 
-        <div class="column">
-          <h1 class="title is-4">{{ event.name }}</h1>
-          <div>
-            <div class="event-date">
-              <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
-            </div>
-            {% if event.venue %}
-              <div class="event-location">
-                <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
-              </div>
-            {% endif %}
-          </div>
-          <p class="event-short-description">
-            {{ event.short_description }}
-          </p>
-        </div>
-      </div>
-    </a>
-  {% endfor %}
-</section>
 {% endblock content %}
