@@ -1,0 +1,30 @@
+{% load utils %}
+{% if events %}
+{% with num_events=events.count  %}
+
+{% with event=events.0 klass="is-full" %}
+<section class="columns">
+    {% include "events/includes/event-section.html" %}
+</section>
+{% endwith %}
+
+{% if num_events == 2 %}
+    {% with event=events.1 klass="is-full" %}
+    <section class="columns">
+        {% include "events/includes/event-section.html" %}
+    </section>
+    {% endwith %}
+{% else %}
+    <section class="columns">
+    {% for event in events|slice:"1:" %}
+        {% include "events/includes/event-section.html" %}
+        {% if forloop.counter|divisibleby:2 %}
+            </section>
+            <section class="columns">
+        {% endif %}
+    {% endfor %}
+    </section>
+{% endif %}
+
+{% endwith %}
+{% endif %}

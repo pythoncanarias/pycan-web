@@ -1,0 +1,35 @@
+{% load utils %}
+    <div class="column {{ klass|default:"is-half" }}">
+      <div class="box event-item">
+       <article class="media">
+           
+        {% if event.cover %}
+          <div class="media-left">
+            <figure class="image is-64x64">
+            <a href="{% url 'events:detail_event' slug=event.slug %}">
+            <img src="{{ event.cover.url }}" alt="{{ event.name }}">
+            </a>
+            </figure>
+          </div>
+        {% endif %}
+        <div class="media-content">
+            <h1 class="title is-3">
+              <a href="{% url 'events:detail_event' slug=event.slug %}">
+              <strong>{{ event.name }}</strong>
+              </a>
+            </h1>
+            <div class="event-date">
+              <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
+            </div>
+            {% if event.venue %}
+              <div class="event-location">
+                <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
+              </div>
+            {% endif %}
+          <p class="event-short-description">
+            {{ event.short_description }}
+          </p>
+        </div>
+       </article>
+     </div> 
+    </div>

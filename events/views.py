@@ -21,7 +21,10 @@ def index(request):
     events = Event.objects.filter(active=True)
     num_events = events.count()
     if num_events == 0:
-        return render(request, 'events/no-events.html')
+        past_events = Event.objects.all().order_by("-start_date")[0:3]
+        return render(request, 'events/no-events.html', {
+            "past_events": past_events,
+        })
     if num_events == 1:
         event = events.first()
         return redirect('events:detail_event', slug=event.slug)

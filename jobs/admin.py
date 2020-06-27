@@ -4,6 +4,7 @@ from . import models
 
 # Register your models here.
 
+
 class JobOfferAdmin(admin.ModelAdmin):
     list_display = (
         "employer",
@@ -14,4 +15,3 @@ class JobOfferAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.JobOffer, JobOfferAdmin)
-

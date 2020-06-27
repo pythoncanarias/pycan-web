@@ -6,6 +6,30 @@
 
 {% block content %}
 <div class="box has-text-centered">
-  <h1 class="title is-6">Por el momento no hay eventos programados</h1>
+    
+<h1 class="title">Por el momento no hay eventos programados</h1>
+
+{% if past_events %}
+
+ <h2 class="subtitle">
+ Estos son los {{ past_events.count }} 
+ últimos eventos que hemos organizado.
+ </h2>
+
+
+{% with events=past_events %}
+    {% include "events/includes/events-list.html" %}
+{% endwith %}
+
+<div class="pt-2">
+<p>
+<a role="button" class="button is-info" href="{% url 'events:past_events' %}">Más eventos en nuestro archivo</a>
+</p>
+
 </div>
+
+{% endif %}
+ </div>
+
+
 {% endblock content %}
