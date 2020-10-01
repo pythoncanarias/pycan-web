@@ -6,6 +6,7 @@ Website of [Python Canarias](pythoncanarias.es) 🚀 happily made with [Django](
 
 ## Table of contents <!-- omit in TOC -->
 
+- [virtual environment](#defining-virtual-environment)
 - [Python dependencies](#python-dependencies)
 - [Node.js dependencies](#nodejs-dependencies)
 - [EditorConfig](#editorconfig)
@@ -15,6 +16,10 @@ Website of [Python Canarias](pythoncanarias.es) 🚀 happily made with [Django](
 - [Launching services](#launching-services)
 - [API](#api)
 - [Adding a new section (app) to the project](#adding-a-new-section-app-to-the-project)
+
+## virtual environment
+
+An environment which is same as the system interpreter but is isolated from the other python environments on the system.
 
 ## Python dependencies
 
