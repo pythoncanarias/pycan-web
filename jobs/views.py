@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from . import models
-# Create your views here.
+# Create your view here..
 
 
 def list_active_job_offers(request):
