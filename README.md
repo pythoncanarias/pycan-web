@@ -1,10 +1,10 @@
 ![Python Canarias Logo](https://github.com/pythoncanarias/docs/raw/master/logos/python-canarias/bitmaps/logo-python-canarias-color-372x128.png)
 
-Website of [Python Canarias](pythoncanarias.es) 🚀 happily made with [Django](https://www.djangoproject.com/).
+Welcome to the Website of [Python Canarias](pythoncanarias.es) 🚀 happily made with [Django](https://www.djangoproject.com/).
 
 ---
 
-## Table of contents <!-- omit in TOC -->
+## Table of contents : <!-- omit in TOC -->
 
 - [Python dependencies](#python-dependencies)
 - [Node.js dependencies](#nodejs-dependencies)
