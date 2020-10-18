@@ -1,0 +1,39 @@
+version: '3'
+services:
+    database:
+        image: "postgres:10.5"
+        environment:
+            POSTGRES_DB: pycan_database
+            POSTGRES_USER: pycan_user
+            POSTGRES_PASSWORD: pycan_password
+        volumes:
+            - database-data:/var/lib/postgresql/data/
+    pycan_web:
+        build: .
+        image: pycan_web:latest
+        volumes:
+            - ./:/var/www/pycan
+        ports:
+            - "8000:8000"
+        depends_on:
+            - database
+            - gulp
+        environment:
+            DATABASE_NAME: pycan_database
+            DATABASE_USER: pycan_user
+            DATABASE_PASSWORD: pycan_password
+            DATABASE_HOST: database
+    gulp:
+        build:
+            context: .
+            dockerfile: Dockerfile-gulp
+        image: pycan_gulp:latest
+        volumes:
+            # Mount the code of the app
+            - ./:/var/www/pycan
+
+            # But hide the host's node_modules by creating an anonymous volume
+            # This is called "The node_modules volume trick"
+            - /var/www/pycan/node_modules
+volumes:
+    database-data:
