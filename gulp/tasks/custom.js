@@ -9,6 +9,7 @@ import rollup from 'rollup-stream'
 import rollupResolve from 'rollup-plugin-node-resolve'
 import source from 'vinyl-source-stream'
 import vinylBuffer from 'vinyl-buffer'
+import tildeImporter from 'node-sass-tilde-importer'
 
 import { APPS } from '../config'
 import modifyCustomCssUrlPath from './utils/custom_css_url_path'
@@ -26,7 +27,7 @@ function buildCustom() {
 function getBuildCustomCssPromise(app) {
   return new Promise(function (resolve) {
     gulp.src(`${app}/static/${app}/css/main.scss`, { allowEmpty: true })
-      .pipe(sass())
+      .pipe(sass({importer: tildeImporter}))
       .pipe(rename('custom.min.css'))
       .pipe(modifyCustomCssUrlPath(app))
       .pipe(uglifycss())
