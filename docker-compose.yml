@@ -15,6 +15,7 @@ services:
         image: pycan_web:latest
         volumes:
             - ./:/var/www/pycan
+            - web-media:/var/www/media/
         ports:
             - "8000:8000"
         depends_on:
@@ -25,6 +26,7 @@ services:
             DATABASE_USER: pycan_user
             DATABASE_PASSWORD: pycan_password
             DATABASE_HOST: database
+            MEDIA_ROOT: /var/www/media
     gulp:
         build:
             context: .
@@ -39,3 +41,4 @@ services:
             - /var/www/pycan/node_modules
 volumes:
     database-data:
+    web-media:
