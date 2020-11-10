@@ -2,6 +2,8 @@ version: '3'
 services:
     database:
         image: "postgres:10.5"
+        ports:
+            - "5432:5432"
         environment:
             POSTGRES_DB: pycan_database
             POSTGRES_USER: pycan_user
