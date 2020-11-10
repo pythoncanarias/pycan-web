@@ -5,7 +5,7 @@ Website of [Python Canarias](pythoncanarias.es) 🚀 happily made with [Django](
 ---
 
 ## Table of contents <!-- omit in TOC -->
-- [Running with `docker-compose`](#running-with--docker-compose-)
+- [Running with `docker-compose`](#running-with-docker-compose)
 - [Python version and dependencies](#python-version-and-dependencies)
   * [Installing all dependencies in a virtual environment](#installing-all-dependencies-in-a-virtual-environment)
 - [Node.js dependencies](#nodejs-dependencies)
