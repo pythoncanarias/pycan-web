@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'members',
     'about',
     'legal',
+    'dev',
 ]
 
 if DEBUG:
