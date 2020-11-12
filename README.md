@@ -21,7 +21,7 @@ Website of [Python Canarias](pythoncanarias.es) 🚀 happily made with [Django](
 
 Ensure you have Docker and docker-compose installed.
 
-Build the main app image:
+Build the main app image and the Gulp (build tool) image:
 ```
 docker-compose build
 ```
@@ -31,14 +31,14 @@ Run the database migrations:
 docker-compose run pycan_web ./manage.py migrate
 ```
 
-Launch the app with the dependencies. This will start all services:
-```
-docker-compose up
-```
-
 Add initial test data to the DB (You will need this to test the web app):
 ```
 docker-compose run pycan_web ./manage.py dbload
+```
+
+Launch the app with the dependencies. This will start all services and keep your terminal blocked (You can Ctrl-C to stop all services):
+```
+docker-compose up
 ```
 
 That's it, now visit http://localhost:8000/
