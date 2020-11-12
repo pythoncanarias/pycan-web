@@ -26,7 +26,7 @@ function buildCustom() {
 
 function getBuildCustomCssPromise(app) {
   return new Promise(function (resolve) {
-    gulp.src(`${app}/static/${app}/css/main.scss`, { allowEmpty: true })
+    gulp.src(`apps/${app}/static/${app}/css/main.scss`, { allowEmpty: true })
       .pipe(sass({importer: tildeImporter}))
       .pipe(rename('custom.min.css'))
       .pipe(modifyCustomCssUrlPath(app))
