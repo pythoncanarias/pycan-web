@@ -28,7 +28,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY requirements.txt requirements-dev.txt ./
 
-RUN pip install -r requirements.txt && \
-    pip install -r requirements-dev.txt
+RUN pip install --disable-pip-version-check -r requirements.txt && \
+    pip install --disable-pip-version-check -r requirements-dev.txt
 
 CMD ["./manage.py", "runserver", "0.0.0.0:8000"]
