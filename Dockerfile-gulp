@@ -7,7 +7,7 @@ ENV PYCAN_DIR=$PYCAN_DIR_PARENT/pycan
 # ===========================================================
 WORKDIR $PYCAN_DIR_PARENT
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm install && npm cache clean --force --loglevel=error \
  && npm install --global gulp-cli

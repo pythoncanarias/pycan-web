@@ -26,7 +26,7 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 
-COPY requirements.txt requirements-dev.txt .
+COPY requirements.txt requirements-dev.txt ./
 
 RUN pip install -r requirements.txt && \
     pip install -r requirements-dev.txt
