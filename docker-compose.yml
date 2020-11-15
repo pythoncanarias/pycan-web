@@ -3,7 +3,7 @@ services:
     database:
         image: "postgres:10.5"
         ports:
-            - "5432:5432"
+            - "${PYCAN_DB_PORT:-5432}:5432"
         environment:
             POSTGRES_DB: pycan_database
             POSTGRES_USER: pycan_user
@@ -17,7 +17,7 @@ services:
             - ./:/var/www/pycan
             - web-media:/var/www/media/
         ports:
-            - "8000:8000"
+            - "${PYCAN_APP_PORT:-8000}:8000"
         depends_on:
             - database
             - gulp

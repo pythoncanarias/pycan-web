@@ -43,6 +43,8 @@ docker-compose up
 
 That's it, now visit http://localhost:8000/
 
+Note that both the database and the web app bind their ports to the host. If you have port conflicts, you can export the environment variables `PYCAN_DB_PORT` and, `PYCAN_APP_PORT` to the desired ports in the host for, respectively, the database and the app, before running `docker-compose up`.
+
 ## Python version and dependencies
 
 This project **requires Python 3.6**. From now on, `python3` is assumed to be Python 3.6.
