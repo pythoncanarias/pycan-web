@@ -5,6 +5,7 @@ import uglifycss from 'gulp-uglifycss'
 import replace from 'gulp-replace'
 import noop from 'gulp-noop'
 import sass from 'gulp-sass'
+import tildeImporter from 'node-sass-tilde-importer'
 
 import { LIBS } from '../config'
 
@@ -26,7 +27,7 @@ function buildVendorJs() {
 function getBuildVendorCssPromise(app) {
   return new Promise(function (resolve) {
     gulp.src(LIBS.CSS[app])
-      .pipe(sass())
+      .pipe(sass({importer: tildeImporter}))
       .pipe(concat('vendor.min.css'))
       .pipe(app === 'commons' ? replace('../webfonts', 'webfonts') : noop())
       .pipe(uglifycss())

@@ -5,33 +5,59 @@ Website of [Python Canarias](pythoncanarias.es) 🚀 happily made with [Django](
 ---
 
 ## Table of contents <!-- omit in TOC -->
-
-- [Python dependencies](#python-dependencies)
+- [Running with `docker-compose`](#running-with-docker-compose)
+- [Python version and dependencies](#python-version-and-dependencies)
+  * [Installing all dependencies in a virtual environment](#installing-all-dependencies-in-a-virtual-environment)
 - [Node.js dependencies](#nodejs-dependencies)
-- [EditorConfig](#editorconfig)
-- [Customize your settings](#customize-your-settings)
 - [Database](#database)
+- [Customize your settings](#customize-your-settings)
 - [Media](#media)
 - [Launching services](#launching-services)
 - [API](#api)
-- [Adding a new section (app) to the project](#adding-a-new-section-app-to-the-project)
+- [Adding a new section (app) to the project](#adding-a-new-section--app--to-the-project)
 
-## Python dependencies
 
-This project recommends the use of virtual environments. The [`requirements.txt`](requirements.txt) contains the packages for _production_, while [`requirements-dev.txt`](requirements-dev.txt) includes the additional requirements for _development_.
+## Running with `docker-compose`
 
-Some advantages of using **virtual environment** are:
+Ensure you have Docker and docker-compose installed.
 
-- Isolates the Python environment from the system.
-- It is easy to duplicate the production environment.
-- It is easy to duplicate the development environment.
-- GitHub enables security checks on the requirements files.
-- You can use [`virtualenv-wrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/), which is ❤️.
+Build the main app image and the Gulp (build tool) image:
+```
+docker-compose build
+```
 
-🐍 **Note**: The procedure assumes `python3` in your system executes a version of
-**Python 3.6** or upper.
+Run the database migrations:
+```
+docker-compose run pycan_web ./manage.py migrate
+```
 
-1. Install [`virtualenv`](https://virtualenv.pypa.io/en/latest/) and (encouragingly) [`virtualenv-wrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/).
+Add initial test data to the DB (You will need this to test the web app):
+```
+docker-compose run pycan_web ./manage.py dbload
+```
+
+Launch the app with the dependencies. This will start all services and keep your terminal blocked (You can Ctrl-C to stop all services):
+```
+docker-compose up
+```
+
+That's it, now visit http://localhost:8000/
+
+Note that both the database and the web app bind their ports to the host. If you have port conflicts, you can export the environment variables `PYCAN_DB_PORT` and, `PYCAN_APP_PORT` to the desired ports in the host for, respectively, the database and the app, before running `docker-compose up`.
+
+## Python version and dependencies
+
+This project **requires Python 3.6**. From now on, `python3` is assumed to be Python 3.6.
+
+The first level dependencies are listed in these files:
+
+ * [`requirements.txt`](requirements.txt): packages for _production_
+ * [`requirements-dev.txt`](requirements-dev.txt): additional requirements for _development_
+
+
+### Installing all dependencies in a virtual environment
+
+1. Install [`virtualenv`](https://virtualenv.pypa.io/en/latest/) and [`virtualenv-wrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/).
 2. Clone the repository: `git clone git@github.com:pythoncanarias/web.git`
 3. Change to the project directory. Create the virtual environment and install all
    the dependencies for the project with the next lines:
@@ -67,16 +93,6 @@ In order to use `gulp` correctly it is necessary to install:
 $ sudo npm install --global gulp-cli
 ```
 
-## EditorConfig
-
-Please install the corresponding extension of [EditorConfig](https://editorconfig.org/) in your favorite editor. Thus your editor will pick the settings stored in `.editorconfig`.
-
-This configuration avoids conflicts with a lot of settings, mainly with tabs widths.
-
-## Customize your settings
-
-Feel free to change some of the settings creating a file called `.env` on the root of the project.
-
 ## Database
 
 We are using **PostgreSQL** as _database management system_. In order to configure the project correctly it is important to follow some indications:
@@ -92,6 +108,10 @@ $ workon pycanweb  # Activation of virtualenv
 $ ./manage.py migrate
 ```
 
+## Customize your settings
+
+Feel free to change some of the settings creating a file called `.env` on the root of the project.
+
 ### Admin user <!-- omit in TOC -->
 
 In order to create a user for the admin site of Django you should:
@@ -103,7 +123,14 @@ $ ./manage.py createsuperuser
 
 ### Fixtures <!-- omit in TOC -->
 
-Initially (and obviously) the database will be empty. Some `fixtures` will be needed to work with.
+Initially the database will be empty. Some fixtures will be needed to work with.
+
+A bare minimum of data can be loaded by running:
+
+```console
+$ workon pycanweb
+./manage.py dbload
+```
 
 ## Media
 

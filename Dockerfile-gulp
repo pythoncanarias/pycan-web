@@ -1,0 +1,19 @@
+FROM node:9
+
+ENV PYCAN_DIR_PARENT=/var/www
+ENV PYCAN_DIR=$PYCAN_DIR_PARENT/pycan
+
+# Install all dependencies in the parent directory of the app
+# ===========================================================
+WORKDIR $PYCAN_DIR_PARENT
+
+COPY package*.json ./
+
+RUN npm install && npm cache clean --force --loglevel=error \
+ && npm install --global gulp-cli
+# ===========================================================
+
+WORKDIR $PYCAN_DIR
+
+ENTRYPOINT ["gulp"]
+CMD ["watch"]

@@ -1,5 +1,6 @@
 import gulp from 'gulp'
 import rename from 'gulp-rename'
+import { NODE_MODULES_DIR } from '../config'
 
 
 function moveResources(done) {
@@ -15,7 +16,7 @@ function moveImages() {
 }
 
 function moveFonts() {
-  return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/**/*')
+  return gulp.src(NODE_MODULES_DIR + '/@fortawesome/fontawesome-free/webfonts/**/*')
     .pipe(gulp.dest('static/commons/webfonts'))
 }
 
