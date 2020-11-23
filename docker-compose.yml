@@ -31,6 +31,8 @@ services:
             DATABASE_PASSWORD: pycan_password
             DATABASE_HOST: database
             MEDIA_ROOT: /var/www/media
+            STATIC_ROOT: /var/www/static
+
     gulp:
         build:
             context: .
