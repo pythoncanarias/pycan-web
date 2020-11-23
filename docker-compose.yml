@@ -43,6 +43,7 @@ services:
             # But hide the host's node_modules by creating an anonymous volume
             # This is called "The node_modules volume trick"
             - /var/www/pycan/node_modules
+        command: watch
 volumes:
     database-data:
     web-media:
