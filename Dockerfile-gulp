@@ -16,4 +16,3 @@ RUN npm install && npm cache clean --force --loglevel=error \
 WORKDIR $PYCAN_DIR
 
 ENTRYPOINT ["gulp"]
-CMD ["watch"]

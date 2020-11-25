@@ -1,0 +1,35 @@
+# This file is meant to be used in conjunction with the docker-compose.yml
+# file one level up. The purpose is to test the app in an environment that
+# is closer to production.
+#
+# Environment variables that control some of the behaviours in this file:
+# PYCAN_STAGING_PORT=10080
+
+version: '3'
+services:
+  pycan_web:
+    volumes:
+      - web-socket:/tmp/pycan/
+      - web-static:/var/www/static/
+    entrypoint: []
+    command: ./tools/staging_app_entrypoint.sh
+
+  nginx:
+    image: nginx:1.14.0
+    restart: always
+    volumes:
+      - ./tools/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./tools/nginx/pycan_web.nginx:/etc/nginx/pycan_web.nginx:ro
+      - web-socket:/tmp/pycan/
+      - web-media:/var/www/media/
+      - web-static:/var/www/static/
+    ports:
+      - "${PYCAN_STAGING_PORT:-10080}:80"
+    command: nginx -g "daemon off;"
+
+  gulp:
+    command: ""
+
+volumes:
+  web-static:
+  web-socket:

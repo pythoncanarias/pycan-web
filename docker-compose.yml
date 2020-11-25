@@ -1,3 +1,7 @@
+# Environment variables that control some of the behaviours in this file:
+# PYCAN_DB_PORT=5432
+# PYCAN_APP_PORT=8000
+
 version: '3'
 services:
     database:
@@ -27,6 +31,8 @@ services:
             DATABASE_PASSWORD: pycan_password
             DATABASE_HOST: database
             MEDIA_ROOT: /var/www/media
+            STATIC_ROOT: /var/www/static
+
     gulp:
         build:
             context: .
@@ -39,6 +45,7 @@ services:
             # But hide the host's node_modules by creating an anonymous volume
             # This is called "The node_modules volume trick"
             - /var/www/pycan/node_modules
+        command: watch
 volumes:
     database-data:
     web-media:
