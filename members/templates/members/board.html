@@ -1,0 +1,47 @@
+{% extends "about/base.html" %}{% load utils %}
+
+{% block title %}Junta de gobierno - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Junta de Gobierno
+      </h1>
+      <h2 class="subtitle">
+        Actualmente la <strong>junta directiva</strong>
+        de {{ orgnizacion.name }}
+        está constituida por los siguientes socios:
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<h2 class="is-size-2"></h2>
+
+<div class="block mb-3 pb-3 mu-3 pu-3">
+Hi
+
+</div>
+
+{% for row in board %}
+<article class="message">
+<h2 class="is-size-4 has-text-centered message-header">{{ row.role }}
+  <small>{{ row.member.full_name }}</small></h2>
+
+<p style="border: 1px solid green" class="block is-pulled-right mr-6">Desde {{ row.since|as_date }}</p>
+
+
+{% if row.role.role_desc %}
+ <div class="message-body">
+  {{ row.role.role_desc|as_markdown }}
+ </div>
+{% endif %}
+</article>
+{% endfor %}
+
+{% endblock content %}
