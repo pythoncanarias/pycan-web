@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Identificación</h2>
+
+<p>
+errors: <pre>
+{{ form.errors|pprint }}
+</pre>
+</p>
+
+
+<form method="POST" action=".">
+{% csrf_token %}
+
+<table class="table">
+{{ form.as_table }}
+</table>
+
+<p> <input type="submit" value="ok" name="Login" id="login"/> </p>
+</form>
+
+{% endblock content %}
+

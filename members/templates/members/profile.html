@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block style %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+{% endblock style %}
+
+
+
+{% block content %}
+
+{{ member|pprint }}
+{{ request.user|pprint }}
+
+<h3>Datos personales</h3>
+
+<table class="table table-striped">
+  <tr>
+    <th>Nº de socio</th>
+    <td> <span class="tag"> {{ member.pk }} </span> </td>
+  </tr>
+  <th>Nombre y apelidos</th><td>{{ member.full_name }}</td>
+  </tr>
+    <th>Dirección</th>
+    <td>{{ member.address }}
+      {% if member.rest_address %}
+      <br>{{ member.rest_address }}
+      {% endif %}
+    </td>
+  </tr>
+  <th>Código postal</th>
+  <td>{{ member.po_box }}</td>
+  </tr>
+  <tr>
+    <th>Ciudad</th>
+    <td>{{ member.city }}</td>
+  </tr>
+  <tr><th>Teléfono</th><td>{{ member.phone }}</td></tr>
+</table>
+
+
+{% endblock content %}

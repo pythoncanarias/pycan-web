@@ -5,4 +5,6 @@ app_name = 'members'
 
 urlpatterns = [
     path('join/', views.join, name='join'),
+    path("profile/", views.profile, name="profile"),
+    path("login/", views.member_login, name="login"),
 ]

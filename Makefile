@@ -23,7 +23,7 @@ run: static
 	python manage.py runserver
 
 rundev:
-	python manage.py runserver_plus
+	DEBUG=yes python manage.py runserver_plus
 
 check:
 	python manage.py check
