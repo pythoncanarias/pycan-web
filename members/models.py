@@ -81,8 +81,11 @@ class Position(models.Model):
                 days=DEFAULT_POSITION_PERIOD)
         super().save(*args, **kwargs)
         if created:
-            Position.objects.filter(position=self.position).exclude(
-                id=self.id).update(until=self.since)
+            # Previous position of the same role must be finished
+            self.__class__.objects  \
+                .filter(role=self.role)  \
+                .exclude(id=self.id)  \
+                .update(until=self.since)
 
     def __str__(self):
         return f'{self.member.full_name} as {self.role}'
@@ -134,3 +137,12 @@ class Membership(models.Model):
             self.valid_until = self.valid_from + datetime.timedelta(
                 days=DEFAULT_MEMBERSHIP_PERIOD)
         super().save(args, kwargs)
+
+    def is_valid(self):
+        """Returns True if this membership is valid.
+        """
+        today = datetime.date.today()
+        return any([
+            self.valid_from <= today and self.valid_until is None,
+            self.valid_from <= today < self.valid_until,
+            ])
