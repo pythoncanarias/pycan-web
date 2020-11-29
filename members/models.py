@@ -53,7 +53,10 @@ class Role(models.Model):
     id = models.CharField(max_length=3, primary_key=True)
     role_name = models.CharField(max_length=120)
     role_desc = models.TextField(blank=True)
-    weight = models.IntegerField(default=100)
+    weight = models.IntegerField(
+        default=100,
+        help_text='Orden relativo a los demas roles. Los más ligeros primero',
+    )
 
     def __str__(self):
         return self.role_name
