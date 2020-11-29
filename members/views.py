@@ -2,6 +2,7 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -43,6 +44,7 @@ def member_logout(request: HttpRequest) -> HttpResponse:
     return redirect(reverse("homepage"))
 
 
+@login_required
 def profile(request: HttpRequest) -> HttpResponse:
     """Show user profile and member information.
     """
