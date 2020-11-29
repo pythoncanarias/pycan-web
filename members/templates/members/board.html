@@ -23,17 +23,19 @@
 
 {% for row in board %}
 <article class="message">
-<h2 class="is-size-4 has-text-centered message-header">{{ row.role }}
-  <small>{{ row.member.full_name }}</small></h2>
-
-<p style="border: 1px solid green" class="block is-pulled-right mr-6">Desde {{ row.since|as_date }}</p>
+<h2 class="is-size-5 has-text-centered message-header">{{ row.role }}
+</h2>
 
 
-{% if row.role.role_desc %}
  <div class="message-body">
-  {{ row.role.role_desc|as_markdown }}
+  <h3 class="is-size-4">{{ row.member.full_name }}</h3>
+  {% if row.role.role_desc %}
+    <hr>
+    {{ row.role.role_desc|as_markdown }}
+  {% endif %}
+
+  <p>En el cargo desde {{ row.since|as_date }}</p>
  </div>
-{% endif %}
 </article>
 {% endfor %}
 

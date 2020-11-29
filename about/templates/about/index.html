@@ -71,18 +71,13 @@
   <div class="message-body">
     <p>Actualmente la <strong>junta directiva</strong> de {{ orgnizacion.name }} está formada por:</p>
 
-  <table class="table is-bordered is-striped is-narrow">
-   <thead>
-     <tr>
-       <th>Cargo</th>
-       <th>Nombre</th>
-     </tr>
-   </thead>
+  <table class="table is-hoverable is-fullwidth">
    <tbody>
     {% for row in board %}
     <tr>
-      <td>{{ row.role }}</td>
+      <th>{{ row.role }}</th>
       <td>{{ row.member.full_name }}</td>
+      <td style="text-align: right;">Socio Nº <span class="tag is-info">{{ row.pk }}</span></td>
     </tr>
     {% endfor %}
    </tbody>
