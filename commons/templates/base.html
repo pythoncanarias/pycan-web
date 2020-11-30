@@ -22,9 +22,24 @@
 
   {% include "header.html" %}
 
+ {% if messages %}
+    {% for message in messages %}
+      <article class="message is-{{ message.tags }}">
+        <div class="message-header">
+            <p>Mensaje</p>
+        </div>
+        <div class="message-body">
+            {{ message }}
+        </div>
+      </article>
+    {% endfor %}
+  {% endif %}
+
+  {% block container %}
   <div class="{% block default_content_class %}container content-page{% endblock %} {% block content_class %}{% endblock %}">
     {% block content %} {% endblock content %}
   </div>
+  {% endblock container %}
 
   {% include "footer.html" %}
 
