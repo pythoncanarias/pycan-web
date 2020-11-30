@@ -38,6 +38,7 @@ if DEBUG:
     INTERNAL_IPS = [
         'localhost',
         '127.0.0.1',
+        '0.0.0.0',
     ]
 
 # Application definition
