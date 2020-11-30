@@ -1,25 +1,46 @@
-{% extends "base.html" %}
+{% extends "members/base.html" %}
 
 {% block content %}
 
-<h2>Identificación</h2>
+<div class="columns is-centered">
+  <div class="column is-one-third">
 
-<p>
-errors: <pre>
-{{ form.errors|pprint }}
-</pre>
-</p>
+  <h2 class="is-size-4">Acceso para socios</h2>
+  <hr>
+    <form method="POST" action=".">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <p class="is-pulled-right" style="margin-top:1em;">
+    <input type="submit" class="button" role="button" value="Identificarse como socio" name="Login" id="login"/> </p>
+    </form>
+
+      {% if form.errors %}
 
 
-<form method="POST" action=".">
-{% csrf_token %}
+      <div class="notification is-warning" style="margin-top: 2em;">
+        <h2 class="is-size-5">Hay errores en el formulario</h2>
 
-<table class="table">
-{{ form.as_table }}
-</table>
 
-<p> <input type="submit" value="ok" name="Login" id="login"/> </p>
-</form>
 
+
+      <dl>
+        {% for field_name, errors in form.errors.items  %}
+        <dt>En el campo <strong>{{ field_name }}</strong></dt>
+          <dd>
+          <ul>
+            {% for err in errors  %}
+            <li>{{err}}</li>
+
+            {% endfor %}
+          </ul>
+          </dd>
+        {% endfor %}
+      </dl>
+        </div>
+      {% endif %}
+
+  </div>
+</div>
 {% endblock content %}
 

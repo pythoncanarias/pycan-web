@@ -1,38 +1,50 @@
-{% extends 'base.html' %}
-
-{% block style %}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-{% endblock style %}
-
-
+{% extends 'members/base.html' %}
+{% load menu %}
 
 {% block content %}
+<div class="box">
 
-<h3>Datos personales</h3>
+  <nav class="panel">
+    <h3 class="panel-heading">Datos personales</h3>
+    <div class="panel-block">
+      <table class="table table-striped">
+        <tr> <th>Username</th> <td><span class="tag is-size-5">{{ member.user.username }}</span></td> </tr>
+        <tr> <th>Nombre</th> <td>{{ member.user.first_name }}</td> </tr>
+        <tr> <th>Apellidos</th> <td>{{ member.user.last_name }}</td> </tr>
+        <tr> <th>Email</th> <td>{{ member.user.email }}</td> </tr>
+      </table>
+    </div>
+  </nav>
 
-<table class="table table-striped">
-  <tr>
-    <th>Nº de socio</th>
-    <td> <span class="tag"> {{ member.pk }} </span> </td>
-  </tr>
-  <th>Nombre y apellidos</th><td>{{ member.full_name }}</td>
-  </tr>
-    <th>Dirección</th>
-    <td>{{ member.address }}
-      {% if member.rest_address %}
-      <br>{{ member.rest_address }}
-      {% endif %}
-    </td>
-  </tr>
-  <th>Código postal</th>
-  <td>{{ member.po_box }}</td>
-  </tr>
-  <tr>
-    <th>Ciudad</th>
-    <td>{{ member.city }}</td>
-  </tr>
-  <tr><th>Teléfono</th><td>{{ member.phone }}</td></tr>
-</table>
+  <nav class="panel">
+    <h3 class="panel-heading">Socio nº {{ member.pk }}</h3>
+    <div class="panel-block">
 
+      <table class="table table-striped">
+        <tr>
+          <th>Dirección</th>
+          <td>{{ member.address }}
+            {% if member.rest_address %}
+            <br>{{ member.rest_address }}
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <th>Código postal</th>
+          <td>{{ member.po_box }}</td>
+        </tr>
+        <tr>
+          <th>Ciudad</th>
+          <td>{{ member.city }}</td>
+        </tr>
+        <tr>
+          <th>Teléfono</th>
+          <td>{{ member.phone }}</td>
+        </tr>
+      </table>
+    </div>
+  </nav>
+
+</div>
 
 {% endblock content %}
