@@ -64,5 +64,13 @@ def test_as_markdown_headers():
     assert filters.as_markdown('### Hola, mundo.') == '<h3>Hola, mundo.</h3>\n'
 
 
+# startswith
+
+def test_startswith():
+    assert filters.startswith("abcdef", "abc") is True
+    assert filters.startswith("abc", "abcdef") is False
+    assert filters.startswith("abc", "zoo") is False
+
+
 if __name__ == '__main__':
     pytest.main()

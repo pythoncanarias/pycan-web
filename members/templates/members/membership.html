@@ -1,0 +1,36 @@
+{% extends 'members/base.html' %}
+{% load utils %}
+
+{% block content %}
+<div class="box">
+
+  <nav class="panel">
+    <h3 class="panel-heading">Datos de permanencia</h3>
+    <div class="panel-block">
+      <table class="table table-striped is-fullwidth">
+        <thead>
+          <tr>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Fecha de pago</th>
+            <th>Tipo pago / Ref</th>
+            <th style="text-align:center;">Importe</th>
+          </tr>
+        </thead>
+        {% for m in membership %}
+        <tr>
+          <td>{{ m.valid_from|as_date }}</td>
+          <td>{{ m.valid_until|as_date }}</td>
+          <td>{{ m.fee_received_at|as_date }}</td>
+          <td>{{ m.get_fee_payment_type_display }}<br>
+            <code>{{ m.fee_payment_reference }}</code>
+          </td>
+          <td style="text-align:center;">{{ m.fee_amount }} &euro;</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </nav>
+
+</div>
+{% endblock content %}

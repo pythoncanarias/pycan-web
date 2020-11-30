@@ -55,3 +55,7 @@ def as_markdown(s):
 
 def sum_float(first_number, second_number):
     return float(first_number) + float(second_number)
+
+
+def startswith(value, argument):
+    return value.startswith(argument)
