@@ -7,5 +7,6 @@ pydotplus
 pytest-django
 black
 rope
+django-extensions
 Werkzeug
 django-debug-toolbar

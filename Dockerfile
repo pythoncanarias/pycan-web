@@ -1,4 +1,4 @@
-FROM python:3.6-buster
+FROM python:3.8-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
@@ -31,4 +31,5 @@ COPY requirements.txt requirements-dev.txt ./
 RUN pip install --disable-pip-version-check -r requirements.txt && \
     pip install --disable-pip-version-check -r requirements-dev.txt
 
-CMD ["./manage.py", "runserver", "0.0.0.0:8000"]
+ENV DEBUG=yes
+CMD ["./manage.py", "runserver_plus", "0.0.0.0:8000"]
