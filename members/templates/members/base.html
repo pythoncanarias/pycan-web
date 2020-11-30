@@ -1,7 +1,27 @@
 {% extends "base.html" %}
-
 {% load utils %}
 
 {% block style %}
   <link rel="stylesheet" href="{{ assets|get_asset_key:'members/custom.min.css' }}">
 {% endblock style %}
+
+{% block container %}
+
+  {% if menu %}
+    <div class="columns is-desplay">
+      <div class="column is-one-quarter">
+          {% include 'as_menu.html' %}
+      </div>
+      <div class="column is-three-quarters">
+  {% endif %}
+
+  {% block content %}
+  {% endblock content %}
+
+
+  {% if menu %}
+    </div>
+  </div>
+  {% endif %}
+
+{% endblock container %}
