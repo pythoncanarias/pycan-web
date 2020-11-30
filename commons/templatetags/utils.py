@@ -20,6 +20,7 @@ register.filter('get_key', filters.get_key)
 register.filter('get_asset_key', filters.get_asset_key)
 register.filter('as_markdown', compose2(mark_safe, filters.as_markdown))
 register.filter('sum_float', filters.sum_float)
+register.filter('startswith', filters.startswith)
 
 
 @register.simple_tag(takes_context=True)
