@@ -19,17 +19,16 @@ RUN apt-get update \
         ca-certificates \
         postgresql-client \
         libpq-dev \
+        gdal-bin \
     && rm -rf /var/lib/apt/lists/*
 
 
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-
+RUN pip install --upgrade pip
 COPY requirements.txt requirements-dev.txt ./
-
-RUN pip install --disable-pip-version-check -r requirements.txt && \
-    pip install --disable-pip-version-check -r requirements-dev.txt
+RUN pip install -r requirements.txt && pip install -r requirements-dev.txt
 
 ENV DEBUG=yes
 CMD ["./manage.py", "runserver_plus", "0.0.0.0:8000"]
