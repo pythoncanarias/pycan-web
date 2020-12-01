@@ -1,0 +1,13 @@
+@import 'apps/commons/static/commons/css/base';
+
+.about-index {
+  p {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+  }
+
+  .message a.headerlink {
+    color: cadetblue;
+    text-decoration: none;
+  }
+}
