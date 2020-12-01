@@ -27,7 +27,7 @@ const NODE_MODULES_DIR = getNodeModulesPathFrom('@fortawesome/fontawesome-free')
 const LIBS = {
   CSS: {
     commons: [NODE_MODULES_DIR + "/@fortawesome/fontawesome-free/css/all.css"],
-    homepage: ["homepage/static/homepage/css/vendor.scss"],
+    homepage: ["apps/homepage/static/homepage/css/vendor.scss"],
   },
   JS: {},
 };
