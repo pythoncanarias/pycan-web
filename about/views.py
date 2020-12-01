@@ -1,6 +1,10 @@
 import logging
+import os
+import sys
 
+import django
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from organizations.models import Organization
@@ -17,3 +21,16 @@ def index(request):
 
 def history(request):
     return render(request, 'about/history.html', {})
+
+
+@login_required
+def versions(request):
+    sysname, _, _, version, _ = os.uname()
+    info = sys.version_info
+    return render(request, "about/versions.html", {
+        "titulo": "Control de versiones",
+        "os_version": f"{sysname} / {version}",
+        "python_version": f"{info.major}.{info.minor}.{info.micro}",
+        "django_version": django.__version__,
+        }
+    )
