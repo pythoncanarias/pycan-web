@@ -16,7 +16,7 @@ pyqrcode==1.2.1
 qr==0.6.0
 redis
 reportlab==3.5.55
-rq==1.1.0
+rq==1.2.0
 sendgrid==6.4.7
 stripe==2.55.0
 uWSGI==2.0.19.1
