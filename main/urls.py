@@ -4,20 +4,20 @@ from django.contrib import admin
 from django.urls import include, path, reverse
 from django.views.generic.base import RedirectView
 
-import debug_toolbar
 
-from homepage import views
+from apps.homepage import views
+
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
     path('python-canarias-admin-zone/', admin.site.urls),
-    path('api/', include('api.urls', namespace='api')),
+    path('api/', include('apps.api.urls', namespace='api')),
     path('django-rq/', include('django_rq.urls')),
-    path('events/', include('events.urls', namespace='events')),
-    path('about/', include('about.urls', namespace='about')),
-    path('legal/', include('legal.urls', namespace='legal')),
-    path('members/', include('members.urls', namespace='members')),
-    path('jobs/', include('jobs.urls', namespace='jobs')),
+    path('events/', include('apps.events.urls', namespace='events')),
+    path('about/', include('apps.about.urls', namespace='about')),
+    path('legal/', include('apps.legal.urls', namespace='legal')),
+    path('members/', include('apps.members.urls', namespace='members')),
+    path('jobs/', include('apps.jobs.urls', namespace='jobs')),
 ]
 
 # redirections
@@ -28,6 +28,7 @@ urlpatterns += [
 ]
 
 if settings.DEBUG:
+    import debug_toolbar
     urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
     urlpatterns += static(
         settings.MEDIA_URL,
