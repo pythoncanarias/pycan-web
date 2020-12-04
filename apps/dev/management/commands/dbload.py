@@ -184,7 +184,6 @@ def add_board():
     """Adds roles, users, members etc. to get a presentable fake board.
     """
     print("Creating governing board")
-    # Creamos al presidente
     print("  - Creating president", end=" ")
     clark = load_or_create_user(
         'clark_kent',
@@ -205,7 +204,6 @@ def add_board():
     assign_role(president, clark_member)
     print(OK)
 
-    # Creamos a la vicepresidente
     print("  - Creating vicepresident", end=" ")
     diana = load_or_create_user(
         'diana_prince',
@@ -227,7 +225,6 @@ def add_board():
     assign_role(vicepresident, diana_member)
     print(OK)
 
-    # Creamos al secretario
     print("  - Creating secretary", end=" ")
     barry = load_or_create_user(
         'barry_allen',
@@ -248,7 +245,6 @@ def add_board():
     assign_role(secretary, barry_member)
     print(OK)
 
-    # Creamos al tesorero
     print("  - Creating treasurer", end=" ")
     bruce = load_or_create_user(
         'bruce_wayne',
