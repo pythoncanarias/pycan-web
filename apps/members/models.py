@@ -136,7 +136,7 @@ class Membership(models.Model):
         if self.valid_until is None:
             self.valid_until = self.valid_from + datetime.timedelta(
                 days=DEFAULT_MEMBERSHIP_PERIOD)
-        super().save(args, kwargs)
+        super().save(*args, **kwargs)
 
     def is_valid(self):
         """Returns True if this membership is valid.
