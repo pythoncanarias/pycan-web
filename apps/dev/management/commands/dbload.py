@@ -2,7 +2,6 @@ import datetime
 from pathlib import Path
 
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import UploadedFile
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
