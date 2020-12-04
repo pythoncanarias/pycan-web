@@ -156,9 +156,9 @@ def assign_role(role, member):
         date_since = datetime.date.today() - datetime.timedelta(days=1)
         valid_period = datetime.timedelta(days=1462)  # 4 years + 1 day
         date_until = date_since + valid_period
-        membership = membership.objects.create(
+        membership = Membership.objects.create(
             member=member,
-            valid_since=date_since,
+            valid_from=date_since,
             valid_until=date_until,
         )
         print(".", end=" ", flush=True)
