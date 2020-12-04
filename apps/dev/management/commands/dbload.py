@@ -85,7 +85,7 @@ def add_events():
     if created:
         print(".", end=" ", flush=True)
         # Add photo
-        photo_path = Path(settings.BASE_DIR) / 'dev/fixtures/fancy_venue.jpg'
+        photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/fancy_venue.jpg'
         with photo_path.open('rb') as fin:
             casa_chano.photo = UploadedFile(fin, name=photo_path.name)
             casa_chano.save()
