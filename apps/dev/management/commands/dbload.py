@@ -14,12 +14,23 @@ from apps.members.models import Role, Member, Membership, Position
 
 OK = "\u001b[32m ✓\u001b[0m"
 
+def step_start(title):
+    print(title, end=" ")
+
+
+def step_progress():
+    print(".", end="", flush=True)
+
+
+def step_ok():
+    print(OK)
+
 
 def add_quotes():
     """
     Add a few quotes to have the start page populated with some content
     """
-    print("Adding initial quotes", end=" ")
+    step_start("Adding initial quotes")
     author, created = Author.objects.get_or_create(
         name='Albert',
         surname='Einstein',
@@ -40,8 +51,8 @@ def add_quotes():
             ]
         for quote_text in quotes:
             author.quote_set.create(text=quote_text)
-            print(".", end="", flush=True)
-    print(OK)
+            step_progress()
+    step_ok()
 
 
 def add_own_organization():
@@ -49,7 +60,7 @@ def add_own_organization():
     Add the Python Canarias organization, which is key to make some parts of
     the page work.
     """
-    print("Adding own organization", end=" ")
+    step_start("Adding own organization")
     _, created = Organization.objects.get_or_create(
         name=settings.ORGANIZATION_NAME,
         defaults={
@@ -63,15 +74,15 @@ def add_own_organization():
         }
     )
     if created:
-        print(".", end="", flush=True)
-    print(OK)
+        step_progress()
+    step_ok()
 
 
 def add_events():
     """
     Add a sample value and event so we get some content in the events page
     """
-    print("Adding sample venue & event", end=" ")
+    step_start("Adding sample venue & event")
     casa_chano, created = Venue.objects.get_or_create(slug='casa-chano', defaults={
         "name": 'Casa Chano',
         "latitude": 28.4933767,
@@ -82,14 +93,13 @@ def add_events():
         }
     )
     if created:
-        print(".", end=" ", flush=True)
+        step_progress()
         # Add photo
         photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/fancy_venue.jpg'
         with photo_path.open('rb') as fin:
             casa_chano.photo = UploadedFile(fin, name=photo_path.name)
             casa_chano.save()
         # Add event
-        print("Adding sample event")
         casa_chano.events.create(
             name='Pyrriaca',
             hashtag='pyrriaca',
@@ -104,8 +114,8 @@ def add_events():
                 ),
             closed_schedule=False
         )
-        print(".", end=" ", flush=True)
-    print(OK)
+        step_progress()
+    step_ok()
 
 
 def load_or_create_user(username, **kwargs):
@@ -119,7 +129,7 @@ def load_or_create_user(username, **kwargs):
         user = User.objects.get(username=username)
     except User.DoesNotExist:
         user = User.objects.create_user(username, **kwargs)
-        print(".", end=" ", flush=True)
+        step_progress()
     return user
 
 
@@ -129,7 +139,7 @@ def load_or_create_role(role_id, name, weigth=100):
     try:
         result = Role.objects.get(pk=role_id)
     except Role.DoesNotExist:
-        print(".", end=" ", flush=True)
+        step_progress()
         result = Role.objects.create(
             id=role_id,
             role_name=name,
@@ -160,7 +170,7 @@ def assign_role(role, member):
             valid_from=date_since,
             valid_until=date_until,
         )
-        print(".", end=" ", flush=True)
+        step_progress()
 
     # Create or load position
     position, created = Position.objects.get_or_create(
@@ -172,7 +182,7 @@ def assign_role(role, member):
         }
     )
     if created:
-        print(".", end=" ", flush=True)
+        step_progress()
     else:
         position.since = membership.valid_from
         position.until = membership.valid_until
@@ -183,7 +193,7 @@ def add_board():
     """Adds roles, users, members etc. to get a presentable fake board.
     """
     print("Creating governing board")
-    print("  - Creating president", end=" ")
+    step_start("  - Creating president")
     clark = load_or_create_user(
         'clark_kent',
         email='clark.kent@dailyplanet.com',
@@ -201,9 +211,9 @@ def add_board():
         )
     president = load_or_create_role('PRE', "Presidencia", 100)
     assign_role(president, clark_member)
-    print(OK)
+    step_ok()
 
-    print("  - Creating vicepresident", end=" ")
+    step_start("  - Creating vicepresident")
     diana = load_or_create_user(
         'diana_prince',
         email='wonderwoman@justiceleague.org',
@@ -222,9 +232,9 @@ def add_board():
         )
     vicepresident = load_or_create_role('VPR', "Vicepresidencia", 200)
     assign_role(vicepresident, diana_member)
-    print(OK)
+    step_ok()
 
-    print("  - Creating secretary", end=" ")
+    step_start("  - Creating secretary")
     barry = load_or_create_user(
         'barry_allen',
         email='barry@ccpd.centralcity.gov',
@@ -242,9 +252,9 @@ def add_board():
         )
     secretary = load_or_create_role('SEC', "Secretaría", 300)
     assign_role(secretary, barry_member)
-    print(OK)
+    step_ok()
 
-    print("  - Creating treasurer", end=" ")
+    step_start("  - Creating treasurer")
     bruce = load_or_create_user(
         'bruce_wayne',
         email='bruce@waynetech.com',
@@ -262,7 +272,7 @@ def add_board():
         )
     treasurer = load_or_create_role('TRE', "Tesorería", 400)
     assign_role(treasurer, bruce_member)
-    print(OK)
+    step_ok()
 
 
 class Command(BaseCommand):
