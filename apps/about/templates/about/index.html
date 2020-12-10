@@ -7,7 +7,7 @@
 {% block content %}
 
 <p class="title is-1">Asociación</p>
-<p class="subtitle is-3">{{ pythoncanarias.name }}</p>
+<p class="subtitle is-3">{{ organization.name }}</p>
 
 <div class="box has-text-centered">
   <a href="{% url 'members:join' %}" class="link button is-link is-medium is-outlined">Forma parte de la asociación</a>
@@ -20,9 +20,9 @@
     <a class="headerlink" href="#intro">¶</a>
   </div>
   <div class="message-body">
-    <strong>{{ pythoncanarias.name }}</strong> es una asociación sin ánimo de lucro cuyos objetivos, son, entre otros, promover el <strong>uso del lenguaje</strong> de programación Python, dar <strong>soporte</strong> a quienes deseen aprenderlo y promover la programación como una <strong>competencia educativa básica</strong>.</p>
+    <strong>{{ organization.name }}</strong> es una asociación sin ánimo de lucro cuyos objetivos, son, entre otros, promover el <strong>uso del lenguaje</strong> de programación Python, dar <strong>soporte</strong> a quienes deseen aprenderlo y promover la programación como una <strong>competencia educativa básica</strong>.</p>
 
-    <p>La asociación fue creada el <strong>{{ pythoncanarias.registration_date|date:"d/m/Y" }}</strong> y desde entonces ha organizado <a href="{% url 'events:index' %}">diferentes eventos</a> de difusión del lenguaje de programación Python colaborando en el incremento de la comunidad de usuarios de Python en Canarias.</p>
+    <p>La asociación fue creada el <strong>{{ organization.registration_date|date:"d/m/Y" }}</strong> y desde entonces ha organizado <a href="{% url 'events:index' %}">diferentes eventos</a> de difusión del lenguaje de programación Python colaborando en el incremento de la comunidad de usuarios de Python en Canarias.</p>
 
     <p>Te recomendamos que no dejes de <a href="{% url 'about:history' %}">repasar la historia de Python Canarias</a>.</p>
 
@@ -49,15 +49,15 @@
   </div>
   <div class="message-body">
     <p>
-      Asociación cultural {{ pythoncanarias.name }}<br>
-      CIF {{ pythoncanarias.cif }}<br>
-      {{ pythoncanarias.address }}<br>
-      {{ pythoncanarias.po_box }} {{ pythoncanarias.city }}
+      Asociación cultural {{ organization.name }}<br>
+      CIF {{ organization.cif }}<br>
+      {{ organization.address }}<br>
+      {{ organization.po_box }} {{ organization.city }}
     </p>
 
     <p>
-      <i class="fas fa-credit-card"></i> {{ pythoncanarias.bank}} | {{ pythoncanarias.iban }}<br>
-      <i class="fas fa-fingerprint"></i> {{ pythoncanarias.registration_number }} <span class="content is-small">(NCI: Número Canario de Inscripción)</span>
+      <i class="fas fa-credit-card"></i> {{ organization.bank}} | {{ organization.iban }}<br>
+      <i class="fas fa-fingerprint"></i> {{ organization.registration_number }} <span class="content is-small">(NCI: Número Canario de Inscripción)</span>
     </p>
   </div>
 </article>
@@ -69,13 +69,20 @@
     <a class="headerlink" href="#board">¶</a>
   </div>
   <div class="message-body">
-    <p>Actualmente la <strong>junta directiva</strong> de {{ pythoncanarias.name }} está formada por:</p>
-    <table class="table is-bordered is-striped is-narrow">
-      <tr><td>Presidente</td><td>Juan Ignacio Rodríguez de León</td></tr>
-      <tr><td>Vicepresidente</td><td>Israel Santana Alemán</td></tr>
-      <tr><td>Secretario</td><td>Sergio Delgado Quintero</td></tr>
-      <tr><td>Tesorero</td><td>Héctor Álvarez Alonso</td></tr>
-    </table>
+    <p>Actualmente la <strong>junta directiva</strong> de {{ orgnizacion.name }} está formada por:</p>
+
+  <table class="table is-hoverable is-fullwidth">
+   <tbody>
+    {% for row in board %}
+    <tr>
+      <th>{{ row.role }}</th>
+      <td>{{ row.member.full_name }}</td>
+      <td style="text-align: right;">Socio Nº <span class="tag is-info">{{ row.pk }}</span></td>
+    </tr>
+    {% endfor %}
+   </tbody>
+  </table>
+
   </div>
 </article>
 

@@ -4,15 +4,19 @@ from django.conf import settings
 from django.shortcuts import render
 
 from apps.organizations.models import Organization
+from apps.members.models import Position
+
 
 logger = logging.getLogger(__name__)
 
 
 def index(request):
-    pythoncanarias = Organization.objects.get(
+    organization = Organization.objects.get(
         name__istartswith=settings.ORGANIZATION_NAME)
-    return render(request, 'about/index.html',
-                  {'pythoncanarias': pythoncanarias})
+    return render(request, 'about/index.html', {
+        'organization': organization,
+        'board': Position.get_current_board(),
+    })
 
 
 def history(request):
