@@ -14,6 +14,7 @@ from apps.members.models import Role, Member, Membership, Position
 
 OK = "\u001b[32m ✓\u001b[0m"
 
+
 def step_start(title):
     print(title, end=" ")
 
@@ -133,19 +134,16 @@ def load_or_create_user(username, **kwargs):
     return user
 
 
-def load_or_create_role(role_id, name, weigth=100):
+def load_or_create_role(role_id, name, weight=100):
     """Get a role by primary key, or create and return a new one
     """
-    try:
-        result = Role.objects.get(pk=role_id)
-    except Role.DoesNotExist:
+    role, created = Role.objects.get_or_create(id=role_id, defaults={
+        'role_name': name,
+        'weight': weight,
+        })
+    if created:
         step_progress()
-        result = Role.objects.create(
-            id=role_id,
-            role_name=name,
-            weigth=weigth,
-            )
-    return result
+    return role
 
 
 def assign_role(role, member):
