@@ -98,3 +98,4 @@ node_modules
 tags
 
 certificates/media
+.prettierignore
