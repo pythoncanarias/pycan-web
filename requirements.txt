@@ -6,7 +6,7 @@ django-extensions==2.2.5
 django-import-export==1.2.0
 django-leaflet==0.25.0
 django-rq==2.1.0
-jinja2==2.10.3
+jinja2==2.11.3
 markdown2==2.3.8
 odfpy==1.4.1
 openpyxl==3.0.3
