@@ -6,8 +6,11 @@ from django.views.generic.base import RedirectView
 
 from apps.homepage import views
 
+admin_url = 'admin' if settings.DEBUG else 'python-canarias-admin-zone'
+
 urlpatterns = [
     path('', views.homepage, name='homepage'),
+    path(f'{admin_url}/', admin.site.urls),
     path('api/', include('apps.api.urls', namespace='api')),
     path('django-rq/', include('django_rq.urls')),
     path('events/', include('apps.events.urls', namespace='events')),
@@ -30,6 +33,3 @@ if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
     )
-    urlpatterns.insert(1, path('admin/', admin.site.urls))
-else:
-    urlpatterns.insert(1, path('admin-canarias-admin-zone/', admin.site.urls))
