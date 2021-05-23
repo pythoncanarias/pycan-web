@@ -1,0 +1,33 @@
+{
+  "name": "Web - Python Canarias",
+  "dockerComposeFile": ["../docker-compose.yml", "./docker-compose.yml"],
+  "service": "pycan_web",
+  "workspaceFolder": "/var/www/pycan",
+  "extensions": ["ms-python.python", "esbenp.prettier-vscode"],
+  "settings": {
+    "editor.formatOnSave": true,
+    // Python
+    "python.pythonPath": "/opt/venv/bin/python",
+    "[python]": {
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+      },
+      "editor.rulers": [79]
+    },
+    // Flake8
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pylintUseMinimalCheckers": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Path": "/opt/venv/bin/flake8",
+    "python.linting.flake8Args": ["--max-line-length=79"],
+    // Black
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "/opt/venv/bin/black",
+    "python.formatting.blackArgs": [
+      "--line-length",
+      "79",
+      "--skip-string-normalization"
+    ]
+  }
+}
