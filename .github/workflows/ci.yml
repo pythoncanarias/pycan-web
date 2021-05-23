@@ -16,4 +16,4 @@ jobs:
           host: pythoncanarias.es
           username: ${{ secrets.PRODUCTION_SSH_USERNAME }}
           key: ${{ secrets.PRODUCTION_SSH_KEY }}
-          script: source ~/.virtualenvs/web/bin/activate && cd ~/web && deploy.sh
+          script: source ~/.virtualenvs/web/bin/activate && cd ~/web && ./deploy.sh
