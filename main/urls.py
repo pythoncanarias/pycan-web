@@ -8,7 +8,6 @@ from apps.homepage import views
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
-    path('python-canarias-admin-zone/', admin.site.urls),
     path('api/', include('apps.api.urls', namespace='api')),
     path('django-rq/', include('django_rq.urls')),
     path('events/', include('apps.events.urls', namespace='events')),
@@ -20,13 +19,17 @@ urlpatterns = [
 
 # redirections
 urlpatterns += [
-    path('join',
-         RedirectView.as_view(url=reverse('members:join')),
-         name='goto_join_members')
+    path(
+        'join',
+        RedirectView.as_view(url=reverse('members:join')),
+        name='goto_join_members',
+    )
 ]
 
 if settings.DEBUG:
     urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
     )
+    urlpatterns.insert(1, path('admin/', admin.site.urls))
+else:
+    urlpatterns.insert(1, path('admin-canarias-admin-zone/', admin.site.urls))
