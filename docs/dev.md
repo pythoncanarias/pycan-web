@@ -17,7 +17,11 @@ This project needs a variety of requirements and it's highly recommended to set 
    ```console
    $ docker compose run pycan_web ./manage.py dbload
    ```
-5. Launch the app with the dependencies. This will start all services and keep your terminal blocked (You can Ctrl-C to stop all services):
+5. Create a default superuser:
+   ```console
+   $ docker compose run pycan_web ./manage.py create_default_admin  # admin | admin
+   ```
+6. Launch the app with the dependencies. This will start all services and keep your terminal blocked (You can Ctrl-C to stop all services):
    ```console
    $ docker compose up
    ```
@@ -25,6 +29,10 @@ This project needs a variety of requirements and it's highly recommended to set 
 That's it, now visit http://localhost:8000/
 
 > Note that both the database and the web app bind their ports to the host. If you have port conflicts, you can export the environment variables `PYCAN_DB_PORT` and, `PYCAN_APP_PORT` to the desired ports in the host for, respectively, the database and the app, before running `docker compose up`.
+
+### Administrative interface
+
+You can access the Django administrative interface visiting http://localhost:8000/admin using credentials: `username: admin` | `password: admin`
 
 ## VSCode over Docker
 
