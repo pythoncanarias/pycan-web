@@ -145,10 +145,16 @@
         <div class="columns is-multiline">
           {% if event.venue %}
             <div class="column is-12-tablet is-6-desktop">
+            {% if event.venue.is_online %}
+              <div class="venue-youtube">
+                <img src="{{ assets|get_asset_key:'events/img/youtube-logo.png' }}">
+              </div>
+            {% else %}
               <div class="map-wrapper">
                 {% leaflet_map "event-map" %}
                 <a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
               </div>
+            {% endif %}
             </div>
             <div class="column is-12-tablet is-6-desktop">
               <strong class="venue-name">
@@ -158,14 +164,16 @@
                   <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
                 {% endif %}
               </strong>
-              <address>
-                <a class="venue-address">
-                  <a href="https://maps.google.com/maps?q={{ event.venue.latitude }},{{ event.venue.longitude }}">
-                    {{ event.venue.address }}
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                </p>
-              </address>
+              {% if not event.venue.is_online %}
+                <address>
+                  <a class="venue-address">
+                    <a href="https://maps.google.com/maps?q={{ event.venue.latitude }},{{ event.venue.longitude }}">
+                      {{ event.venue.address }}
+                      <i class="fas fa-external-link-alt"></i>
+                    </a>
+                  </p>
+                </address>
+              {% endif %}
               <hr/>
               <p class="venue-description">{{ event.venue.description }}</p>
               {% if event.venue.photo %}
