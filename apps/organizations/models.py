@@ -9,7 +9,7 @@ class Organization(models.Model):
     logo = models.FileField(upload_to='organizations/organization/')
     address = models.CharField(max_length=100, blank=True, null=True)
     rest_address = models.CharField(max_length=100, blank=True, null=True)
-    po_box = models.CharField(max_length=10, blank=True, null=True)
+    postal_code = models.CharField(max_length=10, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     cif = models.CharField(max_length=10, blank=True, null=True)
     iban = models.CharField(max_length=50, blank=True, null=True)
@@ -26,8 +26,7 @@ class Organization(models.Model):
     def joint_organizations(self):
         return [
             m.organization
-            for m
-            in self.joint_memberships.order_by(
+            for m in self.joint_memberships.order_by(
                 '-_amount', 'order', 'organization__name'
             )
         ]
@@ -126,7 +125,7 @@ class Membership(models.Model):
         related_name='joint_memberships',
         help_text='Organizations joint with other organizations',
         blank=True,
-        null=True
+        null=True,
     )
 
     @property
