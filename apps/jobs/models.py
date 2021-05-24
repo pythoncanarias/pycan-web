@@ -1,9 +1,12 @@
 import datetime
 from functools import partial
 
+from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 from apps.commons.filters import date_from_now
+from apps.commons.twitter import Twitter
 
 # Create your models here.
 
@@ -65,23 +68,44 @@ class JobOffer(models.Model):
         default="IND",
     )
     work_mode = models.CharField(
-        "Remoto/Presencial", max_length=2, choices=WORK_MODES,
+        "Remoto/Presencial",
+        max_length=2,
+        choices=WORK_MODES,
     )
     part_time = models.BooleanField("A tiempo parcial", default=False)
     more_info = models.URLField(
-        "Enlace para más información", max_length=250, blank=True,
+        "Enlace para más información",
+        max_length=250,
+        blank=True,
     )
     created = models.DateTimeField(auto_now_add=True)
     valid_until = models.DateField(
-        "Válido hasta", blank=True, default=partial(date_from_now, days=91),
+        "Válido hasta",
+        blank=True,
+        default=partial(date_from_now, days=91),
     )
     approved = models.BooleanField("Aprobada", default=False)
 
     def __str__(self):
         if self.employer and self.employer.upper() != 'N/A':
-            return "{} en {}".format(self.title, self.employer,)
+            return "{} en {}".format(
+                self.title,
+                self.employer,
+            )
         else:
             return self.title
 
     def is_valid(self):
         return self.approved and datetime.date.today() <= self.valid_until
+
+    def get_full_url(self):
+        path = reverse('jobs:index') + f'#job{self.pk}'
+        return f'http://{settings.DOMAIN}{path}'
+
+    def save(self, *args, **kwargs):
+        already_exists = self.pk is not None
+        super().save(*args, **kwargs)
+        if not already_exists and self.approved:
+            t = Twitter()
+            msg = f'💼  Oferta de empleo: {self} {self.get_full_url()}'
+            t.post(msg)
