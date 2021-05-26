@@ -5,25 +5,21 @@
 This project needs a variety of requirements and it's highly recommended to set up a development environment through [Docker](https://www.docker.com/).
 
 1. Clone this repository.
-2. Build the main app image and the [Gulp](https://gulpjs.com/) (build tool) image:
+2. Launch containers (building if proceed):
    ```console
-   $ docker compose build
+   $ docker compose up  # leave this running and open new tab
    ```
 3. Run the database migrations:
    ```console
-   $ docker compose run pycan_web ./manage.py migrate
+   $ docker compose exec pycan_web ./manage.py migrate
    ```
 4. Add initial test data to the DB (You will need this to test the web app):
    ```console
-   $ docker compose run pycan_web ./manage.py dbload
+   $ docker compose exec pycan_web ./manage.py dbload
    ```
 5. Create a default superuser:
    ```console
-   $ docker compose run pycan_web ./manage.py create_default_admin  # admin | admin
-   ```
-6. Launch the app with the dependencies. This will start all services and keep your terminal blocked (You can Ctrl-C to stop all services):
-   ```console
-   $ docker compose up
+   $ docker compose exec pycan_web ./manage.py create_default_admin  # admin | admin
    ```
 
 That's it, now visit http://localhost:8000/
