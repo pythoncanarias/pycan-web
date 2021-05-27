@@ -4,48 +4,51 @@
 
 version: '3'
 services:
-    database:
-        image: "postgres:10.5"
-        ports:
-            - "${PYCAN_DB_PORT:-5432}:5432"
-        environment:
-            POSTGRES_DB: pycan_database
-            POSTGRES_USER: pycan_user
-            POSTGRES_PASSWORD: pycan_password
-        volumes:
-            - database-data:/var/lib/postgresql/data/
-    pycan_web:
-        build: .
-        image: pycan_web:latest
-        volumes:
-            - ./:/var/www/pycan
-            - web-media:/var/www/media/
-        ports:
-            - "${PYCAN_APP_PORT:-8000}:8000"
-        depends_on:
-            - database
-            - gulp
-        environment:
-            DATABASE_NAME: pycan_database
-            DATABASE_USER: pycan_user
-            DATABASE_PASSWORD: pycan_password
-            DATABASE_HOST: database
-            MEDIA_ROOT: /var/www/media
-            STATIC_ROOT: /var/www/static
+  database:
+    image: 'postgres:10.5'
+    ports:
+      - '${PYCAN_DB_PORT:-5432}:5432'
+    environment:
+      POSTGRES_DB: pycan_database
+      POSTGRES_USER: pycan_user
+      POSTGRES_PASSWORD: pycan_password
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+  pycan_web:
+    build: .
+    image: pycan_web:latest
+    volumes:
+      - ./:/var/www/pycan
+      - web-media:/var/www/media/
+      # https://bit.ly/2RNtK87
+      - vscode-extensions:/root/.vscode-server/extensions
+    ports:
+      - '${PYCAN_APP_PORT:-8000}:8000'
+    depends_on:
+      - database
+      - gulp
+    environment:
+      DATABASE_NAME: pycan_database
+      DATABASE_USER: pycan_user
+      DATABASE_PASSWORD: pycan_password
+      DATABASE_HOST: database
+      MEDIA_ROOT: /var/www/media
+      STATIC_ROOT: /var/www/static
 
-    gulp:
-        build:
-            context: .
-            dockerfile: Dockerfile-gulp
-        image: pycan_gulp:latest
-        volumes:
-            # Mount the code of the app
-            - ./:/var/www/pycan
+  gulp:
+    build:
+      context: .
+      dockerfile: Dockerfile-gulp
+    image: pycan_gulp:latest
+    volumes:
+      # Mount the code of the app
+      - ./:/var/www/pycan
 
-            # But hide the host's node_modules by creating an anonymous volume
-            # This is called "The node_modules volume trick"
-            - /var/www/pycan/node_modules
-        command: watch
+      # But hide the host's node_modules by creating an anonymous volume
+      # This is called "The node_modules volume trick"
+      - /var/www/pycan/node_modules
+    command: watch
 volumes:
-    database-data:
-    web-media:
+  database-data:
+  web-media:
+  vscode-extensions:
