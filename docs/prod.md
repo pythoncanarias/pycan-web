@@ -40,6 +40,10 @@ DATABASE_NAME = <name of the database>
 DATABASE_USER = <user for the database>
 DATABASE_PASSWORD = <password for the database>
 SENDGRID_API_KEY = <sendgrid api key>
+TWITTER_API_KEY = <twitter api key>
+TWITTER_API_SECRET_KEY = <twitter api secret key>
+TWITTER_ACCESS_TOKEN = <twitter access token>
+TWITTER_ACCESS_TOKEN_SECRET = <twitter access token secret>
 ```
 
 ## Redis
