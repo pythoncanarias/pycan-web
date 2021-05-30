@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'apps.certificates',
     'apps.quotes',
     'apps.members',
+    'apps.notices',
     'apps.about',
     'apps.legal',
     'apps.dev',
