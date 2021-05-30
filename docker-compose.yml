@@ -14,7 +14,8 @@ services:
       POSTGRES_PASSWORD: pycan_password
     volumes:
       - database-data:/var/lib/postgresql/data/
-  pycan_web:
+
+  web:
     build: .
     image: pycan_web:latest
     volumes:

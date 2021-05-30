@@ -11,15 +11,15 @@ This project needs a variety of requirements and it's highly recommended to set 
    ```
 3. Run the database migrations:
    ```console
-   $ docker compose exec pycan_web ./manage.py migrate
+   $ docker compose exec web ./manage.py migrate
    ```
 4. Add initial test data to the DB (You will need this to test the web app):
    ```console
-   $ docker compose exec pycan_web ./manage.py dbload
+   $ docker compose exec web ./manage.py dbload
    ```
 5. Create a default superuser:
    ```console
-   $ docker compose exec pycan_web ./manage.py create_default_admin  # admin | admin
+   $ docker compose exec web ./manage.py create_default_admin  # admin | admin
    ```
 
 That's it, now visit http://localhost:8000/
