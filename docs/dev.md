@@ -30,6 +30,16 @@ That's it, now visit http://localhost:8000/
 
 You can access the Django administrative interface visiting http://localhost:8000/admin using credentials: `username: admin` | `password: admin`
 
+## Code style
+
+Some hints should be followed in order to homogenize **Python** code style:
+
+- Indenting with 4 spaces.
+- Max line length: 79 chars.
+- Imports ordering like in [PEP8](https://www.python.org/dev/peps/pep-0008/#imports).
+- Python linter: [Flake8](https://flake8.pycqa.org/en/latest/)
+- Python autoformatter: [Black](https://github.com/psf/black)
+
 ## VSCode over Docker
 
 One of the multiple options for editing code is [Visual Studio Code](https://code.visualstudio.com/). A nice feature is to link a remote container and configure the IDE installing the required tools on it.
