@@ -51,7 +51,7 @@ TWITTER_ACCESS_TOKEN_SECRET = <twitter access token secret>
 We are using **Redis** for some services. In order to get it run properly it is important to follow some indications:
 
 1. Install [Redis](https://redis.io/download).
-2. Launch `run_rq.sh`
+2. Launch `run-rq.sh`
 
 ## Database
 
