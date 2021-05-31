@@ -34,6 +34,11 @@ ALLOWED_HOSTS = config(
     default='localhost, 127.0.0.1',
 )
 
+INTERNAL_IPS = [
+    'localhost',
+    '127.0.0.1',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,9 +91,7 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
-    MIDDLEWARE += [
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    ]
+    MIDDLEWARE.insert(5, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 
 ROOT_URLCONF = 'main.urls'
 

@@ -23,7 +23,7 @@ class NoticeKind(models.Model):
     app = models.SlugField(max_length=24, choices=get_list_of_internal_apps())
     code = models.SlugField(max_length=32)
     description = models.CharField(max_length=320)
-    template = models.CharField(max_length=512)
+    template = models.TextField(max_length=512)
 
     def __str__(self):
         return f"{self.app}.{self.code}: {self.description}"

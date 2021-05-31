@@ -12,12 +12,32 @@ class NoticeKindAdmin(admin.ModelAdmin):
 class NoticeAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'kind_id',
-        'member_id',
-        # 'reference_date',
-        # 'is_sent',
-    )
-    list_filter = (
         'kind',
         'member',
+        'reference_date',
+        'status',
     )
+    list_filter = (
+        'member',
+        'reference_date',
+    )
+
+    def get_queryset(self, request):
+        qs = super(NoticeAdmin, self).get_queryset(request)
+        return (
+            qs
+            .select_related('kind')
+            .select_related('member')
+            .select_related('member__user')
+        )
+
+    def status(self, obj):
+        if not obj.send_at:
+            return 'Waiting'
+        elif obj.send_at and not obj.delivered_at and not obj.rejected_at:
+            return 'Sending'
+        elif obj.delivered_at:
+            return 'Delivered'
+        else:
+            return 'Rejected'
+
