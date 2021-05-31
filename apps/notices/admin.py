@@ -31,13 +31,4 @@ class NoticeAdmin(admin.ModelAdmin):
             .select_related('member__user')
         )
 
-    def status(self, obj):
-        if not obj.send_at:
-            return 'Waiting'
-        elif obj.send_at and not obj.delivered_at and not obj.rejected_at:
-            return 'Sending'
-        elif obj.delivered_at:
-            return 'Delivered'
-        else:
-            return 'Rejected'
 

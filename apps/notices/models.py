@@ -28,6 +28,22 @@ class NoticeKind(models.Model):
     def __str__(self):
         return f"{self.app}.{self.code}: {self.description}"
 
+    def send_notice(self, member, reference_date):
+        notice = Notice(
+            kind=self,
+            member=member,
+            reference_date=reference_date,
+            )
+        notice.save()
+
+    def notice_has_been_send(self, member, reference_date):
+        return (
+            self.notice_set
+            .filter(member=member)
+            .filter(reference_date=reference_date)
+            .first()
+        )
+
 
 class Notice(models.Model):
 
@@ -53,6 +69,15 @@ class Notice(models.Model):
     def __str__(self):
         return f"Notice {self.pk}"
 
+    def status(self):
+        if not self.send_at:
+            return 'Waiting'
+        elif self.send_at and not self.delivered_at and not self.rejected_at:
+            return 'Sending'
+        elif self.delivered_at:
+            return 'Delivered'
+        else:
+            return f'Rejected: {self.reject_message}'
 
     def is_sent(self):
         return self.send_at is not None
