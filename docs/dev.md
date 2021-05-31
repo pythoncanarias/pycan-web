@@ -30,6 +30,14 @@ That's it, now visit http://localhost:8000/
 
 You can access the Django administrative interface visiting http://localhost:8000/admin using credentials: `username: admin` | `password: admin`
 
+### Redis
+
+Redis server is automatically launched on `docker compose up`, but if you need it, queues must be linked to the server. To that end, run the following command:
+
+```console
+$ docker compose exec web ./manage.py rqworker default low
+```
+
 ## Code style
 
 Some hints should be followed in order to homogenize **Python** code style:
