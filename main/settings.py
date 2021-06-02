@@ -288,13 +288,13 @@ LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')
 
 RQ_QUEUES = {
     'default': {
-        'HOST': 'localhost',
+        'HOST': config('REDIS_HOST', default='localhost'),
         'PORT': 6379,
         'DB': 0,
         'DEFAULT_TIMEOUT': 360,
     },
     'low': {
-        'HOST': 'localhost',
+        'HOST': config('REDIS_HOST', default='localhost'),
         'PORT': 6379,
         'DB': 0,
     },

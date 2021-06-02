@@ -35,6 +35,7 @@ services:
       DATABASE_HOST: database
       MEDIA_ROOT: /var/www/media
       STATIC_ROOT: /var/www/static
+      REDIS_HOST: redis
 
   gulp:
     build:
@@ -49,6 +50,10 @@ services:
       # This is called "The node_modules volume trick"
       - /var/www/pycan/node_modules
     command: watch
+
+  redis:
+    image: 'redis:6.2'
+
 volumes:
   database-data:
   web-media:
