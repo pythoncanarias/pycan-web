@@ -5,7 +5,10 @@ from .models import NoticeKind, Notice
 
 @admin.register(NoticeKind)
 class NoticeKindAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'app', 'code', 'description',)
+    list_display = ('description', 'code', 'days', 'enabled')
+    list_filter = (
+        'enabled',
+    )
 
 
 @admin.register(Notice)
@@ -19,6 +22,7 @@ class NoticeAdmin(admin.ModelAdmin):
     )
     list_filter = (
         'member',
+        'kind',
         'reference_date',
     )
 

@@ -4,29 +4,24 @@ from django.conf import settings
 from apps.members.models import Member
 
 
-def get_list_of_internal_apps():
-    internal_apps = []
-    for app_name in settings.INSTALLED_APPS:
-        if app_name.startswith('apps.'):
-            internal_apps.append(app_name[5:])
-    return zip(internal_apps, internal_apps)
-
-
-
 class NoticeKind(models.Model):
 
     class Meta:
-        unique_together = ('app', 'code',)
         verbose_name = 'Tipo de aviso'
         verbose_name_plural = 'Tipos de aviso'
 
-    app = models.SlugField(max_length=24, choices=get_list_of_internal_apps())
     code = models.SlugField(max_length=32)
     description = models.CharField(max_length=320)
     template = models.TextField(max_length=512)
+    days = models.IntegerField(
+        default=0,
+        help_text="Margen de días antes o después"
+                  " de la fecha de referencia",
+        )
+    enabled = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.app}.{self.code}: {self.description}"
+        return self.description
 
     def send_notice(self, member, reference_date):
         notice = Notice(
@@ -35,6 +30,7 @@ class NoticeKind(models.Model):
             reference_date=reference_date,
             )
         notice.save()
+        return notice
 
     def notice_has_been_send(self, member, reference_date):
         return (
