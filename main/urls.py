@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.urls import include, path, reverse
 from django.views.generic.base import RedirectView
 
+import debug_toolbar
+
 from apps.homepage import views
 
 admin_url = 'admin' if settings.DEBUG else 'python-canarias-admin-zone'
@@ -30,6 +32,9 @@ urlpatterns += [
 ]
 
 if settings.DEBUG:
+    urlpatterns.append(
+        path('__debug__/', include(debug_toolbar.urls)),
+        )
     urlpatterns += static(
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
     )

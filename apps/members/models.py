@@ -13,6 +13,12 @@ from .constants import (
 
 
 class Member(models.Model):
+
+    class Meta:
+        ordering = ('id', 'user__first_name', 'user__last_name')
+        verbose_name = 'Socio'
+        verbose_name_plural = 'Socios'
+
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     address = models.CharField(max_length=100, blank=True)
     rest_address = models.CharField(max_length=100, blank=True)
@@ -37,9 +43,6 @@ class Member(models.Model):
 
     def __str__(self):
         return self.full_name
-
-    class Meta:
-        ordering = ('id', 'user__first_name', 'user__last_name')
 
     @property
     def active(self):
