@@ -27,7 +27,7 @@ def create_notice_body(notice):
 
 def create_notice_message(notice):
     member = notice.member
-    subject = f'[PythonCanarias] Aviso {notice.pk} para el socio nº {member.pk}'
+    subject = kind.description
     body = create_notice_body(notice)
     msg = Mail(
         from_email=Email(settings.CONTACT_EMAIL, settings.ASSOCIATION_NAME),
