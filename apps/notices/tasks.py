@@ -40,7 +40,6 @@ def create_notice_message(notice):
 @job
 def task_send_notice(notice):
     # Preconditions
-    print('task_send_notice starts')
     if not notice.member.user.email:
         print("El usuario no tiene asignado email")
         return
