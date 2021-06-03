@@ -27,7 +27,7 @@ def create_notice_body(notice):
 
 def create_notice_message(notice):
     member = notice.member
-    subject = kind.description
+    subject = notice.kind.description
     body = create_notice_body(notice)
     msg = Mail(
         from_email=Email(settings.CONTACT_EMAIL, settings.ASSOCIATION_NAME),
