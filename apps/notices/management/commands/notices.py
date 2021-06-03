@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 def autotest(days=0):
     logger.info("autotest starts")
     hoy = timezone.now().date()
-    sergio = Member.objects.get(pk=1)
+    sergio = Member.objects.get(pk=3)
     yield hoy, sergio
     jileon = Member.objects.get(pk=4)
     yield hoy, jileon
