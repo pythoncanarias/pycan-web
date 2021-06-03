@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 def autotest(days=0):
     logger.info("autotest starts")
-    hoy = datetime.date.today()
+    hoy = timezone.now().date()
     sergio = Member.objects.get(pk=1)
     yield hoy, sergio
     jileon = Member.objects.get(pk=4)
@@ -29,7 +29,7 @@ def autotest(days=0):
 
 def members_nearly_expired(days=0):
     logger.info("members_nearly_expired starts")
-    hoy = datetime.date.today()
+    hoy = timezone.now().date()
     if days <= 0:
         from_date = hoy
         to_date = hoy + datetime.timedelta(days=-days+1)
@@ -60,6 +60,7 @@ class Command(BaseCommand):
         message_parser = subparser.add_parser("message")
         message_parser.add_argument("id_notice", type=int)
         subparser.add_parser("list")
+        subparser.add_parser("rules")
 
     def do_message(self, *args, **options):
         id_notice = options.get('id_notice')
@@ -91,11 +92,24 @@ class Command(BaseCommand):
         if body:
             print(as_table(headers, body))
 
+    def do_rules(self, *args, **options):
+        body = []
+        for kind in NoticeKind.objects.all():
+            status_code = callable(globals().get(kind.code))
+            body.append((
+                kind.description,
+                green(kind.code) if status_code else red(kind.code),
+                kind.days,
+                yes_no(kind.enabled),
+            ))
+        headers = ["Description", "Code", "Days", "Enabled"]
+        print(as_table(headers, body))
+
     def do_run(self, **options):
         is_verbose = options.get('verbose')
         is_check = options.get('check')
         body = []
-        for kind in NoticeKind.objects.all():
+        for kind in NoticeKind.objects.filter(enabled=True).all():
             code = globals().get(kind.code)
             if not code:
                 print(red(f"ERROR: No existe {kind.code}"))

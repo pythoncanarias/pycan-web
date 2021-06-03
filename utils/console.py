@@ -29,6 +29,13 @@ def as_cell(val, width):
 
 
 def as_table(headers, rows):
+
+    def calc_len(item):
+        if isinstance(item, str):
+            if item.startswith('\u001b'):
+                return len(item) - 9
+        return len(str(item))
+
     assert all([
         len(headers) == len(row)
         for row in rows
@@ -37,7 +44,7 @@ def as_table(headers, rows):
     widths = [len(str(head)) for head in headers]
     for row in rows:
         widths = [
-            max(a, len(str(b)))
+            max(a, calc_len(b))
             for a, b in zip(widths, row)
         ]
     result.append(' '.join([as_cell(h, w) for h, w in zip(headers, widths)]))
