@@ -1,55 +1,34 @@
 #!/usr/bin/env python
 
 import decimal
+from functools import partial
+
+import colorama
+import tabulate
+
+WHITE = colorama.Fore.WHITE
+RED = colorama.Fore.RED
+GREEN = colorama.Fore.GREEN
+CYAN = colorama.Fore.CYAN
+
+RESET = colorama.Style.RESET_ALL
+
+colorama.init()
+
+def colored(text, color=WHITE):
+    return f"{color}{text}{RESET}"
 
 
-def red(s):
-    return f"\u001b[31m{s}\u001b[0m"
+red = partial(colored, color=RED)
+
+cyan = partial(colored, color=CYAN)
+
+green = partial(colored, color=GREEN)
 
 
-def cyan(s):
-    return f"\u001b[36m{s}\u001b[0m"
+def as_table(headers, body):
+    return tabulate.tabulate(body, headers=headers)
 
 
-def green(s):
-    return f"\u001b[32m{s}\u001b[0m"
-
-
-def yes_no(b, yes='Si', no='no'):
-    return green(yes) if b else red(no)
-
-
-def as_cell(val, width):
-    if isinstance(val, (int, float, decimal.Decimal, bool)):
-        return f"{{:>{width}}}".format(str(val))
-    elif isinstance(val, bool):
-        return f"{{:>{width}}}".format(str(yes_no(val)))
-    else:
-        return f"{{:<{width}}}".format(str(val))
-
-
-def as_table(headers, rows):
-
-    def calc_len(item):
-        if isinstance(item, str):
-            if item.startswith('\u001b'):
-                return len(item) - 9
-        return len(str(item))
-
-    assert all([
-        len(headers) == len(row)
-        for row in rows
-        ])
-    result = []
-    widths = [len(str(head)) for head in headers]
-    for row in rows:
-        widths = [
-            max(a, calc_len(b))
-            for a, b in zip(widths, row)
-        ]
-    result.append(' '.join([as_cell(h, w) for h, w in zip(headers, widths)]))
-    result.append(' '.join(['-' * w for w in widths]))
-    for row in rows:
-        result.append(' '.join([as_cell(v, w) for v, w in zip(row, widths)]))
-    result.append(' '.join(['-' * w for w in widths]))
-    return '\n'.join(result)
+def yes_no(flag, yes='Si', no='no'):
+    return green(yes) if flag else red(no)
