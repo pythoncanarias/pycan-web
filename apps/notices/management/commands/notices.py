@@ -55,12 +55,33 @@ class Command(BaseCommand):
         self.parser = parser
         parser.add_argument('--verbose', action='store_true', help='Verboso')
         subparser = parser.add_subparsers(dest="subcommand")
+        # run
         run_parser = subparser.add_parser("run")
         run_parser.add_argument('--check', action='store_true')
+        # message
         message_parser = subparser.add_parser("message")
         message_parser.add_argument("id_notice", type=int)
-        subparser.add_parser("list")
-        subparser.add_parser("rules")
+        # list
+        list_parser = subparser.add_parser("list")
+        list_parser.add_argument(
+            '-n', '--num_rows',
+            type=int,
+            default=25,
+            help="Numero de resultados a mostrar",
+        )
+        # rules
+        rules_parser = subparser.add_parser("rules")
+        rules_parser.add_argument(
+            '--enable',
+            type=int,
+            help="Activar un tipo de aviso",
+        )
+        rules_parser.add_argument(
+            '--disable',
+            type=int,
+            help="Desactivar un tipo de aviso",
+        )
+
 
     def do_message(self, *args, **options):
         id_notice = options.get('id_notice')
@@ -76,33 +97,54 @@ class Command(BaseCommand):
         print(create_notice_body(notice))
         print()
 
-    def do_list(self, *args, **kwargs):
-        headers = ['Msg.', 'Member', 'Notice', 'Ref. date', 'delivered']
-        body = []
-        today = timezone.now().date()
-        for notice in Notice.objects.filter(send_at__gte=today):
-            status = yes_no(notice.status())
-            body.append((
+    def do_list(self, *args, **options):
+        num_rows = options.get('num_rows')
+        body = list(
+            (
                 notice.pk,
                 notice.member,
                 notice.kind,
                 notice.reference_date,
-                status,
-            ))
+                yes_no(notice.status()),
+            )
+            for notice in Notice
+                .objects
+                .order_by('-created_at')
+                [0:num_rows]
+        )
         if body:
+            headers = ['Msg.', 'Member', 'Notice', 'Ref. date', 'delivered']
             print(as_table(headers, body))
+        else:
+            print(cyan('No hay ningún aviso en la base de datos'))
 
     def do_rules(self, *args, **options):
         body = []
-        for kind in NoticeKind.objects.all():
+        id_to_enable = options.get('enable')
+        id_to_disable = options.get('disable')
+        if id_to_enable and id_to_disable and id_to_enable == id_to_disable:
+            print(red("Las dos opciones son mutuamente exclueyentes"))
+            return
+        if id_to_enable:
+            kind = NoticeKind.objects.get(pk=id_to_enable)
+            if not kind.enabled:
+                kind.enabled = True
+                kind.save()
+        if id_to_disable:
+            kind = NoticeKind.objects.get(pk=id_to_disable)
+            if kind.enabled:
+                kind.enabled = False
+                kind.save()
+        for kind in NoticeKind.objects.all().order_by('pk'):
             status_code = callable(globals().get(kind.code))
             body.append((
+                kind.pk,
                 kind.description,
                 green(kind.code) if status_code else red(kind.code),
                 kind.days,
                 yes_no(kind.enabled),
             ))
-        headers = ["Description", "Code", "Days", "Enabled"]
+        headers = ["Id.", "Description", "Code", "Days", "Enabled"]
         print(as_table(headers, body))
 
     def do_run(self, **options):
