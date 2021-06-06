@@ -17,6 +17,20 @@ This project needs a variety of requirements and it's highly recommended to set 
    ```console
    $ docker compose exec web ./manage.py dbload
    ```
+
+---
+
+> Instead of 3) and 4) you can load a (production) database dump using:
+
+```console
+$ docker compose exec -T database /bin/bash -c \
+'PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_USER -d $POSTGRES_DB' < /path/to/db_dump.sql
+```
+
+> If you want to reproduce this last step afterwards, first be sure to remove the database volume with: `docker volume rm pycan-web_database-data`.
+
+---
+
 5. Create a default superuser:
    ```console
    $ docker compose exec web ./manage.py create_default_admin  # admin | admin
