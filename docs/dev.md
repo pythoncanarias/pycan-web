@@ -44,6 +44,10 @@ That's it, now visit http://localhost:8000/
 
 You can access the Django administrative interface visiting http://localhost:8000/admin using credentials: `username: admin` | `password: admin`
 
+### Media
+
+If you have a bunch of (production) files for media, you can leave them in the folder `$PROJECT/media`. A docker volume is set up to collect them from there.
+
 ### Redis
 
 Redis server is automatically launched on `docker compose up`, but if you need it, queues must be linked to the server. To that end, run the following command:
