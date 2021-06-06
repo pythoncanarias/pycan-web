@@ -10,4 +10,8 @@ class Command(BaseCommand):
     help = __doc__
 
     def handle(self, *args, **options):
-        User.objects.create_superuser('admin', 'admin@example.com', 'admin')
+        admin, _ = User.objects.get_or_create(username='admin')
+        admin.is_superuser = True
+        admin.is_staff = True
+        admin.set_password('admin')
+        admin.save()
