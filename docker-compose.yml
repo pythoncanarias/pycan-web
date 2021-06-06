@@ -2,7 +2,7 @@
 # PYCAN_DB_PORT=5432
 # PYCAN_APP_PORT=8000
 
-version: '3'
+version: '3.8'
 services:
   database:
     image: 'postgres:10.5'
@@ -20,7 +20,7 @@ services:
     image: pycan_web:latest
     volumes:
       - ./:/var/www/pycan
-      - web-media:/var/www/media/
+      - ./media:/var/www/media/
       # https://bit.ly/2RNtK87
       - vscode-extensions:/root/.vscode-server/extensions
     ports:
@@ -28,6 +28,7 @@ services:
     depends_on:
       - database
       - gulp
+      - redis
     environment:
       DATABASE_NAME: pycan_database
       DATABASE_USER: pycan_user
@@ -56,5 +57,4 @@ services:
 
 volumes:
   database-data:
-  web-media:
   vscode-extensions:
