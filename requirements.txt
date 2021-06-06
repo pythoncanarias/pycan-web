@@ -1,12 +1,12 @@
 colorama==0.4.4
 MarkupPy==1.14
 pyyaml==5.4
-django==2.2.10
+django==2.2.24
 django-colorfield==0.1.15
 django-extensions==2.2.5
 django-import-export==1.2.0
 django-leaflet==0.25.0
-django-rq==2.1.0
+django-rq==2.4.1
 jinja2==2.11.3
 markdown2==2.3.8
 odfpy==1.4.1
@@ -18,7 +18,7 @@ pyqrcode==1.2.1
 qr==0.6.0
 redis==3.3.11
 reportlab==3.5.32
-rq==1.1.0
+rq==1.8.1
 sendgrid==5.6.0
 stripe==2.41.0
 tabulate==0.8.9

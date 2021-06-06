@@ -20,11 +20,11 @@ logger = logging.getLogger(__name__)
 
 def autotest(days=0):
     logger.info("autotest starts")
+    DEVELOPERS = ['sdelquin', 'euribates']  # ToDo: Put this info in database
     hoy = timezone.now().date()
-    sergio = Member.objects.get(pk=3)
-    yield hoy, sergio
-    jileon = Member.objects.get(pk=4)
-    yield hoy, jileon
+    for username in DEVELOPERS:
+        member = Member.load_from_username(username)
+        yield hoy, member
 
 
 def members_nearly_expired(days=0):
@@ -176,7 +176,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         subcommand = options.get('subcommand')
         if subcommand:
-            do_callable = getattr(self, f'do_{subcommand}')
-            do_callable(*args, **options)
+            do_cmd = getattr(self, f'do_{subcommand}', None)
+            if callable(do_cmd):
+                do_cmd(*args, **options)
         else:
             self.parser.print_help()

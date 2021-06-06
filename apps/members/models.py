@@ -29,6 +29,15 @@ class Member(models.Model):
     is_honorary = models.BooleanField(default=False)
     remarks = models.CharField(max_length=512, blank=True)
 
+    @classmethod
+    def load_from_username(cls, username):
+        rq = cls.objects.select_related('user')
+        try:
+            member = rq.get(user__username=username)
+            return member
+        except (cls.DoesNotExist, cls.MultipleObjectsReturned):
+            return None
+
     @property
     def full_name(self):
         return self.user.first_name + ' ' + self.user.last_name
