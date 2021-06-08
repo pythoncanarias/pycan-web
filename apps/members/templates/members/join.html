@@ -37,7 +37,7 @@ La cuota de socio/socia es anual y su cuantía está recogida en el <a href="htt
   <li><span class="tag is-primary is-medium">10€</span> Estudiantes y/o personas desempleadas.</li>
 </ul>
 
-<h2>Procedimiento para convertirse en socio o socia</h2>
+<h2>Procedimiento para convertirse/renovar como socio/socia</h2>
 
 <ol>
   <li>
@@ -46,17 +46,18 @@ La cuota de socio/socia es anual y su cuantía está recogida en el <a href="htt
       <li><strong>Banco</strong>: {{ pythoncanarias.bank}}</li>
       <li><strong>IBAN</strong>: {{ pythoncanarias.iban }}</li>
       <li><strong>Importe</strong>: <em>el de la cuota seleccionada</em></li>
-      <li><strong>Concepto</strong>: Alta de socio/a</li>
+      <li><strong>Concepto</strong>: Alta de socio/a <i class="fas fa-thumbtack"></i></li>
       <li><strong>Beneficiario</strong>: {{ pythoncanarias.name }}</li>
     </ul>
   </li>
 
   <li>Envía un correo a <a href="mailto:{{ pythoncanarias.email }}">{{ pythoncanarias.email }}</a> indicando los siguientes datos:
     <ul>
-      <li><strong>Asunto</strong>: Alta de socio/a</li>
-      <li><strong>Cuerpo</strong>:
+      <li><strong>Asunto</strong>: Alta de socio/a <i class="fas fa-thumbtack"></i></li>
+      <li><strong>Cuerpo</strong>: <i class="fas fa-bell"></i>
       <p>
       Nombre y apellidos<br>
+      Nickname <small>(no puede contener espacios)</small><br>
       Teléfono de contacto<br>
       Dirección<br>
       </p>
@@ -65,8 +66,15 @@ La cuota de socio/socia es anual y su cuantía está recogida en el <a href="htt
     <span class="tag is-warning">IMPORTANTE</span> Adjuntar el justificante de la transferencia en formato PDF
   </li>
 
-  <li>Una vez que recibamos este email te responderemos indicando que tu solicitud de alta (o continuidad) se ha procesado correctamente, y pasarás a formar parte de la <strong>comunidad pitónica</strong> 🎉</li>
+  <li>Una vez que recibamos este email te responderemos indicando que tu solicitud de alta (o continuidad) se ha procesado correctamente, y pasarás a formar parte de nuestra <strong>comunidad pitónica</strong> 🎉</li>
 </ol>
+
+<p>
+  <i class="fas fa-thumbtack"></i> Indicar <strong>"Renovación de socio/a"</strong> si procede.
+  <br>
+  <i class="fas fa-bell"></i> En caso de renovar, no es necesario indicar nickname, teléfono y dirección, salvo para actualizar datos.
+</p>
+
 </div>
 
 {% endblock content %}

@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'apps.certificates',
     'apps.quotes',
     'apps.members',
+    'apps.notices',
     'apps.about',
     'apps.legal',
     'apps.dev',
@@ -79,7 +80,7 @@ if DEBUG:
     INSTALLED_APPS += [
         'django_extensions',
         'debug_toolbar',
-        ]
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -92,8 +93,7 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
-    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
-
+    MIDDLEWARE.insert(5, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 
 ROOT_URLCONF = 'main.urls'
 
@@ -102,17 +102,15 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
-        'OPTIONS':
-            {
-                'context_processors':
-                    [
-                        'django.template.context_processors.debug',
-                        'django.template.context_processors.request',
-                        'django.contrib.auth.context_processors.auth',
-                        'django.contrib.messages.context_processors.messages',
-                        'apps.commons.context_processors.glob'
-                    ],
-            },
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'apps.commons.context_processors.glob',
+            ],
+        },
     },
 ]
 
@@ -122,21 +120,15 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default':
-        {
-            'ENGINE':
-                config(
-                    'DATABASE_ENGINE', default='django.db.backends.postgresql'
-                ),
-            'NAME':
-                config('DATABASE_NAME', default='pythoncanarias'),
-            'USER':
-                config('DATABASE_USER', default='pythoncanarias'),
-            'PASSWORD':
-                config('DATABASE_PASSWORD', default='pythoncanarias'),
-            'HOST':
-                config('DATABASE_HOST', default='127.0.0.1')
-        }
+    'default': {
+        'ENGINE': config(
+            'DATABASE_ENGINE', default='django.db.backends.postgresql'
+        ),
+        'NAME': config('DATABASE_NAME', default='pythoncanarias'),
+        'USER': config('DATABASE_USER', default='pythoncanarias'),
+        'PASSWORD': config('DATABASE_PASSWORD', default='pythoncanarias'),
+        'HOST': config('DATABASE_HOST', default='127.0.0.1'),
+    }
 }
 
 # Password validation
@@ -144,20 +136,27 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': ('django.contrib.auth.password_validation'
-                 '.UserAttributeSimilarityValidator')
+        'NAME': (
+            'django.contrib.auth.password_validation'
+            '.UserAttributeSimilarityValidator'
+        )
     },
     {
-        'NAME': ('django.contrib.auth.password_validation'
-                 '.MinimumLengthValidator')
+        'NAME': (
+            'django.contrib.auth.password_validation' '.MinimumLengthValidator'
+        )
     },
     {
-        'NAME': ('django.contrib.auth.password_validation'
-                 '.CommonPasswordValidator')
+        'NAME': (
+            'django.contrib.auth.password_validation'
+            '.CommonPasswordValidator'
+        )
     },
     {
-        'NAME': ('django.contrib.auth.password_validation'
-                 '.NumericPasswordValidator')
+        'NAME': (
+            'django.contrib.auth.password_validation'
+            '.NumericPasswordValidator'
+        )
     },
 ]
 
@@ -232,10 +231,11 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': ('%(levelname)s %(asctime)s %(module)s '
-                       '%(process)d %(thread)d %(message)s'),
-            'datefmt':
-            '%d/%b/%Y %H:%M:%S',
+            'format': (
+                '%(levelname)s %(asctime)s %(module)s '
+                '%(process)d %(thread)d %(message)s'
+            ),
+            'datefmt': '%d/%b/%Y %H:%M:%S',
         },
     },
     'handlers': {
@@ -299,18 +299,24 @@ LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')
 
 RQ_QUEUES = {
     'default': {
-        'HOST': 'localhost',
+        'HOST': config('REDIS_HOST', default='localhost'),
         'PORT': 6379,
         'DB': 0,
         'DEFAULT_TIMEOUT': 360,
     },
     'low': {
-        'HOST': 'localhost',
+        'HOST': config('REDIS_HOST', default='localhost'),
         'PORT': 6379,
         'DB': 0,
-    }
+    },
 }
 
 CURRENT_API_VERSION = 1
 
 ORGANIZATION_NAME = 'Python Canarias'
+
+# Twitter API
+TWITTER_API_KEY = config('TWITTER_API_KEY')
+TWITTER_API_SECRET_KEY = config('TWITTER_API_SECRET_KEY')
+TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN')
+TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')

@@ -38,7 +38,7 @@ function getBuildCustomCssPromise(app) {
 
 function getBuildCustomJsPromise(app) {
   return new Promise(function (resolve) {
-    const input = `${app}/static/${app}/js/main.js`
+    const input = `apps/${app}/static/${app}/js/main.js`
 
     if (!fs.existsSync(input)) {
       resolve()

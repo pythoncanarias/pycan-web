@@ -2,7 +2,6 @@ flake8
 pytest
 pytest-sugar
 ipython
-fabric3
 pydotplus
 pytest-django
 black

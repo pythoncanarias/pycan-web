@@ -7,10 +7,11 @@ from django.views.generic.base import RedirectView
 
 from apps.homepage import views
 
+admin_url = 'admin' if settings.DEBUG else 'python-canarias-admin-zone'
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
-    path('python-canarias-admin-zone/', admin.site.urls),
+    path(f'{admin_url}/', admin.site.urls),
     path('api/', include('apps.api.urls', namespace='api')),
     path('django-rq/', include('django_rq.urls')),
     path('events/', include('apps.events.urls', namespace='events')),
@@ -22,15 +23,19 @@ urlpatterns = [
 
 # redirections
 urlpatterns += [
-    path('join',
-         RedirectView.as_view(url=reverse('members:join')),
-         name='goto_join_members')
+    path(
+        'join',
+        RedirectView.as_view(url=reverse('members:join')),
+        name='goto_join_members',
+    )
 ]
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
+
+    urlpatterns.append(
+        path('__debug__/', include(debug_toolbar.urls)),
+        )
     urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
     )
