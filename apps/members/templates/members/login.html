@@ -1,18 +1,20 @@
 {% extends "members/base.html" %}
 
+{% block title %}Acceso para socios/as - {{ block.super }}{% endblock %}
+
 {% block content %}
 
 <div class="columns is-centered">
   <div class="column is-one-third">
 
-  <h2 class="is-size-4">Acceso para socios</h2>
+  <h2 class="is-size-4">Acceso para socios/as</h2>
   <hr>
     <form method="POST" action=".">
     {% csrf_token %}
     {{ form.as_p }}
 
     <p class="is-pulled-right" style="margin-top:1em;">
-    <input type="submit" class="button" role="button" value="Identificarse como socio" name="Login" id="login"/> </p>
+    <input type="submit" class="button" role="button" value="Identificarse como socio/a" name="Login" id="login"/> </p>
     </form>
 
       {% if form.errors %}

@@ -3,7 +3,7 @@ from apps.commons.menu import Menu
 main_menu = (
     Menu()
     .add_section('general', 'General')
-    .add_menu_item("Perfil de usuario", "members:profile")
+    .add_menu_item("Perfil de usuario/a", "members:profile")
     .add_menu_item("Permanencia", "members:membership")
     .finished()
     .add_section('ops', 'Operaciones')

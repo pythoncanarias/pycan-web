@@ -1,5 +1,7 @@
 {% extends 'members/base.html' %}
 
+{% block title %}Perfil de socio/a - {{ block.super }}{% endblock %}
+
 {% block content %}
 <div class="box">
 
@@ -16,7 +18,7 @@
   </nav>
 
   <nav class="panel">
-    <h3 class="panel-heading">Socio nº {{ member.pk }}</h3>
+    <h3 class="panel-heading">Socio/a: #{{ member.pk }}</h3>
     <div class="panel-block">
 
       <table class="table table-striped">
