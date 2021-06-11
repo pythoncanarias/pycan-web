@@ -2,7 +2,6 @@
 @import '~bulma/bulma.sass';
 @import './override';
 
-
 html {
   // source: https://stackoverflow.com/q/46463338
   -webkit-font-feature-settings: 'liga' 0, 'clig' 0;
@@ -40,6 +39,10 @@ body {
     }
   }
 
+  &.is-wide {
+    max-width: 80rem;
+  }
+
   &.is-narrow {
     max-width: 47rem;
   }
@@ -67,7 +70,8 @@ body {
     }
   }
 
-  h1,h2 {
+  h1,
+  h2 {
     color: whitesmoke;
   }
 
