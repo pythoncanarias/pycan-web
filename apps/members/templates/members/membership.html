@@ -21,9 +21,12 @@
         <tr>
           <td>{{ m.valid_from|as_date }}</td>
           <td>{{ m.valid_until|as_date }}</td>
-          <td>{{ m.fee_received_at|as_date }}</td>
-          <td>{{ m.get_fee_payment_type_display }}<br>
-            <code>{{ m.fee_payment_reference }}</code>
+          <td>{{ m.fee_received_at|as_date|default:"No disponible" }}</td>
+          <td>{{ m.get_fee_payment_type_display }}
+            {% if m.fee_payment_reference %}
+              <br>
+              <code>{{ m.fee_payment_reference }}</code>
+            {% endif %}
           </td>
           <td style="text-align:center;">{{ m.fee_amount }} &euro;</td>
         </tr>

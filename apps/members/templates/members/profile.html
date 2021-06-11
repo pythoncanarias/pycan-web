@@ -9,7 +9,7 @@
     <h3 class="panel-heading">Datos personales</h3>
     <div class="panel-block">
       <table class="table table-striped">
-        <tr> <th>Username</th> <td><span class="tag is-size-5">{{ member.user.username }}</span></td> </tr>
+        <tr> <th>Username</th> <td><code>{{ member.user.username }}</code></td> </tr>
         <tr> <th>Nombre</th> <td>{{ member.user.first_name }}</td> </tr>
         <tr> <th>Apellidos</th> <td>{{ member.user.last_name }}</td> </tr>
         <tr> <th>Email</th> <td>{{ member.user.email }}</td> </tr>
@@ -24,23 +24,23 @@
       <table class="table table-striped">
         <tr>
           <th>Dirección</th>
-          <td>{{ member.address }}
-            {% if member.rest_address %}
+          <td>{{ member.address|default:"No disponible" }}
+            {% if member.rest_address|default:"No disponible" %}
             <br>{{ member.rest_address }}
             {% endif %}
           </td>
         </tr>
         <tr>
           <th>Código postal</th>
-          <td>{{ member.po_box }}</td>
+          <td>{{ member.postal_code|default:"No disponible" }}</td>
         </tr>
         <tr>
           <th>Ciudad</th>
-          <td>{{ member.city }}</td>
+          <td>{{ member.city|default:"No disponible" }}</td>
         </tr>
         <tr>
           <th>Teléfono</th>
-          <td>{{ member.phone }}</td>
+          <td>{{ member.phone|default:"No disponible" }}</td>
         </tr>
       </table>
     </div>
