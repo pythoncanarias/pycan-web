@@ -5,7 +5,7 @@
 version: '3.8'
 services:
   database:
-    image: 'postgres:10.5'
+    image: 'postgres:10.17'
     ports:
       - '${PYCAN_DB_PORT:-5432}:5432'
     environment:
@@ -17,7 +17,7 @@ services:
 
   web:
     build: .
-    image: pycan_web:latest
+    image: pycan_web
     volumes:
       - ./:/var/www/pycan
       - ./media:/var/www/media/
