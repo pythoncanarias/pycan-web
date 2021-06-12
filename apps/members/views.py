@@ -1,6 +1,5 @@
 import logging
 
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
@@ -9,8 +8,6 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from apps.organizations.models import Organization
-
 from . import forms
 from .menu import main_menu
 
@@ -18,19 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 def homepage(request):
-    if request.user.is_anonymous:
-        return join(request)
-    else:
-        return profile(request)
-
-
-def join(request):
-    pythoncanarias = Organization.objects.get(
-        name__istartswith=settings.ORGANIZATION_NAME
-    )
-    return render(
-        request, 'members/join.html', {'pythoncanarias': pythoncanarias}
-    )
+    return redirect('members:profile')
 
 
 def member_login(request: HttpRequest) -> HttpResponse:
