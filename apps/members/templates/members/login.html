@@ -12,36 +12,10 @@
     <form method="POST" action=".">
     {% csrf_token %}
     {{ form.as_p }}
-
     <p class="is-pulled-right" style="margin-top:1em;">
-    <input type="submit" class="button" role="button" value="Identificarse como socio/a" name="Login" id="login"/> </p>
+      <input type="submit" class="button is-link" role="button" value="Identificarse como socio/a" name="Login" id="login"/>
+    </p>
     </form>
-
-      {% if form.errors %}
-
-
-      <div class="notification is-warning" style="margin-top: 2em;">
-        <h2 class="is-size-5">Hay errores en el formulario</h2>
-
-
-
-
-      <dl>
-        {% for field_name, errors in form.errors.items  %}
-        <dt>En el campo <strong>{{ field_name }}</strong></dt>
-          <dd>
-          <ul>
-            {% for err in errors  %}
-            <li>{{err}}</li>
-
-            {% endfor %}
-          </ul>
-          </dd>
-        {% endfor %}
-      </dl>
-        </div>
-      {% endif %}
-
   </div>
 </div>
 {% endblock content %}

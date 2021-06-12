@@ -79,3 +79,13 @@ body {
     padding-right: 0.2rem;
   }
 }
+
+/* Error class for Django Forms https://bit.ly/3vidyK2 */
+.errorlist {
+  background: indianred;
+  color: white;
+  padding: 0.3rem;
+  font-size: smaller;
+  margin-top: 0.5rem;
+  border-radius: 0.2rem;
+}
