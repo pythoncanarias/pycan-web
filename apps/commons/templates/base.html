@@ -25,15 +25,13 @@
   {% block container %}
 
     {% if messages %}
-      <div class="messages columns is-centered">
-        <div class="column is-one-quarter">
-            {% for message in messages %}
-              <div class="message notification is-{{ message.tags }}">
-                <button class="delete"></button>
-                {{ message }}
-              </div>
-            {% endfor %}
-        </div>
+      <div class="messages">
+        {% for message in messages %}
+          <div class="notification is-{{ message.tags }}">
+            <button class="delete"></button>
+            {{ message }}
+          </div>
+        {% endfor %}
       </div>
     {% endif %}
 
