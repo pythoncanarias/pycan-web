@@ -24,7 +24,6 @@ body {
 
 .header-page {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
-  border-bottom: 1px solid #ececec;
   background-color: $header-bg;
 }
 
@@ -94,4 +93,8 @@ body {
 .messages {
   margin-top: 1rem;
   margin-bottom: 0;
+}
+
+.container {
+  padding-top: 2rem;
 }
