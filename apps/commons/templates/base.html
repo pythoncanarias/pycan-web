@@ -22,20 +22,21 @@
 
   {% include "header.html" %}
 
- {% if messages %}
-    {% for message in messages %}
-      <article class="message is-{{ message.tags }}">
-        <div class="message-header">
-            <p>Mensaje</p>
-        </div>
-        <div class="message-body">
-            {{ message }}
-        </div>
-      </article>
-    {% endfor %}
-  {% endif %}
-
   {% block container %}
+
+    {% if messages %}
+      <div class="messages columns is-centered">
+        <div class="column is-one-quarter">
+            {% for message in messages %}
+              <div class="message notification is-{{ message.tags }}">
+                <button class="delete"></button>
+                {{ message }}
+              </div>
+            {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
     <div class="{% block default_content_class %}container content-page{% endblock %} {% block content_class %}{% endblock %}
       {% if menu %}
         is-wide
