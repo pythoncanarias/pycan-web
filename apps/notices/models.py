@@ -1,23 +1,25 @@
 from django.db import models
-from django.conf import settings
 
 from apps.members.models import Member
 
 
 class NoticeKind(models.Model):
-
     class Meta:
         verbose_name = 'Tipo de aviso'
         verbose_name_plural = 'Tipos de aviso'
 
-    code = models.SlugField(max_length=32)
+    code = models.SlugField(
+        max_length=32,
+        help_text='Recuerde implementar la función con el mismo nombre en '
+        'apps/notices/repository.py',
+    )
     description = models.CharField(max_length=320)
     template = models.TextField(max_length=512)
     days = models.IntegerField(
         default=0,
         help_text="Margen de días antes o después"
-                  " de la fecha de referencia",
-        )
+        " de la fecha de referencia",
+    )
     enabled = models.BooleanField(default=True)
 
     def __str__(self):
@@ -28,21 +30,19 @@ class NoticeKind(models.Model):
             kind=self,
             member=member,
             reference_date=reference_date,
-            )
+        )
         notice.save()
         return notice
 
     def notice_has_been_send(self, member, reference_date):
         return (
-            self.notice_set
-            .filter(member=member)
+            self.notice_set.filter(member=member)
             .filter(reference_date=reference_date)
             .first()
         )
 
 
 class Notice(models.Model):
-
     class Meta:
         verbose_name = 'Aviso para miembro'
         verbose_name_plural = 'Avisos para miembros'
