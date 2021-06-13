@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+from django.contrib.messages import constants as message_constants
 from prettyconf import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -160,7 +161,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_URL='/members/login/'
+LOGIN_URL = '/members/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -293,7 +294,7 @@ if DEBUG:
         'handlers': ['console'],
         'level': 'DEBUG',
         'propagate': True,
-        }
+    }
 
 LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')
 
@@ -320,3 +321,6 @@ TWITTER_API_KEY = config('TWITTER_API_KEY')
 TWITTER_API_SECRET_KEY = config('TWITTER_API_SECRET_KEY')
 TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN')
 TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')
+
+if DEBUG:
+    MESSAGE_LEVEL = message_constants.DEBUG

@@ -1,8 +1,8 @@
 import re
 
 from django import template
-from django.utils.safestring import mark_safe
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from apps.commons import filters
 
@@ -21,6 +21,7 @@ register.filter('get_asset_key', filters.get_asset_key)
 register.filter('as_markdown', compose2(mark_safe, filters.as_markdown))
 register.filter('sum_float', filters.sum_float)
 register.filter('startswith', filters.startswith)
+register.filter('msgtag_to_bulmaclass', filters.msgtag_to_bulmaclass)
 
 
 @register.simple_tag(takes_context=True)

@@ -27,7 +27,7 @@
     {% if messages %}
       <div class="messages">
         {% for message in messages %}
-          <div class="notification is-{{ message.tags }}">
+          <div class="notification {{ message.tags|msgtag_to_bulmaclass }}">
             <button class="delete"></button>
             {{ message }}
           </div>
