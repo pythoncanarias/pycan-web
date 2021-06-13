@@ -21,5 +21,14 @@ def index(request):
     )
 
 
+def join(request):
+    pythoncanarias = Organization.objects.get(
+        name__istartswith=settings.ORGANIZATION_NAME
+    )
+    return render(
+        request, 'about/join.html', {'pythoncanarias': pythoncanarias}
+    )
+
+
 def history(request):
     return render(request, 'about/history.html', {})

@@ -6,5 +6,6 @@ pydotplus
 pytest-django
 black
 rope
-Werkzeug
+django-extensions==3.1.0
 django-debug-toolbar
+Werkzeug==1.0.1

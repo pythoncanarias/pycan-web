@@ -1,3 +1,5 @@
+'''Remember to register new filters in apps/commons/templatetags/utils.py'''
+
 import datetime
 import os
 
@@ -6,10 +8,29 @@ from markdown2 import markdown
 
 _months = [
     '',
-    'enero', 'febrero', 'marzo', 'abril',
-    'mayo', 'junio', 'julio', 'agosto',
-    'septiembre', 'octubre', 'noviembre', 'diciembre',
+    'enero',
+    'febrero',
+    'marzo',
+    'abril',
+    'mayo',
+    'junio',
+    'julio',
+    'agosto',
+    'septiembre',
+    'octubre',
+    'noviembre',
+    'diciembre',
 ]
+
+# Mapping from Django Message Tags (https://bit.ly/3gjp5nV)
+# into Bulma Notifications (https://bit.ly/3q0fVjH)
+BULMA_CLASSES = {
+    'debug': 'is-primary',
+    'info': 'is-info',
+    'success': 'is-success',
+    'warning': 'is-warning',
+    'error': 'is-danger',
+}
 
 
 def as_month(f, num_letters=0):
@@ -55,3 +76,11 @@ def as_markdown(s):
 
 def sum_float(first_number, second_number):
     return float(first_number) + float(second_number)
+
+
+def startswith(value, argument):
+    return value.startswith(argument)
+
+
+def msgtag_to_bulmaclass(message_tag):
+    return BULMA_CLASSES.get(message_tag, 'is-link')
