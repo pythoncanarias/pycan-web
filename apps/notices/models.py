@@ -14,7 +14,7 @@ class NoticeKind(models.Model):
         'apps/notices/repository.py',
     )
     description = models.CharField(max_length=320)
-    template = models.TextField(max_length=512)
+    template = models.TextField(max_length=2048)
     days = models.IntegerField(
         default=0,
         help_text="Margen de días antes o después"
