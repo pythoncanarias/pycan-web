@@ -27,6 +27,8 @@ def member_login(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             login(request, form.user)
             return redirect(reverse("members:profile"))
+        else:
+            messages.error(request, "El formulario tiene errores")
     elif request.method in set(['GET', 'HEAD']):
         username = request.GET.get('username', '')
         form = forms.LoginForm(initial={"username": username})
@@ -90,7 +92,7 @@ def password_change(request):
             form.save(request)
             return redirect(reverse('members:profile'))
         else:
-            messages.warning(request, "El formulario tiene errores")
+            messages.error(request, "El formulario tiene errores")
     else:
         raise PermissionDenied("Only GET and POST HTTP verbs are valid here")
     return render(
