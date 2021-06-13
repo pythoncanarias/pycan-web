@@ -1,7 +1,10 @@
 {% extends "base.html" %}
-
 {% load utils %}
 
 {% block style %}
   <link rel="stylesheet" href="{{ assets|get_asset_key:'members/custom.min.css' }}">
 {% endblock style %}
+
+{% block menu %}
+  {% include 'as_menu.html' %}
+{% endblock menu %}

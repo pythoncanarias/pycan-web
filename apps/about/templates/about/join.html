@@ -1,8 +1,8 @@
-{% extends "members/base.html" %}
+{% extends "about/base.html" %}
 {% load utils %}
 {% load static %}
 
-{% block title %}Socios/as - {{ block.super }}{% endblock %}
+{% block title %}Únete - {{ block.super }}{% endblock %}
 
 {% block content %}
 
@@ -23,6 +23,9 @@ Python Canarias es una <strong>asociación sin ánimo de lucro</strong>. Para de
 <p>
 Si te animas a formar parte de Python Canarias, también queremos devolverte algo. En este sentido habrá <strong>descuentos en eventos y promociones con prioridad para socios y socias</strong>.
 </p>
+
+<p>Si ya eres socio/a, pulsa en el siguiente botón para aceder:</p>
+<a class="button is-link" href="{% url 'members:login' %}">Acceso para socios/as</a>
 
 <h2>Cuota</h2>
 

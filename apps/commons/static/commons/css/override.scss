@@ -55,7 +55,8 @@ hr {
       }
     }
 
-    a.navbar-item, .navbar-link {
+    a.navbar-item,
+    .navbar-link {
       color: white;
     }
 
@@ -68,6 +69,10 @@ hr {
     .navbar-link.is-active {
       background: darken($header-bg, 10%);
       font-weight: bold;
+    }
+
+    i {
+      padding-right: 0.3rem;
     }
   }
 }

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+from django.contrib.messages import constants as message_constants
 from prettyconf import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -34,10 +35,12 @@ ALLOWED_HOSTS = config(
     default='localhost, 127.0.0.1',
 )
 
-INTERNAL_IPS = [
-    'localhost',
-    '127.0.0.1',
-]
+if DEBUG:
+    INTERNAL_IPS = [
+        'localhost',
+        '127.0.0.1',
+        '0.0.0.0',
+    ]
 
 # Application definition
 
@@ -157,6 +160,8 @@ AUTH_PASSWORD_VALIDATORS = [
         )
     },
 ]
+
+LOGIN_URL = '/members/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -284,6 +289,13 @@ LOGGING = {
     },
 }
 
+if DEBUG:
+    LOGGING['loggers']['werkzeug'] = {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+        'propagate': True,
+    }
+
 LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')
 
 RQ_QUEUES = {
@@ -309,3 +321,6 @@ TWITTER_API_KEY = config('TWITTER_API_KEY')
 TWITTER_API_SECRET_KEY = config('TWITTER_API_SECRET_KEY')
 TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN')
 TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')
+
+if DEBUG:
+    MESSAGE_LEVEL = message_constants.DEBUG
