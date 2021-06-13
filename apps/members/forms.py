@@ -8,7 +8,7 @@ MIN_PASSWORD_LENGTH = 8
 # Validation error messages
 
 WRONG_PASSWORD = (
-    "La contraseña para este identificador de usuario" " es incorrecta."
+    "La contraseña para este identificador de usuario es incorrecta"
 )
 
 PASSWORD_USES_USERNAME = "La contraseña no debería contener el id. de usuario"
@@ -21,7 +21,7 @@ PASSWORD_TOO_SHORT = (
 OLD_PASSWORD_IS_WRONG = "La contraseña anterior es incorrecta"
 
 NEW_PASSWORD_DOES_NOT_MATCH = (
-    "La nueva contraseña y la contraseña de confirmación" " no coinciden"
+    "La nueva contraseña y la contraseña de confirmación no coinciden"
 )
 
 
