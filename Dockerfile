@@ -32,4 +32,7 @@ RUN pip install --upgrade pip && \
     pip install -r requirements.txt && \
     pip install -r requirements-dev.txt
 
+# Fix an ipython bug: https://github.com/ipython/ipython/issues/12677
+RUN pip install jedi==0.17.2  
+
 CMD ["./manage.py", "runserver", "0.0.0.0:8000"]
