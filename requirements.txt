@@ -10,7 +10,7 @@ jinja2==2.11.3
 markdown2==2.4.0
 odfpy==1.4.1
 openpyxl==3.0.3
-pillow==8.1.1
+pillow==8.2.0
 prettyconf==2.1.0
 psycopg2-binary==2.7.5
 pyqrcode==1.2.1
