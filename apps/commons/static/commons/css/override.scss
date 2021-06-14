@@ -30,6 +30,7 @@ hr {
 
 .navbar {
   .navbar-brand {
+    background: $header-bg;
     .navbar-item {
       padding: 0.35rem 1rem;
 
@@ -57,7 +58,7 @@ hr {
 
     a.navbar-item,
     .navbar-link {
-      color: white;
+      color: $header-fg;
     }
 
     a.navbar-item:hover,

@@ -51,10 +51,10 @@ body {
   background-color: $footer-bg;
 
   a {
-    color: $header-bg;
+    color: $footer-fg;
 
     &:hover {
-      text-decoration: underline;
+      font-weight: 400;
     }
   }
 
