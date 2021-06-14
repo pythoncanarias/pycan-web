@@ -46,6 +46,7 @@ class Notice(models.Model):
     class Meta:
         verbose_name = 'Aviso para miembro'
         verbose_name_plural = 'Avisos para miembros'
+        ordering = ['-send_at']
 
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
     kind = models.ForeignKey(NoticeKind, on_delete=models.PROTECT)
