@@ -48,14 +48,6 @@ You can access the Django administrative interface visiting http://localhost:800
 
 If you have a bunch of (production) files for media, you can leave them in the folder `$PROJECT/media`. A docker volume is set up to collect them from there.
 
-### Redis
-
-Redis server is automatically launched on `docker-compose up`, but if you need it, queues must be linked to the server. To that end, run the following command:
-
-```console
-$ docker-compose exec web ./manage.py rqworker default low
-```
-
 ## Code style
 
 Some hints should be followed in order to homogenize **Python** code style:
@@ -75,11 +67,3 @@ In order to use the Docker development environment in VSCode you have to install
 The folder `.devcontainer` already contains the necessary files to enable the Docker "remote" container. Just follow [these instructions](https://code.visualstudio.com/docs/remote/containers) to enable it.
 
 > A good tutorial for setting up VSCode over Docker was broadcasted by Python Malaga. [Check it out](https://www.youtube.com/watch?v=mxpq0ntJ8T8)!
-
-### Launch development server
-
-Remote containers are automatically launched by VSCode when it's right configured though, the development server for the Django application doesn't. To that end, you should launch it from a terminal inside VSCode:
-
-```console
-$ ./run-dev.sh
-```

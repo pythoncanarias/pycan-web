@@ -37,6 +37,11 @@ services:
       MEDIA_ROOT: /var/www/media
       STATIC_ROOT: /var/www/static
       REDIS_HOST: redis
+    command: >
+      bash -c "
+      ./manage.py rqworker default low
+      & ./manage.py runserver 0.0.0.0:8000
+      && fg"
 
   gulp:
     build:
