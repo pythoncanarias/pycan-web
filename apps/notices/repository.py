@@ -45,3 +45,18 @@ def members_nearly_expired(days=0):
     )
     for m in qs:
         yield m.max_valid_until, m
+
+
+def all_members(days=0):
+    logger.info('all_members starts')
+    today = timezone.now().date()
+    for member in Member.objects.all():
+        yield today, member
+
+
+def active_members(days=0):
+    logger.info('active_members starts')
+    today = timezone.now().date()
+    for member in Member.objects.all():
+        if member.active:
+            yield today, member
