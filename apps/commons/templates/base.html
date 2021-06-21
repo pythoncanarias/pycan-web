@@ -22,9 +22,38 @@
 
   {% include "header.html" %}
 
-  <div class="{% block default_content_class %}container content-page{% endblock %} {% block content_class %}{% endblock %}">
+  {% block container %}
+
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="notification {{ message.tags|msgtag_to_bulmaclass }}">
+            <button class="delete"></button>
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="{% block default_content_class %}container content-page{% endblock %} {% block content_class %}{% endblock %}
+      {% if menu %}
+        is-wide
+      {% endif %}
+    ">
+    {% if menu %}
+      <div class="columns is-display">
+        <div class="column is-one-quarter">
+          {% block menu %}{% endblock menu %}
+        </div>
+        <div class="column is-three-quarters">
+    {% endif %}
     {% block content %} {% endblock content %}
+    {% if menu %}
+        </div>
+      </div>
+    {% endif %}
   </div>
+  {% endblock container %}
 
   {% include "footer.html" %}
 

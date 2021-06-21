@@ -30,6 +30,7 @@ hr {
 
 .navbar {
   .navbar-brand {
+    background: $header-bg;
     .navbar-item {
       padding: 0.35rem 1rem;
 
@@ -55,8 +56,9 @@ hr {
       }
     }
 
-    a.navbar-item, .navbar-link {
-      color: white;
+    a.navbar-item,
+    .navbar-link {
+      color: $header-fg;
     }
 
     a.navbar-item:hover,
@@ -68,6 +70,10 @@ hr {
     .navbar-link.is-active {
       background: darken($header-bg, 10%);
       font-weight: bold;
+    }
+
+    i {
+      padding-right: 0.3rem;
     }
   }
 }

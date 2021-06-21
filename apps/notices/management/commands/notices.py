@@ -1,50 +1,17 @@
-import decimal
-import logging
-import datetime
+from inspect import getmembers, isfunction
 
-from django.utils import timezone
-from django.core.management.base import BaseCommand, CommandError
-from django.db.models import Max
+from django.core.management.base import BaseCommand
 
-from utils.console import green, red, cyan, as_table, yes_no
+from apps.notices import repository
 from apps.notices.models import Notice, NoticeKind
-from apps.members.models import Member
 from apps.notices.tasks import (
-    task_send_notice,
-    create_notice_message,
     create_notice_body,
+    create_notice_message,
+    task_send_notice,
 )
+from utils.console import as_table, cyan, green, red, yes_no
 
-logger = logging.getLogger(__name__)
-
-
-def autotest(days=0):
-    logger.info("autotest starts")
-    hoy = timezone.now().date()
-    sergio = Member.objects.get(pk=3)
-    yield hoy, sergio
-    jileon = Member.objects.get(pk=4)
-    yield hoy, jileon
-
-
-def members_nearly_expired(days=0):
-    logger.info("members_nearly_expired starts")
-    hoy = timezone.now().date()
-    if days <= 0:
-        from_date = hoy
-        to_date = hoy + datetime.timedelta(days=-days+1)
-    else:
-        from_date = hoy + datetime.timedelta(days=days)
-        to_date = from_date + datetime.timedelta(days=12)
-    qs = (
-        Member.objects
-        .annotate(max_valid_until=Max('membership__valid_until'))
-        .filter(max_valid_until__isnull=False)
-        .filter(max_valid_until__gte=from_date)
-        .filter(max_valid_until__lt=to_date)
-    )
-    for m in qs:
-        yield m.max_valid_until, m
+NOTICE_KIND = dict(getmembers(repository, isfunction))
 
 
 class Command(BaseCommand):
@@ -64,7 +31,8 @@ class Command(BaseCommand):
         # list
         list_parser = subparser.add_parser("list")
         list_parser.add_argument(
-            '-n', '--num_rows',
+            '-n',
+            '--num_rows',
             type=int,
             default=25,
             help="Numero de resultados a mostrar",
@@ -81,7 +49,6 @@ class Command(BaseCommand):
             type=int,
             help="Desactivar un tipo de aviso",
         )
-
 
     def do_message(self, *args, **options):
         id_notice = options.get('id_notice')
@@ -107,10 +74,7 @@ class Command(BaseCommand):
                 notice.reference_date,
                 yes_no(notice.status()),
             )
-            for notice in Notice
-                .objects
-                .order_by('-created_at')
-                [0:num_rows]
+            for notice in Notice.objects.order_by('-created_at')[0:num_rows]
         )
         if body:
             headers = ['Msg.', 'Member', 'Notice', 'Ref. date', 'delivered']
@@ -136,14 +100,16 @@ class Command(BaseCommand):
                 kind.enabled = False
                 kind.save()
         for kind in NoticeKind.objects.all().order_by('pk'):
-            status_code = callable(globals().get(kind.code))
-            body.append((
-                kind.pk,
-                kind.description,
-                green(kind.code) if status_code else red(kind.code),
-                kind.days,
-                yes_no(kind.enabled),
-            ))
+            status_code = callable(NOTICE_KIND.get(kind.code))
+            body.append(
+                (
+                    kind.pk,
+                    kind.description,
+                    green(kind.code) if status_code else red(kind.code),
+                    kind.days,
+                    yes_no(kind.enabled),
+                )
+            )
         headers = ["Id.", "Description", "Code", "Days", "Enabled"]
         print(as_table(headers, body))
 
@@ -152,7 +118,7 @@ class Command(BaseCommand):
         is_check = options.get('check')
         body = []
         for kind in NoticeKind.objects.filter(enabled=True).all():
-            code = globals().get(kind.code)
+            code = NOTICE_KIND.get(kind.code)
             if not code:
                 print(red(f"ERROR: No existe {kind.code}"))
                 continue
@@ -176,7 +142,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         subcommand = options.get('subcommand')
         if subcommand:
-            do_callable = getattr(self, f'do_{subcommand}')
-            do_callable(*args, **options)
+            do_cmd = getattr(self, f'do_{subcommand}', None)
+            if callable(do_cmd):
+                do_cmd(*args, **options)
         else:
             self.parser.print_help()

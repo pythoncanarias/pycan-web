@@ -5,12 +5,18 @@ $yellow-text: #dcb029;
 $yellow-bg: #efc23b;
 $brown-text-for-yellow-bg: #332702;
 $light-gray-bg: #f9f9fb;
+$notification-width: 25rem;
 
+// Color schemes
 // https://flatuicolors.com/palette/nl
-$header-bg: #F79F1F;
+// https://bit.ly/3zqcDub
+$header-bg: #e2285d;
+$header-fg: white;
 $footer-bg: #444444;
+$footer-fg: lighten($header-bg, 20%);
 
-$default-box-shadow: 0 1px 1px rgba(10, 10, 29, 0.09), 0 0 1px rgba(10, 10, 29, 0.09);
+$default-box-shadow: 0 1px 1px rgba(10, 10, 29, 0.09),
+  0 0 1px rgba(10, 10, 29, 0.09);
 
 $custom-mobile: 36rem;
 

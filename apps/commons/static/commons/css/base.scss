@@ -2,7 +2,6 @@
 @import '~bulma/bulma.sass';
 @import './override';
 
-
 html {
   // source: https://stackoverflow.com/q/46463338
   -webkit-font-feature-settings: 'liga' 0, 'clig' 0;
@@ -25,7 +24,6 @@ body {
 
 .header-page {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
-  border-bottom: 1px solid #ececec;
   background-color: $header-bg;
 }
 
@@ -40,6 +38,10 @@ body {
     }
   }
 
+  &.is-wide {
+    max-width: 80rem;
+  }
+
   &.is-narrow {
     max-width: 47rem;
   }
@@ -49,10 +51,10 @@ body {
   background-color: $footer-bg;
 
   a {
-    color: $header-bg;
+    color: $footer-fg;
 
     &:hover {
-      text-decoration: underline;
+      font-weight: 400;
     }
   }
 
@@ -67,11 +69,40 @@ body {
     }
   }
 
-  h1,h2 {
+  h1,
+  h2 {
     color: whitesmoke;
   }
 
   i {
     padding-right: 0.2rem;
   }
+}
+
+/* Error class for Django Forms https://bit.ly/3vidyK2 */
+.errorlist {
+  color: $red;
+  font-size: smaller;
+  margin-top: 0.5rem;
+}
+
+/* Float notification messages at top of pages */
+.messages {
+  position: absolute;
+  right: 0;
+  top: $header-height + 1rem;
+  width: 100%;
+  z-index: 1;
+
+  & .notification {
+    width: $notification-width;
+    margin-left: auto;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+}
+
+.container {
+  padding-top: 2rem;
 }

@@ -1,0 +1,20 @@
+{% load utils %}
+{% if menu %}
+<div class="box">
+<aside class="menu">
+  {% for section in menu %}
+  <p class="menu-label"> {{ section.title }} </p>
+  <ul class="menu-list">
+    {% for menu_item in section %}
+    {% with active=menu_item.url|startswith:request.path %}
+    <li>{% spaceless %}
+      <a href="{{ menu_item.url }}"{% if active %} class="is-active"{% endif %}>
+        {{ menu_item.text|safe }}
+      </a></li>{% endspaceless %}
+    {% endwith %}
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</aside>
+</div>
+{% endif %}

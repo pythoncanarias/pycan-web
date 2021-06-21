@@ -53,6 +53,10 @@ We are using **Redis** for some services. In order to get it run properly it is 
 1. Install [Redis](https://redis.io/download).
 2. Launch `run-rq.sh`
 
+## Notices
+
+A Django app has been implemented in order to send notices (by email) programmatically. For this process to properly run, the worker `run-notices.sh` must be scheduled in cron (e.g. daily).
+
 ## Database
 
 We are using **PostgreSQL** as _database management system_. In order to configure the project correctly it is important to follow some indications:

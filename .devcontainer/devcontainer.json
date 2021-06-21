@@ -1,6 +1,6 @@
 {
   "name": "Web - Python Canarias",
-  "dockerComposeFile": ["../docker-compose.yml", "./docker-compose.yml"],
+  "dockerComposeFile": "../docker-compose.yml",
   "service": "web",
   "workspaceFolder": "/var/www/pycan",
   "extensions": ["ms-python.python", "esbenp.prettier-vscode"],
