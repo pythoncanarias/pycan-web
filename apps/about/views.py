@@ -10,15 +10,10 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
-    pythoncanarias = Organization.objects.get(
-        name__istartswith=settings.ORGANIZATION_NAME
-    )
     positions = [p for p in Position.objects.all() if p.active]
-    return render(
-        request,
-        'about/index.html',
-        {'pythoncanarias': pythoncanarias, 'positions': positions},
-    )
+    return render(request, 'about/index.html', {
+        'positions': positions,
+        })
 
 
 def history(request):

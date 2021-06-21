@@ -107,6 +107,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.commons.context_processors.glob',
+                'apps.commons.context_processors.main_organization_data',
             ],
         },
     },
@@ -286,17 +287,21 @@ LOGGING = {
 
 LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')
 
+REDIS_HOST = config('REDIS_HOST', default='localhost')
+REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
+REDIS_DB = config('REDIS_DB', default=0, cast=int)
+
 RQ_QUEUES = {
     'default': {
-        'HOST': config('REDIS_HOST', default='localhost'),
-        'PORT': 6379,
-        'DB': 0,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
+        'DB': REDIS_DB,
         'DEFAULT_TIMEOUT': 360,
     },
     'low': {
-        'HOST': config('REDIS_HOST', default='localhost'),
-        'PORT': 6379,
-        'DB': 0,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
+        'DB': REDIS_DB,
     },
 }
 
@@ -309,3 +314,25 @@ TWITTER_API_KEY = config('TWITTER_API_KEY')
 TWITTER_API_SECRET_KEY = config('TWITTER_API_SECRET_KEY')
 TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN')
 TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')
+
+if DEBUG:
+    MESSAGE_LEVEL = message_constants.DEBUG
+
+if DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }
+else:
+    url_redis = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": url_redis,
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            },
+            "KEY_PREFIX": "web"
+        }
+    }
