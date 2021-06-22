@@ -18,13 +18,13 @@ Si dispone de tarjeta bancaria acceda a [la página de venta de entradas]({% url
 ## <i class="fas fa-university"></i> Transferencia bancaria
 
 1. Realice una transferencia bancaria indicando los siguientes datos:
-  - **Banco**: {{ pythoncanarias.bank}}
-  - **IBAN**: {{ pythoncanarias.iban }}
+  - **Banco**: {{ organization.bank }}
+  - **IBAN**: {{ organization.iban }}
   - **Importe**: {{ article.price }} €
   - **Concepto**: Entrada para {{ article.event.slug }}
-  - **Beneficiario**: {{ pythoncanarias.name }}
+  - **Beneficiario**: {{ organization.name }}
 
-2. Envíe un correo a [{{ pythoncanarias.email }}](mailto:{{ pythoncanarias.email }}) indicando los siguientes datos:
+2. Envíe un correo a [{{ organization.email }}](mailto:{{ organization.email }}) indicando los siguientes datos:
   - <b>Asunto</b>: Transferencia bancaria - Entrada para {{ article.event.slug }}
   - <b>Cuerpo</b>: Indique su *nombre y apellidos* así como un *teléfono de contacto*.
   - **IMPORTANTE**: Adjuntar el justificante de la transferencia en formato PDF.
@@ -38,7 +38,7 @@ Si dispone de tarjeta bancaria acceda a [la página de venta de entradas]({% url
 Le rogamos que utilice este método de pago <strong>únicamente en caso de no disponer de tarjeta bancaria</strong> y como último recurso. Las comisiones de PayPal son altas y, aunque usted paga lo mismo, nosotros recibimos un neto mucho más bajo que utilizando una transferencia o un <a href="{% url 'events:ticket_purchase' id_article=article.id %}">pago con tarjeta bancaria</a>.
 </div>
 
-1. Realice un pago PayPal usando [este enlace de la asociación Python Canarias]({{ pythoncanarias.paypal_me }}), indicando los siguientes datos:
+1. Realice un pago PayPal usando [este enlace de la asociación {{ organization.name }}]({{ organization.paypal_me }}), indicando los siguientes datos:
   - **Importe**: {{ article.price }} €
   - **Añada una nota**: Entrada para {{ article.event.slug }}
 

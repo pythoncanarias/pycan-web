@@ -1,11 +1,8 @@
-#! / usr / bin / env python
-# -*- coding: utf-8 -*-
 import os
 import subprocess
 import sys
 from decimal import Decimal
 
-from django.conf import settings
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import cm
@@ -29,9 +26,7 @@ class InvoiceMaker(object):
     PAGE_WIDTH = A4[0]
 
     def __init__(self, invoice):
-        self.python_canarias = Organization.objects.get(
-            name__istartswith=settings.ORGANIZATION_NAME
-        )
+        self.python_canarias = Organization.load_main_organization()
 
         self.invoice = invoice
 

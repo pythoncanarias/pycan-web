@@ -41,15 +41,15 @@ La cuota de socio/socia es anual y su cuantía está recogida en el <a href="htt
   <li>
     Realiza una transferencia bancaria indicando los siguientes datos:
     <ul>
-      <li><strong>Banco</strong>: {{ pythoncanarias.bank}}</li>
-      <li><strong>IBAN</strong>: {{ pythoncanarias.iban }}</li>
+      <li><strong>Banco</strong>: {{ organization.bank}}</li>
+      <li><strong>IBAN</strong>: {{ organization.iban }}</li>
       <li><strong>Importe</strong>: <em>el de la cuota seleccionada</em></li>
       <li><strong>Concepto</strong>: Alta de socio/a <i class="fas fa-thumbtack"></i></li>
-      <li><strong>Beneficiario</strong>: {{ pythoncanarias.name }}</li>
+      <li><strong>Beneficiario</strong>: {{ organization.name }}</li>
     </ul>
   </li>
 
-  <li>Envía un correo a <a href="mailto:{{ pythoncanarias.email }}">{{ pythoncanarias.email }}</a> indicando los siguientes datos:
+  <li>Envía un correo a <a href="mailto:{{ organization.email }}">{{ organization.email }}</a> indicando los siguientes datos:
     <ul>
       <li><strong>Asunto</strong>: Alta de socio/a <i class="fas fa-thumbtack"></i></li>
       <li><strong>Cuerpo</strong>: <i class="fas fa-bell"></i>

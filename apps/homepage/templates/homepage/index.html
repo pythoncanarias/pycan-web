@@ -15,14 +15,14 @@
   <link rel="stylesheet" href="{{ assets|get_asset_key:'homepage/vendor.min.css' }}">
   <link rel="stylesheet" href="{{ assets|get_asset_key:'homepage/custom.min.css' }}">
 
-  <meta property="og:url" content="https://pythoncanarias.es" />
+  <meta property="og:url" content="{{ organization.url }}" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Python Canarias" />
-  <meta property="og:description" content="Web de la asociación Python Canarias" />
+  <meta property="og:description" content="Web de la asociación {{ organization.name }}" />
   <meta property="og:image" content="{% static 'commons/img/logo.png' %}" />
 
   <meta name="twitter:title" content="Python Canarias">
-  <meta name="twitter:description" content="Web de la asociación Python Canarias.">
+  <meta name="twitter:description" content="Web de la asociación {{ organization.name }}.">
   <meta name="twitter:image" content="{% static 'commons/img/logo.png' %}">
   <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -83,7 +83,7 @@
               <i class="fab fa-facebook"></i>
             </span>
           </a>
-          <a href="mailto:info@pythoncanarias.es" target="_blank" class="button is-medium">
+          <a href="mailto:{{ organization.email }}" target="_blank" class="button is-medium">
             <span class="icon">
               <i class="fas fa-envelope-open"></i>
             </span>
