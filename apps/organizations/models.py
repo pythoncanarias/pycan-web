@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 
-from django.core.cache import cache
-from django.db.models.signals import post_save
-
-from django.db import models
-
 from django.conf import settings
+from django.core.cache import cache
+from django.db import models
+from django.db.models.signals import post_save
 
 from apps.commons.constants import PRIORITY
 
@@ -30,6 +28,13 @@ class Organization(models.Model):
     @classmethod
     def load_main_organization(cls):
         return cls.objects.get(name__istartswith=settings.ORGANIZATION_NAME)
+
+    @property
+    def full_address(self):
+        return (
+            f'{self.address} {self.rest_address or ""}| '
+            f'{self.postal_code} {self.city}'
+        )
 
     def __str__(self):
         return self.name
