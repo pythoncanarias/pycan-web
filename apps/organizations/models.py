@@ -1,4 +1,9 @@
+#!/usr/bin/env python
+
+from django.conf import settings
+from django.core.cache import cache
 from django.db import models
+from django.db.models.signals import post_save
 
 from apps.commons.constants import PRIORITY
 
@@ -20,6 +25,24 @@ class Organization(models.Model):
     registration_number = models.CharField(max_length=50, blank=True)
     paypal_username = models.CharField(max_length=50, blank=True)
 
+    @classmethod
+    def load_main_organization(cls):
+        key = 'organizations.organization'
+        org = cache.get(key)
+        if org is None:
+            org = Organization.objects.get(
+                name__istartswith=settings.ORGANIZATION_NAME
+            )
+            cache.set(key, org, timeout=604800)  # 7 días
+        return org
+
+    @property
+    def full_address(self):
+        return (
+            f'{self.address} {self.rest_address or ""}| '
+            f'{self.postal_code} {self.city}'
+        )
+
     def __str__(self):
         return self.name
 
@@ -37,6 +60,25 @@ class Organization(models.Model):
 
     class Meta:
         ordering = ['name']
+
+
+def clear_organization_cache(sender, **kwargs):
+    """Limpia la cache de la informacion sobre la organizacion.
+
+    Ver commons.content_procesors.main_organization_data.
+
+    Cada vez que se almacene informacion en la tabla de organizaciones,
+    se elmimina la cache.
+    """
+    key = 'organizations.organization'
+    cache.delete(key)
+
+
+post_save.connect(
+    clear_organization_cache,
+    sender=Organization,
+    dispatch_uid="clear_organization_cache",
+)
 
 
 class OrganizationRole(models.Model):

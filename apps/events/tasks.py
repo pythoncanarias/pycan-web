@@ -9,23 +9,28 @@ from django_rq import job
 from sendgrid.helpers.mail import Attachment, Content, Email, Mail
 
 from apps.commons.filters import as_markdown
+from apps.organizations.models import Organization
 
 
 def create_ticket_message(ticket):
     event = ticket.article.event
     tmpl = loader.get_template('events/email/ticket_message.md')
     subject = 'Entrada para {}'.format(event.name)
-    body = tmpl.render({
-        'ticket': ticket,
-        'article': ticket.article,
-        'category': ticket.article.category,
-        'event': event,
-    })
+    body = tmpl.render(
+        {
+            'ticket': ticket,
+            'article': ticket.article,
+            'category': ticket.article.category,
+            'event': event,
+        }
+    )
+    organization = Organization.load_main_organization()
     mail = Mail(
-        from_email=Email(settings.CONTACT_EMAIL, settings.ASSOCIATION_NAME),
+        from_email=Email(organization.email, organization.name),
         subject=subject,
         to_email=Email(ticket.customer_email),
-        content=Content('text/html', as_markdown(body)))
+        content=Content('text/html', as_markdown(body)),
+    )
 
     attachment = Attachment()
     pdf_filename = ticket.as_pdf()

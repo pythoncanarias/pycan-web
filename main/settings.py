@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import socket
 
 from django.contrib.messages import constants as message_constants
 from prettyconf import config
@@ -36,7 +37,11 @@ ALLOWED_HOSTS = config(
 )
 
 if DEBUG:
+    # tricks to have debug toolbar when developing with docker
+    local_ip = socket.gethostbyname(socket.gethostname())
+    docker_gateway = local_ip[:-1] + '1'
     INTERNAL_IPS = [
+        docker_gateway,
         'localhost',
         '127.0.0.1',
         '0.0.0.0',
@@ -110,6 +115,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.commons.context_processors.glob',
+                'apps.commons.context_processors.main_organization_data',
             ],
         },
     },
@@ -190,13 +196,11 @@ MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, '.media'))
 
 SITE_ID = 1
 
-# Python Canarias Info
-#
-# You probably want to change this to use this code
-
+# Do not remove this!
+# The value in ASSOCIATION_NAME must match with an entry on:
+# organization.models.Organization
+# See code: organization.models.Organization.load_main_organization()
 ASSOCIATION_NAME = config('ASSOCIATION_NAME', default='Python Canarias')
-DOMAIN = config('DOMAIN', default='pythoncanarias.es')
-CONTACT_EMAIL = config('CONTACT_EMAIL', default='info@{}'.format(DOMAIN))
 
 # Leaflet settings
 
@@ -298,17 +302,22 @@ if DEBUG:
 
 LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')
 
+REDIS_HOST = config('REDIS_HOST', default='localhost')
+REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
+REDIS_DB = config('REDIS_DB', default=0, cast=int)
+REDIS_PREFIX = config('REDIS_PREFIX', default='pycan-web')
+
 RQ_QUEUES = {
     'default': {
-        'HOST': config('REDIS_HOST', default='localhost'),
-        'PORT': 6379,
-        'DB': 0,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
+        'DB': REDIS_DB,
         'DEFAULT_TIMEOUT': 360,
     },
     'low': {
-        'HOST': config('REDIS_HOST', default='localhost'),
-        'PORT': 6379,
-        'DB': 0,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
+        'DB': REDIS_DB,
     },
 }
 
@@ -324,3 +333,20 @@ TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')
 
 if DEBUG:
     MESSAGE_LEVEL = message_constants.DEBUG
+
+if DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }
+else:
+    url_redis = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": url_redis,
+            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+            "KEY_PREFIX": REDIS_PREFIX,
+        }
+    }

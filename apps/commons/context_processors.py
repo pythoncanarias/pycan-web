@@ -3,6 +3,8 @@ import os
 
 from django.conf import settings
 
+from apps.organizations.models import Organization
+
 
 def glob(request):
     static_folder_path = settings.STATIC_ROOT
@@ -16,3 +18,7 @@ def glob(request):
         except Exception:
             assets = False
     return {"assets": assets}
+
+
+def main_organization_data(request):
+    return dict(organization=Organization.load_main_organization())
