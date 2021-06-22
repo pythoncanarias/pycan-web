@@ -22,7 +22,7 @@ def glob(request):
 
 
 def main_organization_data(request):
-    key = "web.organization"
+    key = "pycan-web.organization"
     org = cache.get(key)
     if org is None:
         print("Cache MISS")
