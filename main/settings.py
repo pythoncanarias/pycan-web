@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import socket
 
 from django.contrib.messages import constants as message_constants
 from prettyconf import config
@@ -36,7 +37,11 @@ ALLOWED_HOSTS = config(
 )
 
 if DEBUG:
+    # tricks to have debug toolbar when developing with docker
+    local_ip = socket.gethostbyname(socket.gethostname())
+    docker_gateway = local_ip[:-1] + '1'
     INTERNAL_IPS = [
+        docker_gateway,
         'localhost',
         '127.0.0.1',
         '0.0.0.0',
