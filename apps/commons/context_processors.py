@@ -2,7 +2,6 @@ import json
 import os
 
 from django.conf import settings
-from django.core.cache import cache
 
 from apps.organizations.models import Organization
 
@@ -22,14 +21,4 @@ def glob(request):
 
 
 def main_organization_data(request):
-    key = "pycan-web.organization"
-    org = cache.get(key)
-    if org is None:
-        print("Cache MISS")
-        org = Organization.load_main_organization()
-        cache.set(key, org, timeout=604800)  # 7 días
-    else:
-        print("Cache hit")
-    return {
-        'organization': org,
-    }
+    return dict(organization=Organization.load_main_organization())

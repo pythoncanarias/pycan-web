@@ -27,7 +27,14 @@ class Organization(models.Model):
 
     @classmethod
     def load_main_organization(cls):
-        return cls.objects.get(name__istartswith=settings.ORGANIZATION_NAME)
+        key = 'pycan-web.organization'
+        org = cache.get(key)
+        if org is None:
+            org = Organization.objects.get(
+                name__istartswith=settings.ORGANIZATION_NAME
+            )
+            cache.set(key, org, timeout=604800)  # 7 días
+        return org
 
     @property
     def full_address(self):
