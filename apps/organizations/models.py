@@ -27,7 +27,7 @@ class Organization(models.Model):
 
     @classmethod
     def load_main_organization(cls):
-        key = 'pycan-web.organization'
+        key = 'organizations.organization'
         org = cache.get(key)
         if org is None:
             org = Organization.objects.get(
@@ -70,7 +70,7 @@ def clear_organization_cache(sender, **kwargs):
     Cada vez que se almacene informacion en la tabla de organizaciones,
     se elmimina la cache.
     """
-    key = "pycan-web.organization"
+    key = 'organizations.organization'
     cache.delete(key)
 
 

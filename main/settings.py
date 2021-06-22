@@ -300,6 +300,7 @@ LC_TIME_SPANISH_LOCALE = config('LC_TIME_SPANISH_LOCALE', default='es_ES.utf8')
 REDIS_HOST = config('REDIS_HOST', default='localhost')
 REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
 REDIS_DB = config('REDIS_DB', default=0, cast=int)
+REDIS_PREFIX = config('REDIS_PREFIX', default='pycan-web')
 
 RQ_QUEUES = {
     'default': {
@@ -341,6 +342,6 @@ else:
             "BACKEND": "django_redis.cache.RedisCache",
             "LOCATION": url_redis,
             "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-            "KEY_PREFIX": "web",
+            "KEY_PREFIX": REDIS_PREFIX,
         }
     }
