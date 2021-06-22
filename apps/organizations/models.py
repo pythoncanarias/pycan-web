@@ -58,7 +58,7 @@ def clear_organization_cache(sender, **kwargs):
     Cada vez que se almacene informacion en la tabla de organizaciones,
     se elmimina la cache.
     """
-    key = "web.organization"
+    key = "pycan-web.organization"
     cache.delete(key)
 
 
