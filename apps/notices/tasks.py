@@ -2,25 +2,27 @@
 # -*- coding: utf-8 -*-
 
 import sendgrid
-from sendgrid.helpers.mail import Content, Email, Mail
-from python_http_client.exceptions import HTTPError
-
+from django.conf import settings
 from django.template import Context, Template
 from django.utils import timezone
 from django_rq import job
+from python_http_client.exceptions import HTTPError
+from sendgrid.helpers.mail import Content, Email, Mail
 
-from django.conf import settings
 from apps.commons.filters import as_markdown
+from apps.organizations.models import Organization
 
 
 def create_notice_body(notice):
     kind = notice.kind
-    context = Context({
-        'kind': kind,
-        'notice': notice,
-        'member': notice.member,
-        'user': notice.member.user,
-    })
+    context = Context(
+        {
+            'kind': kind,
+            'notice': notice,
+            'member': notice.member,
+            'user': notice.member.user,
+        }
+    )
     template = Template(kind.template)
     return template.render(context)
 
@@ -29,11 +31,13 @@ def create_notice_message(notice):
     member = notice.member
     subject = notice.kind.description
     body = create_notice_body(notice)
+    organization = Organization.load_main_organization()
     msg = Mail(
-        from_email=Email(settings.CONTACT_EMAIL, settings.ASSOCIATION_NAME),
+        from_email=Email(organization.email, organization.name),
         subject=subject,
         to_email=Email(member.user.email),
-        content=Content('text/html', as_markdown(body)))
+        content=Content('text/html', as_markdown(body)),
+    )
     return msg
 
 

@@ -1,12 +1,13 @@
 import datetime
+import urllib
 from functools import partial
 
-from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
 from apps.commons.filters import date_from_now
 from apps.commons.twitter import Twitter
+from apps.organizations.models import Organization
 
 # Create your models here.
 
@@ -100,7 +101,8 @@ class JobOffer(models.Model):
 
     def get_full_url(self):
         path = reverse('jobs:index') + f'#job{self.pk}'
-        return f'http://{settings.DOMAIN}{path}'
+        organization = Organization.load_main_organization()
+        return urllib.parse.urljoin(organization.url, path)
 
     def save(self, *args, **kwargs):
         already_exists = self.pk is not None

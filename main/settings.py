@@ -191,13 +191,11 @@ MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, '.media'))
 
 SITE_ID = 1
 
-# Python Canarias Info
-#
-# You probably want to change this to use this code
-
+# Do not remove this!
+# The value in ASSOCIATION_NAME must match with an entry on:
+# organization.models.Organization
+# See code: organization.models.Organization.load_main_organization()
 ASSOCIATION_NAME = config('ASSOCIATION_NAME', default='Python Canarias')
-DOMAIN = config('DOMAIN', default='pythoncanarias.es')
-CONTACT_EMAIL = config('CONTACT_EMAIL', default='info@{}'.format(DOMAIN))
 
 # Leaflet settings
 
@@ -342,9 +340,7 @@ else:
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
             "LOCATION": url_redis,
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient"
-            },
-            "KEY_PREFIX": "web"
+            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+            "KEY_PREFIX": "web",
         }
     }

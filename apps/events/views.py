@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect, render
 
+from apps.organizations.models import Organization
 from apps.tickets.models import Article, Gift, Raffle, Ticket
 
 from . import forms, links, stripe_utils
@@ -154,11 +155,12 @@ def trade(request, slug, sell_code, buy_code):
 
 
 def stripe_payment_declined(request, charge):
+    organization = Organization.load_main_organization()
     return render(
         request,
         'events/payment-declined.html',
         {
-            'email': settings.CONTACT_EMAIL,
+            'email': organization.email,
             'charge_id': charge.id,
         },
     )
@@ -166,6 +168,7 @@ def stripe_payment_declined(request, charge):
 
 def stripe_payment_error(request, exception):
     msg, extra_info = stripe_utils.get_description_from_exception(exception)
+    organization = Organization.load_main_organization()
     return render(
         request,
         'events/payment-error.html',
@@ -173,7 +176,7 @@ def stripe_payment_error(request, exception):
             'msg': msg,
             'extra_info': extra_info,
             'error': str(exception),
-            'email': settings.CONTACT_EMAIL,
+            'email': organization.email,
         },
     )
 
@@ -202,12 +205,13 @@ def buy_ticket(request, slug):
 
 
 def no_available_articles(request, event, all_articles):
+    organization = Organization.load_main_organization()
     return render(
         request,
         "events/no-available-articles.html",
         {
             'event': event,
-            'contact_email': settings.CONTACT_EMAIL,
+            'contact_email': organization.email,
         },
     )
 
@@ -300,13 +304,14 @@ def article_bought(request, id_article):
     article = Article.objects.select_related('event').get(pk=id_article)
     assert article.is_active(), "Este tipo de entrada no está ya disponible."
     event = article.event
+    organization = Organization.load_main_organization()
     return render(
         request,
         'events/article-bought.html',
         {
             'article': article,
             'event': event,
-            'contact_email': settings.CONTACT_EMAIL,
+            'contact_email': organization.email,
         },
     )
 
@@ -338,12 +343,13 @@ def resend_ticket(request, slug):
 
 def resend_confirmation(request, slug):
     event = Event.get_by_slug(slug)
+    organization = Organization.load_main_organization()
     return render(
         request,
         'events/resend-confirmation.html',
         {
             'event': event,
-            'contact_email': settings.CONTACT_EMAIL,
+            'contact_email': organization.email,
         },
     )
 
