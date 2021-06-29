@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.views.generic import UpdateView
+from django.urls import reverse, reverse_lazy
 
 from . import forms
 from .menu import main_menu
@@ -104,3 +105,20 @@ def password_change(request):
             "menu": main_menu,
         },
     )
+
+
+class ChangeAddress(UpdateView):
+    form_class = forms.ChangeAddressForm
+    template_name = 'members/address-change.html'
+
+    def get_success_url(self):
+        return reverse_lazy('members:profile')
+
+    def get_object(self, qyeryset=None):
+        return self.request.user.member
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'menu': main_menu,
+        }
+        return super().get_context_data(**context)
