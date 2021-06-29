@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import decimal
 from functools import partial
 
 import colorama
@@ -14,6 +13,7 @@ CYAN = colorama.Fore.CYAN
 RESET = colorama.Style.RESET_ALL
 
 colorama.init()
+
 
 def colored(text, color=WHITE):
     return f"{color}{text}{RESET}"
