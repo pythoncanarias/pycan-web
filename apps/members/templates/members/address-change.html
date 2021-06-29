@@ -1,0 +1,64 @@
+{% extends 'members/base.html' %}
+{% load utils %}
+
+{% block content %}
+<div class="box">
+  <nav class="panel">
+
+    <h3 class="panel-heading">Dirección postal y teléfono</h3>
+    <form class="form" method="POST" action=".">
+      {% csrf_token %}
+
+      {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+      {% endfor %}
+
+
+      <table class="table">
+
+        <tr>
+          <th>{{ form.address.label|safe }}</th>
+          <td>
+            <input name="address" class="input" type="text" value="{{ form.address.value }}">
+            {% error_list form.address %}
+            <input name="rest_address" class="input" type="text" value="{{ form.rest_address.value }}">
+            {% error_list form.rest_address %}
+        </tr>
+
+        <tr>
+          <th>{{ form.postal_code.label|safe }}</th>
+          <td>
+            <input name="postal_code" class="input" type="text" value="{{ form.postal_code.value }}">
+            {% error_list form.postal_code %}
+            </td>
+        </tr>
+
+        <tr>
+          <th>{{ form.city.label|safe }}</th>
+          <td>
+            <input name="city" class="input" type="text" value="{{ form.city.value }}">
+            {% error_list form.city %}
+            </td>
+        </tr>
+
+        <tr>
+          <th>{{ form.phone.label|safe }}</th>
+          <td>
+            <input name="phone" class="input" type="text" value="{{ form.phone.value }}">
+            {% error_list form.phone %}
+            </td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td>
+            <button type="submit" role="button" class="button is-link is-pulled-right">Modificar dirección</button>
+          </td>
+        </tr>
+
+      </table>
+
+  </nav>
+</div>
+
+{% endblock content %}
