@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, update_session_auth_hash
 from django.core.exceptions import ValidationError
 
+from .models import Member
+
 MIN_PASSWORD_LENGTH = 8
 
 # Validation error messages
@@ -150,3 +152,22 @@ class PasswordChangeForm(forms.Form):
         self.user.save()
         update_session_auth_hash(request, self.user)
         messages.success(request, "Contraseña cambiada correctamente")
+
+
+class ChangeAddressForm(forms.ModelForm):
+
+    class Meta:
+        model = Member
+        fields = [
+            'address',
+            'rest_address',
+            'postal_code',
+            'city',
+            'phone',
+        ]
+
+    address = forms.CharField(label='Dirección', strip=True)
+    rest_address = forms.CharField(label='', strip=True)
+    postal_code = forms.CharField(label="Cód. postal", max_length=12, strip=True)
+    city = forms.CharField(label='Ciudad', strip=True)
+    phone = forms.CharField(label='Teléfono', strip=True)
