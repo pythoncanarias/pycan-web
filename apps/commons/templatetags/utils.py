@@ -33,3 +33,10 @@ def is_active(context, named_url):
         return 'is-active'
     else:
         return ''
+
+
+@register.inclusion_tag('includes/error_list.html')
+def error_list(field):
+    return {
+        'errors': field.errors,
+    }
