@@ -19,8 +19,7 @@
 
   <nav class="panel">
     <h3 class="panel-heading">Socio/a: #{{ member.pk }}</h3>
-    <div class="panel-block">
-
+    <div class="panel-block pb-vertical">
       <table class="table table-striped">
         <tr>
           <th>Dirección</th>
@@ -43,9 +42,10 @@
           <td>{{ member.phone|default:"No disponible" }}</td>
         </tr>
       </table>
+
+      <a href="{% url 'members:address_change' %}"><i class="fas fa-edit"></i> Actualizar datos</a>
     </div>
   </nav>
-
 </div>
 
 {% endblock content %}
