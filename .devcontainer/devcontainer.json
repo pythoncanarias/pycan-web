@@ -7,7 +7,7 @@
   "settings": {
     "editor.formatOnSave": true,
     // Python
-    "python.pythonPath": "/opt/venv/bin/python",
+    "python.defaultInterpreterPath": "/opt/venv/bin/python",
     "[python]": {
       "editor.codeActionsOnSave": {
         "source.organizeImports": true
