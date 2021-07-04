@@ -1,1 +1,15 @@
 @import 'apps/commons/static/commons/css/base';
+
+.pb-vertical {
+  flex-direction: column;
+  align-items: baseline;
+}
+
+.rest-address-label {
+  margin-top: 1rem;
+  font-weight: 100;
+}
+
+.phone-label {
+  font-weight: 100;
+}
