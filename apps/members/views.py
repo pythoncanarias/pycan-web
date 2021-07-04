@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import UpdateView
 from django.urls import reverse, reverse_lazy
+from django.views.generic import UpdateView
 
 from . import forms
 from .menu import main_menu
@@ -114,8 +114,15 @@ class ChangeAddress(UpdateView):
     def get_success_url(self):
         return reverse_lazy('members:profile')
 
-    def get_object(self, qyeryset=None):
+    def get_object(self, queryset=None):
         return self.request.user.member
+
+    def form_invalid(self, form):
+        num_errors = sum(len(err) for err in form.errors.values())
+        messages.error(
+            self.request, f'El formulario tiene {num_errors} errores'
+        )
+        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = {
