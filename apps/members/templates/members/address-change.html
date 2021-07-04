@@ -17,7 +17,10 @@
         <table class="table">
 
           <tr>
-            <th>{{ form.address.label|safe }}</th>
+            <th>
+              {{ form.address.label|safe }}
+              <div class="rest-address-label">{{ form.rest_address.label|safe }}</div>
+            </th>
             <td>
               <input name="address" class="input" type="text" value="{{ form.address.value }}">
               {% error_list form.address %}
@@ -42,7 +45,7 @@
           </tr>
 
           <tr>
-            <th>{{ form.phone.label|safe }}</th>
+            <th class="phone-label">{{ form.phone.label|safe }}</th>
             <td>
               <input name="phone" class="input" type="text" value="{{ form.phone.value }}">
               {% error_list form.phone %}

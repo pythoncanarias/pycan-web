@@ -165,10 +165,10 @@ class ChangeAddressForm(forms.ModelForm):
             'phone',
         ]
 
-    address = forms.CharField(label='Dirección', strip=True)
-    rest_address = forms.CharField(label='', required=False, strip=True)
+    address = forms.CharField(label='Dirección<sup>*</sup>', strip=True)
+    rest_address = forms.CharField(label='(extra)', required=False, strip=True)
     postal_code = forms.CharField(
-        label="Cód. postal", max_length=12, strip=True
+        label="Cód. postal<sup>*</sup>", max_length=12, strip=True
     )
-    city = forms.CharField(label='Ciudad', strip=True)
+    city = forms.CharField(label='Ciudad<sup>*</sup>', strip=True)
     phone = forms.CharField(label='Teléfono', required=False, strip=True)
