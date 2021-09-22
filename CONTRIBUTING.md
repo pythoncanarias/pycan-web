@@ -1,4 +1,4 @@
-## Como contribuir a este proyecto
+## Cómo contribuir a este proyecto
 
 Si quieres contribuir a este proyecto, hay muchas cosas que puedes hacer.
 Tenemos una etiqueta en los _issues_ del [repositorio de este
