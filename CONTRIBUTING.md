@@ -12,7 +12,7 @@ una de las principales es aportar nuevas ideas para mejorar la web, así
 como avisarnos de cualquier error que encuentres en la misma.
 
 Para contribuir como desarrollador, en el documento [README.md](README.md) se
-explica como montar un entorno de desarrollo propio unsado _Docjer_ y
+explica como montar un entorno de desarrollo propio unsado _Docker_ y
 _Docker Compose_.
 
 ## Notas para los desarrolladores
@@ -22,9 +22,9 @@ escritas en _javascript_ plano. Por el momento no nos hemos decidido a usar
 ningún _framework_, aunque algunos del equipo tenemos una cierta preferencia
 por [vue.js](https://vuejs.org/).
 
-Se ha intentado seguir en lo posible las practicas habituales en Django, pero
-en algunos casos se han realizado algunas modificaciones sobre lo que podría
-ser un proyecto Django _estándar_. Explicaremos estas divergencias en las
+Se ha intentado seguir en lo posible las prácticas habituales en Django, pero
+en algunos casos se han realizado modificaciones sobre lo que podría
+considerarse un proyecto Django _estándar_. Explicaremos estas divergencias en las
 siguientes secciones.
 
 ### Todas las aplicaciones están en la carpeta `apps`
@@ -38,7 +38,7 @@ mismo nivel que las actuales.
 
 Intentamos adaptarnos lo más posible a la recomendaciones del
 [PEP-8](https://www.python.org/dev/peps/pep-0008/), pero somos más flexibles en
-el tema de la longitud de caracteres de la linea, intentamos mantenerlo por
+el tema de la longitud de caracteres de la línea, intentamos mantenerlo por
 debajo de 96 caracteres por línea.
 
 Algunos de nosotros usamos la herramienta [black](https://github.com/psf/black)
