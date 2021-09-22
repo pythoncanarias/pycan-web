@@ -35,7 +35,7 @@ def create_notice_message(notice):
     msg = Mail(
         from_email=Email(organization.email, organization.name),
         subject=subject,
-        to_email=Email(member.user.email),
+        to_email=Email(member.email),
         content=Content('text/html', as_markdown(body)),
     )
     return msg
@@ -44,7 +44,7 @@ def create_notice_message(notice):
 @job
 def task_send_notice(notice):
     # Preconditions
-    if not notice.member.user.email:
+    if not notice.member.email:
         print("El usuario no tiene asignado email")
         return
     msg = create_notice_message(notice)
