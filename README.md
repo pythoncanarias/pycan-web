@@ -6,6 +6,7 @@ Website of [Python Canarias](pythoncanarias.es) 🚀 &nbsp; happily made with [D
 
 ## Table of contents
 
+- [Contributing to this project](CONTRIBUTING.md).
 - [Development setup](docs/dev.md)
 - [Production setup](docs/prod.md)
 - [Adding new app](docs/new-app.md)
