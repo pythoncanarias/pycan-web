@@ -1,26 +1,63 @@
-{% extends 'members/base.html' %}
+{% extends 'members/base.html' %}{% load utils %}
 
 {% block title %}Perfil de socio/a - {{ block.super }}{% endblock %}
 
 {% block content %}
 <div class="box">
 
-  <nav class="panel">
-    <h3 class="panel-heading">Datos personales</h3>
-    <div class="panel-block">
-      <table class="table table-striped">
+  <div class="card">
+    <header class="card-header">
+      <h3 class="card-header-title"> Datos personales </h3>
+    </header>
+    <div class="card-content">
+      <table class="table is-fullwidth">
         <tr> <th>Username</th> <td><code>{{ member.user.username }}</code></td> </tr>
         <tr> <th>Nombre</th> <td>{{ member.user.first_name }}</td> </tr>
         <tr> <th>Apellidos</th> <td>{{ member.user.last_name }}</td> </tr>
         <tr> <th>Email</th> <td>{{ member.user.email }}</td> </tr>
       </table>
     </div>
-  </nav>
+  </div>
 
-  <nav class="panel">
-    <h3 class="panel-heading">Socio/a: #{{ member.pk }}</h3>
-    <div class="panel-block pb-vertical">
-      <table class="table table-striped">
+  <div class="card">
+    <header class="card-header">
+      <h3 class="card-header-title"> Datos como asociado </h3>
+    </header>
+    <div class="card-content">
+      <table class="table is-fullwidth">
+        <tr> <th>Número de socio</th> <td><code>{{ member.pk }}</code></td> </tr>
+        <tr>
+          <th>Socio desde</th>
+          <td>{{ member.active_since|as_date }}</td>
+        </tr>
+        <tr>
+          <th>Activo hasta</th>
+          <td>{{ member.active_until }}
+            <a class="button is-warning is-pulled-right"
+                href="{% url 'members:renew' %}">
+              Abonar anualidad
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>Puedes abonar la anualidad en cualquier momento, el périodo
+            se añadirá siempre a continuación del último día del periodo
+            anterior
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+
+  <div class="card">
+   <header class="card-header">
+    <h3 class="card-header-title">Dirección</h3>
+   </header>
+   <div class="card-content">
+      <table class="table is-fullwidth">
         <tr>
           <th>Dirección</th>
           <td>{{ member.address|default:"No disponible" }}
@@ -43,9 +80,11 @@
         </tr>
       </table>
 
-      <a href="{% url 'members:address_change' %}"><i class="fas fa-edit"></i> Actualizar datos</a>
+      <p><a href="{% url 'members:address_change' %}">
+        <em class="fas fa-edit"></em> Actualizar datos</a></p>
     </div>
-  </nav>
+  </div>
+
 </div>
 
 {% endblock content %}

@@ -7,6 +7,7 @@ main_menu = (
     .add_menu_item("Permanencia", "members:membership")
     .finished()
     .add_section('ops', 'Operaciones')
+    .add_menu_item("Abonar anualidad", "members:renew")
     .add_menu_item("Cambiar contraseña", "members:password_change")
     .add_menu_item("Cambiar dirección", "members:address_change")
     .add_menu_item("Salir (<i>Logout</i>)", "members:logout")

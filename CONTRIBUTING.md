@@ -1,4 +1,4 @@
-## Como contribuir a este proyecto
+## Cómo contribuir a este proyecto
 
 Si quieres contribuir a este proyecto, hay muchas cosas que puedes hacer.
 Tenemos una etiqueta en los _issues_ del [repositorio de este
@@ -81,5 +81,3 @@ En general, recomendamos usar funciones para las vistas, mejor que vistas
 basadas en clases. En ningún caso debe entenderse esta recomendación como una
 prohibición de usar _CBV_, Es solo que preferimos usarlas para casos sencillos
 y/o triviales, y usar funciones para todo lo demás. 
-
-

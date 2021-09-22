@@ -1,5 +1,6 @@
 import datetime
 
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -10,6 +11,10 @@ from .constants import (
     FEE_PAYMENT_TYPE,
     MEMBER_POSITION,
 )
+
+
+def today():
+    return timezone.localdate()
 
 
 class Member(models.Model):
@@ -53,13 +58,20 @@ class Member(models.Model):
     def __str__(self):
         return self.full_name
 
+    def active_since(self):
+        first_membership = self.membership_set.first()
+        return None if first_membership is None else first_membership.valid_from
+
+    def active_until(self):
+        last_membership = self.membership_set.last()
+        return None if last_membership is None else last_membership.valid_until
+
     @property
     def active(self):
-        last_membership = self.membership_set.last()
-        if last_membership is None:
-            return False
-        valid_until = last_membership.valid_until
-        return valid_until is None or datetime.date.today() <= valid_until
+        valid_until = self.active_until()
+        if valid_until:
+            return valid_until >= today()
+        return False
 
 
 class Position(models.Model):
@@ -90,7 +102,7 @@ class Position(models.Model):
 
     @property
     def active(self):
-        return self.until is None or datetime.date.today() <= self.until
+        return self.until is None or today() <= self.until
 
 
 class Membership(models.Model):

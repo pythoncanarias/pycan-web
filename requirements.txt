@@ -19,7 +19,7 @@ redis==3.5.3
 reportlab==3.5.32
 rq==1.8.1
 sendgrid==5.6.0
-stripe==2.41.0
+stripe==2.60.0
 tabulate==0.8.9
 uWSGI==2.0.18
 xlrd==1.2.0

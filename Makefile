@@ -26,6 +26,9 @@ static:
 run: check static
 	python manage.py runserver
 
+shell:
+	python manage.py shell
+
 rundev: static
 	DEBUG=yes python manage.py runserver_plus
 

@@ -1,7 +1,4 @@
-{% load static %}
-{% load utils %}
-
-<!doctype html>
+{% load static utils %}<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -17,6 +14,7 @@
 
   <link rel="stylesheet" href="{{ assets|get_asset_key:'commons/vendor.min.css' }}">
   {% block style %}{% endblock %}
+  {% block libs %} {% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
 
@@ -35,12 +33,8 @@
       </div>
     {% endif %}
 
-    <div class="{% block default_content_class %}container content-page{% endblock %} {% block content_class %}{% endblock %}
+    <div class="{% block default_content_class %}container content-page{% endblock %}{% block content_class %}{% endblock %}{% if menu %} is-wide{% endif %}">
       {% if menu %}
-        is-wide
-      {% endif %}
-    ">
-    {% if menu %}
       <div class="columns is-display">
         <div class="column is-one-quarter">
           {% block menu %}{% endblock menu %}
@@ -54,11 +48,8 @@
     {% endif %}
   </div>
   {% endblock container %}
-
   {% include "footer.html" %}
-
   <script src="{{ assets|get_asset_key:'commons/custom.min.js' }}"></script>
   {% block js %}{% endblock %}
-
 </body>
 </html>

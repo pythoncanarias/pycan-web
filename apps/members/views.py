@@ -1,11 +1,14 @@
 import logging
 
+import stripe
+
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
+from django.conf import settings
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView
 
@@ -14,9 +17,28 @@ from .menu import main_menu
 
 logger = logging.getLogger(__name__)
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def homepage(request):
     return redirect('members:profile')
+
+
+@login_required
+def renew(request, *args, **kwargs):
+    member = request.user.member
+    intent = stripe.PaymentIntent.create(
+        amount=2000,
+        currency='eur',
+        description=f"PyThonCanarias Abono anual socio {member.pk}",
+        metadata={
+            'integration_check': 'accept_a_payment'
+        },
+    )
+    return render(request, 'members/renew.html', {
+        "titulo": "Renovar membresia anual",
+        "stripe_public_key": settings.STRIPE_PUBLIC_KEY,
+        "client_secret": intent.client_secret,
+    })
 
 
 def member_login(request: HttpRequest) -> HttpResponse:
