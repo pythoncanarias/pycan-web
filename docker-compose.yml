@@ -37,6 +37,10 @@ services:
       MEDIA_ROOT: /var/www/media
       STATIC_ROOT: /var/www/static
       REDIS_HOST: redis
+      TWITTER_API_KEY: "${TWITTER_API_KEY:-Dummy TWITTER_API_KEY}"
+      TWITTER_API_SECRET_KEY: "${TWITTER_API_SECRET_KEY:-Dummy TWITTER_API_SECRET_KEY}"
+      TWITTER_ACCESS_TOKEN: "${TWITTER_ACCESS_TOKEN:-Dummy TWITTER_ACCESS_TOKEN}"
+      TWITTER_ACCESS_TOKEN_SECRET: "${TWITTER_ACCESS_TOKEN_SECRET:-Dummy TWITTER_ACCESS_TOKEN_SECRET}"
     command: >
       bash -c "
       ./manage.py rqworker default low
