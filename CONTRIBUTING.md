@@ -75,7 +75,7 @@ complica el entender en que contextos y de que forma se usa cada una de las
 clases. Razones similares se pueden argumentar para las funciones, métodos
 (Excepto en casos de herencia, claro) y variables o constantes globales.
 
-### Preferimos funciones antes que clases
+### Funciones vs clases para vistas
 
 En general, recomendamos usar funciones para las vistas, mejor que vistas
 basadas en clases. En ningún caso debe entenderse esta recomendación como una
