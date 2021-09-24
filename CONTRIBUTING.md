@@ -54,7 +54,7 @@ realmente nos aportan una funcionalidad importante.
 
 ### Mantener la lógica de negocio fuera de los modelos y de las vistas
 
-Intentamos (Pero no siempre conseguimos) mantener el código de los modelos y de
+Intentamos (pero no siempre conseguimos) mantener el código de los modelos y de
 las vistas lo más sencillo y directo posible. Mantenemos la idea de que es
 preferible tener las reglas de negocio y el código más importante en ficheros
 de servicios aparte, donde un fichero de servicios es simplemente un fichero
