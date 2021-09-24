@@ -12,7 +12,7 @@ una de las principales es aportar nuevas ideas para mejorar la web, así
 como avisarnos de cualquier error que encuentres en la misma.
 
 Para contribuir como desarrollador, en el documento [README.md](README.md) se
-explica como montar un entorno de desarrollo propio unsado _Docker_ y
+explica cómo montar un entorno de desarrollo propio usando _Docker_ y
 _Docker Compose_.
 
 ## Notas para los desarrolladores
