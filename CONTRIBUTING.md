@@ -27,7 +27,7 @@ en algunos casos se han realizado modificaciones sobre lo que podría
 considerarse un proyecto Django _estándar_. Explicaremos estas divergencias en las
 siguientes secciones.
 
-### Todas las aplicaciones están en la carpeta `apps`
+### Organización de código de las aplicaciones de Django
 
 Como hay muchas aplicaciones o _apps_, se trasladaron todas a una única
 carpeta `apps`, para reducir la cantidad de _ruido_ que se encontraba en
