@@ -3,7 +3,7 @@
 # Python Canarias
 
 
-![Python Canarias Banner](https://github.com/cesaralvrz/pycan-web/blob/master/assets/PyCa.png)  
+![Python Canarias Banner](docs/assets/python_canarias_banner.png)  
 
 Website of [Python Canarias](https://pythoncanarias.es/) 🚀 &nbsp; happily made with [Django](https://www.djangoproject.com/). 
 
