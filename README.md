@@ -1,6 +1,13 @@
-![Python Canarias Logo](https://github.com/pythoncanarias/docs/raw/master/logos/python-canarias/bitmaps/logo-python-canarias-color-372x128.png)
+<div align="center"> 
+ 
+# Python Canarias
 
-Website of [Python Canarias](pythoncanarias.es) 🚀 &nbsp; happily made with [Django](https://www.djangoproject.com/).
+
+![Python Canarias Banner](docs/assets/python_canarias_banner.png)  
+
+Website of [Python Canarias](https://pythoncanarias.es/) 🚀 &nbsp; happily made with [Django](https://www.djangoproject.com/). 
+
+</div>
 
 ---
 
