@@ -13,6 +13,7 @@ Website of [Python Canarias](https://pythoncanarias.es/) 🚀 &nbsp; happily mad
 
 ## Table of contents
 
+- [Contributing to this project](CONTRIBUTING.md).
 - [Development setup](docs/dev.md)
 - [Production setup](docs/prod.md)
 - [Adding new app](docs/new-app.md)
