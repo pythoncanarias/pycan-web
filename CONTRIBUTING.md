@@ -30,7 +30,7 @@ siguientes secciones.
 ### Organización de código de las aplicaciones de Django
 
 Como hay muchas aplicaciones o _apps_, las tenemos todas todas bajo una única
-carpeta `apps`, para reducir la cantidad de _ruido_ que se encontraba en
+carpeta `apps`, para reducir la cantidad de _ruido_  en
 la carpeta raíz. Si crees necesario añadir una nueva _app_, créala por favor al
 mismo nivel que las actuales.
 
