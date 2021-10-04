@@ -52,7 +52,7 @@ queremos mejorar. Eso no significa que no se acepten nuevas dependencias, pero
 sí que pedimos que analices primero si las ventajas de usar esa nueva librería
 realmente nos aportan una funcionalidad importante.
 
-### Mantener la lógica de negocio fuera de los modelos y de las vistas
+### Separación entre lógica de negocio, modelos y vistas
 
 Intentamos (pero no siempre conseguimos) mantener el código de los modelos y de
 las vistas lo más sencillo y directo posible. Mantenemos la idea de que es
