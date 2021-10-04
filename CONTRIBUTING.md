@@ -79,7 +79,7 @@ clases. Razones similares se pueden argumentar para las funciones, métodos
 
 Para las vistas, preferimos, en general, usar funciones en vez de vistas
 basadas en clases. En ningún caso debe entenderse esta recomendación como una
-prohibición de usar _CBV_, Es solo que preferimos usarlas para casos sencillos
+prohibición de usar _CBV_, es solo que preferimos usarlas para casos sencillos
 y/o triviales, y usar funciones para todo lo demás. 
 
 
