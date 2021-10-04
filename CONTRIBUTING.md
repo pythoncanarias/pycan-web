@@ -49,7 +49,7 @@ para formatear el código, pero no se considera obligatorio.
 Intentamos mantener el número de dependencias bajo. Un alto número de
 dependencias frena las actualizaciones generales, que es un objetivo que
 queremos mejorar. Eso no significa que no se acepten nuevas dependencias, pero
-si pedimos que analices primero si las ventajas de usar esa nueva librería
+sí que pedimos que analices primero si las ventajas de usar esa nueva librería
 realmente nos aportan una funcionalidad importante.
 
 ### Mantener la lógica de negocio fuera de los modelos y de las vistas
