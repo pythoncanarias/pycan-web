@@ -61,19 +61,50 @@ de servicios aparte, donde un fichero de servicios es simplemente un fichero
 Python en el que se incorpora todo el código relativo a un dominio o
 aplicación.
 
-### Asigna nombres únicos a ficheros, clases y funciones
+Veamos, por ejemplo, la _app_ `notice`, que se usa para enviar notificaciones
+a los miembros ante determinados eventos, como por ejemplo el aviso un mes
+antes de que se venza su permanencia a la organización.
 
-Excepción hecha de los nombres de las variables locales a funciones y métodos,
-cada entidad con nombre en nuestro código debería tener un nombre único.
+En la clase `apps.notice.models.Notice` se definen algunos métodos, pero 
+solo aquellos que afectan o cambian el estado del propio modelo, sin 
+ninguna tercera parte implicada. En concreto, no existe un método
+para enviar la notificación en si.
 
-Hay muchas razones para esto, pero veamos por ejemplo las clases. Si nos
-encontramos con una nueva clase mientras examinamos el código, lo deseable es
-que una búsqueda o un _grep_ por el nombre de la clase nos devuelva será la
-definición y los usos de la misma. Cualquier otra cosa que aparezca será ruido.
-Si tengo dos clases con el mismo nombre en ficheros diferentes, esto solo
-complica el entender en que contextos y de que forma se usa cada una de las
-clases. Razones similares se pueden argumentar para las funciones, métodos
-(Excepto en casos de herencia, claro) y variables o constantes globales.
+Este acto de enviar la notificación está implementado por separado, dentro del
+módulo `apps.notica.tasks`, primero porque es relativamente complejo y segundo,
+e incluso más importante, porque involucra a más elementos que el `notice` en
+cuestión: implica saber de la existencia de un sistema de colas, del subsistema
+de envío de mensajes ([sendgrid](https://sendgrid.com/) en nuestro caso), etc.
+
+En resumen, se recomiendo que las clases definan métodos unicamente para
+consultar o cambiar su estado interno, pero que cualquier interacción con
+otras clases o componentes debe realizarse fuera de la clase, preferiblemente
+en un módulo aparte.
+
+
+### Asigna nombres únicos a las clases
+
+Hay muchas razones para esto, pero veamos solo una. Si nos encontramos con una
+nueva clase mientras examinamos el código, lo deseable es que una búsqueda o un
+_grep_ por el nombre de la clase nos devuelva solo la definición y los usos de
+la misma. Cualquier otra cosa que aparezca será ruido.  Si tengo dos clases con
+el mismo nombre en ficheros diferentes, esto solo complica el entender en que
+contextos y de que forma se usa cada una de las clases. Razones similares se
+pueden argumentar para las variables o constantes globales.
+
+De la misma forma que no existe en español dos sinónimos que signifiquen
+_exactamente_ lo mismo (Siempre hay algún matiz que los diferencia) no deberían
+existir en nuestro programa dos clases que se llamen exactamente iguales,
+porque, si fuera así, ¿por qué no son la misma?
+
+Tenemos ahora mismo en nuestro código un ejemplo de dos clases con el mismo
+nombre, la clase `Membership` en `organization.models` y la clase
+`Membership` en el módulo `members.models`. Es verdad que el programa
+funciona, porque las clases están aisladas en sus propios módulos, pero hubiera
+sido preferible haber buscado otro nombre que no estuviera en conflicto con uno
+ya existente (`@jileon`: Yo lo sé bien ya que fui yo el que creó la clase
+duplicada).
+
 
 ### Funciones vs clases para vistas
 
@@ -81,5 +112,3 @@ Para las vistas, preferimos, en general, usar funciones en vez de vistas
 basadas en clases. En ningún caso debe entenderse esta recomendación como una
 prohibición de usar _CBV_, es solo que preferimos usarlas para casos sencillos
 y/o triviales, y usar funciones para todo lo demás. 
-
-
