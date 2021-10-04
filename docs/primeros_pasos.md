@@ -7,7 +7,10 @@ adquirir nuevas competencias, y de formar parte de nuestra comunidad.
 
 ### Primer paso, empezar con Git y GitHub
 
-Lo primero que necesitas es un conocimiento, aunque sea básico, de git.
+Lo primero que necesitas es un conocimiento, aunque sea básico, de git y GitHub.
+Si no sabes nada de Git ni de GitHub, te recomendamos el tutorial
+de [La guía para principiantes de Git y Github de FreeCodeCamp](https://www.freecodecamp.org/espanol/news/guia-para-principiantes-untitled/).
+
 También necesitarás una cuenta en [GitHub](https://github.com/), que es donde
 tenemos almacenado el código fuente de nuestro proyecto. Si no tienes cuenta
 puedes crearte una sin problemas, es totalmente gratuito.
