@@ -147,5 +147,4 @@ Felicidades, acabas de realizar tu aportación a Python Canarias.
 
 - [Make your first open source contribution](https://markodenic.com/make-your-first-open-source-contribution/) de Marko Denic 
 
-- [
-
+- [Recursos de Programación](https://github.com/Acadeller/recursos-programacion)
