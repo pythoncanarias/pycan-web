@@ -7,6 +7,10 @@ proyecto](https://github.com/pythoncanarias/pycan-web/issues) para
 para empezar a contribuir
 al desarrollo.
 
+Si es la primera vez que vas a contribuir a un proyecto de _software_ libre,
+quizá te sea de ayuda este documento: [Cómo hacer tu primera contribución a
+Python Canarias](docs/primeros_pasos.md)
+
 Además de las tareas propias de desarrollo, hay muchas otras formas de ayudar,
 una de las principales es aportar nuevas ideas para mejorar la web, así
 como avisarnos de cualquier error que encuentres en la misma.
