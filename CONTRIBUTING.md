@@ -23,13 +23,13 @@ _Docker Compose_.
 
 Estamos trabajando para definir los idiomas a usar en las distintas partes del
 proyecto, ya que ahora mismo hay una mezcla un poco aberrante entre Inglés y
-Español. Nuestro objetivo ahora mismo es ir migrando toda la documentación del
-proyecto a Español, y reservar el inglés solo para las cuestiones que atañan al
-código directamente.
+Español. Nuestro objetivo es ir migrando toda la documentación del proyecto a
+Español, y reservar el inglés solo para las cuestiones que atañan al código
+directamente.
 
-Por tanto, si quieres aportar en las secciones de documentación, aunque encuentres el
-texto en inglés, puedes incluir el texto nuevo es Español, ya que la idea
-es ir traduciendo todos esos documentos hasta conseguir el estado mostrado
+Por tanto, si quieres aportar en las secciones de documentación, aunque
+encuentres el texto en inglés, puedes incluir lo nuevo es Español, ya que la
+idea es ir traduciendo todos esos documentos hasta conseguir el estado mostrado
 en la siguiente tabla:
 
 | Área                  | Idioma |
