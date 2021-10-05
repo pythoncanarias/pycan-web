@@ -23,7 +23,7 @@ Nuestro proyecto está alojado en la siguiente página:
 ### Segundo paso, hacer un _fork_ del repositorio
 
 Con tu cuenta de GitHub, ahora puedes hacer un _fork_ de nuestro proyecto en tu
-repositorio. Esta _fork_ es simplemente una copia de nuestro repositorio, que
+repositorio. Este _fork_ es simplemente una copia de nuestro repositorio, que
 es independiente del original, en el sentido de que puedes realizar los
 cambios que quieras en la misma y no tendrán efecto ninguna en nuestro código.
 Así puedes experimentar y jugar con el código sin miedo a romper nada.
