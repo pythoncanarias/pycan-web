@@ -113,7 +113,7 @@ al repositorio debe ser un `commit`. Si no lo hacemos así, quedarían cambios
 el el área de trabajo no confirmadas y, por tanto, ignoradas en el siguiente
 paso, en el `push`.
            
-### Séptimo paso, importar o entregar (_push_) los cambios locales al repositorio.
+### Séptimo paso, exportar o entregar (_push_) los cambios locales al repositorio.
 
 Como se comentó antes, el comando básico aquí es `push`: 
 
