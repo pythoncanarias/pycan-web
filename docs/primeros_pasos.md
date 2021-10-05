@@ -128,7 +128,7 @@ cambios que estén confirmados en el área de trabajo.
 
 Una vez que tus cambios están en tu repositorio, están listos para
 realizar un _Pull Request_, que básicamente es una solicitud hecha para
-incorporar los cambios incluidos en una rama en concreto un otra rama,
+incorporar los cambios incluidos en una rama en concreto a otra rama,
 normalmente la principal, y a realizar en este mismo repositorio o en el
 repositorio original desde el cual se bifurcó este, es decir, aquel del que
 hicimos _fork_ al comienzo.
