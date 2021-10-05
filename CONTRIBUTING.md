@@ -22,9 +22,9 @@ _Docker Compose_.
 ## Sobre el idioma a usar en este proyecto
 
 Estamos trabajando para definir los idiomas a usar en las distintas partes del
-proyecto, ya que ahora mismo hay una mezcla un poco aberrante entre Inglés y
-Español. Nuestro objetivo es ir migrando toda la documentación del proyecto a
-Español, y reservar el inglés solo para las cuestiones que atañan al código
+proyecto, ya que ahora mismo hay una mezcla un poco aberrante entre inglés y
+español. Nuestro objetivo es ir migrando toda la documentación del proyecto a
+español, y reservar el inglés solo para las cuestiones que atañan al código
 directamente.
 
 Por tanto, si quieres aportar en las secciones de documentación, aunque
