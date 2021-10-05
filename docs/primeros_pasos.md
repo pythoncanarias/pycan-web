@@ -32,7 +32,7 @@ Para hacer el _fork_, asegúrate de que estás validado correctamente en _GitHub
 con tu cuenta, y simplemente y visita con tu navegador nuestro repositorio.
 Una vez allí, solo tienes que pulsar el botón con la leyenda _Fork_.
 
-![Github Fork](github-fork.png)
+![Github Fork](./assets/github-fork.png)
 
 El nuevo repositorio, el tuyo, tendrá una URL como esta:
 
@@ -128,10 +128,12 @@ cambios que estén confirmados en el área de trabajo.
 
 Una vez que tus cambios están en tu repositorio, están listos para
 realizar un _Pull Request_, que básicamente es una solicitud hecha para
-incorporar los cambios incluidos en una rama en concreto a otra rama,
-normalmente la principal, y a realizar en este mismo repositorio o en el
-repositorio original desde el cual se bifurcó este, es decir, aquel del que
-hicimos _fork_ al comienzo.
+incorporar los cambios incluidos en una rama a otra rama.
+
+En este caso, lo que debemos hacer es un _Pull Request_ indicando que queremos
+incorporar los cambios realizados en nuestra rama hacia la rama `mastar` del
+repositorio original (Es decir, el repositorio de Python Canarias desde
+el cual se hizo el _fork_ en el paso dos).
 
 Para ello, abrimos el navegador apuntando a nuestro repositorio en GitHub y
 pulsamos el botón que reza "_Compare and Pull Request_". Si todo ha ido bien
