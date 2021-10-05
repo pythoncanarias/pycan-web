@@ -126,7 +126,7 @@ cambios que estén confirmados en el área de trabajo.
 
 ### Octavo paso, crear un _Pull Request_
 
-Una vez que tus cambios están en tu repositorio, estás listos para
+Una vez que tus cambios están en tu repositorio, están listos para
 realizar un _Pull Request_, que básicamente es una solicitud hecha para
 incorporar los cambios incluidos en una rama en concreto un otra rama,
 normalmente la principal, y a realizar en este mismo repositorio o en el
