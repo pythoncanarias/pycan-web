@@ -29,7 +29,7 @@ cambios que quieras en la misma y no tendrán efecto ninguna en nuestro código.
 Así puedes experimentar y jugar con el código sin miedo a romper nada.
 
 Para hacer el _fork_, asegúrate de que estás validado correctamente en _GitHub_
-con tu cuenta, y simplemente y visita con tu navegador nuestra repositorio.
+con tu cuenta, y simplemente y visita con tu navegador nuestro repositorio.
 Una vez allí, solo tienes que pulsar el botón con la leyenda _Fork_.
 
 ![Github Fork](github-fork.png)
