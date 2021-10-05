@@ -108,7 +108,7 @@ git commit -m "Comentario describiendo los cambios realizados"
 ```
 
 Nota: No es necesario que hagas un único _commit_ al final, puedes realizar todos
-los commits que quieres, pero si es verdad que el paso previo a subir el código
+los commits que quieras, pero si es verdad que el paso previo a subir el código
 al repositorio debe ser un `commit`. Si no lo hacemos así, quedarían cambios
 el el área de trabajo no confirmadas y, por tanto, ignoradas en el siguiente
 paso, en el `push`.
