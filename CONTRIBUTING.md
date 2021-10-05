@@ -28,7 +28,7 @@ español, y reservar el inglés solo para las cuestiones que atañan al código
 directamente.
 
 Por tanto, si quieres aportar en las secciones de documentación, aunque
-encuentres el texto en inglés, puedes incluir lo nuevo es Español, ya que la
+encuentres el texto en inglés, puedes incluir lo nuevo es español, ya que la
 idea es ir traduciendo todos esos documentos hasta conseguir el estado mostrado
 en la siguiente tabla:
 
