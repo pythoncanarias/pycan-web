@@ -82,7 +82,7 @@ hubiera en ella.
 ### Sexto paso
 
 Aquí es donde haces tu magia: realiza los cambios que creas oportunos,
-los pruebas si puedes y las vas añadiendo a la rama. Puedes usar `git status` para
+los pruebas si puedes y los vas añadiendo a la rama. Puedes usar `git status` para
 obtener un breve informe de la situación actual de la rama en la que estás.
 
 Supongamos que has cambiado parte del texto del fichero `README.md`. Podemos
