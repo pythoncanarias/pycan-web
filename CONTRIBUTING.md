@@ -19,6 +19,32 @@ Para contribuir como desarrollador, en el documento [README.md](README.md) se
 explica cómo montar un entorno de desarrollo propio usando _Docker_ y
 _Docker Compose_.
 
+## Sobre el idioma a usar en este proyecto
+
+Estamos trabajando para definir los idiomas a usar en las distintas partes del
+proyecto, ya que ahora mismo hay una mezcla un poco aberrante entre inglés y
+español. Nuestro objetivo es ir migrando toda la documentación del proyecto a
+español, y reservar el inglés solo para las cuestiones que atañan al código
+directamente.
+
+Por tanto, si quieres aportar en las secciones de documentación, aunque
+encuentres el texto en inglés, puedes incluir lo nuevo es español, ya que la
+idea es ir traduciendo todos esos documentos hasta conseguir el estado mostrado
+en la siguiente tabla:
+
+| Área                  | Idioma |
+|-----------------------|--------|
+| Variables en código   | 🇬🇧   |
+| Comentarios en código | 🇬🇧   |
+| _Commits_             | 🇬🇧   |
+| README                | 🇪🇸   |
+| Documentación         | 🇪🇸   |
+| _Issues_              | 🇪🇸   |
+| Etiquetas de _issues_ | 🇪🇸   |
+| _Pull Requests_       | 🇪🇸   |
+| Texto de la web       | 🇪🇸   |
+
+
 ## Notas para los desarrolladores
 
 El desarrollo consiste en una aplicación Django, y algunas partes de _frontend_
