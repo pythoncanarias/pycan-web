@@ -6,7 +6,7 @@ Normalmente, cuando se necesita una nueva aplicación (sección) en un projecto 
 $ ./manage.py startapp <app>
 ```
 
-Basados en el diseño de nuestro proyecto, algunos pasos adicionales deben ser tomados en cuenta para lograr que la aplicación sea visualizada:
+Basados en el diseño de nuestro proyecto, se deben llevar a cabo algunos pasos adicionales para lograr visualizar la aplicación correctamente:
 
 1. Añadir `<app>` a la constante `APPS` en [gulp/config.js](gulp/config.js).
 2. Crear el archivo `<app>/static/<app>/css/main.scss` con, al menos, el siguiente contenido: `@import "commons/static/commons/css/base";`
