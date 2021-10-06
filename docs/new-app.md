@@ -1,6 +1,6 @@
 # Añadir una nueva sección (aplicación) al proyecto
 
-Normalmente, cuando una nueva aplicación (sección) es necesitada en un projecto de Django, puede ser creada de la siguiente manera:
+Normalmente, cuando se necesita una nueva aplicación (sección) en un projecto de Django, se puede crear así:
 
 ```console
 $ ./manage.py startapp <app>
