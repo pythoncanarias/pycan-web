@@ -74,7 +74,7 @@ debajo de 96 caracteres por línea.
 Algunos de nosotros usamos la herramienta [black](https://github.com/psf/black)
 para formatear el código, pero no se considera obligatorio.
 
-### Dependecias
+### Dependencias
 
 Intentamos mantener el número de dependencias bajo. Un alto número de
 dependencias frena las actualizaciones generales, que es un objetivo que
