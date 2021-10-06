@@ -81,7 +81,6 @@ consultar o cambiar su estado interno, pero que cualquier interacción con
 otras clases o componentes debe realizarse fuera de la clase, preferiblemente
 en un módulo aparte.
 
-
 ### Asigna nombres únicos a las clases
 
 Hay muchas razones para esto, pero veamos solo una. Si nos encontramos con una
@@ -105,10 +104,35 @@ sido preferible haber buscado otro nombre que no estuviera en conflicto con uno
 ya existente (`@jileon`: Yo lo sé bien ya que fui yo el que creó la clase
 duplicada).
 
-
 ### Funciones vs clases para vistas
 
 Para las vistas, preferimos, en general, usar funciones en vez de vistas
 basadas en clases. En ningún caso debe entenderse esta recomendación como una
 prohibición de usar _CBV_, es solo que preferimos usarlas para casos sencillos
-y/o triviales, y usar funciones para todo lo demás. 
+y/o triviales, y usar funciones para todo lo demás.
+
+### Nombres de ramas y commits
+
+A la hora de crear una rama para contribuir en este proyuecto hemos de seguir
+la nomenclatura propuesta. Para una tarea como
+["[389]Añadir un blog"][add-blog-issue] tendremos que crear la rama de la
+siguiente forma `git branch 389-add-blogs`. Es decir, ponemos como primera
+parte el número de la issue, luego el nombre en inglés.
+
+[add-blog-issue]:https://github.com/pythoncanarias/pycan-web/issues/389
+
+```bash
+git branch <issue number>-<issue-name>
+```
+
+En cuanto a los commits, este proyecto sigue la guía definida en
+[semantic commit messages][semantic-commit-messages] la cual se basa en
+una primera parte dónde explicamos que estámos haciendo, el scope. Este
+puede ser `feat`, `fix`, `docs` entre otros (el resto en el enlace). Y,
+a continuación, el mensaje del commit explicativo.
+
+[semantic-commit-messages]:https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
+
+```bash
+git commit -m 'feat: add blog template'
+```
