@@ -1,4 +1,4 @@
-# Configuración de Produción
+# Configuración de Producción
 
 Docker no está soportado aún en producción. Deben seguirse estos pasos:
 
@@ -25,7 +25,7 @@ $ npm install
 
 ## Ajustes
 
-Estos parametros deben establecerse en un fichero `.env`:
+Estos parámetros deben establecerse en un fichero `.env`:
 
 ```console
 DEBUG = False
@@ -62,4 +62,4 @@ Tenemos una app de Django para enviar notificaciones por email. Para enviar esta
 Usamos **PostgreSQL** como base de datos.
 
 1. Instala [PostgreSQL](https://www.postgresql.org/download/).
-2. Crea una base de datos y unos credenciales con acceso completo a la misma.
+2. Crea una base de datos y unas credenciales con acceso completo a la misma.
