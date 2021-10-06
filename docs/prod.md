@@ -1,8 +1,8 @@
-# Production setup
+# Configuración de Produción
 
-Docker is not yet fully supported on production. Thus, a number of steps must be followed.
+Docker no está soportado aún en producción. Deben seguirse estos pasos:
 
-## Dependencies
+## Dependencias
 
 ### Python
 
@@ -23,9 +23,9 @@ $ pip install requirements.txt
 $ npm install
 ```
 
-## Settings
+## Ajustes
 
-Some parameters must be set on `.env` file:
+Estos parametros deben establecerse en un fichero `.env`:
 
 ```console
 DEBUG = False
@@ -48,18 +48,18 @@ TWITTER_ACCESS_TOKEN_SECRET = <twitter access token secret>
 
 ## Redis
 
-We are using **Redis** for some services. In order to get it run properly it is important to follow some indications:
+Usamos **Redis** para algunos servicios. Sigue estas indicaciones para confirgurarlo:
 
-1. Install [Redis](https://redis.io/download).
-2. Launch `run-rq.sh`
+1. Instala [Redis](https://redis.io/download).
+2. Ejecuta `run-rq.sh`
 
-## Notices
+## Notificaciones
 
-A Django app has been implemented in order to send notices (by email) programmatically. For this process to properly run, the worker `run-notices.sh` must be scheduled in cron (e.g. daily).
+Tenemos una app de Django para enviar notificaciones por email. Para enviar estas notificaciones, es necesario ejecutar el script `run-notices.sh` periódicamente (por ejemplo diariamente) a través de cron.
 
-## Database
+## Base de datos
 
-We are using **PostgreSQL** as _database management system_. In order to configure the project correctly it is important to follow some indications:
+Usamos **PostgreSQL** como base de datos.
 
-1. Install [PostgreSQL](https://www.postgresql.org/download/).
-2. Create a _database_ and a _user/password_ with full access to that database.
+1. Instala [PostgreSQL](https://www.postgresql.org/download/).
+2. Crea una base de datos y unos credenciales con acceso completo a la misma.
