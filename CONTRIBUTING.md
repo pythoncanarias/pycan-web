@@ -113,7 +113,7 @@ y/o triviales, y usar funciones para todo lo demás.
 
 ### Nombres de ramas y commits
 
-A la hora de crear una rama para contribuir en este proyuecto hemos de seguir
+A la hora de crear una rama para contribuir en este proyecto hemos de seguir
 la nomenclatura propuesta. Para una tarea como
 ["[389]Añadir un blog"][add-blog-issue] tendremos que crear la rama de la
 siguiente forma `git branch 389-add-blogs`. Es decir, ponemos como primera
