@@ -116,13 +116,13 @@ y/o triviales, y usar funciones para todo lo demás.
 A la hora de crear una rama para contribuir en este proyuecto hemos de seguir
 la nomenclatura propuesta. Para una tarea como
 ["[389]Añadir un blog"][add-blog-issue] tendremos que crear la rama de la
-siguiente forma `git branch 389-add-blogs`. Es decir, ponemos como primera
-parte el número de la issue, luego el nombre en inglés.
+siguiente forma `git checkout -b 389-add-blogs`. Es decir, ponemos como primera
+parte el número de la issue, luego el nombre en el idioma que más cómodo nos sea.
 
 [add-blog-issue]:https://github.com/pythoncanarias/pycan-web/issues/389
 
 ```bash
-git branch <issue number>-<issue-name>
+git checkout -b <issue number>-<issue-name>
 ```
 
 En cuanto a los commits, este proyecto sigue la guía definida en
