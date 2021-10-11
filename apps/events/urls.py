@@ -6,6 +6,7 @@ app_name = 'events'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('next/', views.next, name='next'),
     path('archive/', views.past_events, name='past_events'),
     path('<slug:slug>/', views.detail_event, name='detail_event'),
     path(
@@ -60,13 +61,20 @@ urlpatterns = [
         name='ticket_purchase_nocc',
     ),
     path('<slug:slug>/raffle/', views.raffle, name='raffle'),
-    path('<slug:slug>/raffle/<int:gift_id>/',
-         views.raffle_gift,
-         name='raffle_gift'),
-    path('<slug:slug>/raffle/<int:gift_id>/match/',
-         views.raffle_gift, {'match': True},
-         name='raffle_gift_match'),
-    path('<slug:slug>/raffle/results/',
-         views.raffle_results,
-         name='raffle_results'),
+    path(
+        '<slug:slug>/raffle/<int:gift_id>/',
+        views.raffle_gift,
+        name='raffle_gift',
+    ),
+    path(
+        '<slug:slug>/raffle/<int:gift_id>/match/',
+        views.raffle_gift,
+        {'match': True},
+        name='raffle_gift_match',
+    ),
+    path(
+        '<slug:slug>/raffle/results/',
+        views.raffle_results,
+        name='raffle_results',
+    ),
 ]

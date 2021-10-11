@@ -21,7 +21,7 @@
          Asociación
          </a>
           <div class="navbar-dropdown is-boxed js-nav-dropdown collapsable--close">
-              <a class="navbar-item {% is_active 'about:index' %}" href="{% url 'about:index' %}">Información</a>
+              <a class="navbar-item {% is_active 'about:us' %}" href="{% url 'about:us' %}">Información</a>
               <a class="navbar-item {% is_active 'about:history' %}" href="{% url 'about:history' %}">Historia</a>
               <a class="navbar-item {% is_active 'about:join' %}" href="{% url 'about:join' %}">¡Únete!</a>
           </div>
@@ -32,7 +32,7 @@
           Eventos
           </a>
           <div class="navbar-dropdown is-boxed js-nav-dropdown collapsable--close">
-            <a class="navbar-item {% is_active 'events:index' %}" href="{% url 'events:index' %}">Próximo evento</a>
+            <a class="navbar-item {% is_active 'events:next' %}" href="{% url 'events:next' %}">Próximo evento</a>
             <a class="navbar-item {% is_active 'events:past_events' %}" href="{% url 'events:past_events' %}">Eventos pasados</a>
             </div>
       </div>
