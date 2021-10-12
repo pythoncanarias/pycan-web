@@ -18,6 +18,10 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
+    return redirect('events:next')
+
+
+def next(request):
     events = Event.objects.filter(active=True)
     num_events = events.count()
     if num_events == 0:
