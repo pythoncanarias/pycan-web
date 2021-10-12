@@ -49,6 +49,7 @@ body {
 
 .footer-page {
   background-color: $footer-bg;
+  position: relative;
 
   a {
     color: $footer-fg;
@@ -60,11 +61,11 @@ body {
 
   .footer-column {
     color: #ebebeb;
-    padding-top: 0.5rem;
+    padding-top: 2rem;
     padding-bottom: 0.5rem;
 
     @include from($desktop) {
-      padding-top: 1rem;
+      padding-top: 2rem;
       padding-bottom: 3rem;
     }
   }
@@ -105,4 +106,20 @@ body {
 
 .container {
   padding-top: 2rem;
+}
+
+.footer-button {
+  position: absolute;
+  top: -22.5px;
+  left: calc(50% - 22.5px);
+  z-index: 100;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 22.5px;
+  border-color: $header-bg;
+  background-color: whitesmoke;
 }
