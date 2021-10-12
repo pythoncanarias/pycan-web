@@ -1,0 +1,21 @@
+.ally-block {
+  margin-bottom: 2rem;
+  img {
+    width: 5rem;
+    vertical-align: middle;
+  }
+  p.description {
+    i.quote {
+      color: gray;
+    }
+  }
+  ul {
+    list-style-type: none;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid lightgray;
+    i {
+      width: 1.5rem;
+    }
+  }
+}

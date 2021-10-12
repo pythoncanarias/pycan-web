@@ -10,3 +10,9 @@ class Ally(models.Model):
     url = models.URLField(blank=True)
     twitter = models.URLField(blank=True)
     email = models.EmailField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']

@@ -1,0 +1,37 @@
+{% extends "about/base.html" %}
+{% load utils %}
+{% load static %}
+
+{% block title %}Aliados - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="content box">
+
+<h1>Aliados</h1>
+
+<p>
+Canarias es un territorio muy prolífico en el campo de las nuevas tecnologías. Las organizaciones y asociaciones de este sector constituyen un punto de entrada para muchos usuarios y usuarias. Aquello de que la unión hace la fuerza es un principio que seguimos desde Python Canarias. Si bien apostamos, como era de esperar, por nuestro lenguaje de programación favorito, somos una comunidad abierta y nos encanta construir sinergias con otros grupos. Aquí les dejamos un listado de nuestros <b>aliados</b>:
+</p>
+
+{% for ally in allies %}
+  <div class="ally-block">
+    <h2><img src="{{ ally.logo.url }}"> {{ ally.name }}</h2>
+    <p class="description"><i class="fas fa-quote-left quote"></i> {{ ally.description }} <i class="fas fa-quote-right quote"></i></p>
+    <ul>
+      {% if ally.url %}
+        <li><i class="fas fa-home"></i> <a href="{{ ally.url }}">{{ ally.url }}</a></li>
+      {% endif %}
+      {% if ally.twitter %}
+        <li><i class="fab fa-twitter"></i> <a href="{{ ally.twitter }}">{{ ally.twitter }}</a></li>
+      {% endif %}
+      {% if ally.email %}
+        <li><i class="far fa-envelope"></i> <a href="mailto:{{ ally.email }}">{{ ally.email }}</a></li>
+      {% endif %}
+    </ul>
+  </div>
+{% endfor %}
+
+</div>
+
+{% endblock content %}
