@@ -23,7 +23,7 @@
   <div class="message-body">
     <strong>{{ organization.name }}</strong> es una asociación sin ánimo de lucro cuyos objetivos, son, entre otros, promover el <strong>uso del lenguaje</strong> de programación Python, dar <strong>soporte</strong> a quienes deseen aprenderlo y promover la programación como una <strong>competencia educativa básica</strong>.</p>
 
-    <p>La asociación fue creada el <strong>{{ organization.registration_date|date:"d/m/Y" }}</strong> y desde entonces ha organizado <a href="{% url 'events:index' %}">diferentes eventos</a> de difusión del lenguaje de programación Python colaborando en el incremento de la comunidad de usuarios de Python en Canarias.</p>
+    <p>La asociación fue creada el <strong>{{ organization.registration_date|date:"d/m/Y" }}</strong> y desde entonces ha organizado <a href="{% url 'events:past_events' %}">diferentes eventos</a> de difusión del lenguaje de programación Python colaborando en el incremento de la comunidad de usuarios de Python en Canarias.</p>
 
     <p>Te recomendamos que no dejes de <a href="{% url 'about:history' %}">repasar la historia de Python Canarias</a>.</p>
 
@@ -90,12 +90,12 @@
   </div>
   <div class="content message-body">
     <ul>
-      <li><a href="https://github.com/pythoncanarias/docs/raw/master/asociacion/estatutos/estatutos.pdf">Estatutos</a></li>
-      <li><a href="https://github.com/pythoncanarias/docs/tree/master/actas/junta-directiva">Actas de la junta directiva</a></li>
-      <li><a href="https://github.com/pythoncanarias/docs/tree/master/actas/asamblea">Actas de la asamblea general</a></li>
-      <li><a href="https://github.com/pythoncanarias/docs/tree/master/actas/core">Actas del CORE</a> <span class="content is-small">(Comisión para la organización y realización de eventos)</span></li>
-      <li><a href="https://github.com/pythoncanarias/docs/tree/master/logos/python-canarias">Logotipos</a></li>
-      <li><a href="https://www.gobiernodecanarias.org/entidadesjuridicas/">Web de Entidades Jurídicas de la Dirección General de Transparencia y Participación Ciudadana</a></li>
+      <li><a href="https://github.com/pythoncanarias/pycan-docs/blob/main/asociacion/estatutos/estatutos.pdf">Estatutos</a></li>
+      <li><a href="https://github.com/pythoncanarias/pycan-docs/tree/main/actas/junta-directiva">Actas de la junta directiva</a></li>
+      <li><a href="https://github.com/pythoncanarias/pycan-docs/tree/main/actas/asamblea">Actas de la asamblea general</a></li>
+      <li><a href="https://github.com/pythoncanarias/pycan-docs/tree/main/actas/core">Actas del CORE</a> <span class="content is-small">(Comisión para la organización y realización de eventos)</span></li>
+      <li><a href="https://github.com/pythoncanarias/pycan-docs/tree/main/logos/python-canarias">Logotipos</a></li>
+      <li><a href="https://www.gobiernodecanarias.org/entidadesjuridicas/Servicios/asociaciones/">Registro de Asociaciones de Canarias</a></li>
     </ul>
   </div>
 </article>
