@@ -1,5 +1,5 @@
 {% load utils %}
-<footer class="footer-page has-text-centered" style="margin-top: 4em;">
+<footer class="footer-page has-text-centered">
   <a class="footer-button" id="scrollToTopBtn" href=""
     ><img
       class="footer__button--image"
@@ -8,7 +8,7 @@
       titile="scroll button up"
   /></a>
   <div class="columns">
-    <div class="column has-text-weight-light">
+    <div class="column has-text-weight-light is-one-third-desktop">
       <div class="footer-column">
         <h2 class="subtitle"><i class="fas fa-award"></i> Créditos</h2>
         <ul class="footer-column-items">
@@ -23,7 +23,11 @@
       <div class="footer-column">
         <h2 class="subtitle"><i class="fas fa-copyright"></i> {{ organization.name }}</h2>
         <ul class="footer-column-items">
-          <li>{{ organization.full_address }}</li>
+          <li>{{ organization.address }}</li>
+          {% if organization.rest_address %}
+          <li>{{ organization.rest_address }}</li>
+          {% endif %}
+          <li>{{ organization.postal_code }}, {{ organization.city }}</li>
           <li><a href="mailto:{{ organization.email }}">{{ organization.email }}</a></li>
           <li><a href="{% url 'about:index' %}">Sobre la asociación</a></li>
         </ul>

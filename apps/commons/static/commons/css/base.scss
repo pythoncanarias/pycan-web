@@ -30,12 +30,16 @@ body {
 .content-page {
   max-width: 59rem;
   min-height: calc(100vh - #{$navbar-height} - #{$footer-height} + 1px);
-  padding: 2rem 0rem 5rem 0rem;
+  padding: 2rem 1.2rem 5rem 1.2rem;
 
   @include from($custom-mobile) {
     & > .box {
       padding: 2rem;
     }
+  }
+
+  @include from($desktop){
+    padding: 2rem 0rem 5rem 0rem;
   }
 
   &.is-wide {
@@ -46,10 +50,13 @@ body {
     max-width: 47rem;
   }
 }
-
+/
+ 
 .footer-page {
   background-color: $footer-bg;
   position: relative;
+  margin-top: 2em;
+  padding: 1.5em 1.5em 2.2em 1.5em;
 
   a {
     color: $footer-fg;
@@ -62,12 +69,7 @@ body {
   .footer-column {
     color: #ebebeb;
     padding-top: 2rem;
-    padding-bottom: 0.5rem;
-
-    @include from($desktop) {
-      padding-top: 2rem;
-      padding-bottom: 3rem;
-    }
+  
   }
 
   h1,
@@ -75,9 +77,6 @@ body {
     color: whitesmoke;
   }
 
-  i {
-    padding-right: 0.2rem;
-  }
 }
 
 /* Error class for Django Forms https://bit.ly/3vidyK2 */
