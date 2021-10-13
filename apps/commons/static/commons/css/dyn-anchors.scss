@@ -1,0 +1,15 @@
+.dyn-anchor-heading {
+  a.dyn-anchor-link {
+    font-size: 14pt;
+    color: skyblue;
+    margin-bottom: 5px;
+    vertical-align: middle;
+    opacity: 0;
+    &:hover {
+      color: darken(skyblue, 40%);
+    }
+    &.show-it {
+      opacity: 1;
+    }
+  }
+}
