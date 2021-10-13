@@ -4,6 +4,8 @@ from django.shortcuts import redirect, render
 
 from apps.members.models import Position
 
+from .models import Ally
+
 logger = logging.getLogger(__name__)
 
 
@@ -28,3 +30,8 @@ def join(request):
 
 def history(request):
     return render(request, 'about/history.html', {})
+
+
+def allies(request):
+    allies = Ally.objects.all()
+    return render(request, 'about/allies.html', {'allies': allies})

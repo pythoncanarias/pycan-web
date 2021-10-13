@@ -1,6 +1,7 @@
 @import './variables';
 @import '~bulma/bulma.sass';
 @import './override';
+@import './dyn-anchors';
 
 html {
   // source: https://stackoverflow.com/q/46463338
