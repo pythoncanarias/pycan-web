@@ -1,15 +1,4 @@
 @import 'apps/commons/static/commons/css/base';
 
+@import './about-us';
 @import './allies';
-
-.about-index {
-  p {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-  }
-
-  .message a.headerlink {
-    color: cadetblue;
-    text-decoration: none;
-  }
-}
