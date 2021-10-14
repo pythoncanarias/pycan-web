@@ -79,6 +79,12 @@ class Event(models.Model):
     def slug(self):
         return self.hashtag.lower()
 
+    def get_end_datetime(self):
+        event_duration =  self.default_slot_duration.total_seconds()
+        start_datetime = self.start_datetime().strftime('%s')
+        end_datetime = float(start_datetime) + event_duration
+        return datetime.datetime.fromtimestamp(end_datetime)
+
     @classmethod
     def get_by_slug(cls, slug):
         return cls.objects.get(hashtag__iexact=slug)

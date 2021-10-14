@@ -108,7 +108,6 @@
       <h1 class="title section-title">
         <p>Agenda</p>
         <p class="section-detail"><i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}</p>
-        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ event.name }}&details={{ event.description }}&location={{ event.venue }}&dates={{ event.start_datetime | date:'Y-m-d' }}">Añadir a Google Calendar</a>
         {% if event.schedule_for_display and not event.closed_schedule %}
           <span class="tag is-warning is-medium not-closed-schedule">
             <i class="fas fa-info-circle"></i>
@@ -116,8 +115,6 @@
           </span>
         {% endif %}
       </h1>
-      <!--20211022T164500Z%2F20211021T164200Z-->
-      <p>https://www.google.com/calendar/render?action=TEMPLATE&text={{ event.name }}&details={{ event.description }}&location={{ event.venue }}&dates={{ event.start_datetime | date:'Ymd\Thm00\Z' }}%2Fundefined</p>
 
       <div class="schedule-table">
         {% for row in event.schedule_for_display %}
@@ -130,6 +127,7 @@
           {% endif %}
         {% empty %}
           <div class="column is-full has-text-centered coming-soon">
+            <a target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ event.name }}&details={{ event.description }}&location={{ event.venue }}&dates={{ event.start_datetime | date:'Ymd\THis\Z' }}%2F{{ event.get_end_datetime | date:'Ymd\THis\Z' }}">Añadir a Google Calendar</a>
             <p>
               <i class="fas fa-box-open"></i>
               Más información próximamente!
