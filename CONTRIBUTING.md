@@ -1,23 +1,21 @@
-## Cómo contribuir a este proyecto
+## Contribuyendo a este proyecto
 
 Si quieres contribuir a este proyecto, hay muchas cosas que puedes hacer.
 Tenemos una etiqueta en los _issues_ del [repositorio de este
-proyecto](https://github.com/pythoncanarias/pycan-web/issues) para 
+proyecto](https://github.com/pythoncanarias/pycan-web/issues) para
 [aquellas tareas que pensamos que son un buen punto de partida](https://github.com/pythoncanarias/pycan-web/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 para empezar a contribuir
 al desarrollo.
 
 Si es la primera vez que vas a contribuir a un proyecto de _software_ libre,
-quizá te sea de ayuda este documento: [Cómo hacer tu primera contribución a
-Python Canarias](docs/primeros_pasos.md)
+quizá te sea de ayuda este documento: [cómo hacer tu primera contribución a
+Python Canarias](docs/first-contrib.md).
 
 Además de las tareas propias de desarrollo, hay muchas otras formas de ayudar,
 una de las principales es aportar nuevas ideas para mejorar la web, así
-como avisarnos de cualquier error que encuentres en la misma.
+como avisarnos de cualquier error que encuentres en la misma. Esto lo puedes hacer creando un nuevo _issue_ [en la sección correspondiente de GitHub](https://github.com/pythoncanarias/pycan-web/issues).
 
-Para contribuir como desarrollador, en el documento [README.md](README.md) se
-explica cómo montar un entorno de desarrollo propio usando _Docker_ y
-_Docker Compose_.
+Para contribuir como desarrollador/a, hemos preparado un manual donde se explica [cómo montar un entorno de desarrollo](docs/dev.md) propio usando _Docker_ y _Docker Compose_.
 
 ## Sobre el idioma a usar en este proyecto
 
@@ -33,26 +31,25 @@ idea es ir traduciendo todos esos documentos hasta conseguir el estado mostrado
 en la siguiente tabla:
 
 | Área                  | Idioma |
-|-----------------------|--------|
-| Variables en código   | 🇬🇧   |
-| Comentarios en código | 🇬🇧   |
-| _Commits_             | 🇬🇧   |
-| README                | 🇪🇸   |
-| Documentación         | 🇪🇸   |
-| _Issues_              | 🇪🇸   |
-| Etiquetas de _issues_ | 🇪🇸   |
-| _Pull Requests_       | 🇪🇸   |
-| Texto de la web       | 🇪🇸   |
+| --------------------- | ------ |
+| Variables en código   | 🇬🇧     |
+| Comentarios en código | 🇬🇧     |
+| _Commits_             | 🇬🇧     |
+| README                | 🇪🇸     |
+| Documentación         | 🇪🇸     |
+| _Issues_              | 🇪🇸     |
+| Etiquetas de _issues_ | 🇪🇸     |
+| _Pull Requests_       | 🇪🇸     |
+| Texto de la web       | 🇪🇸     |
 
+## Notas para desarrolladores
 
-## Notas para los desarrolladores
-
-El desarrollo consiste en una aplicación Django, y algunas partes de _frontend_
+El desarrollo consiste en un proyecto Django, y algunas partes de _frontend_
 escritas en _javascript_ plano. Por el momento no nos hemos decidido a usar
 ningún _framework_, aunque algunos del equipo tenemos una cierta preferencia
 por [vue.js](https://vuejs.org/).
 
-Se ha intentado seguir en lo posible las prácticas habituales en Django, pero
+Se ha intentado seguir en lo posible las [buenas prácticas habituales de Django](https://django-best-practices.readthedocs.io/en/latest/), pero
 en algunos casos se han realizado modificaciones sobre lo que podría
 considerarse un proyecto Django _estándar_. Explicaremos estas divergencias en las
 siguientes secciones.
@@ -60,9 +57,8 @@ siguientes secciones.
 ### Organización de código de las aplicaciones de Django
 
 Como hay muchas aplicaciones o _apps_, las tenemos todas todas bajo una única
-carpeta `apps`, para reducir la cantidad de _ruido_  en
-la carpeta raíz. Si crees necesario añadir una nueva _app_, créala por favor al
-mismo nivel que las actuales.
+carpeta `apps`, para reducir la cantidad de _ruido_ en
+la carpeta raíz. Si crees necesario añadir una nueva _app_, [lee este documento con atención](docs/new-app.md).
 
 ### Estilo de código
 
@@ -73,6 +69,8 @@ debajo de 96 caracteres por línea.
 
 Algunos de nosotros usamos la herramienta [black](https://github.com/psf/black)
 para formatear el código, pero no se considera obligatorio.
+
+Así mismo, existen herramientas como [flake8](https://flake8.pycqa.org/en/latest/) que detectan divergencias del estilo de código frente a los estándares establecidos.
 
 ### Dependencias
 
@@ -95,8 +93,8 @@ Veamos, por ejemplo, la _app_ `notice`, que se usa para enviar notificaciones
 a los miembros ante determinados eventos, como por ejemplo el aviso un mes
 antes de que se venza su permanencia a la organización.
 
-En la clase `apps.notice.models.Notice` se definen algunos métodos, pero 
-solo aquellos que afectan o cambian el estado del propio modelo, sin 
+En la clase `apps.notice.models.Notice` se definen algunos métodos, pero
+solo aquellos que afectan o cambian el estado del propio modelo, sin
 ninguna tercera parte implicada. En concreto, no existe un método
 para enviar la notificación en si.
 
@@ -111,13 +109,12 @@ consultar o cambiar su estado interno, pero que cualquier interacción con
 otras clases o componentes debe realizarse fuera de la clase, preferiblemente
 en un módulo aparte.
 
-
 ### Asigna nombres únicos a las clases
 
 Hay muchas razones para esto, pero veamos solo una. Si nos encontramos con una
 nueva clase mientras examinamos el código, lo deseable es que una búsqueda o un
 _grep_ por el nombre de la clase nos devuelva solo la definición y los usos de
-la misma. Cualquier otra cosa que aparezca será ruido.  Si tengo dos clases con
+la misma. Cualquier otra cosa que aparezca será ruido. Si tengo dos clases con
 el mismo nombre en ficheros diferentes, esto solo complica el entender en que
 contextos y de que forma se usa cada una de las clases. Razones similares se
 pueden argumentar para las variables o constantes globales.
@@ -135,10 +132,9 @@ sido preferible haber buscado otro nombre que no estuviera en conflicto con uno
 ya existente (`@jileon`: Yo lo sé bien ya que fui yo el que creó la clase
 duplicada).
 
-
 ### Funciones vs clases para vistas
 
 Para las vistas, preferimos, en general, usar funciones en vez de vistas
 basadas en clases. En ningún caso debe entenderse esta recomendación como una
 prohibición de usar _CBV_, es solo que preferimos usarlas para casos sencillos
-y/o triviales, y usar funciones para todo lo demás. 
+y/o triviales, y usar funciones para todo lo demás.
