@@ -138,3 +138,36 @@ Para las vistas, preferimos, en general, usar funciones en vez de vistas
 basadas en clases. En ningún caso debe entenderse esta recomendación como una
 prohibición de usar _CBV_, es solo que preferimos usarlas para casos sencillos
 y/o triviales, y usar funciones para todo lo demás.
+
+### Nombres de ramas y commits
+
+A la hora de crear una rama para contribuir en este proyecto hemos de seguir
+la nomenclatura propuesta. Para una tarea como
+["[389]Añadir un blog"][add-blog-issue] tendremos que crear la rama de la
+siguiente forma `git checkout -b 389-add-blogs`. Es decir, ponemos como primera
+parte el número de la issue, luego el nombre en el idioma que más cómodo nos sea.
+
+[add-blog-issue]:https://github.com/pythoncanarias/pycan-web/issues/389
+
+```bash
+git checkout -b <issue number>-<issue-name>
+```
+
+En cuanto a los commits, este proyecto sigue la guía definida en
+semantic commit messages la cual se basa en una primera parte dónde explicamos
+que estámos haciendo, el scope. Este puede ser `feat`, `fix`, `docs` entre
+otros. Y, a continuación, el mensaje del commit explicativo.
+
+Scopes aceptados:
+
+- `feat`: nueva funcionalidad para el usuario, no funcionalidades para scripts de compilación.
+- `fix`: solución a un fallo para el usuario, no fallos de scripst de compilación.
+- `docs`: cambios en la documentación.
+- `style`: formateado, faltas de puntos y coma, etc. No cambios en código de producción.
+- `refactor`: refactor de código en producción. Por ejemplo, cambio de nombre de variable.
+- `test`: añadir test faltantes, refactorizar test. No cambios en código de producción.
+- `chore`: actualización de tareas rutinarias, etc. No cambios en código de producción.
+
+```bash
+git commit -m 'feat: add blog template'
+```
