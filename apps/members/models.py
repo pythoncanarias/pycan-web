@@ -28,6 +28,11 @@ class Member(models.Model):
     is_founder = models.BooleanField(default=False)
     is_honorary = models.BooleanField(default=False)
     remarks = models.CharField(max_length=512, blank=True)
+    email = models.EmailField(
+        max_length=320,
+        unique=True,
+        blank=False,
+        )
 
     @classmethod
     def load_from_username(cls, username):
@@ -41,10 +46,6 @@ class Member(models.Model):
     @property
     def full_name(self):
         return self.user.first_name + ' ' + self.user.last_name
-
-    @property
-    def email(self):
-        return self.user.email
 
     @property
     def member_id(self):

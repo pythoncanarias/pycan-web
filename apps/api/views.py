@@ -135,7 +135,7 @@ def serializer_staff(position):
         'position': position.get_position_display(),
         'first_name': position.member.user.first_name,
         'last_name': position.member.user.last_name,
-        'email': position.member.user.email,
+        'email': position.member.email,
     }
 
 

@@ -5,20 +5,26 @@
 {% block content %}
 <div class="box">
 
-  <nav class="panel">
-    <h3 class="panel-heading">Datos personales</h3>
+  <nav class="panel" id="personal">
+    <h3 class="panel-heading dyn-anchor-heading">
+      Datos personales
+      <a class="dyn-anchor-link" href="#personal"><i class="fas fa-link"></i></a>
+    </h3>
     <div class="panel-block">
       <table class="table table-striped">
         <tr> <th>Username</th> <td><code>{{ member.user.username }}</code></td> </tr>
         <tr> <th>Nombre</th> <td>{{ member.user.first_name }}</td> </tr>
         <tr> <th>Apellidos</th> <td>{{ member.user.last_name }}</td> </tr>
-        <tr> <th>Email</th> <td>{{ member.user.email }}</td> </tr>
+        <tr> <th>Email</th> <td>{{ member.email }}</td> </tr>
       </table>
     </div>
   </nav>
 
-  <nav class="panel">
-    <h3 class="panel-heading">Socio/a: #{{ member.pk }}</h3>
+  <nav class="panel" id="address">
+    <h3 class="panel-heading dyn-anchor-heading">
+      Socio/a: #{{ member.pk }}
+      <a class="dyn-anchor-link" href="#address"><i class="fas fa-link"></i></a>
+    </h3>
     <div class="panel-block pb-vertical">
       <table class="table table-striped">
         <tr>

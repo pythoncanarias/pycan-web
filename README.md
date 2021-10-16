@@ -1,24 +1,23 @@
-<div align="center"> 
- 
+<div align="center">
+
 # Python Canarias
 
+![Python Canarias Banner](docs/assets/python_canarias_banner.png)
 
-![Python Canarias Banner](docs/assets/python_canarias_banner.png)  
-
-Website of [Python Canarias](https://pythoncanarias.es/) 🚀 &nbsp; happily made with [Django](https://www.djangoproject.com/). 
+• Sitio Web de [Python Canarias](https://pythoncanarias.es/) 🚀 &nbsp; felizmente hecho con [Django](https://www.djangoproject.com/) •
 
 </div>
 
 ---
 
-## Table of contents
+## Tabla de contenido
 
-- [Contributing to this project](CONTRIBUTING.md).
-- [Development setup](docs/dev.md)
-- [Production setup](docs/prod.md)
-- [Adding new app](docs/new-app.md)
-- [API](docs/api.md)
+- [Contribuyendo a este proyecto](CONTRIBUTING.md).
+- [Configuración del entorno de desarrollo](docs/dev.md).
+- [Configuración del entorno de producción](docs/prod.md).
+- [Añadir una nueva app](docs/new-app.md).
+- [API](docs/api.md).
 
-## License
+## Licencia
 
-This project is licensed under [MIT](LICENSE.md).
+Este proyecto esta disponible bajo la licencia [MIT](LICENSE.md).

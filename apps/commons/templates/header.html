@@ -1,6 +1,6 @@
 {% load utils %}
 
-<nav class="header-page navbar is-paddingless">
+<nav class="header-page navbar is-paddingless is-fixed-top">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
       <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo-python-canarias-white.svg' }}" alt="{{ organization.name }}" />
@@ -14,18 +14,33 @@
   </div>
 
   <div class="navbar-menu" id="navMenu">
-    <div class="navbar-end has-text-centered">
-      <a class="navbar-item {% is_active 'about:index' %}" href="{% url 'about:index' %}">
-        <i class="fas fa-user-friends"></i>
-        Asociación
-      </a>
-      <a class="navbar-item {% is_active 'events:index' %}" href="{% url 'events:index' %}">
-        <i class="fas fa-birthday-cake"></i>
-        Eventos
-      </a>
+    <div class="navbar-end">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-item  {% is_active 'about:index' %} js-nav-item" href="{% url 'about:index' %}">
+          <i class="fas fa-user-friends"></i>
+         Asociación
+         </a>
+          <div class="navbar-dropdown is-boxed js-nav-dropdown collapsable--close">
+              <a class="navbar-item {% is_active 'about:us' %}" href="{% url 'about:us' %}">Información</a>
+              <a class="navbar-item {% is_active 'about:history' %}" href="{% url 'about:history' %}">Historia</a>
+              <a class="navbar-item {% is_active 'about:join' %}" href="{% url 'about:join' %}">¡Únete!</a>
+              <a class="navbar-item {% is_active 'about:allies' %}" href="{% url 'about:allies' %}">Aliados</a>
+          </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-item {% is_active 'events:index' %} js-nav-item" href="{% url 'events:index' %}">
+          <i class="fas fa-birthday-cake"></i>
+          Eventos
+          </a>
+          <div class="navbar-dropdown is-boxed js-nav-dropdown collapsable--close">
+            <a class="navbar-item {% is_active 'events:next' %}" href="{% url 'events:next' %}">Próximo evento</a>
+            <a class="navbar-item {% is_active 'events:past_events' %}" href="{% url 'events:past_events' %}">Eventos pasados</a>
+            </div>
+      </div>
+     
       <a class="navbar-item {% is_active 'jobs:index' %}" href="{% url 'jobs:index' %}">
-        <i class="fas fa-laptop-code"></i>
-        Empleo
+          <i class="fas fa-laptop-code"></i>
+          Empleo
       </a>
 
       {% if request.user.is_authenticated %}
@@ -39,5 +54,6 @@
         </a>
       {% endif %}
     </div>
+  </div>
   </div>
 </nav>

@@ -1,69 +1,57 @@
-# Development setup
+# Configuración del entorno de desarrollo
 
-## Docker environment
+## Entorno Docker
 
-This project needs a variety of requirements and it's highly recommended to set up a development environment through [Docker](https://www.docker.com/).
+Este proyecto tiene requisitos variados que hacen altamente recomendable configurar un entorno de desarrollo usando [Docker Compose](https://docs.docker.com/compose/).
 
-1. Clone this repository.
-2. Launch containers (building if proceed):
+1. Clona este repositorio.
+2. Inicia los contenedores:
    ```console
-   $ docker-compose up  # leave this running and open new tab
+   $ docker-compose up  # Deja esto ejecutando y abre una nueva pestaña
    ```
-3. Run the database migrations:
+3. Ejecuta las migraciones de la base de datos:
    ```console
    $ docker-compose exec web ./manage.py migrate
    ```
-4. Add initial test data to the DB (You will need this to test the web app):
+4. Añade datos iniciales de pruebas a la base datos (necesitarás esto para testear la app):
    ```console
    $ docker-compose exec web ./manage.py dbload
    ```
 
 ---
 
-> Instead of 3) and 4) you can load a (production) database dump using:
+> Si dispones de un volcado de la base de datos de pruebas o producción, puedes cargarlo así, en sustitución de los pasos 3 y 4:
 
 ```console
 $ docker-compose exec -T database /bin/bash -c \
 'PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_USER -d $POSTGRES_DB' < /path/to/db_dump.sql
 ```
 
-> If you want to reproduce this last step afterwards, first be sure to remove the database volume with: `docker volume rm pycan-web_database-data`.
+> Para reproducir este último paso más adelante, asegúrate primero de borrar el volumen de la base datos con: `docker volume rm pycan-web_database-data`.
 
 ---
 
-5. Create a default superuser:
+5. Crea un superusuario que te permita acceder a la [interfaz administrativa de Django](#interfaz-administrativa):
    ```console
    $ docker-compose exec web ./manage.py create_default_admin  # admin | admin
    ```
 
-That's it, now visit http://localhost:8000/
+Eso es todo, ahora puedes visitar http://localhost:8000/
 
-> Note that both the database and the web app bind their ports to the host. If you have port conflicts, you can export the environment variables `PYCAN_DB_PORT` and, `PYCAN_APP_PORT` to the desired ports in the host for, respectively, the database and the app, before running `docker-compose up`.
+> Nótese que tanto la base de datos y la app web enlazan sus puertos de los contenedores a los del sistema host. Si tienes conflictos con puertos, puedes exportar las variables de entorno `PYCAN_DB_PORT` y, `PYCAN_APP_PORT` con los puertos elegidos en el sistema host para, respectivamente, la base de datos y la app, antes de ejecutar `docker-compose up`.
 
-### Administrative interface
+### Interfaz Administrativa
 
-You can access the Django administrative interface visiting http://localhost:8000/admin using credentials: `username: admin` | `password: admin`
+Puedes acceder a la interfaz administrativa de Django yendo a http://localhost:8000/admin/ usando las credenciales `admin` / `admin`.
 
-### Media
+### Multimedia
 
-If you have a bunch of (production) files for media, you can leave them in the folder `$PROJECT/media`. A docker volume is set up to collect them from there.
+Si dispones de ficheros multimedia para testing o como copias de producción, puedes dejarlos en el directorio `$PROJECT/media`. Hay un volumen de Docker Compose configurado para cargarlos desde ahí.
 
-## Code style
+## VSCode y Docker
 
-Some hints should be followed in order to homogenize **Python** code style:
+Si usas [Visual Studio Code](https://code.visualstudio.com/), puedes enlazar un contenedor remoto y configurar el IDE para usarlo. Para ello recomendamos instalar la extensión [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
-- Indenting with 4 spaces.
-- Max line length: 79 chars.
-- Imports ordering like in [PEP8](https://www.python.org/dev/peps/pep-0008/#imports).
-- Python linter: [Flake8](https://flake8.pycqa.org/en/latest/)
-- Python autoformatter: [Black](https://github.com/psf/black)
+El directorio `.devcontainer` contiene la configuración necesaria para dar soporte a esta integración. Sigue [estas instrucciones](https://code.visualstudio.com/docs/remote/containers) para habilitarlo.
 
-## VSCode over Docker
-
-One of the multiple options for editing code is [Visual Studio Code](https://code.visualstudio.com/). A nice feature is to link a remote container and configure the IDE installing the required tools on it.
-
-In order to use the Docker development environment in VSCode you have to install the extension [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
-
-The folder `.devcontainer` already contains the necessary files to enable the Docker "remote" container. Just follow [these instructions](https://code.visualstudio.com/docs/remote/containers) to enable it.
-
-> A good tutorial for setting up VSCode over Docker was broadcasted by Python Malaga. [Check it out](https://www.youtube.com/watch?v=mxpq0ntJ8T8)!
+> ⭐ &nbsp;Python Malaga tiene un buen [tutorial de cómo configurar VSCode usando Docker](https://www.youtube.com/watch?v=mxpq0ntJ8T8).

@@ -1,0 +1,15 @@
+.dyn-anchor-heading {
+  a.dyn-anchor-link {
+    font-size: 12pt;
+    color: gray;
+    vertical-align: middle;
+    margin-left: 4px;
+    display: none;
+    &:hover {
+      color: darken(gray, 30%);
+    }
+    &.show-it {
+      display: inline-block;
+    }
+  }
+}

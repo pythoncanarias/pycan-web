@@ -71,7 +71,10 @@
 
   <section id="speakers" class="section speakers">
     <div class="container">
-      <h1 class="title section-title">Ponentes</h1>
+      <h1 class="title section-title dyn-anchor-heading">
+        Ponentes
+        <a class="dyn-anchor-link" href="#speakers"><i class="fas fa-link"></i></a>
+      </h1>
       <div class="columns is-multiline is-mobile is-centered">
         {% for speaker in event.get_non_org_speakers %}
 
@@ -105,8 +108,11 @@
 
   <section id="schedule" class="section schedule has-background-white">
     <div class="container">
-      <h1 class="title section-title">
-        <p>Agenda</p>
+      <h1 class="title section-title dyn-anchor-heading">
+        <p>
+          Agenda
+          <a class="dyn-anchor-link" href="#schedule"><i class="fas fa-link"></i></a>
+        </p>
         <p class="section-detail"><i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}</p>
         {% if event.schedule_for_display and not event.closed_schedule %}
           <span class="tag is-warning is-medium not-closed-schedule">
@@ -140,7 +146,10 @@
 
   <section id="venue" class="section venue">
     <div class="container">
-      <h1 class="title section-title">Localización</h1>
+      <h1 class="title section-title dyn-anchor-heading">
+        Localización
+        <a class="dyn-anchor-link" href="#venue"><i class="fas fa-link"></i></a>
+      </h1>
       <div>
         <div class="columns is-multiline">
           {% if event.venue %}
@@ -207,7 +216,10 @@
 
   <section id="sponsors" class="section sponsors has-background-white">
     <div class="container">
-      <h1 class="title section-title">Entidades</h1>
+      <h1 class="title section-title dyn-anchor-heading">
+        Entidades
+        <a class="dyn-anchor-link" href="#sponsors"><i class="fas fa-link"></i></a>
+      </h1>
       {% for role, categories in event.memberships_for_display.items %}
         <h1 class="role-title title is-4 has-text-centered">{{ role.display_name }}</h1>
         {% for category, organizations in categories.items %}
@@ -237,7 +249,10 @@
 
   <section id="past-events" class="section past-events">
     <div class="container">
-      <h1 class="title section-title">Eventos pasados</h1>
+      <h1 class="title section-title dyn-anchor-heading">
+        Eventos pasados
+        <a class="dyn-anchor-link" href="#past-events"><i class="fas fa-link"></i></a>
+      </h1>
       <div class="columns is-centered">
         {% for past_event in past_events %}
           <div class="column has-text-centered">

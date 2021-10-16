@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{ assets|get_asset_key:'commons/vendor.min.css' }}">
   {% block style %}{% endblock %}
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %} has-navbar-fixed-top">
 
   {% include "header.html" %}
 
@@ -39,7 +39,7 @@
       {% if menu %}
         is-wide
       {% endif %}
-    ">
+    " id="content-page">
     {% if menu %}
       <div class="columns is-display">
         <div class="column is-one-quarter">
