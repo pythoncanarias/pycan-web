@@ -1,10 +1,14 @@
 # Añadir una nueva aplicación al proyecto
 
-Los proyectos Django se organizan internamente en aplicaciones. Cada aplicación representa una sección o parte de nuestro proyecto. En el caso de que necesitemos añadir una nueva aplicación tendremos que hacer uso de las herramientas que Django nos proporciona:
+Los proyectos Django se organizan internamente en aplicaciones. Cada aplicación representa una sección o parte de nuestro proyecto. En el caso de que necesitemos añadir una nueva aplicación tendremos que hacer uso de las herramientas que Django nos proporciona.
+
+Teniendo en cuenta que el [entorno de desarrollo está basado en Docker](dev.md) debemos tener los contenedores corriendo (`docker-compose up`) y ejecutar lo siguiente (_quizás en otra terminal_):
 
 ```console
-$ mkdir apps/<app>  # tenemos las apps en su propia carpeta
-$ ./manage.py startapp <app> apps/<app>
+## Situados en el raíz del proyecto...
+
+$ mkdir apps/<app>  # creamos la aplicación en la carpeta de apps
+$ docker-compose exec web ./manage.py startapp <app> apps/<app>
 ```
 
 Basados en el diseño de nuestro proyecto, se deben llevar a cabo algunos pasos adicionales para lograr visualizar la aplicación correctamente.
