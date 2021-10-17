@@ -250,7 +250,7 @@ def list_sponsors(request, slug):
     return [serializer_sponsor(sponsor) for sponsor in sponsors]
 
 @api
-def quote(request):
+def random_quote(request):
     """Return random quote
     """
     quote = Quote.get_random_quote()
