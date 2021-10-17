@@ -25,5 +25,5 @@ urlpatterns = [
     path('v1/events/all/', views.all_events, name='all_events'),
     path('v1/events/', views.active_events, name='active_events'),
     # Quotes
-    path('v1/quotes/', views.quote, name='quote'),
+    path('v1/quotes/', views.random_quote, name='random_quote'),
 ]
