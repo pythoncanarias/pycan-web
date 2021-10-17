@@ -140,7 +140,7 @@ def serializer_staff(position):
     }
 
 
-def serialize_random_quote(quote):
+def serialize_quote(quote):
     return {
         'text': quote.text,
         'author': quote.author.name + ' ' + quote.author.surname,
@@ -254,7 +254,7 @@ def random_quote(request):
     """Return random quote
     """
     quote = Quote.get_random_quote()
-    return serialize_random_quote(quote)
+    return serialize_quote(quote)
 
 # TODO
 @api
