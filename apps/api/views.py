@@ -11,6 +11,7 @@ from django.urls import reverse
 from apps.events.models import Event
 from apps.locations.models import Venue
 from apps.members.models import Position
+from apps.quotes.models import Quote
 
 # API decorator
 
@@ -139,6 +140,12 @@ def serializer_staff(position):
     }
 
 
+def serialize_quote(quote):
+    return {
+        'text': quote.text,
+        'author': quote.author.name + ' ' + quote.author.surname,
+    }
+
 @api
 def status(request):
     return {
@@ -241,6 +248,13 @@ def list_sponsors(request, slug):
     event = Event.get_by_slug(slug)
     sponsors = event.memberships.all().order_by('category__role__order')
     return [serializer_sponsor(sponsor) for sponsor in sponsors]
+
+@api
+def random_quote(request):
+    """Return random quote
+    """
+    quote = Quote.get_random_quote()
+    return serialize_quote(quote)
 
 # TODO
 @api
