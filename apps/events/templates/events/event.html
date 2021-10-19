@@ -108,6 +108,7 @@
       <h1 class="title section-title">
         <p>Agenda</p>
         <p class="section-detail"><i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}</p>
+        <a target="_blank" href="{{ event.get_google_calendar_url }}">Añadir a Google Calendar</a>
         {% if event.schedule_for_display and not event.closed_schedule %}
           <span class="tag is-warning is-medium not-closed-schedule">
             <i class="fas fa-info-circle"></i>
@@ -127,7 +128,6 @@
           {% endif %}
         {% empty %}
           <div class="column is-full has-text-centered coming-soon">
-            <a target="_blank" href="{{ event.get_google_calendar_url }}">Añadir a Google Calendar</a>
             <p>
               <i class="fas fa-box-open"></i>
               Más información próximamente!
