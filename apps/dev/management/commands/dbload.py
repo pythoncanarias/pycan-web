@@ -4,6 +4,7 @@ from pathlib import Path
 from django.conf import settings
 from django.core.files.uploadedfile import UploadedFile
 from django.core.management.base import BaseCommand
+from apps.about.models import Ally
 
 from apps.locations.models import Venue
 from apps.organizations.models import Organization
@@ -52,6 +53,34 @@ def add_own_organization():
     ).save()
 
 
+def add_allies():
+    """
+    Add the Python Canarias allies, in order to work with this section
+    """
+    print("Adding allies")
+
+    photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/fancy_venue.jpg'
+    with photo_path.open('rb') as fin:
+        photo = UploadedFile(fin, name=photo_path.name)
+        Ally(
+            name='Ally 1',
+            description='El aliado 1 es el mejor del mundo',
+            logo=photo,
+            url='mywebsite.com',
+            twitter='https://twitter.com/elonmusk',
+            email='some.mail@domain.com',
+        ).save()
+
+        Ally(
+            name='Ally 2',
+            description='El aliado 2 no es malo pero no fue el primero',
+            logo=photo,
+            url='https://www.anotherwebsite.com',
+            twitter='https://twitter.com/Marvel',
+            email='marvel@domain.com',
+        ).save()
+
+
 def add_events():
     """
     Add a sample value and event so we get some content in the events page
@@ -98,3 +127,4 @@ class Command(BaseCommand):
         add_own_organization()
         add_quotes()
         add_events()
+        add_allies()
