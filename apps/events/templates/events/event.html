@@ -127,7 +127,7 @@
           {% endif %}
         {% empty %}
           <div class="column is-full has-text-centered coming-soon">
-            <a target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ event.name }}&details={{ event.description }}&location={{ event.venue }}&dates={{ event.start_datetime | date:'Ymd\THis\Z' }}%2F{{ event.get_end_datetime | date:'Ymd\THis\Z' }}">Añadir a Google Calendar</a>
+            <a target="_blank" href="{{ event.get_google_calendar_url }}">Añadir a Google Calendar</a>
             <p>
               <i class="fas fa-box-open"></i>
               Más información próximamente!
