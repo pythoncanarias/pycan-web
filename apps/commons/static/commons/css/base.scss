@@ -26,6 +26,7 @@ body {
 .header-page {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
   background-color: $header-bg;
+  z-index: 99;
 }
 
 .content-page {
@@ -51,7 +52,7 @@ body {
     max-width: 47rem;
   }
 }
-/
+
  
 .footer-page {
   background-color: $footer-bg;
@@ -95,6 +96,7 @@ body {
   width: 100%;
   z-index: 1;
 
+
   & .notification {
     width: $notification-width;
     margin-left: auto;
@@ -102,6 +104,9 @@ body {
     margin-top: 1rem;
     margin-bottom: 0;
   }
+}
+.message {
+  scroll-margin-top:  $header-height + 1rem;
 }
 
 .container {
