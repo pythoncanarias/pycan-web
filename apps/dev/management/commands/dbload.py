@@ -71,16 +71,16 @@ def add_allies():
             email='some.mail@domain.com',
         ).save()
 
-    photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/sergio.jpg'
+    photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/avatar.jpg'
     with photo_path.open('rb') as fin:
         photo = UploadedFile(fin, name=photo_path.name)
         Ally(
-            name='Sergio',
+            name='Un aliado mas',
             description='El aliado 2 no es malo, hace lo que puede',
             logo=photo,
-            url='https://sdelquin.me/',
-            twitter='https://twitter.com/sdelquin',
-            email='sdelquin@gmail.com',
+            url='https://domain.me/',
+            twitter='https://twitter.com/username',
+            email='someone@gmail.com',
         ).save()
 
 
