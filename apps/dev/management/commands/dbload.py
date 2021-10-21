@@ -59,28 +59,28 @@ def add_allies():
     """
     print("Adding allies")
 
-    photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/fancy_venue.jpg'
+    photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/adalovedev.jpg'
     with photo_path.open('rb') as fin:
         photo = UploadedFile(fin, name=photo_path.name)
         Ally(
-            name='Ally 1',
-            description='El aliado 1 es el mejor del mundo',
+            name='AdaLoveDev',
+            description='Somos una comunidad sin ánimo de lucro cuyo objetivo es dar visibilidad y empoderamiento a las mujeres en el sector tecnológico',
             logo=photo,
-            url='mywebsite.com',
-            twitter='https://twitter.com/elonmusk',
-            email='some.mail@domain.com',
+            url='https://adalovedev.es/',
+            twitter='https://twitter.com/adalovedev',
+            email='organization@adalovedev.es',
         ).save()
 
-    photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/avatar.jpg'
+    photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/python-es.png'
     with photo_path.open('rb') as fin:
         photo = UploadedFile(fin, name=photo_path.name)
         Ally(
-            name='Un aliado mas',
-            description='El aliado 2 no es malo, hace lo que puede',
+            name='Python España',
+            description='Asociación Python España. Trabajando para promover y visibilizar el uso del lenguaje de programación Python en nuestro país',
             logo=photo,
-            url='https://domain.me/',
-            twitter='https://twitter.com/username',
-            email='someone@gmail.com',
+            url='https://www.es.python.org/',
+            twitter='https://twitter.com/python_es',
+            email=' contacto@es.python.org',
         ).save()
 
 
