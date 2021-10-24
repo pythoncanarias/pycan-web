@@ -1,0 +1,26 @@
+{% extends "faq/base.html" %}
+
+{% block title %}Asociación - {{ block.super }}{% endblock %}
+
+{% block body_class %}about-index{% endblock %}
+
+{% block content %}
+<h1 class="title">FAQ</h1>
+<div class="intro">
+  <p>Bienvenido a nuestra seccion de respuestas a preguntas frecuentes</p>
+</div>
+
+{% for faq in faqs %}
+    <article class="faq" id="faq{{ faq.id }}">
+        <div class="message-header dyn-anchor-heading">
+            <a id="#faq{{ faq.id }}">
+                Q: {{ faq.question }}
+            </a>
+        </div>
+        <div class="faq-answer">
+            <p>{{ faq.answer|linebreaksbr }}</p>
+        </div>
+    </article>
+{% endfor %}
+
+{% endblock content %}
