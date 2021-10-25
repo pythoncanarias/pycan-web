@@ -1,0 +1,12 @@
+@import "apps/commons/static/commons/css/base";
+
+.faq-index {
+      p {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+      }
+
+      .dyn-anchor-link i:hover {
+        color: tomato;
+      }
+    }
