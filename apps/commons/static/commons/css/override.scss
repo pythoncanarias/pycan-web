@@ -20,7 +20,6 @@ hr {
   }
 }
 
-
 .message.is-info .message-body {
   border-color: #c8dfec;
 }
@@ -29,31 +28,30 @@ hr {
   background-color: #f3f3f7;
 }
 
-.collapsable--close{
+.collapsable--close {
   display: none;
 }
 
-.nav-menu{
- display:flex;
+.nav-menu {
+  display: flex;
   justify-content: center;
-  align-items: center; 
-} 
+  align-items: center;
+}
 
-.navbar-dropdown{
+.navbar-dropdown {
   background-color: $header-bg;
 }
 
-.navbar-burger{
+.navbar-burger {
   color: $header-fg;
 }
 
 .navbar {
-  
   .navbar-brand {
     background: $header-bg;
     .navbar-item {
       padding: 0.35rem 1rem;
-      
+
       .logo {
         margin-top: 2px; // offset logo
         max-height: $header-height;
@@ -113,3 +111,15 @@ hr {
   }
 }
 
+.message-body {
+  p {
+    text-align: justify;
+  }
+  p:not(:last-child) {
+    padding-bottom: 0.5rem;
+  }
+}
+
+article {
+  margin-bottom: 1rem;
+}

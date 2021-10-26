@@ -7,21 +7,20 @@
 {% block body_class %}faq-index{% endblock %}
 
 {% block content %}
-<h1 class="title">FAQ</h1>
-<div class="intro">
-  <p>Bienvenido a nuestra sección de respuestas a preguntas frecuentes</p>
-</div>
 
-{% for faq in faqs %}
-    <article class="anchor" id="{{ faq.question|slugify }}">
-        <div class="message-header dyn-anchor-heading">
-            {{ faq.question }}
-            <a class="dyn-anchor-link" href="#{{ faq.question|slugify }}"><i class="fas fa-link"></i></a>
-        </div>
-        <div class="faq-answer">
-            <p>{{ faq.answer|as_markdown }}</p>
-        </div>
-    </article>
-{% endfor %}
+<div class="content box">
+    <h1 class="title">FAQ</h1>
+    {% for faq in faqs %}
+        <article class="anchor" id="{{ faq.question|slugify }}">
+            <div class="message-header dyn-anchor-heading">
+                {{ faq.question }}
+                <a class="dyn-anchor-link" href="#{{ faq.question|slugify }}"><i class="fas fa-link"></i></a>
+            </div>
+            <div class="message-body">
+                {{ faq.answer|as_markdown }}
+            </div>
+        </article>
+    {% endfor %}
+</div>
 
 {% endblock content %}
