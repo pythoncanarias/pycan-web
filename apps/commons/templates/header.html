@@ -25,6 +25,7 @@
               <a class="navbar-item {% is_active 'about:history' %}" href="{% url 'about:history' %}">Historia</a>
               <a class="navbar-item {% is_active 'about:join' %}" href="{% url 'about:join' %}">¡Únete!</a>
               <a class="navbar-item {% is_active 'about:allies' %}" href="{% url 'about:allies' %}">Aliados</a>
+              <a class="navbar-item {% is_active 'about:faq' %}" href="{% url 'about:faq' %}">FAQ</a>
           </div>
       </div>
       <div class="navbar-item has-dropdown is-hoverable">
@@ -37,7 +38,7 @@
             <a class="navbar-item {% is_active 'events:past_events' %}" href="{% url 'events:past_events' %}">Eventos pasados</a>
             </div>
       </div>
-     
+
       <a class="navbar-item {% is_active 'jobs:index' %}" href="{% url 'jobs:index' %}">
           <i class="fas fa-laptop-code"></i>
           Empleo

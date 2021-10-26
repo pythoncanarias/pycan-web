@@ -40,7 +40,7 @@ body {
     }
   }
 
-  @include from($desktop){
+  @include from($desktop) {
     padding: 2rem 0rem 5rem 0rem;
   }
 
@@ -53,7 +53,6 @@ body {
   }
 }
 
- 
 .footer-page {
   background-color: $footer-bg;
   position: relative;
@@ -71,14 +70,12 @@ body {
   .footer-column {
     color: #ebebeb;
     padding-top: 2rem;
-  
   }
 
   h1,
   h2 {
     color: whitesmoke;
   }
-
 }
 
 /* Error class for Django Forms https://bit.ly/3vidyK2 */
@@ -96,7 +93,6 @@ body {
   width: 100%;
   z-index: 1;
 
-
   & .notification {
     width: $notification-width;
     margin-left: auto;
@@ -106,7 +102,7 @@ body {
   }
 }
 .message {
-  scroll-margin-top:  $header-height + 1rem;
+  scroll-margin-top: $header-height + 1rem;
 }
 
 .container {

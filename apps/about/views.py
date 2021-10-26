@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 
 from apps.members.models import Position
 
-from .models import Ally
+from .models import Ally, FAQItem
 
 logger = logging.getLogger(__name__)
 
@@ -35,3 +35,8 @@ def history(request):
 def allies(request):
     allies = Ally.objects.all()
     return render(request, 'about/allies.html', {'allies': allies})
+
+
+def faq_list(request):
+    faqs = FAQItem.objects.order_by('id')
+    return render(request, 'about/faq_list.html', {'faqs': faqs})
