@@ -4,6 +4,7 @@ from pathlib import Path
 from django.conf import settings
 from django.core.files.uploadedfile import UploadedFile
 from django.core.management.base import BaseCommand
+from apps.about.models import Ally
 
 from apps.locations.models import Venue
 from apps.organizations.models import Organization
@@ -52,6 +53,37 @@ def add_own_organization():
     ).save()
 
 
+def add_allies():
+    """
+    Add the Python Canarias allies, in order to work with this section
+    """
+    print("Adding allies")
+
+    photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/adalovedev.jpg'
+    with photo_path.open('rb') as fin:
+        photo = UploadedFile(fin, name=photo_path.name)
+        Ally(
+            name='AdaLoveDev',
+            description='Somos una comunidad sin ánimo de lucro cuyo objetivo es dar visibilidad y empoderamiento a las mujeres en el sector tecnológico',
+            logo=photo,
+            url='https://adalovedev.es/',
+            twitter='https://twitter.com/adalovedev',
+            email='organization@adalovedev.es',
+        ).save()
+
+    photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/python-es.png'
+    with photo_path.open('rb') as fin:
+        photo = UploadedFile(fin, name=photo_path.name)
+        Ally(
+            name='Python España',
+            description='Asociación Python España. Trabajando para promover y visibilizar el uso del lenguaje de programación Python en nuestro país',
+            logo=photo,
+            url='https://www.es.python.org/',
+            twitter='https://twitter.com/python_es',
+            email=' contacto@es.python.org',
+        ).save()
+
+
 def add_events():
     """
     Add a sample value and event so we get some content in the events page
@@ -98,3 +130,4 @@ class Command(BaseCommand):
         add_own_organization()
         add_quotes()
         add_events()
+        add_allies()

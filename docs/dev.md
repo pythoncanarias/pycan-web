@@ -9,6 +9,7 @@ Este proyecto tiene requisitos variados que hacen altamente recomendable configu
    ```console
    $ docker-compose up  # Deja esto ejecutando y abre una nueva pestaña
    ```
+   > Si obtienes un error de tipo _"Version is unsupported"_ debes tener en cuenta [esta documentación sobre versiones del fichero compose](https://docs.docker.com/compose/compose-file/compose-versioning/).
 3. Ejecuta las migraciones de la base de datos:
    ```console
    $ docker-compose exec web ./manage.py migrate

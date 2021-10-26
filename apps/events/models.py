@@ -79,6 +79,19 @@ class Event(models.Model):
     def slug(self):
         return self.hashtag.lower()
 
+    def end_datetime(self):
+        try:
+            return self.schedule.order_by('end').last().end
+        except AttributeError:
+            end_time = datetime.time(
+                23, 59, 59, tzinfo=timezone.get_current_timezone())
+            return datetime.datetime.combine(self.start_date, end_time)
+
+    def get_google_calendar_url(self):
+        start_datetime = self.start_datetime().strftime('%Y%m%dT%H%M%S%Z')
+        end_datetime = self.end_datetime().strftime('%Y%m%dT%H%M%S%Z')
+        return f"https://www.google.com/calendar/render?action=TEMPLATE&text={self.name}&details={self.description}&location={self.venue}&dates={start_datetime}%2F{end_datetime}"
+
     @classmethod
     def get_by_slug(cls, slug):
         return cls.objects.get(hashtag__iexact=slug)
