@@ -11,3 +11,6 @@ class AllyAdmin(admin.ModelAdmin):
         'twitter',
         'email',
     )
+
+
+admin.site.register(models.FAQItem)

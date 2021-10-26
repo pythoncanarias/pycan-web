@@ -19,7 +19,7 @@
     </div>
   </div>
   {% for job in jobs %}
-  <div class="card" id="job{{ job.id }}">
+  <div class="card anchor" id="job{{ job.id }}">
     <div class="card-header job-title">
       <a href="#job{{ job.id }}" class="subtitle card-header-title is-centered has-text-white">
         {{ job }} ({{ job.created|date:"d/m/Y" }})

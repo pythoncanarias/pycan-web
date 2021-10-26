@@ -13,6 +13,13 @@
     }
   }
 }
+
 .anchor {
-  scroll-margin-top:  $header-height + 1rem;
+  scroll-margin-top: $header-height + 1rem;
+}
+
+.message-header {
+  .dyn-anchor-link i:hover {
+    color: tomato;
+  }
 }

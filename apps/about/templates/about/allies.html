@@ -14,8 +14,9 @@
 Canarias es un territorio muy prolífico en el campo de las nuevas tecnologías. Las organizaciones y asociaciones de este sector constituyen un punto de entrada para muchos usuarios y usuarias. Aquello de que la unión hace la fuerza es un principio que seguimos desde Python Canarias. Si bien apostamos, como era de esperar, por nuestro lenguaje de programación favorito, somos una comunidad abierta y nos encanta construir sinergias con otros grupos. Aquí les dejamos un listado de nuestros <b>aliados</b>:
 </p>
 
+
 {% for ally in allies %}
-  <div class="ally-block" id="{{ ally.name|slugify }}">
+  <div class="ally-block anchor" id="{{ ally.name|slugify }}">
     <h2 class="dyn-anchor-heading">
       {% if ally.logo %}
       <img class="logo" src="{{ ally.logo.url }}">
