@@ -1,5 +1,7 @@
 {% extends "about/base.html" %}
 
+{% load utils %}
+
 {% block title %}Asociación - {{ block.super }}{% endblock %}
 
 {% block body_class %}faq-index{% endblock %}
@@ -17,7 +19,7 @@
             <a class="dyn-anchor-link" href="#{{ faq.question|slugify }}"><i class="fas fa-link"></i></a>
         </div>
         <div class="faq-answer">
-            <p>{{ faq.answer|linebreaksbr }}</p>
+            <p>{{ faq.answer|as_markdown }}</p>
         </div>
     </article>
 {% endfor %}
