@@ -19,6 +19,8 @@ Canarias es un territorio muy prolífico en el campo de las nuevas tecnologías.
     <h2 class="dyn-anchor-heading">
       {% if ally.logo %}
       <img class="logo" src="{{ ally.logo.url }}">
+      {% else %}
+      <img class="logo" src="{{ assets | get_asset_key:'about/img/ally-placeholder.png' }}">
       {% endif %}
       {{ ally.name }}
       <a class="dyn-anchor-link" href="#{{ ally.name|slugify }}"><i class="fas fa-link"></i></a>
