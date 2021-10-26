@@ -1,4 +1,4 @@
-{% extends "faq/base.html" %}
+{% extends "about/base.html" %}
 
 {% block title %}Asociación - {{ block.super }}{% endblock %}
 
@@ -13,9 +13,8 @@
 {% for faq in faqs %}
     <article class="faq" id="faq{{ faq.id }}">
         <div class="message-header dyn-anchor-heading">
-            <a id="#faq{{ faq.id }}">
-                Q: {{ faq.question }}
-            </a>
+            {{ faq.question }}
+            <a class="dyn-anchor-link" href="#faq{{ faq.id }}"><i class="fas fa-link"></i></a>
         </div>
         <div class="faq-answer">
             <p>{{ faq.answer|linebreaksbr }}</p>

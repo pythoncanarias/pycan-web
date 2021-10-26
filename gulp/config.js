@@ -20,7 +20,6 @@ const APPS = [
   "legal",
   "members",
   "jobs",
-  "faq",
 ];
 
 const NODE_MODULES_DIR = getNodeModulesPathFrom('@fortawesome/fontawesome-free');
