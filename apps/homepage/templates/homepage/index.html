@@ -37,12 +37,18 @@
 
         <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias" />
 
-      {% if quote %}
         <div class="quote is-centered">
-          <p><i class="fas fa-quote-left"></i> {{ quote.text }} <i class="fas fa-quote-right"></i></p>
-          <p>&mdash; {{ quote.author }}</p>
+            <p>
+              <i class="fas fa-quote-left"></i>
+                <span id="quote-text">
+                </span>
+              <i class="fas fa-quote-right"></i>
+            </p>
+          <p>&mdash;
+            <span id="quote-author">
+            </span>
+          </p>
         </div>
-      {% endif %}
 
         <div class="links buttons is-centered">
           <a href="{% url 'about:index' %}" class="link button is-primary is-medium is-outlined">Entrar</a>
@@ -95,3 +101,51 @@
   </div>
 </body>
 </html>
+
+{% block scripts %}
+<script type="text/javascript">
+  // Show the first quote
+  f_quote();
+
+  // Change quote every RANDOM_QUOTE
+  var interval = setInterval(function() { f_quote(); }, {{ random_quote_interval }});
+
+  // Retrieve random quote using the api
+  function f_quote() {
+    // Get random quote url
+    var a = "{% url 'api:random_quote' %}"
+    // Get the text and author span id
+    var text = document.getElementById("quote-text");
+    var author = document.getElementById("quote-author");
+    // Load random quote and convert to JSON
+    result = loadXMLDoc(a);
+    result_json = JSON.parse(result)
+    // Set the text and author spans
+    text.textContent = result_json.result.text;
+    author.textContent = result_json.result.author;
+  }
+
+  function loadXMLDoc(theURL)
+    {
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari, SeaMonkey
+            xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                result = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", theURL, false);
+        xmlhttp.send();
+
+        return result;
+    }
+</script>
+{% endblock %}
