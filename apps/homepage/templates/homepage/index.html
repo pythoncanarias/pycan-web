@@ -113,19 +113,19 @@
   // Retrieve random quote using the api
   function f_quote() {
     // Get random quote url
-    var a = "{% url 'api:random_quote' %}"
+    var url_api = "{% url 'api:random_quote' %}"
     // Get the text and author span id
     var text = document.getElementById("quote-text");
     var author = document.getElementById("quote-author");
     // Load random quote and convert to JSON
-    result = loadXMLDoc(a);
+    result = loadXMLDoc(url_api);
     result_json = JSON.parse(result)
     // Set the text and author spans
     text.textContent = result_json.result.text;
     author.textContent = result_json.result.author;
   }
 
-  function loadXMLDoc(theURL)
+  function loadXMLDoc(url_api)
     {
         if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari, SeaMonkey
@@ -142,7 +142,7 @@
                 result = xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET", theURL, false);
+        xmlhttp.open("GET", url_api, false);
         xmlhttp.send();
 
         return result;
