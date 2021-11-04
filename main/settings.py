@@ -331,8 +331,10 @@ TWITTER_API_SECRET_KEY = config('TWITTER_API_SECRET_KEY')
 TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN')
 TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')
 
-# Random quote interval
-RANDOM_QUOTE_INTERVAL = config('RANDOM_QUOTE_INTERVAL', default=60000, cast=int)
+# Random quote interval (seconds)
+RANDOM_QUOTE_INTERVAL = config(
+    'RANDOM_QUOTE_INTERVAL', default=10, cast=lambda i: 1000 * i
+)
 
 if DEBUG:
     MESSAGE_LEVEL = message_constants.DEBUG
