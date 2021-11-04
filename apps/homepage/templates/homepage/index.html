@@ -37,12 +37,18 @@
 
         <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias" />
 
-      {% if quote %}
-        <div class="quote is-centered">
-          <p><i class="fas fa-quote-left"></i> {{ quote.text }} <i class="fas fa-quote-right"></i></p>
-          <p>&mdash; {{ quote.author }}</p>
+        <div id="quote-block" class="quote is-centered">
+            <p>
+              <i class="fas fa-quote-left"></i>
+                <span id="quote-text">
+                </span>
+              <i class="fas fa-quote-right"></i>
+            </p>
+          <p>&mdash;
+            <span id="quote-author">
+            </span>
+          </p>
         </div>
-      {% endif %}
 
         <div class="links buttons is-centered">
           <a href="{% url 'about:index' %}" class="link button is-primary is-medium is-outlined">Entrar</a>
@@ -93,5 +99,13 @@
       </div>
     </div>
   </div>
+
+  <!-- Live random quotes managed through JS -->
+  <script>
+    const random_quote_interval = "{{ random_quote_interval }}";
+    const quotes_api_url = "{% url 'api:random_quote' %}";
+  </script>
+  <script src="{{ assets|get_asset_key:'homepage/custom.min.js' }}"></script>
+
 </body>
 </html>
