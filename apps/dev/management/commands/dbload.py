@@ -4,8 +4,8 @@ from pathlib import Path
 from django.conf import settings
 from django.core.files.uploadedfile import UploadedFile
 from django.core.management.base import BaseCommand
-from apps.about.models import Ally
 
+from apps.about.models import Ally, FAQItem
 from apps.locations.models import Venue
 from apps.organizations.models import Organization
 from apps.quotes.models import Author
@@ -64,7 +64,9 @@ def add_allies():
         photo = UploadedFile(fin, name=photo_path.name)
         Ally(
             name='AdaLoveDev',
-            description='Somos una comunidad sin ánimo de lucro cuyo objetivo es dar visibilidad y empoderamiento a las mujeres en el sector tecnológico',
+            description='Somos una comunidad sin ánimo de lucro cuyo objetivo'
+            'es dar visibilidad y empoderamiento a las mujeres en el sector'
+            'tecnológico',
             logo=photo,
             url='https://adalovedev.es/',
             twitter='https://twitter.com/adalovedev',
@@ -76,7 +78,9 @@ def add_allies():
         photo = UploadedFile(fin, name=photo_path.name)
         Ally(
             name='Python España',
-            description='Asociación Python España. Trabajando para promover y visibilizar el uso del lenguaje de programación Python en nuestro país',
+            description='Asociación Python España. Trabajando para promover y'
+            'visibilizar el uso del lenguaje de programación Python en nuestro'
+            'país',
             logo=photo,
             url='https://www.es.python.org/',
             twitter='https://twitter.com/python_es',
@@ -114,9 +118,30 @@ def add_events():
         start_date=datetime.date(2023, 9, 23),
         default_slot_duration=datetime.timedelta(minutes=50),
         short_description='Charlas informales de Python',
-        description='Bocadillos, vino, y Python, todo opcional menos lo último.',
+        description='Bocadillos, vino y Python, todo opcional menos lo último',
         closed_schedule=False,
     )
+
+
+def add_faq_items():
+    print('Adding sample faq item about Python')
+    FAQItem(
+        question='¿Qué es Python?',
+        answer='''Python es un lenguaje de programación interpretado cuya
+filosofía hace hincapié en la legibilidad de su código. Se trata de
+un lenguaje de programación multiparadigma, ya que soporta parcialmente la
+orientación a objetos, programación imperativa y, en menor medida,
+programación funcional. Es un lenguaje interpretado, dinámico y
+multiplataforma.''',
+    ).save()
+
+    print('Adding sample faq item about Python benefits')
+    FAQItem(
+        question='¿Es Python un buen lenguaje para empezar a programar?',
+        answer='''Sí. Python tiene una sintaxis simple y consistente, dispone
+de una librería estándar muy completa. Al ser multiparadigma sirve de
+introducción para programación orientada a objetos, funcional y procedural.''',
+    ).save()
 
 
 class Command(BaseCommand):
@@ -131,3 +156,4 @@ class Command(BaseCommand):
         add_quotes()
         add_events()
         add_allies()
+        add_faq_items()

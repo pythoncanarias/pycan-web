@@ -28,7 +28,7 @@ $ docker-compose exec -T database /bin/bash -c \
 'PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_USER -d $POSTGRES_DB' < /path/to/db_dump.sql
 ```
 
-> Para reproducir este último paso más adelante, asegúrate primero de borrar el volumen de la base datos con: `docker volume rm pycan-web_database-data`.
+> Para reproducir este último paso más adelante, asegúrate primero de borrar el volumen de la base datos con: `docker volume rm pycan-web_database-data` que sólo podrás hacer parando los contendores previamente.
 
 ---
 
@@ -48,6 +48,12 @@ Puedes acceder a la interfaz administrativa de Django yendo a http://localhost:8
 ### Multimedia
 
 Si dispones de ficheros multimedia para testing o como copias de producción, puedes dejarlos en el directorio `$PROJECT/media`. Hay un volumen de Docker Compose configurado para cargarlos desde ahí.
+
+Si queremos sincronizar desde producción, podemos ejecutar lo siguiente desde la carpeta raíz del proyecto en desarrollo:
+
+```console
+rsync -avz --delete prod-server:/path/to/media .
+```
 
 ## VSCode y Docker
 
