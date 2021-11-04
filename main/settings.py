@@ -333,7 +333,7 @@ TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')
 
 # Random quote interval (seconds)
 RANDOM_QUOTE_INTERVAL = config(
-    'RANDOM_QUOTE_INTERVAL', default=10, cast=lambda i: 1000 * i
+    'RANDOM_QUOTE_INTERVAL', default=10, cast=lambda i: 1000 * int(i)
 )
 
 if DEBUG:
