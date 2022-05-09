@@ -535,3 +535,18 @@ class Trade(models.Model):
         if not self.finished and time_utils.now() > self.finish_at:
             self.finish(sucessful=False)
         return self.finished
+
+
+
+class Proposal(models.Model):
+    event = models.ForeignKey(
+        Event,
+        related_name='proposals',
+        on_delete=models.PROTECT,
+    )
+    name = models.CharField(max_length=256)
+    surname = models.CharField(max_length=256)
+    email = models.EmailField(blank=True)
+    title = models.CharField(max_length=340)
+    description = models.TextField(blank=True)
+    presented_at = models.DateTimeField(auto_now=True)
