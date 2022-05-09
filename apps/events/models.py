@@ -40,34 +40,58 @@ class Event(models.Model):
     default_slot_duration = models.DurationField(default=50 * 60)
     short_description = models.TextField(
         blank=True,
-        help_text='Shown in events\' list'
+        help_text="Shown in events list",
     )
     description = models.TextField(
         blank=True,
-        help_text='Shown in main page of event (markdown allowed)'
+        help_text="Shown in main page of event (markdown allowed)",
     )
     cover = models.ImageField(
         upload_to='events/event/',
         blank=True,
-        help_text='Should be squared (250x250 max). Shown in events\' list'
+        help_text="Should be squared (250x250 max). Shown in events list.",
     )
     poster = models.FileField(
         upload_to='events/event/',
-        blank=True
+        blank=True,
     )
     sponsorship_brochure = models.FileField(
         upload_to='events/event/',
-        blank=True
+        blank=True,
     )
     hero = models.ImageField(
         upload_to='events/event/',
         blank=True,
-        help_text='Enough 1200px wide. Shown shaded in main page of event'
+        help_text="Enough 1200px wide. Shown shaded in main page of event",
     )
     external_tickets_url = models.URLField(
         blank=True,
-        help_text='Should be filled if tickets are sold outside our site')
+        help_text="Should be filled if tickets are sold outside our site",
+    )
     closed_schedule = models.BooleanField(default=False)
+    # Call for papers fields
+    cfp_start_at = models.DateTimeField(
+        blank=True,
+        default=None,
+        null=True,
+        help_text="First day of Call for Papers period",
+    )
+    cfp_stop_at = models.DateTimeField(
+        blank=True,
+        default=None,
+        null=True,
+        help_text="End of Call for Papers period (This day is not included)",
+        )
+
+    def call_for_paper_is_open(self) -> bool:
+        """Returns True if it is possible to present a proposal for the event.
+        """
+        if self.cfp_start_at is None:
+            return False
+        now = timezone.now()
+        if self.cfp_stop_at is None:
+            return self.cfp_start_at <= now
+        return self.cfp_start_at <= now < self.cfp_stop_at
 
     def __str__(self):
         return self.name

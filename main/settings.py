@@ -197,10 +197,11 @@ MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, '.media'))
 SITE_ID = 1
 
 # Do not remove this!
-# The value in ASSOCIATION_NAME must match with an entry on:
+# The value in `ORGANIZATION_NAME` must match with an entry on:
 # organization.models.Organization
 # See code: organization.models.Organization.load_main_organization()
-ASSOCIATION_NAME = config('ASSOCIATION_NAME', default='Python Canarias')
+
+ORGANIZATION_NAME = config('ORGANIZATION_NAME', default='Python Canarias')
 
 # Leaflet settings
 
@@ -322,8 +323,6 @@ RQ_QUEUES = {
 }
 
 CURRENT_API_VERSION = 1
-
-ORGANIZATION_NAME = 'Python Canarias'
 
 # Twitter API
 TWITTER_API_KEY = config('TWITTER_API_KEY')
