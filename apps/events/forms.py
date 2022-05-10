@@ -2,9 +2,23 @@ import logging
 
 from django import forms
 
-from .models import Refund
+from .models import Refund, Proposal
 
 UUID_LAST_DIGITS = 12
+
+
+class ProposalForm(forms.ModelForm):
+
+    class Meta:
+        model = Proposal
+        fields = [
+            'event',
+            'name',
+            'surname',
+            'email',
+            'title',
+            'description',
+        ]
 
 
 class EmailForm(forms.Form):

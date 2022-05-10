@@ -1,0 +1,14 @@
+{% extends "events/base.html" %}
+
+{% load static utils crispy_forms_tags %}
+
+{% block title %}Call For Papers - {{ evento }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+
+<form method="post" class="uniForm">
+    {{ form|crispy }}
+</form>
+
+{% endblock content %}

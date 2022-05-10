@@ -13,6 +13,7 @@ from apps.tickets.models import Article, Gift, Raffle, Ticket
 from . import forms, links, stripe_utils
 from .models import Event, Refund, WaitingList
 from .tasks import send_ticket
+from .forms import ProposalForm
 
 logger = logging.getLogger(__name__)
 
@@ -54,6 +55,18 @@ def detail_event(request, slug):
         'events/event.html',
         {'event': event, 'past_events': past_events},
     )
+
+
+def call_for_papers(request, event):
+    if request.method == 'POST':
+        form = ProposalForm(request.POST)
+    else:
+        form = ProposalForm()
+    return render(request, 'events/call-for-papers.html', {
+        'tille': f"Call for papers / {event}",
+        'event': event,
+        'form': form,
+    })
 
 
 def waiting_list(request, slug):

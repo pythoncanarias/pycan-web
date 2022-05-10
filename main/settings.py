@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'django_rq',
     'colorfield',
     'leaflet',
+    'crispy_forms',
     'import_export',
     'apps.commons',
     'apps.homepage',
@@ -325,10 +326,10 @@ RQ_QUEUES = {
 CURRENT_API_VERSION = 1
 
 # Twitter API
-TWITTER_API_KEY = config('TWITTER_API_KEY')
-TWITTER_API_SECRET_KEY = config('TWITTER_API_SECRET_KEY')
-TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN')
-TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')
+TWITTER_API_KEY = config('TWITTER_API_KEY', default='<Your Twitter API KEY here>')
+TWITTER_API_SECRET_KEY = config('TWITTER_API_SECRET_KEY', default='<Your Twitter API SECRET here>')
+TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN', default='<Your Twitter ACCESS TOKEN here>')
+TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET', default='<Your Twitter ACCESS SECRET here>')
 
 # Random quote interval (seconds)
 RANDOM_QUOTE_INTERVAL = config(
