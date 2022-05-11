@@ -1,0 +1,19 @@
+{% extends "events/base.html" %}
+
+{% load static utils %}
+
+{% block title %}Call For Papers - {{ evento }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <h1>Call for papers</h1>
+  <h2>
+    {{ event.name }}
+  </h2>
+  <p><strong>Gracias por enviar tu propuesta de charla.</strong></p>
+
+  <p>Recuerda que toda la información relativa al evento la podrás encontrar <a href="{% url 'events:detail_event' slug=event.slug %}">en este enlace</a>.</p>
+</div>
+
+{% endblock content %}

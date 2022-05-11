@@ -1,12 +1,13 @@
 {% extends "events/base.html" %}
 
-{% load static utils crispy_forms_tags %}
+{% load static utils %}
 
 {% block title %}Call For Papers - {{ evento }} - {{ block.super }}{% endblock %}
 
 {% block content %}
 
 <div class="content">
+  <h1>Call for papers</h1>
   <h2>
     {{ event.name }}
   </h2>
@@ -15,7 +16,9 @@
 
 <form action="./" method="post" class="uniForm">
   {% csrf_token %}
-    {{ form|crispy }}
+    <table class="table">
+        {{ form.as_table }}
+    </table>
   <p>
   <input type="submit" value="Enviar propuesta" name="ok" id="pb_submit"/>
   </p>

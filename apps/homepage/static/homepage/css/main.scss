@@ -12,6 +12,16 @@
     display: flex;
     align-items: center;
 
+    .event-launcher {
+      a.event-target:hover {
+        color: #cdcdcd;
+      }
+      background: #ffffff1a;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      margin-bottom: .5rem
+    }
+
     .logo {
       max-width: 29rem;
       width: 100%;

@@ -60,24 +60,29 @@ def call_for_papers(request, event):
         form = ProposalForm(event, request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse("events:thanks"))
+            return redirect(reverse("events:thanks", kwargs={"event": event}))
     else:
         form = ProposalForm(event)
     return render(
         request,
         "events/call-for-papers.html",
         {
-            "tille": f"Call for papers / {event}",
+            "title": f"Call for papers / {event}",
             "event": event,
             "form": form,
         },
     )
 
 
-def proposal_received(request):
-    from django.http import HttpResponse
-
-    return HttpResponse(" no implementado", content_type="text/plain")
+def proposal_received(request, event):
+    return render(
+        request,
+        "events/cfp-thanks.html",
+        {
+            "title": f"Gracias por su propuesta / {event}",
+            "event": event,
+        },
+    )
 
 
 def waiting_list(request, slug):

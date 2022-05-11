@@ -21,6 +21,21 @@ class ProposalForm(forms.ModelForm):
 
     def __init__(self, event, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["name"].widget.attrs.update({'id': 'cfp-name', 'size': '20',
+                                                 'placeholder': 'Tu nombre'})
+        self.fields["surname"].widget.attrs.update({'id': 'cfp-surname', 'size': '40',
+                                                     'placeholder': 'Tus apellidos'})
+        self.fields["email"].widget.attrs.update({
+            'id': 'cfp-email',
+            'size': '40',
+            'placeholder': 'Tu email'
+        })
+        self.fields["title"].widget.attrs.update({
+            'id': 'cfp-title',
+            'size': '60',
+            'placeholder': 'El título de tu maravillosa charla'})
+        self.fields["description"].widget.attrs.update({'id': 'cfp-title',
+            'cols': '60', 'rows': '20'})
         self.event = event
 
     def save(self):

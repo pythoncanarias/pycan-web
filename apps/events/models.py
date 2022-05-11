@@ -545,11 +545,13 @@ class Proposal(models.Model):
         related_name='proposals',
         on_delete=models.PROTECT,
     )
-    name = models.CharField(max_length=256)
-    surname = models.CharField(max_length=256)
-    email = models.EmailField(blank=True)
-    title = models.CharField(max_length=340)
-    description = models.TextField(blank=True)
+    name = models.CharField(max_length=256, verbose_name='Nombre')
+    surname = models.CharField(max_length=256, verbose_name='Apellidos')
+    email = models.EmailField(blank=True, verbose_name='Email')
+    title = models.CharField(max_length=340, verbose_name='Título')
+    description = models.TextField(blank=True,
+            verbose_name='Descripción',
+            help_text="Cuéntamos en dos o tres párrafos tu propuesta de charla.")
     presented_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

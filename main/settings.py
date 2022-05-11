@@ -61,7 +61,6 @@ INSTALLED_APPS = [
     'django_rq',
     'colorfield',
     'leaflet',
-    'crispy_forms',
     'import_export',
     'apps.commons',
     'apps.homepage',
