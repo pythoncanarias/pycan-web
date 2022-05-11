@@ -54,7 +54,7 @@
           <a href="{% url 'about:index' %}" class="link button is-primary is-medium is-outlined">Entrar</a>
         </div>
 
-        <h4 class="blog-message">Para más noticias, pásate por nuestro
+        <h4 class="content blog-message">Para más noticias, pásate por nuestro
           <a href="https://medium.com/pythoncanarias" target="_blank" class="blog-link">
             blog
             <span class="icon">
@@ -62,6 +62,26 @@
             </span>
           </a>
         </h4>
+
+        {% if active_events.count > 0 %}
+          <div class="content is-centered">
+            {% for event in active_events.all %}
+            <h2><a href="{% url 'events:detail_event' slug=event.slug %}">
+                {{ event.name }}
+              </a></h2>
+              {% if event.call_for_paper_is_open %}
+              <p class="lead">
+              ¡El <i>Call for papers</i> de este evento esta abierto!
+              </p>
+              <p class="lead">
+              <a class="button is-warning" href="{% url 'events:cfp' event=event %}">
+              Envianos tu propuesta
+              </a>
+              </p>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
 
         <div class="social buttons is-centered">
           <a href="https://twitter.com/pythoncanarias" target="_blank" class="button is-medium">

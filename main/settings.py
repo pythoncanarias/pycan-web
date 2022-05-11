@@ -204,6 +204,8 @@ SITE_ID = 1
 
 ORGANIZATION_NAME = config('ORGANIZATION_NAME', default='Python Canarias')
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Leaflet settings
 
 LEAFLET_CONFIG = {
@@ -326,10 +328,22 @@ RQ_QUEUES = {
 CURRENT_API_VERSION = 1
 
 # Twitter API
-TWITTER_API_KEY = config('TWITTER_API_KEY', default='<Your Twitter API KEY here>')
-TWITTER_API_SECRET_KEY = config('TWITTER_API_SECRET_KEY', default='<Your Twitter API SECRET here>')
-TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN', default='<Your Twitter ACCESS TOKEN here>')
-TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET', default='<Your Twitter ACCESS SECRET here>')
+TWITTER_API_KEY = config(
+    'TWITTER_API_KEY',
+    default='<Your Twitter API KEY here>',
+)
+TWITTER_API_SECRET_KEY = config(
+    'TWITTER_API_SECRET_KEY',
+    default='<Your Twitter API SECRET here>',
+)
+TWITTER_ACCESS_TOKEN = config(
+    'TWITTER_ACCESS_TOKEN',
+    default='<Your Twitter ACCESS TOKEN here>',
+)
+TWITTER_ACCESS_TOKEN_SECRET = config(
+    'TWITTER_ACCESS_TOKEN_SECRET',
+    default='<Your Twitter ACCESS SECRET here>',
+)
 
 # Random quote interval (seconds)
 RANDOM_QUOTE_INTERVAL = config(

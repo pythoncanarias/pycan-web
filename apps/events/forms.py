@@ -12,13 +12,22 @@ class ProposalForm(forms.ModelForm):
     class Meta:
         model = Proposal
         fields = [
-            'event',
             'name',
             'surname',
             'email',
             'title',
             'description',
         ]
+
+    def __init__(self, event, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.event = event
+
+    def save(self):
+        proposal = super().save(commit=False)
+        proposal.event = self.event
+        proposal.save()
+        return proposal
 
 
 class EmailForm(forms.Form):

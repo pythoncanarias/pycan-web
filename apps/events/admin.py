@@ -1,14 +1,21 @@
 from django.contrib import admin, messages
 
-from .models import Badge, Event, Refund, WaitingList
+from .models import (
+    Badge,
+    Event,
+    Proposal,
+    Refund,
+    WaitingList,
+)
 
 
 def render_event_badges(modeladmin, request, queryset):
     prints = []
     for event in queryset:
         prints.append(request.get_host() + event.render_all_badges())
-    messages.add_message(request, messages.INFO,
-                         f"Generated PDFs in -> {' '.join(prints)} ")
+    messages.add_message(
+        request, messages.INFO, f"Generated PDFs in -> {' '.join(prints)} "
+    )
 
 
 render_event_badges.short_description = "Generate a PDF with all the badges"
@@ -21,42 +28,57 @@ class BadgeInline(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    date_hierarchy = 'start_date'
+    date_hierarchy = "start_date"
     list_filter = [
-        'active',
-        'venue',
-        'closed_schedule',
-        ]
-    prepopulated_fields = {'hashtag': ('name', ), }
+        "active",
+        "venue",
+        "closed_schedule",
+    ]
+    prepopulated_fields = {
+        "hashtag": ("name",),
+    }
     actions = [render_event_badges]
-    list_display = ('name', 'hashtag', 'active',
-                    'opened_ticket_sales', 'start_date')
+    list_display = ("name", "hashtag", "active", "opened_ticket_sales", "start_date")
 
 
 @admin.register(WaitingList)
 class WaitingListAdmin(admin.ModelAdmin):
     list_display = (
-        'full_name',
-        'email',
-        'phone',
-        'created_at',
-        'fixed_at',
-        'buy_code',
-        )
+        "full_name",
+        "email",
+        "phone",
+        "created_at",
+        "fixed_at",
+        "buy_code",
+    )
 
     def full_name(self, obj):
-        return '{}, {}'.format(
+        return "{}, {}".format(
             obj.surname,
             obj.name,
-            )
+        )
 
 
 @admin.register(Refund)
 class RefundAdmin(admin.ModelAdmin):
     list_display = (
-        'pk',
-        'ticket',
-        'event',
-        'created_at',
-        'fixed_at',
-        )
+        "pk",
+        "ticket",
+        "event",
+        "created_at",
+        "fixed_at",
+    )
+
+
+@admin.register(Proposal)
+class ProposalAdmin(admin.ModelAdmin):
+    list_display = (
+        "pk",
+        "name",
+        "surname",
+        "email",
+        "title",
+    )
+    list_filter = [
+        "event",
+    ]

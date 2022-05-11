@@ -22,6 +22,10 @@ from . import time_utils
 
 
 class Event(models.Model):
+
+    class Meta:
+        ordering = ['-start_date']
+
     name = models.CharField(max_length=256)
     hashtag = models.SlugField(unique=True)
     active = models.BooleanField(
@@ -95,9 +99,6 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        ordering = ['start_date']
 
     @property
     def slug(self):
@@ -550,3 +551,6 @@ class Proposal(models.Model):
     title = models.CharField(max_length=340)
     description = models.TextField(blank=True)
     presented_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.title} por {self.name} {self.surname}"

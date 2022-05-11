@@ -1,8 +1,8 @@
 {% extends "events/base.html" %}
 
 {% load static %}
-{% load utils %}
 {% load leaflet_tags %}
+{% load utils %}
 
 {% block title %}{{event.name}} - {{ block.super }}{% endblock %}
 
@@ -60,6 +60,20 @@
       {{ event.qualified_hashtag }}
     </a>
   </nav>
+
+{% if event.call_for_paper_is_open %}
+  <section class="hero is-success">
+    <div class="hero-body">
+    <p class="title">¡El <i>Call for papers</i> de este evento esta abierto!</p>
+    <p class="subtitle">
+      <a class="button is-warning" href="{% url 'events:cfp' event=event %}">
+      Envianos tu propuesta
+      </a>
+    </p>
+    </div>
+  </section>
+{% endif %}
+
 
 
   <section class="section what-is has-background-white">
@@ -185,7 +199,7 @@
                 </address>
               {% endif %}
               <hr/>
-              <p class="venue-description">{{ event.venue.description }}</p>
+              <p class="venue-description">{{ event.venue.description|as_markdown }}</p>
               {% if event.venue.photo %}
                 <hr/>
                 <a href="{{ event.venue.photo.url }}"><img class="venue-photo" src="{{ event.venue.photo.url }}" alt="Fotografía de la localización"></a>

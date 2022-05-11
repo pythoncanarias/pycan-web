@@ -2,7 +2,7 @@
     <div class="column {{ klass|default:"is-half" }}">
       <div class="box event-item">
        <article class="media">
-           
+
         {% if event.cover %}
           <div class="media-left">
             <figure class="image is-64x64">
@@ -27,10 +27,10 @@
                 <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
               </div>
             {% endif %}
-          <p class="event-short-description">
-            {{ event.short_description }}
-          </p>
+          <div class="event-short-description m-4">
+            {{ event.short_description|as_markdown }}
+          </div>
         </div>
        </article>
-     </div> 
+     </div>
     </div>

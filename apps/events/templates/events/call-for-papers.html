@@ -6,9 +6,19 @@
 
 {% block content %}
 
+<div class="content">
+  <h2>
+    {{ event.name }}
+  </h2>
+  {{ event.short_description|as_markdown }}
+</div>
 
-<form method="post" class="uniForm">
+<form action="./" method="post" class="uniForm">
+  {% csrf_token %}
     {{ form|crispy }}
+  <p>
+  <input type="submit" value="Enviar propuesta" name="ok" id="pb_submit"/>
+  </p>
 </form>
 
 {% endblock content %}
