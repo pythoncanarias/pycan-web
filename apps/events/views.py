@@ -12,7 +12,7 @@ from apps.tickets.models import Article, Gift, Raffle, Ticket
 
 from . import forms, links, stripe_utils
 from .models import Event, Refund, WaitingList
-from .tasks import send_ticket
+from .tasks import send_ticket, send_proposal_acknowledge, send_proposal_notification
 from .forms import ProposalForm
 
 logger = logging.getLogger(__name__)
@@ -60,7 +60,9 @@ def call_for_papers(request, event):
     if request.method == "POST":
         form = ProposalForm(event, request.POST)
         if form.is_valid():
-            form.save()
+            proposal = form.save()
+            send_proposal_acknowledge.delay(proposal)
+            send_proposal_notification.delay(proposal)
             return redirect(reverse("events:thanks", kwargs={"event": event}))
     else:
         if request.user.is_authenticated:

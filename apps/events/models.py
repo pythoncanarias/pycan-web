@@ -538,7 +538,7 @@ class Proposal(models.Model):
     title = models.CharField(max_length=340, verbose_name="Título")
     description = models.TextField(
         verbose_name="Descripción",
-        help_text="Cuéntamos en dos o tres párrafos tu propuesta de charla.",
+        help_text=("Cuéntamos en dos o tres párrafos tu propuesta de charla.")
     )
     presented_at = models.DateTimeField(auto_now=True)
 
