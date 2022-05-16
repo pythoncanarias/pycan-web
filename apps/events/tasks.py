@@ -58,3 +58,42 @@ def send_ticket(ticket, force=False):
         raise Exception(os.linesep.join(error_msg))
     ticket.send_at = timezone.now()
     ticket.save()
+
+
+# --[ Call for papers ]------------------------------------------------
+
+
+def create_proposal_acknowledge(proposal):
+    event = proposal.event
+    tmpl = loader.get_template('events/email/proposal_acknowledge.md')
+    subject = 'Acuse de recibo de su propuesta para {}'.format(event.name)
+    body = tmpl.render(
+        {
+            'event': event,
+            'proposal': proposal,
+        }
+    )
+    organization = Organization.load_main_organization()
+    mail = Mail(
+        from_email=Email(organization.email, organization.name),
+        subject=subject,
+        to_email=Email(proposal.email),
+        content=Content('text/html', as_markdown(body)),
+    )
+    return mail
+
+
+@job
+def send_proposal_acknowledge(proposal):
+    msg = create_proposal_acknowledge(proposal)
+    sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
+    response = sg.client.mail.send.post(request_body=msg.get())
+    if response.status_code >= 400:
+        error_msg = []
+        error_msg.append('STATUS CODE: {}'.format(response.status_code))
+        error_msg.append('RESPONSE HEADERS: {}'.format(response.headers))
+        error_msg.append('RESPONSE BODY: {}'.format(response.body))
+        raise Exception(os.linesep.join(error_msg))
+    # ticket.send_at = timezone.now()
+    # ticket.save()
+
