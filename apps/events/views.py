@@ -56,13 +56,19 @@ def detail_event(request, slug):
 
 
 def call_for_papers(request, event):
+    initial = {}
     if request.method == "POST":
         form = ProposalForm(event, request.POST)
         if form.is_valid():
             form.save()
             return redirect(reverse("events:thanks", kwargs={"event": event}))
     else:
-        form = ProposalForm(event)
+        if request.user.is_authenticated:
+            user = request.user
+            initial['name'] = user.first_name
+            initial['surname'] = user.last_name
+            initial['email'] = user.email
+        form = ProposalForm(event, initial=initial)
     return render(
         request,
         "events/call-for-papers.html",
