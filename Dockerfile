@@ -19,6 +19,9 @@ RUN apt-get update \
         ca-certificates \
         postgresql-client \
         libpq-dev \
+        binutils \
+        libproj-dev \
+        gdal-bin \
     && rm -rf /var/lib/apt/lists/*
 
 

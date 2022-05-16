@@ -1,0 +1,30 @@
+{% extends "events/base.html" %}
+
+{% load static utils %}
+
+{% block title %}Call For Papers - {{ evento }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="container content-page">
+    <div class="content box">
+      <h1>Call for papers <i class="fas fa-inbox"></i></h1>
+      <h2>
+          <a href="{% url 'events:detail_event' slug=event.slug %}">{{ event.name }}</a>
+      </h2>
+      {{ event.short_description|as_markdown }}
+      <p>El período de presentación de propuestas estará abierto hasta el <strong>{{ event.cfp_stop_at }}</strong>.</p>
+
+        <form action="./" method="post" class="uniForm">
+          {% csrf_token %}
+            <table class="table">
+                {{ form.as_table }}
+            </table>
+          <p>
+          <input class="input is-rounded has-background-warning" style="width: auto" type="submit" value="Enviar propuesta" name="ok" id="pb_submit"/>
+          </p>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

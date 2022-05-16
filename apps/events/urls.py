@@ -1,14 +1,19 @@
-from django.urls import path
+from django.urls import path, register_converter
 
 from . import views
+from . import converters
 
 app_name = 'events'
+
+register_converter(converters.EventConverter, 'event')
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('next/', views.next, name='next'),
     path('archive/', views.past_events, name='past_events'),
     path('<slug:slug>/', views.detail_event, name='detail_event'),
+    path('<event:event>/cfp/', views.call_for_papers, name='cfp'),
+    path('<event:event>/cfp/thanks', views.proposal_received, name='thanks'),
     path(
         '<slug:slug>/waiting-list/',
         views.waiting_list,

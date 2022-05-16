@@ -1,0 +1,23 @@
+{% extends "events/base.html" %}
+
+{% load static utils %}
+
+{% block title %}Call For Papers - {{ evento }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="container content-page">
+    <div class="content box">
+      <h1>Call for papers <i class="fas fa-inbox"></i></h1>
+      <h2>
+          <a href="{% url 'events:detail_event' slug=event.slug %}">{{ event.name }}</a>
+      </h2>
+      {{ event.short_description|as_markdown }}
+
+      <p><strong>Gracias por enviar tu propuesta de charla.</strong></p>
+
+      <p>En breve recibirás un correo electrónico confirmando la entrega de tu propuesta. Si no lo tuvieras, revisa primero en la bandeja de correo no deseado, y en otro caso, ponte en contacto con la organización.</p>
+    </div>
+</div>
+
+{% endblock %}

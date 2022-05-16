@@ -197,10 +197,13 @@ MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, '.media'))
 SITE_ID = 1
 
 # Do not remove this!
-# The value in ASSOCIATION_NAME must match with an entry on:
+# The value in `ORGANIZATION_NAME` must match with an entry on:
 # organization.models.Organization
 # See code: organization.models.Organization.load_main_organization()
-ASSOCIATION_NAME = config('ASSOCIATION_NAME', default='Python Canarias')
+
+ORGANIZATION_NAME = config('ORGANIZATION_NAME', default='Python Canarias')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Leaflet settings
 
@@ -323,13 +326,23 @@ RQ_QUEUES = {
 
 CURRENT_API_VERSION = 1
 
-ORGANIZATION_NAME = 'Python Canarias'
-
 # Twitter API
-TWITTER_API_KEY = config('TWITTER_API_KEY')
-TWITTER_API_SECRET_KEY = config('TWITTER_API_SECRET_KEY')
-TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN')
-TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')
+TWITTER_API_KEY = config(
+    'TWITTER_API_KEY',
+    default='<Your Twitter API KEY here>',
+)
+TWITTER_API_SECRET_KEY = config(
+    'TWITTER_API_SECRET_KEY',
+    default='<Your Twitter API SECRET here>',
+)
+TWITTER_ACCESS_TOKEN = config(
+    'TWITTER_ACCESS_TOKEN',
+    default='<Your Twitter ACCESS TOKEN here>',
+)
+TWITTER_ACCESS_TOKEN_SECRET = config(
+    'TWITTER_ACCESS_TOKEN_SECRET',
+    default='<Your Twitter ACCESS SECRET here>',
+)
 
 # Random quote interval (seconds)
 RANDOM_QUOTE_INTERVAL = config(

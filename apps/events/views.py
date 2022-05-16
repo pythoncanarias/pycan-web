@@ -6,40 +6,39 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect, render
-
+from django.urls import reverse
 from apps.organizations.models import Organization
 from apps.tickets.models import Article, Gift, Raffle, Ticket
 
 from . import forms, links, stripe_utils
 from .models import Event, Refund, WaitingList
-from .tasks import send_ticket
+from .tasks import send_ticket, send_proposal_acknowledge, send_proposal_notification
+from .forms import ProposalForm
 
 logger = logging.getLogger(__name__)
 
 
 def index(request):
-    return redirect('events:next')
+    return redirect("events:next")
 
 
 def next(request):
-    events = Event.objects.filter(active=True)
+    events = Event.objects.filter(active=True).order_by("-start_date")
     num_events = events.count()
     if num_events == 0:
         past_events = Event.objects.all().order_by("-start_date")[0:3]
         return render(
             request,
-            'events/no-events.html',
+            "events/no-events.html",
             {
                 "past_events": past_events,
             },
         )
     if num_events == 1:
         event = events.first()
-        return redirect('events:detail_event', slug=event.slug)
+        return redirect("events:detail_event", slug=event.slug)
     else:
-        return render(
-            request, 'events/list-events.html', {'events': events.all()}
-        )
+        return render(request, "events/list-events.html", {"events": events.all()})
 
 
 def detail_event(request, slug):
@@ -47,26 +46,64 @@ def detail_event(request, slug):
     past_events = (
         Event.objects.filter(active=False)
         .exclude(pk=event.id)
-        .order_by('-start_date')[:3]
+        .order_by("-start_date")[:3]
     )
     return render(
         request,
-        'events/event.html',
-        {'event': event, 'past_events': past_events},
+        "events/event.html",
+        {"event": event, "past_events": past_events},
+    )
+
+
+def call_for_papers(request, event):
+    initial = {}
+    if request.method == "POST":
+        form = ProposalForm(event, request.POST)
+        if form.is_valid():
+            proposal = form.save()
+            send_proposal_acknowledge.delay(proposal)
+            send_proposal_notification.delay(proposal)
+            return redirect(reverse("events:thanks", kwargs={"event": event}))
+    else:
+        if request.user.is_authenticated:
+            user = request.user
+            initial['name'] = user.first_name
+            initial['surname'] = user.last_name
+            initial['email'] = user.email
+        form = ProposalForm(event, initial=initial)
+    return render(
+        request,
+        "events/call-for-papers.html",
+        {
+            "title": f"Call for papers / {event}",
+            "event": event,
+            "form": form,
+        },
+    )
+
+
+def proposal_received(request, event):
+    return render(
+        request,
+        "events/cfp-thanks.html",
+        {
+            "title": f"Gracias por su propuesta / {event}",
+            "event": event,
+        },
     )
 
 
 def waiting_list(request, slug):
     event = Event.get_by_slug(slug)
-    if request.method == 'POST':
+    if request.method == "POST":
         form = forms.WaitingListForm(request.POST)
         if form.is_valid():
             wl = WaitingList(
                 event=event,
-                name=form.cleaned_data['name'],
-                surname=form.cleaned_data['surname'],
-                email=form.cleaned_data['email'],
-                phone=form.cleaned_data['phone'],
+                name=form.cleaned_data["name"],
+                surname=form.cleaned_data["surname"],
+                email=form.cleaned_data["email"],
+                phone=form.cleaned_data["phone"],
             )
             wl.save()
             return redirect(links.waiting_list_accepted(event.slug))
@@ -74,10 +111,10 @@ def waiting_list(request, slug):
         form = forms.WaitingListForm()
     return render(
         request,
-        'events/waiting-list.html',
+        "events/waiting-list.html",
         {
-            'event': event,
-            'form': form,
+            "event": event,
+            "form": form,
         },
     )
 
@@ -85,11 +122,11 @@ def waiting_list(request, slug):
 def refund(request, slug):
     logging.error('refund(request, "{}") starts'.format(slug))
     event = Event.get_by_slug(slug)
-    logging.error('   request method is {}'.format(request.method))
-    if request.method == 'POST':
+    logging.error("   request method is {}".format(request.method))
+    if request.method == "POST":
         form = forms.RefundForm(event, request.POST)
-        logging.error('   form.is_valid() is {}'.format(form.is_valid()))
-        logging.error('   form.errors is {}'.format(form.errors))
+        logging.error("   form.is_valid() is {}".format(form.is_valid()))
+        logging.error("   form.errors is {}".format(form.errors))
         if form.is_valid():
             ticket = form.ticket
             rf = Refund(ticket=ticket, event=event)
@@ -99,10 +136,10 @@ def refund(request, slug):
         form = forms.RefundForm(event)
     return render(
         request,
-        'events/refund.html',
+        "events/refund.html",
         {
-            'event': event,
-            'form': form,
+            "event": event,
+            "form": form,
         },
     )
 
@@ -112,10 +149,10 @@ def refund_accepted(request, slug, pk):
     refund = Refund.objects.get(pk=pk)
     return render(
         request,
-        'events/refund-accepted.html',
+        "events/refund-accepted.html",
         {
-            'event': event,
-            'refund': refund,
+            "event": event,
+            "refund": refund,
         },
     )
 
@@ -124,9 +161,9 @@ def waiting_list_accepted(request, slug):
     event = Event.get_by_slug(slug)
     return render(
         request,
-        'events/waiting-list-accepted.html',
+        "events/waiting-list-accepted.html",
         {
-            'event': event,
+            "event": event,
         },
     )
 
@@ -149,11 +186,11 @@ def trade(request, slug, sell_code, buy_code):
 
     return render(
         request,
-        'events/trade.html',
+        "events/trade.html",
         {
-            'event': event,
-            'waiting_list': waiting_list,
-            'refund': refund,
+            "event": event,
+            "waiting_list": waiting_list,
+            "refund": refund,
         },
     )
 
@@ -162,10 +199,10 @@ def stripe_payment_declined(request, charge):
     organization = Organization.load_main_organization()
     return render(
         request,
-        'events/payment-declined.html',
+        "events/payment-declined.html",
         {
-            'email': organization.email,
-            'charge_id': charge.id,
+            "email": organization.email,
+            "charge_id": charge.id,
         },
     )
 
@@ -175,12 +212,12 @@ def stripe_payment_error(request, exception):
     organization = Organization.load_main_organization()
     return render(
         request,
-        'events/payment-error.html',
+        "events/payment-error.html",
         {
-            'msg': msg,
-            'extra_info': extra_info,
-            'error': str(exception),
-            'email': organization.email,
+            "msg": msg,
+            "extra_info": extra_info,
+            "error": str(exception),
+            "email": organization.email,
         },
     )
 
@@ -190,7 +227,7 @@ def buy_ticket(request, slug):
     event = Event.get_by_slug(slug)
     if event.external_tickets_url:
         logger.debug(
-            'Redirecting to external URL for selling tickets: url={}'.format(
+            "Redirecting to external URL for selling tickets: url={}".format(
                 event.external_tickets_url
             )
         )
@@ -214,8 +251,8 @@ def no_available_articles(request, event, all_articles):
         request,
         "events/no-available-articles.html",
         {
-            'event': event,
-            'contact_email': organization.email,
+            "event": event,
+            "contact_email": organization.email,
         },
     )
 
@@ -225,35 +262,35 @@ def select_article(request, event, all_articles, active_articles):
         request,
         "events/select-article.html",
         {
-            'event': event,
-            'all_articles': all_articles,
-            'active_articles': active_articles,
+            "event": event,
+            "all_articles": all_articles,
+            "active_articles": active_articles,
         },
     )
 
 
 def ticket_purchase(request, id_article):
-    article = Article.objects.select_related('event').get(pk=id_article)
+    article = Article.objects.select_related("event").get(pk=id_article)
     assert article.is_active(), "Este tipo de entrada no está ya disponible."
     event = article.event
-    if request.method == 'POST':
-        email = request.POST['stripeEmail']
-        name = request.POST['name']
-        surname = request.POST['surname']
-        phone = request.POST.get('phone', None)
-        token = request.POST['stripeToken']
+    if request.method == "POST":
+        email = request.POST["stripeEmail"]
+        name = request.POST["name"]
+        surname = request.POST["surname"]
+        phone = request.POST.get("phone", None)
+        token = request.POST["stripeToken"]
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
             customer = stripe.Customer.create(
                 email=email,
                 source=token,
-                description='{}, {}'.format(surname, name),
+                description="{}, {}".format(surname, name),
             )
             charge = stripe.Charge.create(
                 customer=customer.id,
                 amount=article.price_in_cents,
-                currency='EUR',
-                description='{}/{}, {}'.format(
+                currency="EUR",
+                description="{}/{}, {}".format(
                     event.hashtag,
                     surname,
                     name,
@@ -274,48 +311,48 @@ def ticket_purchase(request, id_article):
             else:
                 return stripe_payment_declined(request, charge)
         except stripe.error.StripeError as err:
-            logger.error('Error de stripe')
+            logger.error("Error de stripe")
             logger.error(str(err))
             return stripe_payment_error(request, err)
         except Exception as err:
-            logger.error('Error en el pago por stripe')
+            logger.error("Error en el pago por stripe")
             logger.error(str(err))
-            messages.add_message(request, messages.ERROR, 'Hello world.')
+            messages.add_message(request, messages.ERROR, "Hello world.")
             from django.http import HttpResponse
 
             return HttpResponse("Something goes wrong\n{}".format(err))
     else:
         return render(
             request,
-            'events/buy-article.html',
+            "events/buy-article.html",
             {
-                'event': event,
-                'article': article,
-                'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
+                "event": event,
+                "article": article,
+                "stripe_public_key": settings.STRIPE_PUBLIC_KEY,
             },
         )
 
 
 def ticket_purchase_nocc(request, id_article):
-    article = Article.objects.select_related('event').get(pk=id_article)
+    article = Article.objects.select_related("event").get(pk=id_article)
     assert article.is_active(), "Este tipo de entrada no está ya disponible."
 
-    template = 'events/ticket-purchase-nocc.html'
-    return render(request, template, {'article': article})
+    template = "events/ticket-purchase-nocc.html"
+    return render(request, template, {"article": article})
 
 
 def article_bought(request, id_article):
-    article = Article.objects.select_related('event').get(pk=id_article)
+    article = Article.objects.select_related("event").get(pk=id_article)
     assert article.is_active(), "Este tipo de entrada no está ya disponible."
     event = article.event
     organization = Organization.load_main_organization()
     return render(
         request,
-        'events/article-bought.html',
+        "events/article-bought.html",
         {
-            'article': article,
-            'event': event,
-            'contact_email': organization.email,
+            "article": article,
+            "event": event,
+            "contact_email": organization.email,
         },
     )
 
@@ -328,19 +365,19 @@ def find_tickets_by_email(event, email):
 def resend_ticket(request, slug):
     event = Event.get_by_slug(slug)
     form = forms.EmailForm(request.POST or None)
-    if request.method == 'POST':
+    if request.method == "POST":
         if form.is_valid():
-            email = form.cleaned_data['email']
+            email = form.cleaned_data["email"]
             tickets = find_tickets_by_email(event, email)
             for ticket in tickets:
                 send_ticket.delay(ticket)
-            return redirect('events:resend_confirmation', slug=event.slug)
+            return redirect("events:resend_confirmation", slug=event.slug)
     return render(
         request,
-        'events/resend-ticket.html',
+        "events/resend-ticket.html",
         {
-            'event': event,
-            'form': form,
+            "event": event,
+            "form": form,
         },
     )
 
@@ -350,20 +387,20 @@ def resend_confirmation(request, slug):
     organization = Organization.load_main_organization()
     return render(
         request,
-        'events/resend-confirmation.html',
+        "events/resend-confirmation.html",
         {
-            'event': event,
-            'contact_email': organization.email,
+            "event": event,
+            "contact_email": organization.email,
         },
     )
 
 
 def past_events(request):
-    events = Event.objects.filter(active=False).order_by('-start_date')
+    events = Event.objects.filter(active=False).order_by("-start_date")
     return render(
         request,
-        'events/list-events.html',
-        {'events': events.all(), 'archive': True},
+        "events/list-events.html",
+        {"events": events.all(), "archive": True},
     )
 
 
@@ -373,19 +410,19 @@ def raffle(request, slug):
         event = Event.get_by_slug(slug)
         raffle = event.raffle
     except (Event.DoesNotExist, Raffle.DoesNotExist):
-        return redirect('/')
+        return redirect("/")
     gifts = raffle.gifts.all()
     candidate_tickets = raffle.get_candidate_tickets()
     success_probability = gifts.count() / candidate_tickets.count() * 100
     return render(
         request,
-        'events/raffle.html',
+        "events/raffle.html",
         {
-            'event': event,
-            'raffle': raffle,
-            'gifts': gifts,
-            'candidate_tickets': candidate_tickets,
-            'success_probability': success_probability,
+            "event": event,
+            "raffle": raffle,
+            "gifts": gifts,
+            "candidate_tickets": candidate_tickets,
+            "success_probability": success_probability,
         },
     )
 
@@ -396,7 +433,7 @@ def raffle_gift(request, slug, gift_id, match=False):
         event = Event.get_by_slug(slug)
         raffle = event.raffle
     except (Event.DoesNotExist, Raffle.DoesNotExist):
-        return redirect('/')
+        return redirect("/")
     current_gift = Gift.objects.get(pk=gift_id)
     if match:
         if current_gift.awarded_ticket:
@@ -409,14 +446,14 @@ def raffle_gift(request, slug, gift_id, match=False):
     exist_available_tickets = raffle.get_available_tickets().count() > 0
     return render(
         request,
-        'events/raffle-gift.html',
+        "events/raffle-gift.html",
         {
-            'event': event,
-            'current_gift': current_gift,
-            'next_gift': next_gift,
-            'match': match,
-            'progress_value': progress_value,
-            'exist_available_tickets': exist_available_tickets,
+            "event": event,
+            "current_gift": current_gift,
+            "next_gift": next_gift,
+            "match": match,
+            "progress_value": progress_value,
+            "exist_available_tickets": exist_available_tickets,
         },
     )
 
@@ -426,11 +463,11 @@ def raffle_results(request, slug):
         event = Event.get_by_slug(slug)
         raffle = event.raffle
     except (Event.DoesNotExist, Raffle.DoesNotExist):
-        return redirect('/')
+        return redirect("/")
     if request.user.is_staff and raffle.opened:
         raffle.closed_at = datetime.datetime.now()
         raffle.save()
     gifts = raffle.gifts.all()
     return render(
-        request, 'events/raffle-results.html', {'event': event, 'gifts': gifts}
+        request, "events/raffle-results.html", {"event": event, "gifts": gifts}
     )
