@@ -62,19 +62,19 @@
   </nav>
 
 {% if event.call_for_paper_is_open %}
-  <section class="hero is-success">
-    <div class="hero-body">
-    <p class="title">¡El <i>Call for papers</i> de este evento esta abierto!</p>
-    <p class="subtitle">
-      <a class="button is-warning" href="{% url 'events:cfp' event=event %}">
-      Envianos tu propuesta
-      </a>
-    </p>
+  <section id="cfp" class="section cfp">
+    <div class="container">
+      <h1 class="title section-title">
+        Call for papers
+      </h1>
+      <p class="has-text-centered"><strong>¡El <i>Call for papers</i> de este evento está abierto!</strong></p>
+      <p class="has-text-centered"><a class="button is-warning" href="{% url 'events:cfp' event=event %}">
+          Envíanos tu propuesta
+      </a></p>
+      </p>
     </div>
   </section>
 {% endif %}
-
-
 
   <section class="section what-is has-background-white">
     <div class="container">
