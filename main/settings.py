@@ -368,3 +368,5 @@ else:
             "KEY_PREFIX": REDIS_PREFIX,
         }
     }
+
+DOMAIN = config('DOMAIN', default='localhost')
