@@ -17,7 +17,7 @@
       <h1 class="title is-1">{{ event.name }}</h1>
       <div class="subtitle is-4">
         <span class="event-header-date">
-          <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
+          <i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}
         </span>
         {% if event.venue %}
           <span class="event-header-venue">
@@ -127,7 +127,7 @@
           Agenda
           <a class="dyn-anchor-link" href="#schedule"><i class="fas fa-link"></i></a>
         </p>
-        <p class="section-detail"><i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}</p>
+        <p class="section-detail"><i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}</p>
         <a target="_blank" href="{{ event.get_google_calendar_url }}">Añadir a Google Calendar</a>
         {% if event.schedule_for_display and not event.closed_schedule %}
           <span class="tag is-warning is-medium not-closed-schedule">

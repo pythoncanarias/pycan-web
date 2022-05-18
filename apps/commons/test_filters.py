@@ -4,18 +4,29 @@ import pytest
 
 from . import filters
 
+
 # as_date
 
 
 def test_as_date():
-    d = datetime.date(2016, 4, 18)
-    assert filters.as_date(d) == '18/abr/2016'
+    assert filters.as_date(datetime.date(2016, 4, 18)) == '18/abr/2016'
 
 
 def test_as_date_current_year():
-    today = datetime.date.today()
-    d = datetime.date(today.year, 4, 18)
-    assert filters.as_date(d) == '18/abr'
+    year = datetime.date.today().year
+    assert filters.as_date(datetime.date(year, 4, 18)) == f'18/abr/{year}'
+
+
+# as_short_date
+
+
+def test_as_short_date_current_year():
+    year = datetime.date.today().year
+    assert filters.as_short_date(datetime.date(year, 4, 18)) == '18/abr'
+
+
+def test_as_short_date_other_year():
+    assert filters.as_short_date(datetime.date(1992, 4, 18)) == '18/abr/1992'
 
 
 # as_month

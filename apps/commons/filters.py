@@ -2,6 +2,7 @@
 
 import datetime
 import os
+from typing import Union
 
 from django.conf import settings
 from markdown2 import markdown
@@ -42,18 +43,46 @@ def as_month(f, num_letters=0):
         return _months[n]
 
 
-def as_date(f):
-    if not isinstance(f, datetime.date):
-        return f
+def as_date(f: Union[datetime.date, datetime.datetime]) -> str:
+    """Fecha o timestamp en formato día/mes/año.
 
-    today = datetime.date.today()
-    if f.year == today.year:
-        return '{}/{}'.format(f.day, as_month(f, 3))
-    else:
-        return '{}/{}/{}'.format(f.day, as_month(f, 3), f.year)
+    Ver también: `as_short_date`.
+
+    Ejemplo de uso:
+
+        >>> import datetime
+        >>> print(as_date(datetime.date(1992, 1, 2)))
+        2/ene/1992
+    """
+    if isinstance(f, (datetime.date, datetime.datetime)):
+        return f'{f.day}/{as_month(f, 3)}/{f.year}'
+    return str(f)
 
 
-def date_from_now(days=1):
+def as_short_date(f: Union[datetime.date, datetime.datetime]) -> str:
+    """Fecha o timestamp en formato día/mes/año, omitiendo el
+    año si es el mismo del año actual.
+
+    Ver también: `as_date`.
+
+    Ejemplo de uso:
+
+        >>> import datetime
+        >>> current_year = datetime.date.today().year
+        >>> print(as_short_date(datetime.date(current_year, 1, 2)))
+        2/ene
+        >>> print(as_short_date(datetime.date(1992, 1, 2)))
+        2/ene/1992
+    """
+    if isinstance(f, (datetime.date, datetime.datetime)):
+        today = datetime.date.today()
+        if f.year == today.year:
+            return f'{f.day}/{as_month(f, 3)}'
+        return f'{f.day}/{as_month(f, 3)}/{f.year}'
+    return str(f)
+
+
+def date_from_now(days=1) -> datetime.date:
     today = datetime.date.today()
     delta = datetime.timedelta(days=days)
     return today + delta

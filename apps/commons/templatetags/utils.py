@@ -14,6 +14,7 @@ def compose2(f, g):
 register = template.Library()
 
 register.filter('as_month', filters.as_month)
+register.filter('as_short_date', filters.as_short_date)
 register.filter('as_date', filters.as_date)
 register.filter('date_from_now', filters.date_from_now)
 register.filter('get_key', filters.get_key)
