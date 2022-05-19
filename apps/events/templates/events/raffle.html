@@ -53,7 +53,7 @@
     <div class="closed-raffle">
       <span class="tag is-warning is-medium">
         <i class="fas fa-lock"></i>
-        Este sorteo está cerrado! Se realizó el {{ raffle.closed_at|as_date }}
+        Este sorteo está cerrado! Se realizó el {{ raffle.closed_at|as_short_date }}
       </span>
       <a class="view-results" href="{% url 'events:raffle_results' event.slug %}">
         <i class="fas fa-table"></i>
