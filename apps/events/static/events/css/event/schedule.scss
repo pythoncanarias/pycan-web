@@ -162,7 +162,15 @@
   .not-closed-schedule {
     margin-top: 1rem;
     i {
-      margin-right: .3rem;
+      margin-right: 0.3rem;
+    }
+  }
+
+  .section-detail {
+    text-align: center;
+
+    a#add-to-google-calendar {
+      font-size: medium;
     }
   }
 }

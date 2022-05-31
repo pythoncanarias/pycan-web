@@ -128,15 +128,20 @@
           Agenda
           <a class="dyn-anchor-link" href="#schedule"><i class="fas fa-link"></i></a>
         </p>
-        <p class="section-detail"><i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}</p>
-        <a target="_blank" href="{{ event.get_google_calendar_url }}">Añadir a Google Calendar</a>
+      </h1>
+
+      <div class="section-detail">
+        <p><i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}</p>
+
+        <a id="add-to-google-calendar" target="_blank" href="{{ event.get_google_calendar_url }}"><i class="far fa-calendar-plus"></i> Añadir a Google Calendar</a>
+
         {% if event.schedule_for_display and not event.closed_schedule %}
           <span class="tag is-warning is-medium not-closed-schedule">
             <i class="fas fa-info-circle"></i>
             La agenda aún no está cerrada!
           </span>
         {% endif %}
-      </h1>
+      </div>
 
       <div class="schedule-table">
         {% for row in event.schedule_for_display %}
