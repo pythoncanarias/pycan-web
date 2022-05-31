@@ -3,6 +3,7 @@
 {% load static %}
 {% load leaflet_tags %}
 {% load utils %}
+{% load l10n %}
 
 {% block title %}{{event.name}} - {{ block.super }}{% endblock %}
 
@@ -175,15 +176,17 @@
               </div>
             {% else %}
               <div class="map-wrapper">
-                {% leaflet_map "event-map" %}
-                <a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
+                {% localize off %}
+                  {% leaflet_map "event-map" %}
+                  <a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
+                {% endlocalize %}
               </div>
             {% endif %}
             </div>
             <div class="column is-12-tablet is-6-desktop">
               <strong class="venue-name">
                 {% if event.venue.website %}
-                  <a href="{{ event.venue.website }}"><i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}</a>
+                  <a href="{{ event.venue.website }}"><i class="fas fa-info-circle"></i> {{ event.venue.name }}</a>
                 {% else %}
                   <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
                 {% endif %}
@@ -191,10 +194,11 @@
               {% if not event.venue.is_online %}
                 <address>
                   <a class="venue-address">
-                    <a href="https://maps.google.com/maps?q={{ event.venue.latitude }},{{ event.venue.longitude }}">
-                      {{ event.venue.address }}
-                      <i class="fas fa-external-link-alt"></i>
-                    </a>
+                    {% localize off %}
+                      <a href="https://maps.google.com/maps?q={{ event.venue.latitude }},{{ event.venue.longitude }}">
+                        {{ event.venue.address }}
+                      </a>
+                    {% endlocalize %}
                   </p>
                 </address>
               {% endif %}
@@ -217,15 +221,17 @@
       </div>
     </div>
 
-    <script type="text/javascript">
-      window.addEventListener('map:init', function (e) {
-          const map = e.detail.map;
-          const coordinates = ['{{ event.venue.latitude }}', '{{ event.venue.longitude }}'];
-          const zoom = 17;
-          map.setView(coordinates, zoom);
-          L.marker(coordinates).addTo(map);
-      }, false);
-    </script>
+    {% localize off %}
+      <script type="text/javascript">
+        window.addEventListener('map:init', function (e) {
+            const map = e.detail.map;
+            const coordinates = ['{{ event.venue.latitude }}', '{{ event.venue.longitude }}'];
+            const zoom = 17;
+            map.setView(coordinates, zoom);
+            L.marker(coordinates).addTo(map);
+        }, false);
+      </script>
+    {% endlocalize %}
   </section>
 
 
