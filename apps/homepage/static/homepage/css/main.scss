@@ -16,10 +16,15 @@
       a.event-target:hover {
         color: #cdcdcd;
       }
-      background: linear-gradient(to right, #fff0, #fff3, #fff0);
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0)
+      );
       padding-top: 1rem;
       padding-bottom: 1rem;
-      margin-bottom: .5rem
+      margin-bottom: 0.5rem;
     }
 
     .logo {

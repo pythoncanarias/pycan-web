@@ -35,7 +35,7 @@
     <div class="hero-body">
       <div class="container has-text-centered">
 
-        <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias" />
+        <a href="{% url 'about:index' %}"><img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias" /></a>
 
         {% if active_events.count > 0 %}
           <div class="content is-centered">
