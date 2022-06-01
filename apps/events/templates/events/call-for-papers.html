@@ -2,7 +2,7 @@
 
 {% load static utils %}
 
-{% block title %}Call For Papers - {{ evento }} - {{ block.super }}{% endblock %}
+{% block title %}Call For Papers - {{ event }} - {{ block.super }}{% endblock %}
 
 {% block content %}
 
@@ -12,8 +12,14 @@
       <h2>
           <a href="{% url 'events:detail_event' slug=event.slug %}">{{ event.name }}</a>
       </h2>
-      {{ event.short_description|as_markdown }}
-      <p>El período de presentación de propuestas estará abierto hasta el <strong>{{ event.cfp_stop_at }}</strong>.</p>
+      <p><em>{{ event.short_description|as_markdown }}</em></p>
+      <p>
+        <i class="far fa-calendar-check"></i>
+        El período de presentación de propuestas estará abierto hasta el <strong>{{ event.cfp_stop_at }}</strong>.
+        <br>
+        <i class="far fa-clock"></i>
+        La duración máxima de la charla será de <strong>{{ event.default_slot_duration|duration_in_minutes }}<strong> minutos.
+      </p>
 
         <form action="./" method="post" class="uniForm">
           {% csrf_token %}

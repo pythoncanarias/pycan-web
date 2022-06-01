@@ -113,3 +113,7 @@ def startswith(value, argument):
 
 def msgtag_to_bulmaclass(message_tag):
     return BULMA_CLASSES.get(message_tag, 'is-link')
+
+
+def duration_in_minutes(value):
+    return value.seconds // 60
