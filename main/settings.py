@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'apps.about',
     'apps.legal',
     'apps.dev',
+    'apps.learn',
 ]
 
 if DEBUG:
