@@ -17,6 +17,7 @@ urlpatterns = [
     path('legal/', include('apps.legal.urls', namespace='legal')),
     path('members/', include('apps.members.urls', namespace='members')),
     path('jobs/', include('apps.jobs.urls', namespace='jobs')),
+    path('learn/', include('apps.learn.urls', namespace='learn')),
 ]
 
 if settings.DEBUG:
