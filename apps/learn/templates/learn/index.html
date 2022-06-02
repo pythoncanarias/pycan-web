@@ -1,0 +1,19 @@
+{% extends "jobs/base.html" %}
+
+{% load utils %}
+
+{% block title %}Aprende Python - {{ block.super }}{% endblock %}
+
+{% block body_class %}learn-index{% endblock %}
+
+{% block content %}
+
+<h1 class="title">Aprende Python</h1>
+
+<ul>
+  {% for label in labels %}
+    <li>{{ label }}</li>  
+  {% endfor %}
+</ul>
+
+{% endblock content %}

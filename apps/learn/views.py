@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
+from .models import Label
 
-# Create your views here.
+
 def index(request):
-    from django.http import HttpResponse
-
-    return HttpResponse('Not implemented!')
+    labels = Label.objects.all()
+    return render(request, 'learn/index.html', {'labels': labels})
