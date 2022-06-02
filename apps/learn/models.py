@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Label(models.Model):
+    class Meta:
+        ordering = ['name']
+
     name = models.CharField(max_length=120)
     slug = models.SlugField(max_length=120, unique=True)
 
@@ -10,6 +13,9 @@ class Label(models.Model):
 
 
 class Resource(models.Model):
+    class Meta:
+        ordering = ['name']
+
     name = models.CharField(max_length=120)
     slug = models.SlugField(max_length=120, unique=True)
     url = models.URLField(max_length=240)
