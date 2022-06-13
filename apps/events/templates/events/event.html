@@ -132,15 +132,7 @@
 
       <div class="section-detail">
         <p><i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}</p>
-
         <a id="add-to-google-calendar" target="_blank" href="{{ event.get_google_calendar_url }}"><i class="far fa-calendar-plus"></i> Añadir a Google Calendar</a>
-
-        {% if event.schedule_for_display and not event.closed_schedule %}
-          <span class="tag is-warning is-medium not-closed-schedule">
-            <i class="fas fa-info-circle"></i>
-            La agenda aún no está cerrada!
-          </span>
-        {% endif %}
       </div>
 
       <div class="schedule-table">
@@ -161,6 +153,15 @@
           </div>
         {% endfor %}
       </div>
+
+      {% if event.schedule_for_display and not event.closed_schedule %}
+      <div class="section-detail">
+            <div class="tag is-warning is-medium not-closed-schedule centered">
+            <i class="fas fa-info-circle"></i>
+            La agenda aún no está cerrada!
+          </div>
+        </div>
+      {% endif %}
     </div>
   </section>
 
