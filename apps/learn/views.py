@@ -9,8 +9,9 @@ def index(request):
 
 
 def resources_by_label(request, label):
+    resources = label.resources.prefetch_related('labels').all()
     return render(
         request,
         'learn/resources_by_label.html',
-        {'label': label, 'resources': label.resources.all()},
+        {'label': label, 'resources': resources},
     )

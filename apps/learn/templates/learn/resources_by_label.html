@@ -12,7 +12,12 @@
 
 <ul>
   {% for resource in resources %}
-    <li><a href="{{ resource.url }}">{{ resource }}</a></li>  
+    <li>
+      <a href="{{ resource.url }}">{{ resource }}</a>
+      {% for label in resource.labels.all %}
+        <span class="tag is-primary"><a href="{% url "learn:resources_by_label" label=label %}">{{ label }}</a></span>
+      {% endfor %}
+    </li>  
   {% endfor %}
 </ul>
 
