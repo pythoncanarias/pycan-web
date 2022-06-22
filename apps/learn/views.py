@@ -4,7 +4,7 @@ from .models import Label
 
 
 def index(request):
-    labels = Label.objects.all()
+    labels = Label.objects.prefetch_related('resources').all()
     return render(request, 'learn/index.html', {'labels': labels})
 
 

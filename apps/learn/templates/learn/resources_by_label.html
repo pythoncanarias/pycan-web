@@ -22,9 +22,11 @@
     <li>
       <a class="resource" href="{{ resource.url }}">{{ resource }}</a>
       {% for label in resource.labels.all %}
-        <span class="label" style="background-color: #{{ label.color }}">
-          <a style="color: #{{ label.foreground_color }}" href="{% url "learn:resources_by_label" label=label %}">{{ label }}</a>
-        </span>
+        <a class="label"
+           style="background-color: #{{ label.color }}; color: #{{ label.foreground_color }}"
+           href="{% url "learn:resources_by_label" label=label %}">
+           {{ label }}
+        </a>
       {% endfor %}
     </li>  
   {% endfor %}
