@@ -1,4 +1,4 @@
-{% extends "jobs/base.html" %}
+{% extends "learn/base.html" %}
 
 {% load utils %}
 
@@ -10,11 +10,15 @@
 
 <h1 class="title">Aprende Python</h1>
 
-<p>En esta sección podrás encontrar recursos de aprendizaje Python.</p>
+<p>En esta sección podrás encontrar <strong>recursos de aprendizaje Python</strong>. Están clasificados por etiquetas:</p>
 
 <ul>
   {% for label in labels %}
-    <li><a href="{% url "learn:resources_by_label" label=label %}">{{ label }}</a></li>  
+    <li>
+      <span class="label" style="background-color: #{{ label.color }}">
+        <a style="color: #{{ label.foreground_color }}" href="{% url "learn:resources_by_label" label=label %}">{{ label }}</a>
+      </span>
+    </li>  
   {% endfor %}
 </ul>
 

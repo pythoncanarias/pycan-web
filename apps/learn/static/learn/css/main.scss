@@ -1,0 +1,44 @@
+@import 'apps/commons/static/commons/css/base';
+
+ul {
+  margin-top: 1rem;
+
+  &.resources {
+    li {
+      list-style: initial;
+      margin-left: 20px;
+    }
+  }
+
+  .label {
+    display: inline-block;
+    font-size: 13px;
+    padding-left: 9px;
+    padding-right: 9px;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: #154360 !important;
+      a {
+        color: white !important;
+      }
+    }
+  }
+}
+
+.learn-index {
+  ul li i {
+    padding-right: 10px;
+  }
+
+  .label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.learn-resources_by_label {
+  .resource {
+    margin-right: 1rem;
+  }
+}
