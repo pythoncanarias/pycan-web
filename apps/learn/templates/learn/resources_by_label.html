@@ -8,6 +8,14 @@
 
 {% block content %}
 
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="{% url "homepage" %}">⌂</a></li>
+    <li><a href="{% url "learn:index" %}">Aprende Python</a></li>
+    <li class="is-active"><a href="#" aria-current="page">{{ label }}</a></li>
+  </ul>
+</nav>
+
 <h1 class="title">{{ label }}</h1>
 
 <ul>
@@ -15,7 +23,9 @@
     <li>
       <a href="{{ resource.url }}">{{ resource }}</a>
       {% for label in resource.labels.all %}
-        <span class="tag is-primary"><a href="{% url "learn:resources_by_label" label=label %}">{{ label }}</a></span>
+        <span class="tag" style="background-color: #{{ label.color }}">
+          <a style="color: #{{ label.foreground_color }}" href="{% url "learn:resources_by_label" label=label %}">{{ label }}</a>
+        </span>
       {% endfor %}
     </li>  
   {% endfor %}
