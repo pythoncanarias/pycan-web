@@ -12,7 +12,7 @@
 
 <ul>
   {% for label in labels %}
-    <li>{{ label }}</li>  
+    <li><a href="{% url "learn:resources_by_label" label=label %}">{{ label }}</a></li>  
   {% endfor %}
 </ul>
 
