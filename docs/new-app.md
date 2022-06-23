@@ -55,10 +55,12 @@ El resto de plantillas de la aplicación, al menos, deberían extender la planti
 
 ## Estilos CSS
 
-En el caso de que se necesiten estilos CSS se debe crear el archivo `<app>/static/<app>/css/main.scss` con, al menos, el siguiente contenido:
+Primero que nada hay que añadir la aplicación a la constante `APPS` de `gulp/config.js` para que `gulp` compile los ficheros de estilos.
+
+A continuación hay que crear el archivo `<app>/static/<app>/css/main.scss` con, al menos, el siguiente contenido:
 
 ```scss
-@import "commons/static/commons/css/base";
+@import 'apps/commons/static/commons/css/base';
 
 .<app>-<subsection> {
    ...
