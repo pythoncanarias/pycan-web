@@ -17,19 +17,23 @@
 
 <h1 class="title"><i class="fas fa-tag"></i> {{ label }}</h1>
 
-<ul class="resources">
+<table class="table resources">
   {% for resource in resources %}
-    <li>
-      <a class="resource" href="{{ resource.url }}">{{ resource }}</a>
-      {% for label in resource.labels.all %}
-        <a class="label"
-           style="background-color: #{{ label.color }}; color: #{{ label.foreground_color }}"
-           href="{% url "learn:resources_by_label" label=label %}">
-           {{ label }}
-        </a>
-      {% endfor %}
-    </li>  
+    <tr>
+      <td>
+        <a class="resource" href="{{ resource.url }}">{{ resource }}</a>
+      </td>
+      <td>
+        {% for label in resource.labels.all %}
+          <a class="label"
+            style="background-color: #{{ label.color }}; color: #{{ label.foreground_color }}"
+            href="{% url "learn:resources_by_label" label=label %}">
+            {{ label }}
+          </a>
+        {% endfor %}
+      </td>
+    </tr>  
   {% endfor %}
-</ul>
+</table>
 
 {% endblock content %}

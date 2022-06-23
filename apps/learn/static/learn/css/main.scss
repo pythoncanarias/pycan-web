@@ -43,13 +43,15 @@ ul {
 
 .learn-resources_by_label {
   a.resource {
+    font-weight: bold;
     margin-right: 1rem;
   }
 
-  ul.resources {
-    li {
-      list-style: initial;
-      margin-left: 20px;
-    }
+  a.label {
+    margin-right: 5px;
+  }
+
+  table.resources {
+    background-color: initial;
   }
 }
