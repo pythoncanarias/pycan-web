@@ -1,0 +1,55 @@
+@import 'apps/commons/static/commons/css/base';
+
+a.label {
+  display: inline-block;
+  font-size: 13px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 9px;
+  padding-right: 9px;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: #154360 !important;
+    color: white !important;
+  }
+
+  span.badge {
+    background-color: rgba(255, 255, 255, 0.518);
+    margin-left: 3px;
+    border-radius: 12px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 12px;
+  }
+}
+
+ul {
+  margin-top: 1rem;
+}
+
+.learn-index {
+  ul li i {
+    padding-right: 10px;
+  }
+
+  .label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.learn-resources_by_label {
+  a.resource {
+    margin-right: 1rem;
+  }
+
+  ul.resources {
+    li {
+      list-style: initial;
+      margin-left: 20px;
+    }
+  }
+}
