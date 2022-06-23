@@ -12,9 +12,7 @@ class Label(models.Model):
     name = models.CharField(max_length=120)
     slug = models.SlugField(max_length=120, unique=True)
     # Label color in hex mode
-    color = models.CharField(
-        max_length=8, default=colors.get_random_hex_color()
-    )
+    color = models.CharField(max_length=8, default=colors.get_random_hex_color)
 
     def __str__(self):
         return self.name
