@@ -1,3 +1,5 @@
+import random
+import string
 from typing import Tuple
 
 BLACK = '000000'
@@ -16,3 +18,10 @@ def get_luminance(red, green, blue, alpha) -> int:
     luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
     luminance *= alpha / 255
     return round(luminance)
+
+
+def get_random_hex_color(include_alpha=False):
+    size = 8 if include_alpha else 6
+    return ''.join(
+        random.choice(string.hexdigits.upper()) for _ in range(size)
+    )
