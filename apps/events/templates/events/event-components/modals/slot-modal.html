@@ -1,4 +1,4 @@
-{% extends "./modal.html" %}
+{% extends "./modal.html" %}{% load utils %}
 {% block modal_id %}modal-slot-{{ scheduled_item.slot.id }}{% endblock %}
 
 {% block modal_content %}
@@ -28,7 +28,9 @@
     {% endfor %}
   </div>
 
-  <div class="slot-description">{{ slot.description|linebreaks }}</div>
+  <div class="slot-description content">
+      {{ slot.description|as_markdown }}
+  </div>
 
   <div class="talk-links columns">
       {% if slot.repo %}
