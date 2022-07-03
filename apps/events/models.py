@@ -106,8 +106,8 @@ class Event(models.Model):
             return datetime.datetime.combine(self.start_date, end_time)
 
     def get_google_calendar_url(self):
-        start_datetime = self.start_datetime().strftime("%Y%m%dT%H%M%S%Z")
-        end_datetime = self.end_datetime().strftime("%Y%m%dT%H%M%S%Z")
+        start_datetime = self.start_datetime().strftime("%Y%m%dT%H%M%SZ")
+        end_datetime = self.end_datetime().strftime("%Y%m%dT%H%M%SZ")
         return f"https://www.google.com/calendar/render?action=TEMPLATE&text={self.name}&details={self.description}&location={self.venue}&dates={start_datetime}%2F{end_datetime}"
 
     @classmethod
