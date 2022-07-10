@@ -20,7 +20,6 @@
             </h1>
             <div class="event-date">
               <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
-              <a target="_blank" href="{{ event.get_google_calendar_url }}">Añadir a Google Calendar</a>
             </div>
             {% if event.venue %}
               <div class="event-location">
