@@ -1,7 +1,7 @@
 colorama==0.4.4
 MarkupPy==1.14
 pyyaml==5.4
-django==3.2.13
+django==3.2.15
 django-colorfield==0.1.15
 django-import-export==2.7.1
 django-leaflet==0.28.0
