@@ -53,6 +53,9 @@ Usamos **Redis** para algunos servicios. Sigue estas indicaciones para confirgur
 1. Instala [Redis](https://redis.io/download).
 2. Ejecuta `run-rq.sh`
 
+Para saber más sobre la configuración y uso de Redis, puedes leer
+[./uso-de-redis.md](redis.md)
+
 ## Notificaciones
 
 Tenemos una app de Django para enviar notificaciones por email. Para enviar estas notificaciones, es necesario ejecutar el script `run-notices.sh` periódicamente (por ejemplo diariamente) a través de cron.

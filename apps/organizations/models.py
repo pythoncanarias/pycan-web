@@ -63,12 +63,12 @@ class Organization(models.Model):
 
 
 def clear_organization_cache(sender, **kwargs):
-    """Limpia la cache de la informacion sobre la organizacion.
+    """Limpia la cache de la información sobre la organización.
 
-    Ver commons.content_procesors.main_organization_data.
+    Ver `commons.content_procesors.main_organization_data`.
 
-    Cada vez que se almacene informacion en la tabla de organizaciones,
-    se elmimina la cache.
+    Cada vez que se almacene o modifique información en la tabla de organizaciones,
+    se borra la cache.
     """
     key = 'organizations.organization'
     cache.delete(key)
