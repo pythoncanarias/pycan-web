@@ -26,7 +26,7 @@ español, y reservar el inglés solo para las cuestiones que atañan al código
 directamente.
 
 Por tanto, si quieres aportar en las secciones de documentación, aunque
-encuentres el texto en inglés, puedes incluir lo nuevo es español, ya que la
+encuentres el texto en inglés, puedes incluir lo nuevo en español, ya que la
 idea es ir traduciendo todos esos documentos hasta conseguir el estado mostrado
 en la siguiente tabla:
 
@@ -96,7 +96,7 @@ antes de que se venza su permanencia a la organización.
 En la clase `apps.notice.models.Notice` se definen algunos métodos, pero
 solo aquellos que afectan o cambian el estado del propio modelo, sin
 ninguna tercera parte implicada. En concreto, no existe un método
-para enviar la notificación en si.
+para enviar la notificación en sí.
 
 Este acto de enviar la notificación está implementado por separado, dentro del
 módulo `apps.notica.tasks`, primero porque es relativamente complejo y segundo,
@@ -104,7 +104,7 @@ e incluso más importante, porque involucra a más elementos que el `notice` en
 cuestión: implica saber de la existencia de un sistema de colas, del subsistema
 de envío de mensajes ([sendgrid](https://sendgrid.com/) en nuestro caso), etc.
 
-En resumen, se recomiendo que las clases definan métodos unicamente para
+En resumen, se recomienda que las clases definan métodos unicamente para
 consultar o cambiar su estado interno, pero que cualquier interacción con
 otras clases o componentes debe realizarse fuera de la clase, preferiblemente
 en un módulo aparte.
@@ -154,8 +154,8 @@ git checkout -b <issue number>-<issue-name>
 ```
 
 En cuanto a los commits, este proyecto sigue la guía definida en
-semantic commit messages la cual se basa en una primera parte dónde explicamos
-que estámos haciendo, el scope. Este puede ser `feat`, `fix`, `docs` entre
+semantic commit messages la cual se basa en una primera parte donde explicamos
+qué estámos haciendo, el scope. Este puede ser `feat`, `fix`, `docs` entre
 otros. Y, a continuación, el mensaje del commit explicativo.
 
 Scopes aceptados:
