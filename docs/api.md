@@ -35,17 +35,17 @@ Que te daría un listado abreviado de todas los eventos activos en la fecha actu
 
 Todas las llamadas tienen como resultado un Json similar a este, en el sentido de que todas son un
 diccionario con, como mínimo, el campo `status`. Si el valor en `status` es `ok`, entonces hay
-tambien una entrada `result`, que contendrá el resultado en si de la llamada, y que podrá ser
+tambien una entrada `result`, que contendrá el resultado en sí de la llamada, y que podrá ser
 cualquier contenido Json válido.
 
 Además, puede que se incluyan _opcionalmente_ como metadatos de la respuesta otras entradas en el
 diccionario principal (en paralelo a las entradas `status` y `result`). En este caso se incluye un
-campo `length`, con valor `1`, inidicando que en el campo de resultados, que es una lista de
+campo `length`, con valor `1`, indicando que en el campo de resultados, que es una lista de
 eventos, solo hay uno.
 
-El otro valor posible de `status` es cuando hay algun error, en ese caso su valor es el literal
-`error`, el campo `result` **NO** esta, y en su lugar hay una entrada `message` con una descripción
-del problema que ocasionó el error. Por ejemplo, si intentamos obtener informacion de un evento
+El otro valor posible de `status` es cuando hay algún error, en ese caso su valor es el literal
+`error`, el campo `result` **NO** está, y en su lugar hay una entrada `message` con una descripción
+del problema que ocasionó el error. Por ejemplo, si intentamos obtener información de un evento
 inexistente:
 
 ```
@@ -90,7 +90,7 @@ Si realizamos una consulta a dicha dirección, obtenemos el siguiente resultado:
 
 y ahora se puede elegir si quieres obtener las charlas ordenadas por ponente (Ordenadas
 alfabéticamente por nombre del ponente) en `/api/v1/events/PyDayGC19/speakers/`, por las charlas,
-(ordenadas alfabeticamente por título) `/api/v1/events/PyDayGC19/talks/` o agrupada por tracks (y
+(ordenadas alfabéticamente por título) `/api/v1/events/PyDayGC19/talks/` o agrupada por tracks (y
 ordenada por horas), en: `/api/v1/events/PyDayGC19/tracks/`.
 
 Por ejemplo, esta es una versión recortada de la consulta por ponentes:
@@ -161,7 +161,7 @@ Por ejemplo, esta es una versión recortada de la consulta por ponentes:
 ```
 
 Además, puedes usar la llamada en la entrada `venue` para obtener información sobre la localización
-del evento, incluyendo (Si está en la base de datos), la latitud y longitud de la
+del evento, incluyendo (si está en la base de datos), la latitud y longitud de la
 ubicación. En este caso, la llamada `/api/v1/venues/cdtic-innovacion-turistica/` devolverá:
 
 ```JSON
