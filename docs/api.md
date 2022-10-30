@@ -4,14 +4,14 @@ Por el momento la API solo sirve para obtener informacion de eventos.
 
 ### API para eventos
 
-Con la API de eventos, como queremos que se pueda usar para cualquier eventos, la primera llamada a
+Con la API de eventos, como queremos que se pueda usar para cualquier evento, la primera llamada a
 hacer sería:
 
 ```
     https://pythoncanarias.es/api/v1/events/
 ```
 
-Que te daría un listado abreviado de todas los eventos activos en la fecha actual. En este mommento
+Que te daría un listado abreviado de todas los eventos activos en la fecha actual. En este momento
 (11/oct/2019), la llamada devuelve el siguiente json:
 
 ```JSON
@@ -35,7 +35,7 @@ Que te daría un listado abreviado de todas los eventos activos en la fecha actu
 
 Todas las llamadas tienen como resultado un Json similar a este, en el sentido de que todas son un
 diccionario con, como mínimo, el campo `status`. Si el valor en `status` es `ok`, entonces hay
-tambien una entrada `result`, que contendrá el resultado en sí de la llamada, y que podrá ser
+también una entrada `result`, que contendrá el resultado en sí de la llamada, y que podrá ser
 cualquier contenido Json válido.
 
 Además, puede que se incluyan _opcionalmente_ como metadatos de la respuesta otras entradas en el
