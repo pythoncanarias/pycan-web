@@ -7,5 +7,6 @@
 {% endblock style %}
 
 {% block js %}
+{{ block.super }}
   <script src="{{ assets|get_asset_key:'jobs/custom.min.js' }}"></script>
 {% endblock js %}
