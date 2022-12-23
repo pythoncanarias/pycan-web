@@ -15,6 +15,7 @@
 {% endblock style %}
 
 {% block js %}
+  {{ block.super }}
   <script src="{{ assets|get_asset_key:'events/custom.min.js' }}"></script>
 
   {% leaflet_js %}
