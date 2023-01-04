@@ -28,6 +28,7 @@
           <li>{{ organization.rest_address }}</li>
           {% endif %}
           <li>{{ organization.postal_code }}, {{ organization.city }}</li>
+          <li>{{ organization.phone }}</li>
           <li><a href="mailto:{{ organization.email }}">{{ organization.email }}</a></li>
           <li><a href="{% url 'about:index' %}">Sobre la asociación</a></li>
         </ul>
