@@ -12,9 +12,9 @@
 
 <p>En esta sección podrás encontrar <strong>recursos de aprendizaje Python</strong>. Están clasificados por etiquetas:</p>
 
-<ul>
+<ul class="display: flex; flex-wrap: wrap">
   {% for label in labels %}
-    <li>
+    <li class="padding: 5px 5px 5px 0px">
         <a class="label"
            style="background-color: #{{ label.color }}; color: #{{ label.foreground_color }}"
            href="{% url "learn:resources_by_label" label=label %}">
