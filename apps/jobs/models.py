@@ -99,8 +99,8 @@ class JobOffer(models.Model):
     def save(self, *args, **kwargs):
         already_exists = self.pk is not None
         super().save(*args, **kwargs)
+        ''' tweepy.error.TweepError: [{'message': 'You currently have access to a subset of Twitter API v2 endpoints and limited v1.1 endpoints (e.g. media post, oauth) only. If you need access to this endpoint, you may need a different access level. You can learn more here: https://developer.twitter.com/en/portal/product', 'code': 453}]
         if not already_exists and self.approved:
-            # tweepy.error.TweepError: [{'message': 'You currently have access to a subset of Twitter API v2 endpoints and limited v1.1 endpoints (e.g. media post, oauth) only. If you need access to this endpoint, you may need a different access level. You can learn more here: https://developer.twitter.com/en/portal/product', 'code': 453}]
-            # t = Twitter()
+            t = Twitter()
             msg = f'💼  Oferta de empleo: {self} {self.get_full_url()}'
-            t.post(msg)
+            t.post(msg)'''
