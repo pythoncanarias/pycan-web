@@ -9,6 +9,10 @@ admin_url = 'admin' if settings.DEBUG else 'python-canarias-admin-zone'
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
+    path(
+        f'{admin_url}/dashboard/',
+        include('apps.dashboard.urls', namespace='dashboard'),
+        ),
     path(f'{admin_url}/', admin.site.urls),
     path('api/', include('apps.api.urls', namespace='api')),
     path('django-rq/', include('django_rq.urls')),
