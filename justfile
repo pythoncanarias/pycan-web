@@ -1,7 +1,12 @@
 # Ejecutar comprobaciones del proyecto Django + Flake8 + Vulture
 check:
     python manage.py check
+    python manage.py validate_templates
     flake8 --count **/*.py
+
+# Detectar código sospechoso, confuso o incompatible
+lint:
+    ruff --quiet .
     vulture .
 
 
