@@ -36,3 +36,23 @@ class Certificate(models.Model):
 
     def __str__(self):
         return str(self.description)
+
+
+class Attendee(models.Model):
+
+    class Meta:
+        verbose_name = 'asistente'
+        verbose_name_plural = 'asistentes'
+        ordering = ['name', 'surname']
+
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.PROTECT,
+        related_name="Attendees",
+        help_text='Attendee event',
+        )
+    name = models.CharField(max_length=256)
+    surname = models.CharField(max_length=384)
+
+    def __str__(self):
+        return '{self.name} {self.surname} asiste a {self.event}'
