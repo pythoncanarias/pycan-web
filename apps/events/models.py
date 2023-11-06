@@ -110,7 +110,12 @@ class Event(models.Model):
     def get_google_calendar_url(self):
         start_datetime = self.start_datetime().strftime("%Y%m%dT%H%M%SZ")
         end_datetime = self.end_datetime().strftime("%Y%m%dT%H%M%SZ")
-        return f"https://www.google.com/calendar/render?action=TEMPLATE&text={self.name}&details={self.description}&location={self.venue}&dates={start_datetime}%2F{end_datetime}"
+        return (
+            "https://www.google.com/calendar/render?action=TEMPLATE"
+            f"&text={self.name}&details={self.description}"
+            f"&location={self.venue}"
+            f"&dates={start_datetime}%2F{end_datetime}"
+            )
 
     @classmethod
     def get_by_slug(cls, slug):
@@ -327,7 +332,7 @@ class Event(models.Model):
 
 class Badge(models.Model):
     event = models.ForeignKey("events.Event", on_delete=models.CASCADE)
-    base_image = models.ImageField(upload_to=f"events/badges/", blank=False)
+    base_image = models.ImageField(upload_to="events/badges/", blank=False)
     # Coordinates start from the top-left corner
     name_coordinates = models.CharField(
         max_length=255,
