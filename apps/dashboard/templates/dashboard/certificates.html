@@ -17,6 +17,11 @@
       </small>
     {% endif %}
   </td>
+  <td>
+      <a href="{% url 'dashboard:attendees' pk=event.pk %}" role="button" class="button">  
+      Certificados
+      </a>
+  </td>
 </tr>
 {% endfor %}
 

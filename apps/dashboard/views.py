@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 from django.shortcuts import render
+
+from apps.certificates.models import Attendee
 from apps.events.models import Event
-from apps.members.models import Membership
 from apps.jobs.models import JobOffer
+from apps.members.models import Membership
 from apps.quotes.models import Quote
 
 
@@ -28,4 +30,13 @@ def certificates(request):
     return render(request, "dashboard/certificates.html", {
         'events': events,
         'num_events': events.count(),
+        })
+
+
+def attendees(request, pk, *args, **kwargs):
+    event = Event.load_event(pk)
+    attendees = Attendee.objects.filter(event=event)
+    return render(request, "dashboard/attendees.html", {
+        'event': event,
+        'attendees': attendees,
         })

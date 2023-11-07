@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
+from functools import partial
+from typing import Optional
 import datetime
 import locale
 import os
 import uuid
-from functools import partial
 
 from colorfield.fields import ColorField
 from django.conf import settings
@@ -19,7 +20,6 @@ from apps.organizations.models import OrganizationRole
 from apps.schedule.models import Track
 from apps.speakers.models import Speaker
 from apps.tickets.models import Ticket
-
 from . import time_utils
 
 
@@ -84,6 +84,16 @@ class Event(models.Model):
         help_text="End of Call for Papers period (This day is not included)",
     )
 
+    @classmethod
+    def load_event(cls, pk: int):
+        try:
+            return cls.objects.get(pk=pk)
+        except cls.DoesNotExist:
+            return None
+
+    def __str__(self):
+        return self.name
+
     def call_for_paper_is_open(self) -> bool:
         """Returns True if it is possible to present a proposal for the event."""
         if self.cfp_start_at is None:
@@ -92,9 +102,6 @@ class Event(models.Model):
         if self.cfp_stop_at is None:
             return self.cfp_start_at <= now
         return self.cfp_start_at <= now < self.cfp_stop_at
-
-    def __str__(self):
-        return self.name
 
     @property
     def slug(self):
