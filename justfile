@@ -18,8 +18,8 @@ clean:
 
 
 # Ejecuta las migraciones pendientes"
-migrate:
-    python manage.py migrate
+migrate *args='':
+    python manage.py migrate {{ args }}
 
 
 # Ejecutar el servidor en modo producción

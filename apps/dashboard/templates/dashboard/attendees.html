@@ -1,0 +1,35 @@
+{% extends "dashboard/base.html" %}
+{% load utils %}
+
+{%block content %}
+
+<p>Seleccione el asistente al evento <b>{{ event.name }}:</b></p>
+
+<nav class="panel is-primary">
+    <p class="panel-heading">Asistentes</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id.</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for attendee in attendees %}
+    <tr>
+    <td>{{ attendee.pk }}</td>
+    <td>
+        <b>{{ attendee.name }}</b>
+    </td>
+    <td>
+        <b>{{ attendee.surname }}</b>
+    </td>
+    </tr>
+    {% endfor %}
+        </tbody>
+
+    </table>
+</nav>
+
+{% endblock content %}
