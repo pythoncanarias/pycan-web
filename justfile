@@ -47,3 +47,12 @@ static:
 # [Re]crear el fichero ctags
 tags:
     ctags -R --exclude=@ctags-exclude-names.txt .
+
+# Álias a showmigrations (Mostrar las migraciones)
+sm *args='':
+    python ./manage.py showmigrations {{ args }}
+
+
+# Álias a makemigrations (Crear migraciones a partir de cambios en los modelos)
+mm *args='':
+    python ./manage.py makemigrations {{ args }}
