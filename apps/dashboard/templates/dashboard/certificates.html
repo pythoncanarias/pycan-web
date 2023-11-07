@@ -1,0 +1,25 @@
+{% extends "dashboard/base.html" %}
+{% load utils %}
+
+{%block content %}
+
+<p>Hay {{ num_events }} en la base de datos</p>
+
+<table class="table">
+{% for event in events %}
+<tr>
+  <td>{{ event.slug }}</td>
+  <td>
+    <b>{{ event.name }}</b>
+    {% if event.description %}
+      <small>
+        {{ event.description|as_markdown }}
+      </small>
+    {% endif %}
+  </td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock content %}

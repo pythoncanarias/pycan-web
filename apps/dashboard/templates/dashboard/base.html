@@ -13,42 +13,23 @@
   </head>
   <body>
   {% include "dashboard/includes/navbar.html" %}
-  {% include "dashboard/includes/sidebar.html" %}
-  <main class="main">
-      
 
+  <div class="columns displaced">
+   <div class="column is-one-fifth">
+    {% include "dashboard/includes/sidebar.html" %}
+   </div>
+
+   <div class="column">
+     <main>
     {% block content %}
 
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">329</p>
-            <p class="subtitle">Total Visits</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">+20 %</p>
-            <p class="subtitle">Total Page Views</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">201</p>
-            <p class="subtitle">Unique Visitor</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">12 %</p>
-            <p class="subtitle">Purchases</p>
-          </article>
-        </div>
-      </div>
-        
+
   {% endblock content %}
   </main>
 
+  </div>
+
+  <hr>
 
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 </body>

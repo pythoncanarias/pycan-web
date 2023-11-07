@@ -111,8 +111,7 @@ class Footer(BaseReport):
         # message
         start_x += 5 * mm
         self.canvas.setFont('bold', 10)
-        self.canvas.drawString(start_x, start_y,
-                               f'Comparte el evento con:')
+        self.canvas.drawString(start_x, start_y, 'Comparte el evento con:')
         # hashtag
         start_x += 38 * mm
         self.canvas.setFont('fira', 9)

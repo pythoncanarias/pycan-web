@@ -1,5 +1,34 @@
 {% extends "dashboard/base.html" %}
 
 {% block content %}
-<p><a href="#" role="button" class="button">Generar certificados de asistencia</a></p>
+
+      <div class="tile is-ancestor">
+        <div class="tile is-parent">
+          <article class="tile is-child box">
+            <p class="title">{{ num_members }}</p>
+            <p class="subtitle">Miembros</p>
+          </article>
+        </div>
+        <div class="tile is-parent">
+          <article class="tile is-child box">
+            <p class="title">{{ num_events }}</p>
+            <p class="subtitle">Eventos realizados</p>
+          </article>
+        </div>
+        <div class="tile is-parent">
+          <article class="tile is-child box">
+            <p class="title">{{ num_jobs }}</p>
+            <p class="subtitle">Ofertas de trabajo</p>
+          </article>
+        </div>
+        <div class="tile is-parent">
+          <article class="tile is-child box">
+            <p class="title">{{ num_quotes }}</p>
+            <p class="subtitle">Citas</p>
+          </article>
+        </div>
+      </div>
+
+
+<p><a href="{% url 'dashboard:certificates' %}" role="button" class="button">Generar certificados de asistencia</a></p>
 {% endblock content %}

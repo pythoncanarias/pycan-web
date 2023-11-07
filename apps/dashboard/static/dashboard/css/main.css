@@ -1,13 +1,10 @@
 html {
   overflow-y: auto;
-}
-
-body {
     --font-color: #ffffff;
     --font-dark-color: #949ba2;
     --font-darker-color: #5b646d;
     --highlight-color: #ffa500;
-    --main-color: #2e323b;
+    --main-color: #f0f0f0;
 
     --light-color: lighten($main-color, 3%);
     --dark-color: darken(var(--main-color), 3%);
@@ -25,249 +22,31 @@ body {
   background-color: var(--main-color);
 }
 
-.sidebar {
-  padding-left: calc(var(--padding) - 0.75rem);
-  padding-right: calc(var(--padding) - 0.75rem);
-  position: absolute;
-  
-  border: 1px dotted green;
-  background-color: coral;
-
-
-  .category-header {
-    padding: 0.5em 0.75em;
-  }
-
-  .menu {
-    position: fixed;
-    width: calc(var(--sidebar-width) - 2.5rem);
-    max-width: inherit;
-  }
-  .menu-list a {
-    font-size: 0.875rem;
-    line-height: 24px;
-    color: var(--font-dark-color);
-  }
+#logo {
+    width: 48px;
+    height: 48px;
+    min-height: 48!important;
+    max-height: none!important;
+    vertical-align: baseline;
 }
 
-.sidebar:before {
-  content: "";
-  background-color: var(--dark-color);
-  width: var(--sidebar-width);
-  position: fixed;
+.menu {
+    z-index: 10;
+    background-color: transparent;
+    /*border-right: 4px dotted red;*/
 }
 
-.sidebar,
-.sidebar:before {
-  top: 0;
-  bottom: 0;
-  left: 0;
+
+
+nav:hover {
+    background-color: #E8E8E8;
 }
 
-.main {
-  margin-left: var(--sidebar-width);
-  position: relative;
-  padding-left: var(--padding);
-  padding-right: var(--padding);
-  header {
-    line-height: 18px;
-    h2 {
-      font-size: 24px;
-      font-weight: 600;
-      padding-bottom: 0.5rem;
-    }
-    hr {
-      background-color: transparent;
-      border-top: 1px solid var(--lighter-color);
-    }
-    small {
-      color: var(--font-dark-color);
-      text-align: right;
-    }
-  }
-}
-.main:before {
-  content: "";
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: -2;
-  left: 0;
-  right: 0;
-  background-image: -webkit-radial-gradient(
-    top,
-    circle cover,
-    var(--gradient-color-start) 0%,
-    var(--gradient-color-end) 70%
-  );
-  background-image: -moz-radial-gradient(
-    center,
-    circle cover,
-    var(--gradient-color-start) 0%,
-    var(--gradient-color-end) 70%
-  );
-  background-image: -o-radial-gradient(
-    center,
-    circle cover,
-    var(--gradient-color-start) 0%,
-    var(--gradient-color-end) 70%
-  );
-  background-image: radial-gradient(
-    center,
-    circle cover,
-    var(--gradient-color-start) 0%,
-    var(--gradient-color-end) 70%
-  );
-  background-position: 50%, 50%;
+nav.navbar {
+    box-shadow: 0 4px 22px #323232;
+    border-bottom: 2px solid #CCCCCC;
 }
 
-.sidebar,
-.main {
-  margin-top: var(--header-height);
-  padding-top: var(--padding);
+.displaced {
+    margin-top: 100px;
 }
-
-.navbar {
-  box-shadow: 0px 0px 21px var(--darker-color);
-}
-.navbar-brand {
-  width: var(--sidebar-width);
-  background-color: var(--highlight-color);
-  margin-right: calc(var(--padding) - 0.75rem);
-  .navbar-item {
-    padding-left: var(--padding);
-  }
-}
-
-.box {
-  hr {
-    background-color: var(--lighter-color);
-  }
-}
-.box.transparent {
-  background-color: transparent;
-}
-.box.accent {
-  background-color: var(--highlight-color);
-  .subtitle {
-    color: $font-color;
-  }
-}
-
-.statcard {
-  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-align: center;
-  .statcard-number {
-    font-size: 2rem;
-    font-weight: 300;
-    line-height: 1.125;
-  }
-  .statcard-desc {
-    font-size: 85%;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--font-dark-color);
-  }
-  .delta-indicator {
-  display: inline-block;
-  padding: .4em;
-  font-size: 12px;
-  vertical-align: middle; 
-  }
-  .delta-indicator:after {
-    content: "";
-    display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: 2px;
-    margin-left: 2px;
-    vertical-align: middle;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent; 
-  }
-  
-}
-
-/* overwrite bulma, try to resolve with variables */
-
-.box {
-  background-color: var(--lighter-color);
-  box-shadow: none;
-  border-radius: 3px;
-}
-
-.content h1,
-.content h2,
-.content h3,
-.content h4,
-.content h5,
-.content h6,
-.title,
-.tile {
-  color: $font-color;
-}
-
-.subtitle {
-  color: var(--font-dark-color);
-}
-
-.navbar-item.is-tab:hover {
-  background-color: transparent;
-  border-bottom-color: var(--font-dark-color);
-}
-
-.navbar-item.is-tab {
-  border-bottom: 3px solid transparent;
-  min-height: 3.25rem;
-  padding-bottom: calc(0.5rem - 1px);
-}
-
-a.navbar-item:hover {
-  color: var(--darker-color);
-}
-
-.breadcrumb li + li::before,
-.breadcrumb li a {
-  color: var(--font-darker-color);
-}
-
-.breadcrumb li a:hover,
-.breadcrumb li.is-active a {
-  color: $font-color;
-}
-
-.tabs ul {
-  border-bottom-color: var(--font-darker-color);
-}
-
-.tabs li.is-active a {
-  border-bottom-color: $font-color;
-  color: $font-color;
-}
-
-.tabs a {
-  border-bottom-color: var(--font-darker-color);
-  color: var(--font-dark-color);
-}
-
-.tabs a:hover {
-  border-bottom-color: $font-color;
-  color: $font-color;
-}
-
-.pagination-link,
-.pagination-next,
-.pagination-previous {
-  border-color: var(--font-dark-color);
-  color: var(--font-dark-color);
-}
-
-.pagination-link.is-current,
-.pagination-link:hover,
-.pagination-next:hover,
-.pagination-previous:hover {
-  background-color: transparent;
-  border-color: $font-color;
-  color: $font-color;
-}
-

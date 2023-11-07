@@ -1,5 +1,6 @@
 import datetime
 
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -11,6 +12,8 @@ from .constants import (
     MEMBER_POSITION,
 )
 
+def just_today():
+    return timezone.now().date()
 
 class Member(models.Model):
 
@@ -60,7 +63,7 @@ class Member(models.Model):
         if last_membership is None:
             return False
         valid_until = last_membership.valid_until
-        return valid_until is None or datetime.date.today() <= valid_until
+        return valid_until is None or just_today() <= valid_until
 
 
 class Position(models.Model):
@@ -91,10 +94,14 @@ class Position(models.Model):
 
     @property
     def active(self):
-        return self.until is None or datetime.date.today() <= self.until
+        return self.until is None or just_today() <= self.until
 
 
 class Membership(models.Model):
+
+    class Meta:
+        ordering = ('valid_from', 'member')
+
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
     valid_from = models.DateField()
     valid_until = models.DateField(blank=True, null=True)
@@ -114,8 +121,16 @@ class Membership(models.Model):
     def __str__(self):
         return f'{self.member.full_name} from {self.valid_from}'
 
-    class Meta:
-        ordering = ('valid_from', 'member')
+    @classmethod
+    def num_active_members(cls):
+        today = just_today()
+        return (
+            cls.objects
+            .filter(valid_from__lte=today)
+            .filter(valid_until__gt=today)
+            .count()
+            )
+
 
     def save(self, *args, **kwargs):
         if self.valid_until is None:
