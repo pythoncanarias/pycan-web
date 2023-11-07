@@ -22,6 +22,10 @@ urlpatterns = [
     path('members/', include('apps.members.urls', namespace='members')),
     path('jobs/', include('apps.jobs.urls', namespace='jobs')),
     path('learn/', include('apps.learn.urls', namespace='learn')),
+    path(
+        'certificates/',
+        include('apps.certificates.urls', namespace='certificates'),
+        ),
 ]
 
 if settings.DEBUG:
