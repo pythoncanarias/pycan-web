@@ -48,11 +48,28 @@ class Attendee(models.Model):
     event = models.ForeignKey(
         Event,
         on_delete=models.PROTECT,
-        related_name="Attendees",
-        help_text='Attendee event',
+        related_name="attendees",
+        verbose_name='Evento',
+        help_text='Evento al que asistió',
         )
-    name = models.CharField(max_length=256)
-    surname = models.CharField(max_length=384)
+    name = models.CharField(
+        verbose_name='Nombre',
+        help_text='Nombre propio',
+        max_length=256,
+        )
+    surname = models.CharField(
+        verbose_name='Apellidos',
+        help_text='Apellidos',
+        max_length=384,
+        )
+    email = models.EmailField(
+        verbose_name='E-Mail',
+        help_text='Correo electrónico al que remitir el certificado',
+        max_length=256,
+        blank=True,
+        null=True,
+        default=None,
+        )
 
     def __str__(self):
-        return '{self.name} {self.surname} asiste a {self.event}'
+        return f'{self.name} {self.surname} asiste a {self.event}'
