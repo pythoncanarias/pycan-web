@@ -3,28 +3,38 @@
 
 {%block content %}
 
-<p>Hay {{ num_events }} en la base de datos</p>
+<h2 class="title">Hay {{ num_certificates }} certificados</h2>
+{% if subtitle %}
+<h3 class="subtitle">{{ subtitle }}</h3>
+{% endif %}
 
-<table class="table">
-{% for event in events %}
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th colspan="2">Asistente</th>
+      <th>Email</th>
+      <th>Evento</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+
+{% for attendee in attendees %}
 <tr>
-  <td>{{ event.slug }}</td>
+  <td>{{ attendee.name }}</td>
+  <td>{{ attendee.surname }}</td>
+  <td>{{ attendee.email }}</td>
+  <td>{{ attendee.event }}</td>
   <td>
-    <b>{{ event.name }}</b>
-    {% if event.description %}
-      <small>
-        {{ event.description|as_markdown }}
-      </small>
-    {% endif %}
-  </td>
-  <td>
-      <a href="{% url 'dashboard:attendees' pk=event.pk %}" role="button" class="button">  
-      Certificados
-      </a>
+      {% comment %}<a href="{% url 'dashboard:issue_certificates' id_attendee=attendee.pk %}"{% endcomment %}
+        {% comment %}role="button" class="button is-primary">{% endcomment %}
+      Expedir Certificado
+      {% comment %}</a>{% endcomment %}
   </td>
 </tr>
 {% endfor %}
 
+  </tbody>
 </table>
 
 {% endblock content %}

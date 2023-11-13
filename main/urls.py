@@ -5,15 +5,12 @@ from django.urls import include, path
 
 from apps.homepage import views
 
-admin_url = 'admin' if settings.DEBUG else 'python-canarias-admin-zone'
+
+ADMIN_URL = 'admin/' if settings.DEBUG else 'python-canarias-admin-zone/'
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
-    path(
-        f'{admin_url}/dashboard/',
-        include('apps.dashboard.urls', namespace='dashboard'),
-        ),
-    path(f'{admin_url}/', admin.site.urls),
+    path(ADMIN_URL, admin.site.urls),
     path('api/', include('apps.api.urls', namespace='api')),
     path('django-rq/', include('django_rq.urls')),
     path('events/', include('apps.events.urls', namespace='events')),
@@ -22,10 +19,8 @@ urlpatterns = [
     path('members/', include('apps.members.urls', namespace='members')),
     path('jobs/', include('apps.jobs.urls', namespace='jobs')),
     path('learn/', include('apps.learn.urls', namespace='learn')),
-    path(
-        'certificates/',
-        include('apps.certificates.urls', namespace='certificates'),
-        ),
+    path('dashboard/', include('apps.dashboard.urls', namespace='dashboard')),
+    path('certificates/', include('apps.certificates.urls', namespace='certificates')),
 ]
 
 if settings.DEBUG:

@@ -125,8 +125,14 @@ class Attendee(models.Model):
         except cls.DoesNotExist:
             return None
 
+    def full_name(self):
+        return f'{self.name} {self.surname}'
+
     def __str__(self):
-        return f'{self.name} {self.surname} asiste a {self.event}'
+        return f'{self.full_name()} asiste a {self.event}'
+
+    def is_issued(self):
+        return self.pdf and self.issued_at
 
 
 def svg_to_pdf(svg_filename, pdf_filename):

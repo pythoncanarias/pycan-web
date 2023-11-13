@@ -1,0 +1,30 @@
+{% extends "dashboard/base.html" %}
+{% load utils %}
+
+{%block content %}
+
+<h2 class="title">Emitir certificado de asistencia</h2>
+<h3 class="subtitle">{{ attendee.full_name }}<h3>
+<h3 class="subtitl">{{ attendee.event.description }}</h3>
+
+<p class="mb-3">Seleccione el certificado a expedir:</p>
+
+<div class="buttons">
+  {% for certificate in certificates %}
+  <p>
+  <a href="{% url 'dashboard:issue_certificate_attendee' id_certificate=certificate.pk id_attendee=attendee.pk %}"
+     class="button is-primary" role="button">
+      {{ certificate.description }}
+     </a>
+     {% if attendee.uuid %}
+     <span class="tag is-danger">
+       Ya tiene un certificado
+     </span>
+
+     {% endif %}
+    </p>
+  {% endfor %}
+
+</div>
+
+{% endblock content %}

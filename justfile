@@ -43,6 +43,9 @@ static:
     #sass --sourcemap=none bulma/custom.scss:commons/static/commons/vendor.min.css
     #sass --sourcemap=none about/static/about/css/main.scss:about/static/about/custom.min.css
 
+# Actualiza en caliente contenidos estaticos js/css/png/svg
+watch: static
+    watchmedo shell-command  --patterns "*.css;*.js;*.png;*.jpg;*.webp;*.svg" --recursive --command "just static"
 
 # [Re]crear el fichero ctags
 tags:

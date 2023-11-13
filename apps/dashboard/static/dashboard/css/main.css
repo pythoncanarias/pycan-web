@@ -33,7 +33,7 @@ html {
 .menu {
     z-index: 10;
     background-color: transparent;
-    /*border-right: 4px dotted red;*/
+    border-right: 2px solid red;
 }
 
 

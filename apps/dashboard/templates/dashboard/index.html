@@ -2,33 +2,70 @@
 
 {% block content %}
 
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">{{ num_members }}</p>
-            <p class="subtitle">Miembros</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">{{ num_events }}</p>
-            <p class="subtitle">Eventos realizados</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">{{ num_jobs }}</p>
-            <p class="subtitle">Ofertas de trabajo</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">{{ num_quotes }}</p>
-            <p class="subtitle">Citas</p>
-          </article>
-        </div>
+
+<div class="columns is-multiline is-parent">
+
+      <div class="column is-child is-half-mobile is-one-third-tablet">
+          <div class="tile is-primary notification is-vertical has-text-centered">
+            <p class="title is-size-1">
+              {{ num_members }}
+            </p>
+            <p class="subtitle">
+              <a href="{% url 'dashboard:list_members' %}">Socios</a>
+            </p>
+          </div>
       </div>
 
+      <div class="column is-child is-half-mobile is-one-third-tablet">
+          <div class="tile is-primary notification is-vertical has-text-centered">
+            <p class="title is-size-1">
+              {{ num_events }}
+            </p>
+            <p class="subtitle">Eventos realizados</p>
+          </div>
+      </div>
 
-<p><a href="{% url 'dashboard:certificates' %}" role="button" class="button">Generar certificados de asistencia</a></p>
+      <div class="column is-half-mobile is-one-third-tablet">
+          <article class="tile is-primary notification is-vertical has-text-centered">
+            <p class="title is-size-1">
+              {{ num_jobs }}
+            </p>
+            <p class="subtitle">
+              Ofertas de trabajo
+            </p>
+          </article>
+      </div>
+
+      <div class="column is-half-mobile is-one-third-tablet">
+          <article class="tile is-primary notification is-vertical has-text-centered">
+            <p class="title is-size-1">{{ num_quotes }}</p>
+            <p class="subtitle">Citas</p>
+          </article>
+      </div>
+
+      <div class="column is-half-mobile is-one-third-tablet">
+          <article class="tile is-warning notification is-vertical has-text-centered">
+            <p class="title is-warning is-size-1">{{ total_certificates }}</p>
+            <p class="subtitle">
+              <a href="{% url 'dashboard:all_certificates' %}">
+                Todos los certificados
+              </a>
+            </p>
+          </article>
+      </div>
+
+      <div class="column is-half-mobile is-one-third-tablet">
+        <article class="tile is-{% if pending_certificates == 0 %}primary{% else %}danger{% endif %} notification is-vertical has-text-centered">
+            <p class="title is-size-1">{{ pending_certificates }}</p>
+            <p class="subtitle">
+              <a href="{% url 'dashboard:list_certificates' %}">
+                Certificados pendientes
+              </a>
+            </p>
+          </article>
+      </div>
+
+</div>
+
+
 {% endblock content %}
