@@ -1,0 +1,40 @@
+{% extends "dashboard/base.html" %}
+{% load utils %}
+
+{%block content %}
+
+<h2 class="title">{{ title }}</h2>
+{% if subtitle %}
+<h3 class="subtitle">{{ subtitle }}</h3>
+{% endif %}
+
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th>Id. Evento</th>
+      <th>Descripcion</th>
+      <th>Activo<th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for event in events %}
+<tr>
+  <td>
+    <a href="{% url 'admin:events_event_change' event.pk %}"
+       role="button" class="button is-primary">
+    {{ event.hashtag }}
+    </a>
+  </td>
+  <td>
+    <b>{{ event.name }}</b><br>
+    {{ event.description }}</td>
+  <td>{{ event.active|yesno }}</td>
+</tr>
+{% endfor %}
+
+  </tbody>
+</table>
+
+{% endblock content %}

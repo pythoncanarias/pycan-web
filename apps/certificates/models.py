@@ -45,7 +45,7 @@ class Certificate(models.Model):
     @classmethod
     def load_certificate(cls, pk: int):
         try:
-            return cls.objects.get(pk=pk)
+            return cls.objects.select_related('certificate').get(pk=pk)
         except cls.DoesNotExist:
             return None
 
@@ -55,7 +55,7 @@ class Certificate(models.Model):
 
 def _issued_certificates_upload_to(instance, filename):
     public_filename = f'{instance.uuid}.pdf'
-    return f"events/{instance.event.hashtag}/{public_filename}"
+    return f"events/{instance.certificate.event.hashtag}/{public_filename}"
 
 
 class Attendee(models.Model):
@@ -65,12 +65,12 @@ class Attendee(models.Model):
         verbose_name_plural = 'asistentes'
         ordering = ['name', 'surname']
 
-    event = models.ForeignKey(
-        Event,
+    certificate = models.ForeignKey(
+        Certificate,
         on_delete=models.PROTECT,
         related_name="attendees",
-        verbose_name='Evento',
-        help_text='Evento al que asistió',
+        verbose_name='Certificado que solicita',
+        help_text='Modelo del certificado',
         )
     name = models.CharField(
         verbose_name='Nombre',
@@ -90,12 +90,21 @@ class Attendee(models.Model):
         null=True,
         default=None,
         )
+    extra = models.CharField(
+        verbose_name='Información extra',
+        help_text='Información extra para el cerificado',
+        max_length=512,
+        blank=True,
+        null=True,
+        default=None,
+        )
     uuid = models.UUIDField(
         editable=False,
         default=uuid.uuid4,
         verbose_name='Id. público del certificado',
         )
     pdf = models.FileField(
+        editable=False,
         max_length=512,
         upload_to=_issued_certificates_upload_to,
         help_text='Generated PDF',
@@ -129,11 +138,33 @@ class Attendee(models.Model):
         return f'{self.name} {self.surname}'
 
     def __str__(self):
-        return f'{self.full_name()} asiste a {self.event}'
+        return f'{self.full_name()}/{self.certificate.description}'
 
     def is_issued(self):
         return self.pdf and self.issued_at
 
+    def issue_certificate(self):
+        certificate = self.certificate
+        if self.pdf:
+            if os.path.isfile(self.pdf.path):
+                os.remove(self.pdf.path)
+            self.uuid = uuid.uuid4()
+        data = Context(model_to_dict(self))
+        data['uuid'] = str(self.uuid)
+        with open(certificate.template.path, 'r', encoding='utf-8') as f_in:
+            template = Template(f_in.read())
+        with NamedTemporaryFile(mode='w', encoding='utf-8', suffix=".svg") as f_svg:
+            f_svg.write(template.render(data))
+            f_svg.flush()
+            svg_filename = f_svg.name
+            with NamedTemporaryFile(mode='w', encoding='utf-8', suffix=".pdf") as f_pdf:
+                pdf_filename = f_pdf.name
+                svg_to_pdf(svg_filename, pdf_filename)
+                self.uuid = uuid.uuid4()
+                with open(pdf_filename, 'rb') as doc_file:
+                    self.pdf.save(pdf_filename, File(doc_file), save=True)
+                    self.issued_at = just_now()
+                    self.save()
 
 def svg_to_pdf(svg_filename, pdf_filename):
     subprocess.run([
@@ -144,32 +175,3 @@ def svg_to_pdf(svg_filename, pdf_filename):
         ])
 
 
-def issue_certificate_for_attendee(certificate, attendee):
-
-    if attendee.event != certificate.event:
-        raise ValueError(
-            f'Certificate {certificate}'
-            f'is not available for {attendee}'
-            )
-
-    if attendee.pdf:
-        if os.path.isfile(attendee.pdf.path):
-            os.remove(attendee.pdf.path)
-        attendee.uuid = uuid.uuid4()
-
-    data = Context(model_to_dict(attendee))
-    data['uuid'] = str(attendee.uuid)
-    with open(certificate.template.path, 'r', encoding='utf-8') as f_in:
-        template = Template(f_in.read())
-    with NamedTemporaryFile(mode='w', encoding='utf-8', suffix=".svg") as f_svg:
-        f_svg.write(template.render(data))
-        f_svg.flush()
-        svg_filename = f_svg.name
-        with NamedTemporaryFile(mode='w', encoding='utf-8', suffix=".pdf") as f_pdf:
-            pdf_filename = f_pdf.name
-            svg_to_pdf(svg_filename, pdf_filename)
-            attendee.uuid = uuid.uuid4()
-            with open(pdf_filename, 'rb') as doc_file:
-                attendee.pdf.save(pdf_filename, File(doc_file), save=True)
-                attendee.issued_at = just_now()
-                attendee.save()

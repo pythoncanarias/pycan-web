@@ -5,7 +5,6 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 from apps.certificates.models import Certificate, Attendee
-from apps.certificates.models import issue_certificate_for_attendee
 from apps.events.models import Event
 from apps.jobs.models import JobOffer
 from apps.members.models import Member
@@ -20,6 +19,7 @@ def index(request, *args, **kwargs):
         'num_events': Event.objects.count(),
         'num_jobs': JobOffer.actives.count(),
         'num_quotes': Quote.objects.count(),
+        'num_certificates': Certificate.objects.all().count(),
         'pending_certificates': Attendee.objects.filter(issued_at=None).count(),
         'total_certificates': Attendee.objects.count(),
         })
@@ -32,60 +32,66 @@ def list_members(request, *args, **kwargs):
         })
 
 
-def demo(request):
-    return render(request, 'dashboard/demo.html', {
-        'title': 'Dashboard',
-        })
-
-
-def all_certificates(request):
-    certificates = (
-        Attendee.objects
-        .select_related('event')
-        )
-    return render(request, "dashboard/certificates.html", {
-        'title': 'Todos los certificados',
-        'subtitle': 'Ya emitidos o pendientes',
-        'attendees': certificates.all(),
-        'num_certificates':  certificates.count(),
+def list_events(request, *args, **kwargs):
+    return render(request, 'dashboard/list_events.html', {
+        'title': 'Aventos - Dashboard',
+        'subtitle': 'Todos los events',
+        'events': Event.objects.all(),
         })
 
 
 def list_certificates(request):
-    pending_certificates = (
-        Attendee.objects
-        .filter(issued_at=None)
+    certificates = (
+        Certificate.objects
         .select_related('event')
+        .all()
         )
-    return render(request, "dashboard/certificates.html", {
-        'attendees': pending_certificates.all(),
-        'num_certificates':  pending_certificates.count(),
+    return render(request, "dashboard/list_certificates.html", {
+        'certificates': certificates.all(),
+        'num_certificates':  certificates.count(),
         })
 
 
 def view_certificate(request, id_certificate):
     certificate = Certificate.load_certificate(id_certificate)
-    attendees = certificate.event.attendees.all()
+    attendees = certificate.attendees.all()
     return render(request, "dashboard/attendees.html", {
         'certificate': certificate,
         'attendees': attendees,
         })
 
 
-def issue_certificates(request, id_certificate):
-    attendee = Attendee.load_attendee(id_certificate)
-    certificates = Certificate.objects.filter(event=attendee.event)
-    return render(request, "dashboard/issue_certificates.html", {
-        'title': 'Expedir certificados de asistencia',
-        'attendee': attendee,
-        'certificates': certificates,
+def all_attendees(request):
+    attendees = (
+        Attendee.objects
+        .select_related('certificate')
+        .all()
+        )
+    return render(request, "dashboard/attendees.html", {
+        'title': 'Todos los certificados',
+        'subtitle': 'Ya emitidos o pendientes',
+        'attendees': attendees.all(),
+        'num_attendees':  attendees.count(),
         })
 
 
-def issue_certificate_attendee(request, id_certificate, id_attendee):
+def pending_attendees(request):
+    attendees = (
+        Attendee.objects
+        .select_related('certificate')
+        .filter(issued_at=None)
+        )
+    return render(request, "dashboard/attendees.html", {
+        'title': 'Todos los certificados',
+        'subtitle': 'Pendientes de emisión',
+        'attendees': attendees.all(),
+        'num_attendees':  attendees.count(),
+        })
+
+
+def issue_attendee(request, id_attendee):
     attendee = Attendee.load_attendee(id_attendee)
-    certificate = Certificate.load_certificate(id_certificate)
-    issue_certificate_for_attendee(certificate, attendee)
+    attendee.issue_certificate()
     return redirect(
         reverse(
             'certificates:download',

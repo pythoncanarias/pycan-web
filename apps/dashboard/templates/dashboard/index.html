@@ -21,7 +21,11 @@
             <p class="title is-size-1">
               {{ num_events }}
             </p>
-            <p class="subtitle">Eventos realizados</p>
+            <p class="subtitle">
+              <a href="{% url 'dashboard:list_events' %}">
+              Eventos realizados
+              </a>
+            </p>
           </div>
       </div>
 
@@ -37,9 +41,13 @@
       </div>
 
       <div class="column is-half-mobile is-one-third-tablet">
-          <article class="tile is-primary notification is-vertical has-text-centered">
-            <p class="title is-size-1">{{ num_quotes }}</p>
-            <p class="subtitle">Citas</p>
+          <article class="tile is-warning notification is-vertical has-text-centered">
+            <p class="title is-warning is-size-1">{{ num_certificates }}</p>
+            <p class="subtitle">
+              <a href="{% url 'dashboard:list_certificates' %}">
+                Modelos de certificados
+              </a>
+            </p>
           </article>
       </div>
 
@@ -47,8 +55,8 @@
           <article class="tile is-warning notification is-vertical has-text-centered">
             <p class="title is-warning is-size-1">{{ total_certificates }}</p>
             <p class="subtitle">
-              <a href="{% url 'dashboard:all_certificates' %}">
-                Todos los certificados
+              <a href="{% url 'dashboard:all_attendees' %}">
+                Todos las certificiones
               </a>
             </p>
           </article>
@@ -58,13 +66,19 @@
         <article class="tile is-{% if pending_certificates == 0 %}primary{% else %}danger{% endif %} notification is-vertical has-text-centered">
             <p class="title is-size-1">{{ pending_certificates }}</p>
             <p class="subtitle">
-              <a href="{% url 'dashboard:list_certificates' %}">
+              <a href="{% url 'dashboard:pending_attendees' %}">
                 Certificados pendientes
               </a>
             </p>
           </article>
       </div>
 
+      <div class="column is-half-mobile is-one-third-tablet">
+          <article class="tile is-primary notification is-vertical has-text-centered">
+            <p class="title is-size-1">{{ num_quotes }}</p>
+            <p class="subtitle">Citas</p>
+          </article>
+      </div>
 </div>
 
 
