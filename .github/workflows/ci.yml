@@ -16,5 +16,5 @@ jobs:
           host: pythoncanarias.es
           username: ${{ secrets.PRODUCTION_SSH_USERNAME }}
           key: ${{ secrets.PRODUCTION_SSH_KEY }}
-          script: ~/web && ./deploy.sh
+          script: cd ~/web && ./deploy.sh
           passphrase: ${{ secrets.PASS_PHRASE }}
