@@ -2,7 +2,7 @@
 check:
     python manage.py check
     flake8 --count **/*.py
-    vulture .
+    # vulture . --exclude node_modules/
 
 
 # Borrar ficheros temporales y espurios
@@ -42,3 +42,15 @@ static:
 # [Re]crear el fichero ctags
 tags:
     ctags -R --exclude=@ctags-exclude-names.txt .
+
+# Ejecutar los test pasados como paræmetro (Empezará por el último que haya fallado)
+test *args='.':
+    python3 -m pytest --failed-first -vv -x --log-cli-level=INFO --doctest-modules -m "not slow" {{ args }}
+
+# Muestra información del Harware / S.O. / Python / Django
+info:
+    @echo "This is an {{arch()}} machine"
+    @echo "OS: {{os()}} / {{os_family()}}"
+    python3 -V
+    python3 -c "import django; print(django.__version__)"
+    uptime
