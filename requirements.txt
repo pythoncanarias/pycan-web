@@ -6,7 +6,6 @@ django-colorfield==0.1.15
 django-import-export==2.7.1
 django-leaflet==0.28.0
 django-rq==2.4.1
-jinja2==2.11.3
 markdown2==2.4.0
 odfpy==1.4.1
 openpyxl==3.0.3
