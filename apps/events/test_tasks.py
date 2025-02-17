@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 
-import datetime
+from datetime import datetime as DateTime
 import os
 from unittest.mock import Mock
 
@@ -30,7 +30,7 @@ def test_ticket():
         customer_name="Nombre del comprador",
         customer_surname='Apellidos comprador',
         customer_email='euribates@gmail.com',
-        sold_at=datetime.datetime(2018, 10, 11, 22, 44, 00),
+        sold_at=DateTime(2018, 10, 11, 22, 44, 00),
         keycode='18b0b618-7b9e-4857-9f01-39999424ee3f',
         )
     ticket.article = article

@@ -24,6 +24,7 @@ class Organization(models.Model):
     registration_date = models.DateField(blank=True, null=True)
     registration_number = models.CharField(max_length=50, blank=True)
     paypal_username = models.CharField(max_length=50, blank=True)
+    phone = models.CharField(max_length=32, blank=True)
 
     @classmethod
     def load_main_organization(cls):

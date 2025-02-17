@@ -16,6 +16,8 @@ class Ally(models.Model):
 
     class Meta:
         ordering = ['name']
+        verbose_name = 'Aliado'
+        verbose_name_plural = 'Aliados'
 
 
 class FAQItem(models.Model):

@@ -38,16 +38,10 @@ WORK_MODES = [
 class ActiveJobOfferManager(models.Manager):
     def get_queryset(self):
         today = datetime.date.today()
-        return (
-            super()
-            .get_queryset()
-            .filter(approved=True)
-            .filter(valid_until__gte=today)
-        )
+        return super().get_queryset().filter(approved=True).filter(valid_until__gte=today)
 
 
 class JobOffer(models.Model):
-
     objects = models.Manager()  # The default manager.
     actives = ActiveJobOfferManager()  # Only the active jobs offer
 
@@ -59,9 +53,7 @@ class JobOffer(models.Model):
     employer = models.CharField("Ofertante", max_length=120)
     title = models.CharField("Nombre del puesto", max_length=220)
     description = models.TextField("Texto de la oferta", max_length=2000)
-    salary = models.CharField(
-        "Salario o rango salarial", max_length=80, blank=True
-    )
+    salary = models.CharField("Salario o rango salarial", max_length=80, blank=True)
     contract_type = models.CharField(
         "Tipo de contrato",
         max_length=3,
@@ -107,7 +99,8 @@ class JobOffer(models.Model):
     def save(self, *args, **kwargs):
         already_exists = self.pk is not None
         super().save(*args, **kwargs)
+        ''' tweepy.error.TweepError: [{'message': 'You currently have access to a subset of Twitter API v2 endpoints and limited v1.1 endpoints (e.g. media post, oauth) only. If you need access to this endpoint, you may need a different access level. You can learn more here: https://developer.twitter.com/en/portal/product', 'code': 453}]
         if not already_exists and self.approved:
             t = Twitter()
             msg = f'💼  Oferta de empleo: {self} {self.get_full_url()}'
-            t.post(msg)
+            t.post(msg)'''
