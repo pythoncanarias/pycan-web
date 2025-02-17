@@ -2,6 +2,8 @@
 
 # Commands to deploy project in production
 
+echo "Empieza el despliegue"
+echo $USER
 source ~/.pyenv/versions/pycanweb/bin/activate
 git pull
 pip install -r requirements.txt
