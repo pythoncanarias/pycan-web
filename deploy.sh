@@ -2,6 +2,7 @@
 
 # Commands to deploy project in production
 
+source ~/.pyenv/versions/pycanweb/bin/activate
 git pull
 pip install -r requirements.txt
 npm install --no-save
