@@ -2,6 +2,7 @@
 check:
     python manage.py check
     flake8 --count **/*.py
+    ruff check .
     # vulture . --exclude node_modules/
 
 
@@ -10,6 +11,7 @@ clean:
     find . -type f -name "*.pyc" -delete
     find . -type d -name "__pycache__" -exec rm -r "{}" \;
     find . -type d -name ".sass-cache" -exec rm -r "{}" \;
+    rm -r .ruff_cache/
 
 
 # Ejecuta las migraciones pendientes"

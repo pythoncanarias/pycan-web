@@ -1,6 +1,7 @@
 import logging
 
 from django import forms
+from django.core.exceptions import ValidationError
 
 from .models import Proposal, Refund
 
@@ -95,13 +96,12 @@ class RefundForm(forms.Form):
         email = self.cleaned_data["email"]
         uuid = self.cleaned_data["uuid"]
         if uuid == "tu puta madre":
-            raise forms.ValidationError("Cuida ese vocabulario")
+            raise ValidationError("Cuida ese vocabulario")
 
         if len(uuid) < UUID_LAST_DIGITS:
-            raise forms.ValidationError(
-                "Necesito los últimos () letras o dígitos "
-                "del código".format(UUID_LAST_DIGITS)
-            )
+            raise ValidationError(
+                f"Necesito los últimos {UUID_LAST_DIGITS} caracteres del código"
+                )
         uuid = uuid[-UUID_LAST_DIGITS:]
         tickets = list(
             self.event.all_tickets()
@@ -109,13 +109,13 @@ class RefundForm(forms.Form):
             .filter(keycode__iendswith=uuid)
         )
         if len(tickets) != 1:
-            raise forms.ValidationError(
+            raise ValidationError(
                 "El correo o las últimos {} letras o dígitos del"
                 " codigo están mal.".format(UUID_LAST_DIGITS)
             )
         self.ticket = tickets[0]
         if Refund.exists(self.event, self.ticket):
-            raise forms.ValidationError(
+            raise ValidationError(
                 "Ya se ha solicitado una devolución del" " importe para ese ticket"
             )
         return uuid

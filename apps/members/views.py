@@ -8,6 +8,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView
+from django.conf import settings
 
 from . import forms
 from .menu import main_menu

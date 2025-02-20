@@ -1,10 +1,8 @@
 '''Remember to register new filters in apps/commons/templatetags/utils.py'''
 
 import datetime
-import os
 from typing import Union
 
-from django.conf import settings
 from markdown2 import markdown
 
 _months = [

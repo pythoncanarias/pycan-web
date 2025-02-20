@@ -1,12 +1,11 @@
 import logging
 
+from django.conf import settings
 from django.shortcuts import redirect, render
 
-from apps.members.models import Position
-
 from .models import Ally, FAQItem
-from apps.organizations.models import Organization
 from apps.members.models import Position
+from apps.organizations.models import Organization
 
 logger = logging.getLogger(__name__)
 

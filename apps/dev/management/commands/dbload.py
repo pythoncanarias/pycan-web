@@ -29,8 +29,7 @@ def step_ok():
 
 
 def add_quotes():
-    """
-    Add a few quotes to have the start page populated with some content
+    """Add a few quotes to have the start page populated with some content.
     """
     step_start("Adding initial quotes")
     author, created = Author.objects.get_or_create(
@@ -41,15 +40,15 @@ def add_quotes():
             },
         )
     if created:
-	quotes = (
+        quotes = (
             'La imaginación es más importante que el conocimiento. '
-	    'El conocimiento es limitado. '
+            'El conocimiento es limitado. '
             'La imaginación rodea al mundo.',
-	    'Todos somos muy ignorantes, lo que ocurre es que no todos '
+            'Todos somos muy ignorantes, lo que ocurre es que no todos '
             'ignoramos las mismas cosas.',
             'No entiendes realmente algo a menos que seas capaz de'
             ' explicárselo a tu abuela.',
-    	    )
+            )
         for quote_text in quotes:
             author.quote_set.create(text=quote_text)
             step_progress()
@@ -57,9 +56,9 @@ def add_quotes():
 
 
 def add_own_organization():
-    """
-    Add the Python Canarias organization, which is key to make some parts of
-    the page work.
+    """Add the Python Canarias organization.
+
+    This is key to make some parts of the page work.
     """
     step_start("Adding own organization")
     _, created = Organization.objects.get_or_create(
@@ -78,8 +77,9 @@ def add_own_organization():
 
 
 def add_allies():
-    """
-    Add the Python Canarias allies, in order to work with this section
+    """Add the Python Canarias allies.
+
+    In order to work with this section
     """
     print("Adding allies")
 
@@ -113,8 +113,9 @@ def add_allies():
 
 
 def add_events():
-    """
-    Add a sample value and event so we get some content in the events page
+    """Add a sample value and event.
+
+    So we get some content in the events page.
     """
     print("Adding sample venue")
     photo_path = Path(settings.BASE_DIR) / 'apps/dev/fixtures/fancy_venue.jpg'
@@ -357,3 +358,4 @@ class Command(BaseCommand):
         add_events()
         add_allies()
         add_faq_items()
+
