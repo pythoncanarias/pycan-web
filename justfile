@@ -54,3 +54,21 @@ info:
     python3 -V
     python3 -c "import django; print(django.__version__)"
     uptime
+
+# Acceso al DBShell
+dbshell *args='default':
+    python3 manage.py dbshell --database {{ args }}
+
+# Show migrations
+showmigrations $APP='' *args='':
+    python3 ./manage.py showmigrations {{APP}} {{ args }}
+
+alias sm := showmigrations
+
+# Make migrations
+makemigrations $APP='' *args='':
+    python3 ./manage.py makemigrations {{APP}} {{ args }}
+
+alias mm := makemigrations
+
+
