@@ -3,7 +3,9 @@ import os
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Client, Concept, Invoice
+from .models import Client
+from .models import Concept
+from .models import Invoice
 
 
 @admin.register(Client)

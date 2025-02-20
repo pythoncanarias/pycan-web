@@ -186,7 +186,7 @@ class InvoiceMaker(object):
         canvas.drawRightString(
             self.PAGE_WIDTH - 1.3 * cm,
             self.PAGE_HEIGHT - 1.70 * cm,
-            self.invoice.verbose_invoice_number,
+            self.invoice.verbose_invoice_number(),
         )
         canvas.setFont(self.bold, 9)
         canvas.drawString(
@@ -338,7 +338,7 @@ class InvoiceMaker(object):
         canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 5.3 * cm, 'SUBTOTAL')
         canvas.setFont(self.normal, 12)
 
-        subtotal = self.invoice.concepts_total
+        subtotal = self.invoice.concepts_total()
 
         canvas.drawRightString(
             self.PAGE_WIDTH - 1.5 * cm, 5.3 * cm, '{} €'.format(subtotal)
