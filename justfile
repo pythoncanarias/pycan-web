@@ -24,7 +24,7 @@ run: check static
 
 # Ejecutar el servidor en modo desarrollo
 rundev: static
-    DEBUG=yes python manage.py runserver_plus
+    DEBUG=yes python3 manage.py runserver_plus 0.0.0.0:8888
 
 
 # Abre una shell python con el entorno de Django cargado
