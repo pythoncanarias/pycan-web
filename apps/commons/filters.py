@@ -92,10 +92,6 @@ def get_key(dictionary, key):
     return dictionary.get(key, "")
 
 
-def get_asset_key(dictionary, key):
-    return os.path.join(settings.STATIC_URL, dictionary.get(key, "") or key)
-
-
 def as_markdown(s):
     result = markdown(s, extras=['tables', 'footnotes'])
     if '<table' in result:

@@ -1,9 +1,9 @@
-{% load utils %}
+{% load static utils %}
 
 <nav class="header-page navbar is-paddingless is-fixed-top">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img class="logo" src="{{ assets|get_asset_key:'commons/img/logo-python-canarias-white.svg' }}" alt="{{ organization.name }}" />
+      <img class="logo" src="{% static 'commons/img/logo-python-canarias-white.svg' %}" alt="{{ organization.name }}" />
     </a>
 
     <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
@@ -60,6 +60,5 @@
         </a>
       {% endif %}
     </div>
-  </div>
   </div>
 </nav>

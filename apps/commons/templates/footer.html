@@ -1,9 +1,9 @@
-{% load utils %}
+{% load static %}
 <footer class="footer-page has-text-centered">
   <a class="footer-button" id="scrollToTopBtn" href=""
     ><img
       class="footer__button--image"
-      src="{{ assets|get_asset_key:'commons/img/ico-arrow.svg' }}"
+      src="{% static 'commons/img/ico-arrow.svg' %}"
       alt="scroll button up"
       titile="scroll button up"
   /></a>

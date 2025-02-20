@@ -1,0 +1,36 @@
+.job-title a {
+  background-color: steelblue;
+}
+
+.job-description {
+  padding-top: 0;
+}
+
+.job-description-text {
+  padding-top: 0;
+  max-height: 0;
+  overflow: hidden;
+  // https://stackoverflow.com/a/8331169
+  transition: max-height 0.2s ease-out, padding-top 0.2s linear;
+}
+
+.job-description-text-show {
+  padding-top: 1rem;
+  max-height: 2000px;
+  transition: padding-top 0.1s ease-in, max-height 1s ease-in;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.details .collab {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.details .collab a {
+  padding-top: 4px;
+}

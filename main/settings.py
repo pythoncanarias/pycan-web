@@ -115,7 +115,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'apps.commons.context_processors.glob',
+                # 'apps.commons.context_processors.glob',
                 'apps.commons.context_processors.main_organization_data',
                 'apps.commons.context_processors.global_data',
             ],

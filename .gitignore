@@ -100,3 +100,4 @@ tags
 certificates/media
 .prettierignore
 .parcel-cache/
+.python-version

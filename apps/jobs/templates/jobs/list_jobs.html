@@ -1,6 +1,6 @@
 {% extends "jobs/base.html" %}
 
-{% load utils %}
+{% load static utils %}
 
 {% block title %}Empleo - {{ block.super }}{% endblock %}
 
@@ -12,7 +12,7 @@
   <div class="details">
     <div class="collab">
       <div class="heading">Sección desarrollada en colaboración con:</div>
-      <a href="http://www.enbuscade.org/"><img class="logo" src="{{ assets|get_asset_key:'jobs/img/enbuscade_logo.png' }}" alt="enbuscade" /></a>
+      <a href="http://www.enbuscade.org/"><img class="logo" src="{% static 'jobs/img/enbuscade_logo.png' %}" alt="enbuscade" /></a>
     </div>
     <div class="send-offers">
     <i class="fas fa-reply"></i> Si quieres publicar una oferta de trabajo relacionada con Python, puedes escribirnos a <a href="mailto:{{ organization.email }}">{{ organization.email }}</a>

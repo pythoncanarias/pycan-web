@@ -1,0 +1,64 @@
+ul.labels {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px dotted red;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+
+ul.labels li {
+  padding: 5px 5px 5px 0px;
+}
+
+a.label {
+	 display: inline-block;
+	 font-size: 13px;
+	 padding-top: 3px;
+	 padding-bottom: 3px;
+	 padding-left: 9px;
+	 padding-right: 9px;
+	 border-radius: 10px;
+}
+
+ a.label:hover {
+	 background-color: #154360 !important;
+	 color: white !important;
+}
+
+ a.label span.badge {
+	 background-color: rgba(255, 255, 255, 0.518);
+	 margin-left: 3px;
+	 border-radius: 12px;
+	 padding-top: 2px;
+	 padding-bottom: 2px;
+	 padding-left: 4px;
+	 padding-right: 4px;
+	 font-size: 12px;
+}
+
+ul {
+	 margin-top: 1rem;
+}
+
+.learn-index ul li i {
+	 padding-right: 10px;
+}
+
+.learn-index .label {
+	 font-size: 1rem;
+	 margin-bottom: 0.5rem;
+}
+
+.learn-resources_by_label a.resource {
+	 font-weight: bold;
+	 margin-right: 1rem;
+}
+
+.learn-resources_by_label a.label {
+	 margin-right: 5px;
+}
+
+.learn-resources_by_label table.resources {
+	 background-color: initial;
+} 
