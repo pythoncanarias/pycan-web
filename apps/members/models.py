@@ -8,8 +8,7 @@ from .constants import (
     DEFAULT_POSITION_PERIOD,
     FEE_AMOUNT,
     FEE_PAYMENT_TYPE,
-    MEMBER_POSITION,
-)
+    )
 
 
 class Member(models.Model):

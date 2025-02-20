@@ -1,7 +1,6 @@
 {% extends "legal/base.html" %}
 {% load utils %}
 
-{% block title %}Aviso legal - {{ block.super }}{% endblock %}
 
 {% block content %}
 
@@ -9,19 +8,28 @@
 
 {% filter as_markdown %}
 
-# Aviso legal
-
 ## 1. Objeto y aceptación
 
-El presente aviso legal regula el uso del sitio web: [pythoncanarias.es]({{ organization.url }}). El sitio web pythoncanarias.es presta servicios cuyo objetivo primordial es difundir y promover el uso del lenguaje de programación Python en la comunidad Canaria.
+El presente aviso legal regula el uso del sitio web: [pythoncanarias.es]({{ organization.url
+}}). El sitio web pythoncanarias.es presta servicios cuyo objetivo primordial es difundir y
+promover el uso del lenguaje de programación Python en la comunidad Canaria.
 
-La navegación por la página pythoncanarias.es atribuye la condición de usuario de la misma e implica la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en estos Términos de servicio, que pueden sufrir modificaciones.
+La navegación por la página pythoncanarias.es atribuye la condición de usuario de la misma e
+implica la aceptación plena y sin reservas de todas y cada una de las disposiciones
+incluidas en estos Términos de servicio, que pueden sufrir modificaciones.
 
-El usuario se obliga a hacer un uso correcto del sitio Web de conformidad con las leyes, la buena fe, el orden público, los usos del tráfico y los presentes Términos de servicio. El Usuario responderá frente a la Python Canarias (Python Canarias en adelante) y frente a terceros, de los daños y perjuicios que pudieran causarse como consecuencia del incumplimiento de dicha obligación.
+El usuario se obliga a hacer un uso correcto del sitio Web de conformidad con las leyes, la
+buena fe, el orden público, los usos del tráfico y los presentes Términos de servicio. El
+Usuario responderá frente a la Python Canarias (Python Canarias en adelante) y frente a
+terceros, de los daños y perjuicios que pudieran causarse como consecuencia del
+incumplimiento de dicha obligación.
 
 ## 2. Titularidad de la web e identificación del Prestador de Servicios de la Sociedad de la Información
 
-Con la finalidad de dar cumplimiento al principio de Información general exigido por el Artículo 10 de la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico  informamos a nuestros usuarios que el presente sitio web pertenece a Python Canarias:
+Con la finalidad de dar cumplimiento al principio de Información general exigido por el
+Artículo 10 de la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información
+y de comercio electrónico  informamos a nuestros usuarios que el presente sitio web
+pertenece a Python Canarias:
 
 - Dirección: {{ organization.full_address }}
 - Correo electrónico: {{ organization.email }}

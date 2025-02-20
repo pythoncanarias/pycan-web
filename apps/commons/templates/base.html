@@ -8,19 +8,30 @@
 
   <link rel="icon" href="{% static 'commons/img/favicon.ico' %}">
 
-  <title>{% block title %}{{ organization.name }}{% endblock title %}</title>
+  <title>{% block title %}
+    {% if title %}
+      {{ title }} - {{ organization.name }}
+    {% else %}
+      {{ organization.name }}
+    {% endif %}
+    
+  {% endblock title %}</title>
 
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">
 
   {% block styles %}
   <link rel="stylesheet" href="{% static 'commons/css/bulma.min.css' %}">
-  {% endblock  styles %}
+  {% endblock styles %}
 
 </head>
 <body class="{% block body_class %}{% endblock %} has-navbar-fixed-top">
   .
   {% include "header.html" %}
 
+  {% if breadcrumbs %}
+    {% include "includes/breadcrumbs.html" %}
+  {% endif %}
+  
   {% block container %}
 
   {% if messages %}
@@ -46,6 +57,7 @@
         </div>
         <div class="column is-three-quarters">
     {% endif %}
+    {% if title %}<h1 class="title">{{ title }}</h1>{% endif %}
     {% block content %} {% endblock content %}
     {% if menu %}
         </div>

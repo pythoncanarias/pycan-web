@@ -2,11 +2,16 @@ import logging
 
 from django.shortcuts import render
 
+from . import breadcrumbs
+
 logger = logging.getLogger(__name__)
 
 
 def legal_notice(request):
-    return render(request, 'legal/legal-notice.html')
+    return render(request, 'legal/legal-notice.html', {
+        'title': 'Aviso legal',
+        'breadcrumbs': breadcrumbs.bc_root(),
+        })
 
 
 def coc(request, language='es'):
@@ -15,7 +20,9 @@ def coc(request, language='es'):
 
 
 def privacy_policy(request):
-    return render(request, 'legal/privacy-policy.html')
+    return render(request, 'legal/privacy-policy.html', {
+        'title': 'Política de privacidad y protección de datos',
+        })
 
 
 def purchase_terms(request):

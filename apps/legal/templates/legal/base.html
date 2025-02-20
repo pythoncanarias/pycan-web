@@ -1,8 +1,6 @@
-{% extends "base.html" %}about
-
-{% load utils %}
+{% extends "base.html" %}{% load static %}
 
 {% block styles %}
   {{ block.super }}
-  <link rel="stylesheet" href="{{ assets|get_asset_key:'legal/custom.min.css' }}">
+  <link rel="stylesheet" href="{% static 'legal/css/legal.css' %}">
 {% endblock styles %}
