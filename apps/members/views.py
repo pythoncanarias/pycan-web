@@ -11,6 +11,8 @@ from django.views.generic import UpdateView
 
 from . import forms
 from .menu import main_menu
+from apps.organizations.models import Organization
+from apps.members.models import Position
 
 logger = logging.getLogger(__name__)
 
@@ -129,3 +131,20 @@ class ChangeAddress(UpdateView):
             'menu': main_menu,
         }
         return super().get_context_data(**context)
+
+
+def board(request):
+    organization = Organization.objects.get(name=settings.ORGANIZATION_NAME)
+    return render(request, 'members/board.html', {
+        'organization': organization,
+        'board': Position.get_current_board(),
+    })
+
+
+def join(request):
+    pythoncanarias = Organization.objects.get(
+        name__istartswith=settings.ORGANIZATION_NAME
+	)
+    return render(request, 'members/join.html',{
+        'pythoncanarias': pythoncanarias,
+        })

@@ -1,0 +1,47 @@
+[
+{
+    "model": "members.role",
+    "pk": "PRE",
+    "fields": {
+        "role_name": "Presidencia",
+        "role_desc": "Ser\u00e1n facultades del presidente/a:\r\n\r\na) Ostentar la representaci\u00f3n legal de la asociaci\u00f3n.\r\n\r\nb) Convocar y presidir las reuniones del \u00f3rgano de representaci\u00f3n y de la\r\nasamblea general de acuerdo con lo establecido en los presentes Esta-\r\ntutos.\r\n\r\nc) Velar por el cumplimiento de los fines sociales.\r\n\r\nd) Autorizar con su firma las actas, certificaciones y dem\u00e1s documentos\r\nde la Asociaci\u00f3n.\r\n\r\ne) Solicitar, percibir o hacer efectivas las ayudas, subvenciones o patro-\r\ncinios que por cualquier concepto provengan de organismos p\u00fablicos o\r\nentidades privadas, as\u00ed como contratar y convenir con entes p\u00fablicos de\r\ncualquier naturaleza y privados.\r\n\r\nf) Y cuantas facultades se le confieran, no expresamente asignadas a otros\r\n\u00f3rganos.",
+        "weight": 100
+    }
+},
+{
+    "model": "members.role",
+    "pk": "SEC",
+    "fields": {
+        "role_name": "Secretar\u00eda",
+        "role_desc": "Ser\u00e1n facultades del secretario/a:\r\n\r\na) Redactar y certificar las actas de las sesiones de las asambleas generales\r\ny del \u00f3rgano de representaci\u00f3n.\r\n\r\nb) Llevar el libro del registro de asociados, consignando en ellos la fecha\r\nde su ingreso y las bajas que hubieren.\r\n\r\nc) Recibir y tramitar las solicitudes de ingreso.\r\n\r\nd) Llevar una relaci\u00f3n del inventario de la asociaci\u00f3n.\r\n\r\ne) Tener bajo su custodia los documentos y archivos de la asociaci\u00f3n.\r\n\r\nf) Expedir certificaciones.\r\n\r\ng) Formular la memoria de actividades.",
+        "weight": 300
+    }
+},
+{
+    "model": "members.role",
+    "pk": "TRE",
+    "fields": {
+        "role_name": "Tesorer\u00eda",
+        "role_desc": "Ser\u00e1n facultades del tesorero/a:\r\n\r\na) Tendr\u00e1 a su cargo los fondos pertenecientes a la asociaci\u00f3n.\r\n\r\nb) Elaborar los presupuestos, balances e inventarios de la asociaci\u00f3n.\r\n\r\nc) Firmar\u00e1 los recibos, cobrar\u00e1 las cuotas de los asociados y efectuar\u00e1\r\ntodos los cobros y pagos.\r\n\r\nd) Llevar y custodiar los libros de contabilidad.\r\n\r\ne) Formular las cuentas anuales y el presupuesto.",
+        "weight": 400
+    }
+},
+{
+    "model": "members.role",
+    "pk": "VOC",
+    "fields": {
+        "role_name": "Vocal\u00eda",
+        "role_desc": "Los/as vocales tendr\u00e1n el derecho y la obligaci\u00f3n de asistir a las sesiones\r\ndel \u00f3rgano de representaci\u00f3n con voz y con voto as\u00ed como, en r\u00e9gimen de\r\ndelegaci\u00f3n, podr\u00e1n desempe\u00f1ar las funciones que les confiera el \u00f3rgano de\r\nrepresentaci\u00f3n.",
+        "weight": 500
+    }
+},
+{
+    "model": "members.role",
+    "pk": "VPR",
+    "fields": {
+        "role_name": "Vicepresidencia",
+        "role_desc": "Ser\u00e1n facultades del vicepresidente/a:\r\n\r\na) Sustituir al presidente/a en caso de vacante, ausencia o enfermedad\r\nasumiendo sus funciones, con car\u00e1cter provisional, cuando el titular\r\ncesare en el cargo.\r\n\r\nb) Las que les deleguen el presidente/a o la asamblea general.",
+        "weight": 200
+    }
+}
+]

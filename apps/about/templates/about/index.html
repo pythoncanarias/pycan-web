@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<p class="title is-1">Asociación </p>
+<p class="title is-1">Asociación</p>
 
 <p class="subtitle is-3">{{ organization.name }}</p>
 
@@ -22,7 +22,10 @@
   <div class="message-body">
     <strong>{{ organization.name }}</strong> es una asociación sin ánimo de lucro cuyos objetivos, son, entre otros, promover el <strong>uso del lenguaje</strong> de programación Python, dar <strong>soporte</strong> a quienes deseen aprenderlo y promover la programación como una <strong>competencia educativa básica</strong>.</p>
 
-    <p>La asociación fue creada el <strong>{{ organization.registration_date|date:"d/m/Y" }}</strong> y desde entonces ha organizado <a href="{% url 'events:past_events' %}">diferentes eventos</a> de difusión del lenguaje de programación Python colaborando en el incremento de la comunidad de usuarios de Python en Canarias y <a href="{% url 'about:allies' %}">sumando aliados</a> por el camino.</p>
+    <p>La asociación fue creada el <strong>{{ organization.registration_date|date:"d/m/Y" }}</strong> y
+    desde entonces ha organizado <a href="{% url 'events:index' %}">diferentes eventos</a> de difusión
+ del lenguaje de programación Python colaborando en el incremento de la comunidad de usuarios de Python
+ en Canarias.</p>
 
     <p>Te recomendamos que no dejes de <a href="{% url 'about:history' %}">repasar la historia de Python Canarias</a>.</p>
 
@@ -67,15 +70,19 @@
     <a class="dyn-anchor-link" href="#board"><i class="fas fa-link"></i></a>
   </div>
   <div class="message-body">
-    <p>Actualmente la <strong>junta directiva</strong> de {{ organization.name }} está formada por:</p>
-    <table class="table is-bordered is-striped is-narrow">
-      {% for position in positions %}
-        <tr>
-          <td>{{ position.get_position_display }}</td>
-          <td>{{ position.member }}</td>
-        </tr>
-      {% endfor %}
-    </table>
+    <p>Actualmente la <strong>junta directiva</strong> de {{ orgnizacion.name }} está formada por:</p>
+
+  <table class="table is-hoverable is-fullwidth">
+   <tbody>
+    {% for row in board %}
+    <tr>
+      <th>{{ row.role }}</th>
+      <td>{{ row.member.full_name }}</td>
+      <td style="text-align: right;">Socio Nº <span class="tag is-info">{{ row.pk }}</span></td>
+    </tr>
+    {% endfor %}
+   </tbody>
+  </table>
   </div>
 </article>
 

@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 from apps.members.models import Position
 
 from .models import Ally, FAQItem
+from apps.organizations.models import Organization
+from apps.members.models import Position
 
 logger = logging.getLogger(__name__)
 
@@ -15,17 +17,19 @@ def index(request):
 
 def us(request):
     positions = [p for p in Position.objects.all() if p.active]
-    return render(
-        request,
-        'about/index.html',
-        {
-            'positions': positions,
-        },
-    )
+    return render(request, 'about/index.html', {
+        'positions': positions,
+        })
 
 
 def join(request):
-    return render(request, 'about/join.html')
+    organization = Organization.objects.get(
+        name__istartswith=settings.ORGANIZATION_NAME
+        )
+    return render(request, 'about/index.html', {
+        'organization': organization,
+        'board': Position.get_current_board(),
+    })
 
 
 def history(request):

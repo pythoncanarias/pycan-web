@@ -1,24 +1,3 @@
-class MEMBER_POSITION:
-    PRESIDENT = 'PRE'
-    VICEPRESIDENT = 'VPR'
-    SECRETARY = 'SEC'
-    TREASURER = 'TRE'
-    CHAIR1 = 'CH1'
-    CHAIR2 = 'CH2'
-    CHAIR3 = 'CH3'
-    CHAIR4 = 'CH4'
-    CHOICES = (
-        (PRESIDENT, 'Presidencia'),
-        (VICEPRESIDENT, 'Vicepresidencia'),
-        (SECRETARY, 'Secretaría'),
-        (TREASURER, 'Tesorería'),
-        (CHAIR1, 'Vocalía 1'),
-        (CHAIR2, 'Vocalía 2'),
-        (CHAIR3, 'Vocalía 3'),
-        (CHAIR4, 'Vocalía 4')
-    )
-
-
 class FEE_PAYMENT_TYPE:
     BANK_TRANSFERENCE = 'BT'
     STRIPE = 'ST'

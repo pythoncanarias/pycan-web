@@ -1,0 +1,310 @@
+
+--radius: 0.15rem;
+--yellow: #ffde4f;
+--link: #1e72b9;
+
+// Own variables
+--blue-text: #2673b5;
+--blue-bg: #2a77b7;
+
+--yellow-text: #dcb029;
+--yellow-bg: #efc23b;
+--brown-text-for-yellow-bg: #332702;
+
+--light-gray-bg: #f9f9fb;
+
+--notification-width: 25rem;
+
+// Color schemes
+// https://flatuicolors.com/palette/nl
+// https://bit.ly/3zqcDub
+
+--header-bg: #e2285d;
+--header-fg: white;
+--footer-bg: #444444;
+--footer-fg: lighten(var(--header-bg), 20%);
+
+--default-box-shadow: 0 1px 1px rgba(10, 10, 29, 0.09), 0 0 1px rgba(10, 10, 29, 0.09);
+
+--custom-mobile: 36rem;
+
+--header-height: 4rem;
+--footer-height: 6rem;
+--footer-mobile-height: 3rem;
+
+// Bulma variables
+--family-sans-serif: 'Lato', sans-serif;
+--text: #46474c;
+--text-strong: #46474c;
+
+--size-3: 1.85rem;
+
+--body-background-color: var(--light-gray-bg);
+--title-weight: 400;
+--subtitle-negative-margin: -1rem;
+--content-heading-weight: 500;
+--radius: 0.15rem;
+--navbar-height: 4.3rem;
+
+--section-title-margin-bottom: 2.1rem;
+
+--box-radius: $radius;
+--box-padding: 1.5rem;
+--box-shadow: var(--default-box-shadow);
+--box-link-hover-shadow: var(--default-box-shadow);
+--box-link-active-shadow: var(--default-box-shadow);
+
+--column-gap: 0.65rem;
+
+--message-body-border-width: 1px;
+
+--modal-z: 3000;
+--modal-background-background-color: rgba(7, 8, 16, 0.86);
+
+
+
+hr {
+  background-color: #ececf1;
+  height: 1px;
+  margin: 0.7em 0;
+}
+
+.title.is-blue {
+  color: var(--blue-text);
+}
+
+.button.is-warning {
+  color: var(--brown-text-for-yellow-bg);
+  background-color: var(--yellow-bg);
+  font-weight: 600;
+}
+
+.button.is-warning#hover, .button.is-warning#focus, .button.is-warning#active, {
+    background-color: lighten(var(--yellow-bg), 2);
+  }
+
+.message.is-info .message-body {
+  border-color: #c8dfec;
+}
+
+.tag {
+  background-color: #f3f3f7;
+}
+
+.collapsable--close {
+  display: none;
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-dropdown {
+  background-color: var(--header-bg);
+}
+
+.navbar-burger {
+  color: var(--header-fg);
+}
+
+/*.navbar {*/
+  /*.navbar-brand {*/
+    /*background: var(--header-bg);*/
+    /*.navbar-item {*/
+      /*padding: 0.35rem 1rem;*/
+
+      /*.logo {*/
+        /*margin-top: 2px; // offset logo*/
+        /*max-height: var(--header-height);*/
+      /*}*/
+    /*}*/
+  /*}*/
+
+  /*.navbar-menu {*/
+    /*background: var(--header-bg);*/
+    /*box-shadow: none;*/
+    /*border-top: 1px solid #f2f2f2;*/
+
+    /*@include from($desktop) {*/
+      /*border-top: 0;*/
+    /*}*/
+
+    /*@include from($desktop) {*/
+      /*.navbar-end {*/
+        /*padding-right: 1rem;*/
+      /*}*/
+    /*}*/
+
+    /*.navbar-item,*/
+    /*.navbar-link {*/
+      /*color: var(--header-fg);*/
+      /*background: var(--header-bg);*/
+    /*}*/
+
+    /*.navbar-item:hover,*/
+    /*.navbar-link:hover {*/
+      /*background: darken(var(--header-bg), 5%);*/
+    /*}*/
+
+    /*.navbar-item.is-active,*/
+    /*.navbar-link.is-active {*/
+      /*background: darken(var(--header-bg), 10%);*/
+      /*font-weight: bold;*/
+      /*color: var(--header-fg);*/
+    /*}*/
+
+    /*i {*/
+      /*padding-right: 0.3rem;*/
+    /*}*/
+  /*}*/
+/*}*/
+
+.card {
+  border-radius: $radius;
+  margin-top: 1.7rem;
+  }
+
+.card .card-header {
+  border-radius: $radius $radius 0 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  }
+
+.message-body p {
+    text-align: justify;
+  }
+
+.message-body p:not(:last-child) {
+    padding-bottom: 0.5rem;
+  }
+
+article {
+  margin-bottom: 1rem;
+}
+
+
+.dyn-anchor-heading a.dyn-anchor-link {
+  font-size: 12pt;
+  color: gray;
+  vertical-align: middle;
+  margin-left: 4px;
+  display: none;
+  }
+
+.dyn-anchor-heading a.dyn-anchor-link#hover {
+  color: darken(gray, 30%);
+  }
+
+.dyn-anchor-heading a.dyn-anchor-link#show-it {
+  display: inline-block;
+  }
+
+.anchor {
+  scroll-margin-top: var(--header-height) + 1rem;
+}
+
+.message-header .dyn-anchor-link i:hover {
+  color: tomato;
+  }
+  
+
+html {
+  // source: https://stackoverflow.com/q/46463338
+  -webkit-font-feature-settings: 'liga' 0, 'clig' 0;
+  -moz-font-feature-settings: 'liga' 0, 'clig' 0;
+  font-feature-settings: 'liga' 0, 'clig' 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 1.03rem;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.inactive-link {
+  pointer-events: none;
+}
+
+.header-page {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  background-color: $header-bg;
+  z-index: 99;
+}
+
+.footer-page {
+  background-color: $footer-bg;
+  position: relative;
+  margin-top: 2em;
+  padding: 1.5em 1.5em 2.2em 1.5em;
+
+  a {
+    color: $footer-fg;
+
+    &:hover {
+      font-weight: 400;
+    }
+  }
+
+  .footer-column {
+    color: #ebebeb;
+    padding-top: 2rem;
+  }
+
+  h1,
+  h2 {
+    color: whitesmoke;
+  }
+}
+
+/* Error class for Django Forms https://bit.ly/3vidyK2 */
+.errorlist {
+  color: $red;
+  font-size: smaller;
+  margin-top: 0.5rem;
+}
+
+/* Float notification messages at top of pages */
+.messages {
+  position: absolute;
+  right: 0;
+  top: $header-height + 1rem;
+  width: 100%;
+  z-index: 1;
+}
+
+.messages .notification {
+  width: $notification-width;
+  margin-left: auto;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  }
+
+
+.message {
+  scroll-margin-top: $header-height + 1rem;
+}
+
+.container {
+  padding-top: 2rem;
+}
+
+.footer-button {
+  position: absolute;
+  top: -22.5px;
+  left: calc(50% - 22.5px);
+  z-index: 100;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 22.5px;
+  border-color: $header-bg;
+  background-color: whitesmoke;
+}
