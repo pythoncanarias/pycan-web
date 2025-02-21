@@ -18,7 +18,7 @@ def set_roles(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0024_position_role'),
+        ('members', '0030_position_role'),
     ]
 
     operations = [

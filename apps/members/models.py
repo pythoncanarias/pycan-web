@@ -42,7 +42,6 @@ class Member(models.Model):
         except (cls.DoesNotExist, cls.MultipleObjectsReturned):
             return None
 
-    @property
     def full_name(self):
         return f"{self.user.first_name} {self.user.last_name}"
 
@@ -51,7 +50,7 @@ class Member(models.Model):
         return self.id
 
     def __str__(self):
-        return self.full_name
+        return self.full_name()
 
     @property
     def active(self):
@@ -106,7 +105,7 @@ class Position(models.Model):
                 .update(until=self.since)
 
     def __str__(self):
-        return f'{self.member.full_name} as {self.role}'
+        return f'{self.member.full_name()} as {self.role}'
 
     @property
     def active(self):
@@ -150,7 +149,7 @@ class Membership(models.Model):
     remarks = models.CharField(max_length=512, blank=True)
 
     def __str__(self):
-        return f'{self.member.full_name} from {self.valid_from}'
+        return f'{self.member.full_name()} from {self.valid_from}'
 
     def save(self, *args, **kwargs):
         if self.valid_until is None:

@@ -19,7 +19,7 @@ def create_roles(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0022_create_model_role'),
+        ('members', '0028_create_model_role'),
     ]
 
     operations = [

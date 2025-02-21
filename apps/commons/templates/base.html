@@ -21,6 +21,7 @@
 
   {% block styles %}
   <link rel="stylesheet" href="{% static 'commons/css/bulma.min.css' %}">
+  <link rel="stylesheet" href="{% static 'commons/css/custom.css' %}">
   {% endblock styles %}
 
 </head>
@@ -58,6 +59,7 @@
         <div class="column is-three-quarters">
     {% endif %}
     {% if title %}<h1 class="title">{{ title }}</h1>{% endif %}
+    {% if subtitle %}<h2 class="subtitle">{{ subtitle }}</h2>{% endif %}
     {% block content %} {% endblock content %}
     {% if menu %}
         </div>
@@ -68,8 +70,8 @@
 
   {% include "footer.html" %}
 
-  <script src="{% static 'commons/custom.min.js' %}"></script>
   {% block js %}
+    <script src="{% static 'commons/js/custom.js' %}"></script>
     {% if current_date.month == 12 and current_date.day >= 21 and current_date.day <= 31  %}
       <script src="https://app.embed.im/snow.js" defer></script>
     {% endif %}

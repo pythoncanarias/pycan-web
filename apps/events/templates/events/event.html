@@ -178,7 +178,7 @@
             <div class="column is-12-tablet is-6-desktop">
             {% if event.venue.is_online %}
               <div class="venue-youtube map-section">
-                <img src="{{ assets|get_asset_key:'events/img/youtube-logo.png' }}">
+                <img src="{% static 'events/img/youtube-logo.png' %}">
               </div>
             {% else %}
               <div class="map-wrapper">

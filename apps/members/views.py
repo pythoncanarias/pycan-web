@@ -7,11 +7,11 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import UpdateView
 from django.conf import settings
 
 from . import forms
-from .menu import main_menu
+from . import breadcrumbs
+from . import menu
 from apps.organizations.models import Organization
 from apps.members.models import Position
 
@@ -20,6 +20,20 @@ logger = logging.getLogger(__name__)
 
 def homepage(request):
     return redirect('members:profile')
+
+
+@login_required
+def profile(request: HttpRequest) -> HttpResponse:
+    """Show user profile and member information.
+    """
+    member = request.user.member
+    return render(request, "members/profile.html", {
+        "title": member.full_name(),
+        "subtitle": f"Socio núm. {member.pk}",
+        "breadcrumbs": breadcrumbs.bc_profile(member),
+        "member": member,
+        "menu": menu.main_menu,
+        })
 
 
 def member_login(request: HttpRequest) -> HttpResponse:
@@ -57,37 +71,21 @@ def member_logout(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def profile(request: HttpRequest) -> HttpResponse:
-    """Show user profile and member information."""
-    member = request.user.member
-    return render(
-        request,
-        "members/profile.html",
-        {
-            "title": "Perfil socio {member.pk}: {member.full_name}",
-            "member": member,
-            "menu": main_menu,
-        },
-    )
-
-
-@login_required
 def view_membership(request: HttpRequest) -> HttpResponse:
     member = request.user.member
-    return render(
-        request,
-        "members/membership.html",
-        {
-            "title": "Socio {member.pk}: {member.full_name} - Pertenencia",
-            "member": member,
-            "membership": member.membership_set.all(),
-            "menu": main_menu,
-        },
-    )
+    return render(request, "members/membership.html", {
+        "title": member.full_name(),
+        "subtitle": "Pertenencia",
+        "breadcrumbs": breadcrumbs.bc_membership(member),
+        "member": member,
+        "membership": member.membership_set.all(),
+        "menu": menu.main_menu,
+        })
 
 
 @login_required
 def password_change(request):
+    member = request.user.member
     if request.method == 'GET':
         form = forms.PasswordChangeForm(user=request.user)
     elif request.method == 'POST':
@@ -99,53 +97,38 @@ def password_change(request):
             messages.error(request, "El formulario tiene errores")
     else:
         raise PermissionDenied("Only GET and POST HTTP verbs are valid here")
-    return render(
-        request,
-        "members/password-change.html",
-        {
-            "title": "Cambio de contraseña",
-            "form": form,
-            "menu": main_menu,
-        },
-    )
+    return render(request, "members/password-change.html", {
+        "title": member.full_name(),
+        "subtitle": "Cambio de contraseña",
+        "breadcrumbs": breadcrumbs.bc_password_change(member),
+        "form": form,
+        "menu": menu.main_menu,
+        })
 
 
-class ChangeAddress(UpdateView):
-    form_class = forms.ChangeAddressForm
-    template_name = 'members/address-change.html'
+@login_required
+def address_change(request):
+    member = request.user.member
+    if request.method == 'POST':
+        form = forms.ChangeAddressForm(request.POST, instance=member)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('members:profile'))
+        messages.error(self.request, 'El formulario tiene errores')
+    else:
+        form = forms.ChangeAddressForm(instance=member)
+    return render(request, 'members/address-change.html', {
+        'title': member.full_name(),
+        'subtitle': 'Cambio de dirección',
+        'breadcrumbs': breadcrumbs.bc_address_change(member),
+        'form': form, 
+        "menu": menu.main_menu,
+        })
 
-    def get_success_url(self):
-        return reverse_lazy('members:profile')
-
-    def get_object(self, queryset=None):
-        return self.request.user.member
-
-    def form_invalid(self, form):
-        num_errors = sum(len(err) for err in form.errors.values())
-        messages.error(
-            self.request, f'El formulario tiene {num_errors} errores'
-        )
-        return super().form_invalid(form)
-
-    def get_context_data(self, **kwargs):
-        context = {
-            'menu': main_menu,
-        }
-        return super().get_context_data(**context)
-
-
-def board(request):
-    organization = Organization.objects.get(name=settings.ORGANIZATION_NAME)
-    return render(request, 'members/board.html', {
-        'organization': organization,
-        'board': Position.get_current_board(),
-    })
 
 
 def join(request):
-    pythoncanarias = Organization.objects.get(
-        name__istartswith=settings.ORGANIZATION_NAME
-	)
-    return render(request, 'members/join.html',{
+    pythoncanarias = Organization.objects.get(name__istartswith=settings.ORGANIZATION_NAME)
+    return render(request, 'members/join.html', {
         'pythoncanarias': pythoncanarias,
         })

@@ -10,14 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
 import socket
+import pathlib
 
 from django.contrib.messages import constants as message_constants
 from prettyconf import config
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = pathlib.Path(__file__).parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -188,12 +187,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = config('STATIC_ROOT', default=os.path.join(BASE_DIR, '.static'))
+STATIC_ROOT = config('STATIC_ROOT', default=BASE_DIR / '.static')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, '.media'))
+MEDIA_ROOT = config('MEDIA_ROOT', default=BASE_DIR / '.media')
 
 
 SITE_ID = 1
@@ -231,7 +230,7 @@ STRIPE_SECRET_KEY = config(
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='<sengrid api key>')
 
-LOGFILE_NAME = os.path.join(BASE_DIR, 'web.log')
+LOGFILE_NAME = BASE_DIR / 'web.log'
 LOGFILE_SIZE = 1 * 1024 * 1024
 LOGFILE_COUNT = 3
 

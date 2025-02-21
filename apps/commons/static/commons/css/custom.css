@@ -1,66 +1,70 @@
 
---radius: 0.15rem;
---yellow: #ffde4f;
---link: #1e72b9;
+:root {
+  --radius: 0.15rem;
+  --yellow: #ffde4f;
+  --link: #1e72b9;
 
-// Own variables
---blue-text: #2673b5;
---blue-bg: #2a77b7;
+  /* Own variables */
+  --blue-text: #2673b5;
+  --blue-bg: #2a77b7;
 
---yellow-text: #dcb029;
---yellow-bg: #efc23b;
---brown-text-for-yellow-bg: #332702;
+  --breadcrumbs-bg: #6F1E51;
+  --breadcrumbs-fg: #E3E3E3;
 
---light-gray-bg: #f9f9fb;
+  --yellow-text: #dcb029;
+  --yellow-bg: #efc23b;
+  --brown-text-for-yellow-bg: #332702;
 
---notification-width: 25rem;
+  --light-gray-bg: #f9f9fb;
 
-// Color schemes
-// https://flatuicolors.com/palette/nl
-// https://bit.ly/3zqcDub
+  --notification-width: 25rem;
 
---header-bg: #e2285d;
---header-fg: white;
---footer-bg: #444444;
---footer-fg: lighten(var(--header-bg), 20%);
+  /* Color schemes */
+  /* https://flatuicolors.com/palette/nl */
+  /* https://bit.ly/3zqcDub */
 
---default-box-shadow: 0 1px 1px rgba(10, 10, 29, 0.09), 0 0 1px rgba(10, 10, 29, 0.09);
+  --header-bg: #e2285d;
+  --header-fg: white;
+  --footer-bg: #444444;
+  --footer-fg: lighten(var(--header-bg), 20%);
 
---custom-mobile: 36rem;
+  --default-box-shadow: 0 1px 1px rgba(10, 10, 29, 0.09), 0 0 1px rgba(10, 10, 29, 0.09);
 
---header-height: 4rem;
---footer-height: 6rem;
---footer-mobile-height: 3rem;
+  --custom-mobile: 36rem;
 
-// Bulma variables
---family-sans-serif: 'Lato', sans-serif;
---text: #46474c;
---text-strong: #46474c;
+  --header-height: 4rem;
+  --footer-height: 6rem;
+  --footer-mobile-height: 3rem;
 
---size-3: 1.85rem;
+  /* Bulma variables */
+  --family-sans-serif: 'Lato', sans-serif;
+  --text: #46474c;
+  --text-strong: #46474c;
 
---body-background-color: var(--light-gray-bg);
---title-weight: 400;
---subtitle-negative-margin: -1rem;
---content-heading-weight: 500;
---radius: 0.15rem;
---navbar-height: 4.3rem;
+  --size-3: 1.85rem;
 
---section-title-margin-bottom: 2.1rem;
+  --body-background-color: var(--light-gray-bg);
+  --title-weight: 400;
+  --subtitle-negative-margin: -1rem;
+  --content-heading-weight: 500;
+  --radius: 0.15rem;
+  --navbar-height: 4.3rem;
 
---box-radius: $radius;
---box-padding: 1.5rem;
---box-shadow: var(--default-box-shadow);
---box-link-hover-shadow: var(--default-box-shadow);
---box-link-active-shadow: var(--default-box-shadow);
+  --section-title-margin-bottom: 2.1rem;
 
---column-gap: 0.65rem;
+  --box-radius: var(--radius);
+  --box-padding: 1.5rem;
+  --box-shadow: var(--default-box-shadow);
+  --box-link-hover-shadow: var(--default-box-shadow);
+  --box-link-active-shadow: var(--default-box-shadow);
 
---message-body-border-width: 1px;
+  --column-gap: 0.65rem;
 
---modal-z: 3000;
---modal-background-background-color: rgba(7, 8, 16, 0.86);
+  --message-body-border-width: 1px;
 
+  --modal-z: 3000;
+  --modal-background-background-color: rgba(7, 8, 16, 0.86);
+}
 
 
 hr {
@@ -109,65 +113,110 @@ hr {
   color: var(--header-fg);
 }
 
-/*.navbar {*/
-  /*.navbar-brand {*/
-    /*background: var(--header-bg);*/
-    /*.navbar-item {*/
-      /*padding: 0.35rem 1rem;*/
+.navbar .navbar-brand {
+  background: var(--header-bg);
+}
 
-      /*.logo {*/
-        /*margin-top: 2px; // offset logo*/
-        /*max-height: var(--header-height);*/
-      /*}*/
-    /*}*/
-  /*}*/
+.navbar .navbar-brand .navbar-item {
+  padding: 0.35rem 1rem;
+}
 
-  /*.navbar-menu {*/
-    /*background: var(--header-bg);*/
-    /*box-shadow: none;*/
-    /*border-top: 1px solid #f2f2f2;*/
+.navbar .navbar-brand .logo {
+  margin-top: 2px; /* offset logo */
+  max-height: var(--header-height);
+}
 
-    /*@include from($desktop) {*/
-      /*border-top: 0;*/
-    /*}*/
+.navbar .navbar-menu {
+  background: var(--header-bg);
+  box-shadow: none;
+  border-top: 1px solid #f2f2f2;
+  border-top: 0;
+}
 
-    /*@include from($desktop) {*/
-      /*.navbar-end {*/
-        /*padding-right: 1rem;*/
-      /*}*/
-    /*}*/
+.navbar .navbar-end {
+  padding-right: 1rem;
+}
 
-    /*.navbar-item,*/
-    /*.navbar-link {*/
-      /*color: var(--header-fg);*/
-      /*background: var(--header-bg);*/
-    /*}*/
+.navbar i {
+  padding-right: 0.3rem;
+}
 
-    /*.navbar-item:hover,*/
-    /*.navbar-link:hover {*/
-      /*background: darken(var(--header-bg), 5%);*/
-    /*}*/
+.navbar .navbar-item, .navbar-link {
+  color: var(--header-fg);
+  background: var(--header-bg);
+}
 
-    /*.navbar-item.is-active,*/
-    /*.navbar-link.is-active {*/
-      /*background: darken(var(--header-bg), 10%);*/
-      /*font-weight: bold;*/
-      /*color: var(--header-fg);*/
-    /*}*/
+.navbar .navbar-item:hover, .navbar-link:hover {
+  background: darken(var(--header-bg), 5%);
+}
 
-    /*i {*/
-      /*padding-right: 0.3rem;*/
-    /*}*/
-  /*}*/
-/*}*/
+.navbar .navbar-item.is-active, .navbar-link.is-active {
+  background: darken(var(--header-bg), 10%);
+  font-weight: bold;
+  color: var(--header-fg);
+}
+
+/* Styles for Breadcrumbs */
+.breadcrumb {
+  padding-left: 1em;
+  border-top: 1px solid #833471;
+  background: var(--breadcrumbs-bg);
+  color: var(--breadcrumbs-fg);
+}
+
+.breadcrumb b {
+  align-items: center;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: var(--bulma-breadcrumb-item-padding-vertical) var(--bulma-breadcrumb-item-padding-horizontal);
+}
+
+.breadcrumb a {
+  background: var(--breadcrumbs-bg);
+  color: var(--breadcrumbs-fg);
+}
+
+.breadcrumb a:link {
+  background: var(--breadcrumbs-bg);
+  color: var(--breadcrumbs-fg);
+}
+
+.breadcrumb a:local-link {
+  background: var(--breadcrumbs-bg);
+  color: var(--breadcrumbs-fg);
+  font-weight: bolder;
+}
+
+.breadcrumb a:target {
+  background: var(--breadcrumbs-bg);
+  color: var(--breadcrumbs-fg);
+  font-weight: bolder;
+}
+
+
+.breadcrumb a:visited {
+  background: var(--breadcrumbs-bg);
+  color: var(--breadcrumbs-fg);
+}
+
+.breadcrumb a:active {
+  background: var(--breadcrumbs-bg);
+  color: var(--breadcrumbs-fg);
+}
+
+.breadcrumb a:hover {
+  background: var(--breadcrumbs-bg);
+  color: white;
+}
 
 .card {
-  border-radius: $radius;
+  border-radius: var(--radius);
   margin-top: 1.7rem;
   }
 
 .card .card-header {
-  border-radius: $radius $radius 0 0;
+  border-radius: var(--radius) var(--radius) 0 0;
   background-color: rgba(0, 0, 0, 0.03);
   }
 
@@ -210,7 +259,7 @@ article {
   
 
 html {
-  // source: https://stackoverflow.com/q/46463338
+  /* source: https://stackoverflow.com/q/46463338 */
   -webkit-font-feature-settings: 'liga' 0, 'clig' 0;
   -moz-font-feature-settings: 'liga' 0, 'clig' 0;
   font-feature-settings: 'liga' 0, 'clig' 0;
@@ -231,38 +280,38 @@ body {
 
 .header-page {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
-  background-color: $header-bg;
+  background-color: var(--header-bg);
   z-index: 99;
 }
 
 .footer-page {
-  background-color: $footer-bg;
+  background-color: var(--footer-bg);
   position: relative;
   margin-top: 2em;
   padding: 1.5em 1.5em 2.2em 1.5em;
-
-  a {
-    color: $footer-fg;
-
-    &:hover {
-      font-weight: 400;
-    }
-  }
-
-  .footer-column {
-    color: #ebebeb;
-    padding-top: 2rem;
-  }
-
-  h1,
-  h2 {
-    color: whitesmoke;
-  }
 }
 
+.footer-page a {
+  color: var(--footer-fg);
+  }
+
+.footer-page a:hover {
+  font-weight: 400;
+  }
+
+.footer-page .footer-column {
+  color: #ebebeb;
+  padding-top: 2rem;
+  }
+
+ .footer-page h1, h2 {
+  color: whitesmoke;
+  }
+
 /* Error class for Django Forms https://bit.ly/3vidyK2 */
+
 .errorlist {
-  color: $red;
+  color: var(--red);
   font-size: smaller;
   margin-top: 0.5rem;
 }
@@ -271,13 +320,13 @@ body {
 .messages {
   position: absolute;
   right: 0;
-  top: $header-height + 1rem;
+  top: var(--header-height) + 1rem;
   width: 100%;
   z-index: 1;
 }
 
 .messages .notification {
-  width: $notification-width;
+  width: var(--notification-width);
   margin-left: auto;
   margin-right: 1rem;
   margin-top: 1rem;
@@ -286,7 +335,7 @@ body {
 
 
 .message {
-  scroll-margin-top: $header-height + 1rem;
+  scroll-margin-top: var(--header-height) + 1rem;
 }
 
 .container {
@@ -305,6 +354,6 @@ body {
   width: 45px;
   height: 45px;
   border-radius: 22.5px;
-  border-color: $header-bg;
+  border-color: var(--header-bg);
   background-color: whitesmoke;
 }

@@ -1,13 +1,11 @@
 {% block breadcrumbs %}
-<nav aria-label="Breadcrumb">
-  <ol class="breadcrumb">
-    {% for text,url in breadcrumbs %}
+<nav class="breadcrumb" aria-label="Ruta">
+  <ul>{% for text,url in breadcrumbs %}
     {% if forloop.last %}
-      <li class="active">{{ text }}</li>
+      <li class="is-active"><b>{{ text }}</b></li>
     {% else %}
       <li><a href="{{ url }}">{{ text }}</a></li>
     {% endif %}
-    {% endfor %}
-  </ol>
+  {% endfor %}</ul>
 </nav>
 {% endblock breadcrumbs %}

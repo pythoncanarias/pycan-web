@@ -155,6 +155,7 @@ class PasswordChangeForm(forms.Form):
 
 
 class ChangeAddressForm(forms.ModelForm):
+    
     class Meta:
         model = Member
         fields = [

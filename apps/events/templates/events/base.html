@@ -1,11 +1,9 @@
 {% extends "base.html" %}
-
-{% load utils %}
-{% load leaflet_tags %}
+{% load static utils leaflet_tags %}
 
 {% block styles %}
   {{ block.super }}
-  <link rel="stylesheet" href="{{ assets|get_asset_key:'events/custom.min.css' }}">
+  <link rel="stylesheet" href="{% static 'events/css/event.css' %}">
   <style type="text/css" media="screen">
 .event-item {
     -webkit-box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.25);
@@ -13,12 +11,11 @@
     box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.25);
 }
   </style>
+  {% leaflet_css %}
 {% endblock styles %}
 
 {% block js %}
   {{ block.super }}
-  <script src="{{ assets|get_asset_key:'events/custom.min.js' }}"></script>
-
+  <script src="{% static 'events/js/events.js' %}"></script>
   {% leaflet_js %}
-  {% leaflet_css %}
 {% endblock %}

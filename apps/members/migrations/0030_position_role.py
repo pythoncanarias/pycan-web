@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0023_feed_roles'),
+        ('members', '0029_feed_roles'),
     ]
 
     operations = [

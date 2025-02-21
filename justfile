@@ -14,11 +14,6 @@ clean:
     rm -r .ruff_cache/
 
 
-# Ejecuta las migraciones pendientes"
-migrate:
-    python manage.py migrate
-
-
 # Ejecutar el servidor en modo producción
 run: check static
     python manage.py runserver
@@ -74,3 +69,6 @@ makemigrations $APP='' *args='':
 alias mm := makemigrations
 
 
+# Apply migrations
+migrate $APP='' *args='':
+    python3 ./manage.py migrate {{APP}} {{ args }}
