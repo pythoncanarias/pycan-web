@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
@@ -7,13 +8,12 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.conf import settings
 
 from . import forms
 from . import breadcrumbs
 from . import menu
 from apps.organizations.models import Organization
-from apps.members.models import Position
+
 
 logger = logging.getLogger(__name__)
 
@@ -114,14 +114,14 @@ def address_change(request):
         if form.is_valid():
             form.save()
             return redirect(reverse_lazy('members:profile'))
-        messages.error(self.request, 'El formulario tiene errores')
+        messages.error(request, 'El formulario tiene errores')
     else:
         form = forms.ChangeAddressForm(instance=member)
     return render(request, 'members/address-change.html', {
         'title': member.full_name(),
         'subtitle': 'Cambio de dirección',
         'breadcrumbs': breadcrumbs.bc_address_change(member),
-        'form': form, 
+        'form': form,
         "menu": menu.main_menu,
         })
 
