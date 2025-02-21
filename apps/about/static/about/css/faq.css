@@ -1,0 +1,18 @@
+.faq-question {
+  background-color: var(--text);
+  align-items: center;
+  border-radius: .15rem .15rem 0 0;
+  color: #fff;
+  display: flex;
+  font-weight: 700;
+  justify-content: space-between;
+  line-height: 1.25;
+  padding: .75em 1em;
+  position: relative;
+}
+
+.faq-answer {
+  margin: 1em;
+  padding: 1em;
+  color: var(--text);
+}

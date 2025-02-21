@@ -1,22 +1,22 @@
-{% extends "about/base.html" %}
+{% extends "base.html" %}
+{% load static utils %}
 
-{% load utils %}
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'about/css/faq.css' %}">
+{% endblock styles %}
 
-{% block title %}Asociación - {{ block.super }}{% endblock %}
-
-{% block body_class %}faq-index{% endblock %}
 
 {% block content %}
 
 <div class="content box">
-    <h1 class="title">FAQ</h1>
     {% for faq in faqs %}
         <article class="anchor" id="{{ faq.question|slugify }}">
-            <div class="message-header dyn-anchor-heading">
+            <div class="faq-question">
                 {{ faq.question }}
                 <a class="dyn-anchor-link" href="#{{ faq.question|slugify }}"><i class="fas fa-link"></i></a>
             </div>
-            <div class="message-body">
+            <div class="faq-answer">
                 {{ faq.answer|as_markdown }}
             </div>
         </article>

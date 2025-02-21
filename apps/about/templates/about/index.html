@@ -1,14 +1,7 @@
-{% extends "about/base.html" %}
-
-{% block title %}Asociación - {{ block.super }}{% endblock %}
-
-{% block body_class %}about-index{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
 
-<p class="title is-1">Asociación</p>
-
-<p class="subtitle is-3">{{ organization.name }}</p>
 
 <div class="box has-text-centered">
   <a href="{% url 'about:join' %}" class="link button is-link is-medium is-outlined">Forma parte de la asociación</a>
@@ -19,13 +12,15 @@
     Introducción 
     <a class="dyn-anchor-link" href="#intro"><i class="fas fa-link"></i></a>
   </div>
-  <div class="message-body">
-    <strong>{{ organization.name }}</strong> es una asociación sin ánimo de lucro cuyos objetivos, son, entre otros, promover el <strong>uso del lenguaje</strong> de programación Python, dar <strong>soporte</strong> a quienes deseen aprenderlo y promover la programación como una <strong>competencia educativa básica</strong>.</p>
 
-    <p>La asociación fue creada el <strong>{{ organization.registration_date|date:"d/m/Y" }}</strong> y
-    desde entonces ha organizado <a href="{% url 'events:index' %}">diferentes eventos</a> de difusión
- del lenguaje de programación Python colaborando en el incremento de la comunidad de usuarios de Python
- en Canarias.</p>
+  <div class="message-body">
+    <b>{{ organization.name }}</b> es una asociación sin ánimo de lucro cuyos objetivos, son, entre otros, promover el <strong>uso del lenguaje</strong> de programación Python, dar <strong>soporte</strong> a quienes deseen aprenderlo y promover la programación como una <strong>competencia educativa básica</strong>.</p>
+
+  <p>La asociación fue creada el <b>{{ organization.registration_date|date:"d/m/Y" }}</b> y desde
+  entonces ha organizado <a href="{% url 'events:index' %}">diferentes
+    eventos</a> de difusión del lenguaje de programación Python
+  colaborando en el incremento de la comunidad de usuarios de Python en
+  Canarias.</p>
 
     <p>Te recomendamos que no dejes de <a href="{% url 'about:history' %}">repasar la historia de Python Canarias</a>.</p>
 
@@ -35,7 +30,7 @@
 
 <article class="anchor" id="whypython">
   <div class="message-header dyn-anchor-heading">
-    ¿Por qué Python?
+    <h3>¿Por qué Python?</h3>
     <a class="dyn-anchor-link" href="#whypython"><i class="fas fa-link"></i></a>
   </div>
   <div class="message-body">
@@ -70,15 +65,23 @@
     <a class="dyn-anchor-link" href="#board"><i class="fas fa-link"></i></a>
   </div>
   <div class="message-body">
-    <p>Actualmente la <strong>junta directiva</strong> de {{ orgnizacion.name }} está formada por:</p>
+    <p>Actualmente la <b>junta directiva</b> está formada por:</p>
 
   <table class="table is-hoverable is-fullwidth">
+   <thead>
+    <tr>
+     <th>Cargo</th>
+     <th>Nombre</th>
+     <th>Nº socia/o</th>
+     </tr>
+   </thead>
    <tbody>
     {% for row in board %}
     <tr>
       <th>{{ row.role }}</th>
       <td>{{ row.member.full_name }}</td>
-      <td style="text-align: right;">Socio Nº <span class="tag is-info">{{ row.pk }}</span></td>
+      <td style="text-align: right;">Socio Nº
+        <span class="tag is-info">{{ row.member.pk }}</span></td>
     </tr>
     {% endfor %}
    </tbody>

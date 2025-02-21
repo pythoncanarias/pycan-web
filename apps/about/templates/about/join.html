@@ -1,21 +1,13 @@
-{% extends "about/base.html" %}
-{% load utils %}
-{% load static %}
-
-{% block title %}Únete - {{ block.super }}{% endblock %}
+{% extends "base.html" %}
+{% load utils static %}
 
 {% block content %}
 
 <div class="content box">
 <div id="join" class="section anchor">
 
-<h1  class="dyn-anchor-heading" >
-  No nos mires, ¡únete! <i class="fas fa-people-carry"></i>
-  <a class="dyn-anchor-link" href="#join"><i class="fas fa-link"></i></a>
-</h1>
-
 <p>
-Python Canarias es una <strong>asociación sin ánimo de lucro</strong>. Para desarrollar nuestras actividades necesitamos un <strong>soporte económico</strong> que se convierte en servicios para la comunidad, principalmente en <a href="{% url 'events:past_events' %}">forma de eventos</a>. Las aportaciones de empresas colaboradoras y patrocinios son super importantes, pero aún así seguimos necesitando de otras ayudas.
+<b>{{ organization.name|title }}</b> es una <strong>asociación sin ánimo de lucro</strong>. Para desarrollar nuestras actividades necesitamos un <strong>soporte económico</strong> que se convierte en servicios para la comunidad, principalmente en <a href="{% url 'events:past_events' %}">forma de eventos</a>. Las aportaciones de empresas colaboradoras y patrocinios son super importantes, pero aún así seguimos necesitando de otras ayudas.
 </p>
 
 <article class="message">
@@ -54,7 +46,7 @@ La cuota de socio/socia es anual y su cuantía está recogida en el <a href="htt
   <li>
     Realiza una transferencia bancaria indicando los siguientes datos:
     <ul>
-      <li><strong>Banco</strong>: {{ organization.bank}}</li>
+      <li><strong>Banco</strong>: {{ organization.bank }}</li>
       <li><strong>IBAN</strong>: {{ organization.iban }}</li>
       <li><strong>Importe</strong>: <em>el de la cuota seleccionada</em></li>
       <li><strong>Concepto</strong>: Alta de socio/a <i class="fas fa-thumbtack"></i></li>

@@ -1,8 +1,5 @@
-{% extends "about/base.html" %}
-{% load utils %}
-{% load static %}
-
-{% block title %}Historia - {{ block.super }}{% endblock %}
+{% extends "base.html" %}
+{% load utils static %}
 
 {% block content %}
 
@@ -10,15 +7,13 @@
 
 {% filter as_markdown %}
 
-# Historia de Python Canarias
-
 La historia conocida de Python en Canarias se remonta al **año 2001**. Por aquellos tiempos, el software libre se empezaba a cocinar en el [Grupo de Usuarios de Linux de Canarias](http://gulic.org/).
 
 Desde **2001** un grupo de alumnos daba en la [Universidad de La Laguna](https://www.ull.es/) los cursos CILA y, entre ellos, varios años se impartió el *CILA de Programación con Python*. Posteriormente los oficializó la [Oficina del software libre de la ULL](https://osl.ull.es/). También hubo incursiones en el ámbito de la Astrofísica en la ULL.
 
 En junio de **2002**, en Gran Canaria, **Ricardo Cárdenes** [(heimy)](https://twitter.com/heimy?lang=es) anunciaba la [traducción](http://web.archive.org/web/20010630145724/http://www.gulic.org/) por **Iván Juanes** ([kerberos](https://twitter.com/kerberus)) de la primera edicion del libro *How to think like a computer scientist, Python version* (Aprenda a pensar como un cientifico informático, versión Python).
 
-![Historia de Python Canarias]({{ assets|get_asset_key:'about/img/history.png' }})
+![Historia de Python Canarias]({% static 'about/img/history.png' %})
 
 En **2003** aparecen las primeras reuniones de desarrolladores de Python [PyCon](https://www.pycon.org/), que comenzaron en Washington DC, donde los asistentes marcaban las líneas de desarrollo de Python y compartían experiencias.
 

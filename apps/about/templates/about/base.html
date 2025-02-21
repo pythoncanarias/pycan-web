@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-
-{% load utils %}
-
-{% block styles %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{{ assets|get_asset_key:'about/custom.min.css' }}">
-{% endblock styles %}

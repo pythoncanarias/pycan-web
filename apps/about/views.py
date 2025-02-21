@@ -1,11 +1,12 @@
 import logging
 
-from django.conf import settings
 from django.shortcuts import redirect, render
 
-from .models import Ally, FAQItem
 from apps.members.models import Position
 from apps.organizations.models import Organization
+from . import models
+from . import breadcrumbs
+
 
 logger = logging.getLogger(__name__)
 
@@ -15,31 +16,55 @@ def index(request):
 
 
 def us(request):
-    positions = [p for p in Position.objects.all() if p.active]
+    organization = Organization.load_main_organization()
+    board = Position.get_current_board()
     return render(request, 'about/index.html', {
-        'positions': positions,
+        'title': 'Sobre la organización',
+        'subtitle': str(organization),
+        'breadcrumbs': breadcrumbs.bc_root(),
+        'board': board,
         })
 
 
 def join(request):
-    organization = Organization.objects.get(
-        name__istartswith=settings.ORGANIZATION_NAME
-        )
-    return render(request, 'about/index.html', {
+    organization = Organization.load_main_organization()
+    return render(request, 'about/join.html', {
+        'title': 'No nos mires, ¡únete!',
+        'breadcrumbs': breadcrumbs.bc_join(),
+        'board': board,
         'organization': organization,
-        'board': Position.get_current_board(),
     })
 
 
 def history(request):
-    return render(request, 'about/history.html', {})
+    organization = Organization.load_main_organization()
+    return render(request, 'about/history.html', {
+        'title': f'Historia de {organization}',
+        'breadcrumbs': breadcrumbs.bc_history(),
+        })
 
 
 def allies(request):
-    allies = Ally.objects.all()
-    return render(request, 'about/allies.html', {'allies': allies})
+    return render(request, 'about/allies.html', {
+        'title': 'Aliados',
+        'breadcrumbs': breadcrumbs.bc_allies(),
+        'allies': models.Ally.objects.all(),
+        })
 
 
 def faq_list(request):
-    faqs = FAQItem.objects.order_by('id')
-    return render(request, 'about/faq_list.html', {'faqs': faqs})
+    return render(request, 'about/faq_list.html', {
+        'title': 'Preguntas frecuentes',
+        'breadcrumbs': breadcrumbs.bc_faq(),
+        'faqs': models.FAQItem.objects.order_by('id'),
+        })
+
+
+def board(request):
+    organization = Organization.load_main_organization()
+    return render(request, 'about/board.html', {
+        'title': 'Datos de la organización',
+        'subtitle': str(organization),
+        'organization': organization,
+        'board': Position.get_current_board(),
+        })
