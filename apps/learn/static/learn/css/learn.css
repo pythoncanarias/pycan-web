@@ -1,9 +1,10 @@
 ul.labels {
   display: flex;
   flex-wrap: wrap;
-  border: 1px dotted red;
+  /*border: 1px dotted red;*/
   margin-left: 10%;
   margin-right: 10%;
+  padding-bottom: 25px;
 }
 
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from html import escape
-
 from django.urls import reverse_lazy
 
 from apps.commons.breadcrumbs import HOMEPAGE
