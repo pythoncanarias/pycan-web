@@ -1,35 +1,17 @@
 {% extends "events/base.html" %}
 
-{% block title %}No hay eventos programados - {{ block.super }}{% endblock %}
-
-{% block content_class %}is-narrow{% endblock %}
-
 {% block content %}
-<div class="box has-text-centered">
-    
-<h1 class="title">Por el momento no hay eventos programados</h1>
+<section class="box has-text-centered">
 
-{% if past_events %}
-
- <h2 class="subtitle">
- Estos son los {{ past_events.count }} 
- últimos eventos que hemos organizado.
- </h2>
-
-
-{% with events=past_events %}
-    {% include "events/includes/events-list.html" %}
-{% endwith %}
+{% include "events/includes/events-list.html" %}
 
 <div class="pt-2">
 <p>
 <a role="button" class="button is-info" href="{% url 'events:past_events' %}">Más eventos en nuestro archivo</a>
 </p>
-
 </div>
 
-{% endif %}
- </div>
+</section>
 
 
 {% endblock content %}

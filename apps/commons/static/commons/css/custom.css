@@ -6,6 +6,7 @@
 
   /* Own variables */
   --blue-text: #2673b5;
+  --blue-text-light: #338ad4;
   --blue-bg: #2a77b7;
 
   --breadcrumbs-bg: #6F1E51;
@@ -256,7 +257,7 @@ article {
 .message-header .dyn-anchor-link i:hover {
   color: tomato;
   }
-  
+
 
 html {
   /* source: https://stackoverflow.com/q/46463338 */

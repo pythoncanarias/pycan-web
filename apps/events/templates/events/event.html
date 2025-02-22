@@ -1,14 +1,6 @@
 {% extends "events/base.html" %}
 
-{% load static %}
-{% load leaflet_tags %}
-{% load utils %}
-{% load l10n %}
-
-{% block title %}{{event.name}} - {{ block.super }}{% endblock %}
-
-{% block body_class %}event-page{% endblock %}
-{% block default_content_class %}{% endblock %}
+{% load static leaflet_tags utils l10n %}
 
 {% block content %}
 

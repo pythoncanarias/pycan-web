@@ -28,8 +28,9 @@ class Event(models.Model):
     name = models.CharField(max_length=256)
     hashtag = models.SlugField(unique=True)
     active = models.BooleanField(
-        help_text="The current event is shown in the events page", default=False
-    )
+        help_text="The current event is shown in the events page",
+        default=False,
+        )
     opened_ticket_sales = models.BooleanField(default=False)
     start_date = models.DateField()
     venue = models.ForeignKey(

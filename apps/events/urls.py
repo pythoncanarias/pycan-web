@@ -5,13 +5,23 @@ from . import converters
 
 app_name = 'events'
 
+
+def tie(url_path, view_function, name=None):
+    """Use the name of the function as the name of the url.
+
+    Unlesss a different name were specified using the ``name`` parameter.
+    """
+    return path(url_path, view_function, name=name or view_function.__name__)
+
+
 register_converter(converters.EventConverter, 'event')
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('next/', views.next, name='next'),
-    path('archive/', views.past_events, name='past_events'),
-    path('<slug:slug>/', views.detail_event, name='detail_event'),
+    tie('', views.index, name='index'),
+    tie('next/', views.next, name='next'),
+    tie('last/', views.last_events),
+    tie('archive/', views.past_events),
+    tie('<slug:slug>/', views.detail_event),
     path('<event:event>/cfp/', views.call_for_papers, name='cfp'),
     path('<event:event>/cfp/thanks', views.proposal_received, name='thanks'),
     path(
