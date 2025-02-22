@@ -144,6 +144,7 @@ def serialize_quote(quote):
     return {
         'text': quote.text,
         'author': quote.author.name + ' ' + quote.author.surname,
+        'url': quote.author.url or '',
     }
 
 @api
