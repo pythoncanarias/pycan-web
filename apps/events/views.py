@@ -173,33 +173,6 @@ def waiting_list_accepted(request, slug):
     )
 
 
-def trade(request, slug, sell_code, buy_code):
-    event = models.Event.get_by_slug(slug)
-    refund = models.Refund.load_by_sell_code(sell_code)
-    waiting_list = models.WaitingList.load_by_buy_code(buy_code)
-    """Pseudo codigo
-    GET:
-    1) A partir del ticket comprado obtener el tipo de ticket (articulo)
-    2) A partir del waiting list, obtener los datos del nuevo comprador
-    3) Preparar el formulario de compra. Idealmente un solo boton
-    POST:
-    1) obtener timestamp
-    2) Marcar el waiting list como fixed
-    3) Marcar el refund como fixed
-    4) Notificar a ambos que el acuerdo esta cerrado
-    """
-
-    return render(
-        request,
-        "events/trade.html",
-        {
-            "event": event,
-            "waiting_list": waiting_list,
-            "refund": refund,
-        },
-    )
-
-
 def stripe_payment_declined(request, charge):
     organization = Organization.load_main_organization()
     return render(
