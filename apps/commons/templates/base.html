@@ -14,12 +14,13 @@
     {% else %}
       {{ organization.name }}
     {% endif %}
-    
+
   {% endblock title %}</title>
 
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">
 
   {% block styles %}
+  <link rel="stylesheet" href="{% static 'commons/css/font-awesome.css' %}">
   <link rel="stylesheet" href="{% static 'commons/css/bulma.min.css' %}">
   <link rel="stylesheet" href="{% static 'commons/css/custom.css' %}">
   {% endblock styles %}
@@ -32,7 +33,7 @@
   {% if breadcrumbs %}
     {% include "includes/breadcrumbs.html" %}
   {% endif %}
-  
+
   {% block container %}
 
   {% if messages %}
