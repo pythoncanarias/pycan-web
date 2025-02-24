@@ -12,6 +12,7 @@ clean:
     find . -type d -name "__pycache__" -exec rm -r "{}" \;
     find . -type d -name ".sass-cache" -exec rm -r "{}" \;
     rm -r .ruff_cache/
+    rm -r .pytest_cache/
 
 
 # Ejecutar el servidor en modo producción
