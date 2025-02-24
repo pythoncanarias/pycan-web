@@ -18,7 +18,8 @@ urlpatterns = [
     path('members/', include('apps.members.urls', namespace='members')),
     path('jobs/', include('apps.jobs.urls', namespace='jobs')),
     path('learn/', include('apps.learn.urls', namespace='learn')),
-]
+    path('dashboard/', include('apps.dashboard.urls', namespace='dashboard')),
+    ]
 
 if settings.DEBUG:
     import debug_toolbar
