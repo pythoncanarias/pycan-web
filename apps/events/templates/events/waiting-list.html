@@ -1,25 +1,25 @@
 {% extends "events/base.html" %}
-{% load static %}
-{% load utils %}
-{% block title %}Lista de espera - {{event.name}} - {{ block.super }}{% endblock %}
+{% load static utils controls %}
 
 {% block content %}
 
-<h1> {{ event.name }} 
-    <small> Lista de espera </small>
-</h1>
-
-<form method="POST" action =".">
-
-    {% csrf_token %}
-
-    <table class="table form">
-
-    {{ form.as_table }}
-
-    </table>
-
-<input type="submit" name="Apuntarse en la lista de espera">
-</form>
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">Apuntarse a la lista de espera</p>
+  </header>
+  <div class="card-content">
+  <form method="POST" action =".">
+  {% csrf_token %}
+  {% text_field form.name placeholder="Nombre" %}
+  {% text_field form.surname placeholder="Apellidos" %}
+  {% email_field form.email placeholder="Correo electrónico" %}
+  {% tel_field form.phone placeholder="Teléfono" %}
+  <input type="submit"
+        class="input"
+        name="pb_ok"
+        value="Apuntarse en la lista de espera">
+  </form>
+  </div>
+</div>
 
 {% endblock content %}

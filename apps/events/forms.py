@@ -1,16 +1,18 @@
+#!/usr/bin/env python3
+
 import logging
 
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Proposal, Refund
+from . import models
 
 UUID_LAST_DIGITS = 12
 
 
 class ProposalForm(forms.ModelForm):
     class Meta:
-        model = Proposal
+        model = models.Proposal
         fields = [
             "name",
             "surname",
@@ -77,10 +79,28 @@ class EmailForm(forms.Form):
 
 
 class WaitingListForm(forms.Form):
+
     email = forms.EmailField(label="Tu email", max_length=192)
     name = forms.CharField(label="Nombre", max_length=256)
     surname = forms.CharField(label="Apellidos", max_length=256)
     phone = forms.CharField(label="Teléfono", max_length=32)
+
+    def __init__(self, event, *args, **kwargs):
+        self.event = event
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        assert self.is_valid()
+        wl = models.WaitingList(
+            event=self.event,
+            name=self.cleaned_data["name"],
+            surname=self.cleaned_data["surname"],
+            email=self.cleaned_data["email"],
+            phone=self.cleaned_data["phone"],
+            )
+        if commit:
+            wl.save()
+        return wl
 
 
 class RefundForm(forms.Form):
@@ -114,7 +134,7 @@ class RefundForm(forms.Form):
                 " codigo están mal.".format(UUID_LAST_DIGITS)
             )
         self.ticket = tickets[0]
-        if Refund.exists(self.event, self.ticket):
+        if models.Refund.exists(self.event, self.ticket):
             raise ValidationError(
                 "Ya se ha solicitado una devolución del" " importe para ese ticket"
             )

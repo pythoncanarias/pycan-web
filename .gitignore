@@ -101,3 +101,4 @@ certificates/media
 .prettierignore
 .parcel-cache/
 .python-version
+exported/

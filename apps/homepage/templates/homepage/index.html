@@ -41,7 +41,8 @@
               </a></h2>
               {% if event.call_for_paper_is_open %}
               <p class="lead">
-                <a class="button is-warning is-outlined" href="{% url 'events:cfp' event=event %}">
+                <a class="button is-warning is-outlined"
+                   href="{% url 'events:call_for_papers' event=event %}">
                   ¡Envíanos tu propuesta!
                 </a>
               </p>

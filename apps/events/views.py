@@ -1,21 +1,20 @@
-import datetime
+from datetime import datetime as DateTime
 import logging
 
-import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect, render
-from django.urls import reverse
-from apps.organizations.models import Organization
-from apps.tickets.models import Article, Gift, Raffle, Ticket
+import stripe
 
-from . import models
-from . import tasks
+from . import breadcrumbs
 from . import forms
 from . import links
+from . import models
 from . import stripe_utils
-from . import breadcrumbs
+from . import tasks
+from apps.organizations.models import Organization
+from apps.tickets.models import Article, Gift, Raffle, Ticket
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +65,7 @@ def call_for_papers(request, event):
             proposal = form.save()
             tasks.send_proposal_acknowledge.delay(proposal)
             tasks.send_proposal_notification.delay(proposal)
-            return redirect(reverse("events:thanks", kwargs={"event": event}))
+            return redirect(links.to_proposal_received(event))
     else:
         if request.user.is_authenticated:
             user = request.user
@@ -74,62 +73,50 @@ def call_for_papers(request, event):
             initial['surname'] = user.last_name
             initial['email'] = user.email
         form = forms.ProposalForm(event, initial=initial)
-    return render(
-        request,
-        "events/call-for-papers.html",
-        {
-            "title": f"Call for papers / {event}",
-            "event": event,
-            "form": form,
-        },
-    )
+    return render(request, "events/call-for-papers.html", {
+        "title": f"Call for papers / {event}",
+        "breadcrumbs": breadcrumbs.bc_event_cfp(event),
+        "event": event,
+        "form": form,
+        })
 
 
 def proposal_received(request, event):
-    return render(
-        request,
-        "events/cfp-thanks.html",
-        {
-            "title": f"Gracias por su propuesta / {event}",
-            "event": event,
-        },
-    )
+    return render(request, "events/proposal_received.html", {
+        "title": f"Gracias por su propuesta para {event}",
+        "breadcrumbs": breadcrumbs.bc_proposal_received(event),
+        "event": event,
+        })
 
 
-def waiting_list(request, slug):
-    event = models.Event.get_by_slug(slug)
+def waiting_list(request, event):
     if request.method == "POST":
-        form = forms.WaitingListForm(request.POST)
+        form = forms.WaitingListForm(event, request.POST)
         if form.is_valid():
-            wl = models.WaitingList(
-                event=event,
-                name=form.cleaned_data["name"],
-                surname=form.cleaned_data["surname"],
-                email=form.cleaned_data["email"],
-                phone=form.cleaned_data["phone"],
-            )
-            wl.save()
+            form.save()
             return redirect(links.waiting_list_accepted(event.slug))
     else:
-        form = forms.WaitingListForm()
-    return render(
-        request,
-        "events/waiting-list.html",
-        {
-            "event": event,
-            "form": form,
-        },
-    )
+        form = forms.WaitingListForm(event)
+    return render(request, "events/waiting-list.html", {
+        "title": f"Lista de espera para {event}",
+        "breadcrumbs": breadcrumbs.bc_waiting_list(event),
+        "event": event,
+        "form": form,
+        })
 
 
-def refund(request, slug):
-    logging.error('refund(request, "{}") starts'.format(slug))
-    event = models.Event.get_by_slug(slug)
-    logging.error("   request method is {}".format(request.method))
+def waiting_list_accepted(request, event):
+    return render( request, "events/waiting-list-accepted.html", {
+        "title": "Su petición para la lista de espera está aceptada",
+        "subtitle": str(event),
+        "breadcrumbs": breadcrumbs.bc_waiting_list(event),
+        "event": event,
+        })
+
+
+def refund(request, event):
     if request.method == "POST":
         form = forms.RefundForm(event, request.POST)
-        logging.error("   form.is_valid() is {}".format(form.is_valid()))
-        logging.error("   form.errors is {}".format(form.errors))
         if form.is_valid():
             ticket = form.ticket
             rf = models.Refund(ticket=ticket, event=event)
@@ -137,14 +124,13 @@ def refund(request, slug):
             return redirect(links.refund_accepted(event.slug, rf.pk))
     else:
         form = forms.RefundForm(event)
-    return render(
-        request,
-        "events/refund.html",
-        {
-            "event": event,
-            "form": form,
-        },
-    )
+    return render(request, "events/refund.html", {
+        "title": "Solicitud de devolución",
+        "subtitle": str(event),
+        "breadcrumbs": breadcrumbs.bc_refund(event),
+        "event": event,
+        "form": form,
+        })
 
 
 def refund_accepted(request, slug, pk):
@@ -156,17 +142,6 @@ def refund_accepted(request, slug, pk):
         {
             "event": event,
             "refund": refund,
-        },
-    )
-
-
-def waiting_list_accepted(request, slug):
-    event = models.Event.get_by_slug(slug)
-    return render(
-        request,
-        "events/waiting-list-accepted.html",
-        {
-            "event": event,
         },
     )
 
@@ -415,7 +390,7 @@ def raffle_gift(request, slug, gift_id, match=False):
         if current_gift.awarded_ticket:
             current_gift.missing_tickets.add(current_gift.awarded_ticket)
         current_gift.awarded_ticket = raffle.get_random_ticket()
-        current_gift.awarded_at = datetime.datetime.now()
+        current_gift.awarded_at = DateTime.now()
         current_gift.save()
     next_gift = raffle.get_undelivered_gifts().first()
     progress_value = current_gift.order() / raffle.gifts.count() * 100
@@ -441,7 +416,7 @@ def raffle_results(request, slug):
     except (models.Event.DoesNotExist, Raffle.DoesNotExist):
         return redirect("/")
     if request.user.is_staff and raffle.opened:
-        raffle.closed_at = datetime.datetime.now()
+        raffle.closed_at = DateTime.now()
         raffle.save()
     gifts = raffle.gifts.all()
     return render(

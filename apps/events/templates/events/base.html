@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static utils leaflet_tags %}
+{% load static leaflet_tags %}
 
 {% block content_class %}is-narrow{% endblock %}
 
@@ -13,4 +13,4 @@
   {{ block.super }}
   <script src="{% static 'events/js/events.js' %}"></script>
   {% leaflet_js %}
-{% endblock %}
+{% endblock js %}

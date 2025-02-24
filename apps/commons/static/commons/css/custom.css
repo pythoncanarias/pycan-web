@@ -5,6 +5,7 @@
   --link: #1e72b9;
 
   /* Own variables */
+  --red: #EA2027;
   --blue-text: #2673b5;
   --blue-text-light: #338ad4;
   --blue-bg: #2a77b7;
@@ -67,6 +68,10 @@
   --modal-background-background-color: rgba(7, 8, 16, 0.86);
 }
 
+p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 
 hr {
   background-color: #ececf1;
@@ -313,7 +318,7 @@ body {
 
 .errorlist {
   color: var(--red);
-  font-size: smaller;
+  font-weight: bolder;
   margin-top: 0.5rem;
 }
 

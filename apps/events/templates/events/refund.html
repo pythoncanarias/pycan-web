@@ -1,11 +1,9 @@
 {% extends "events/base.html" %}
-{% load static %}
-{% load utils %}
-{% block title %}Lista de espera - {{event.name}} - {{ block.super }}{% endblock %}
+{% load controls %}
 
 {% block content %}
 
-<h1> {{ event.name }} 
+<h1 class="is-size-2"> {{ event.name }}<br>
     <small> Solicitud de devolución </small>
 </h1>
 
@@ -20,16 +18,17 @@ lo posible para que se le pueda devolver el importe, descontando los gastos de
 comisión que nos haya cobrado la pasarela de pago.</p>
 
 <p>Para mayor seguridad, debes indicarnos el email que usaste para comprar
-la entrada, y los <b>12 últimos números o letras del código UUID</b> de la misma. 
-El código uuid es una serie de 32 dígitos y 
+la entrada, y los <b>12 últimos números o letras del código UUID</b> de la misma.
+El código uuid es una serie de 32 dígitos y
 letras, (y opcionalmente, guiones) como por ejemplo
 <code>ff1fa8a1-b9b3-4a9d-b3df-8bb016c02829</code>, y está en la entrada en PDF
 que te enviamos, debajo del código QR. Para este ejemplo, tendrías que incluir
 los últimos 12 símbolos, o sea <code>8bb016c02829</code></p>
 
 <form method="POST" action =".">
-
-    {% csrf_token %}
+{% csrf_token %}
+{% email_field field.email %}
+{% comment %}{% text_field field.uuid %}{% endcomment %}
 
     <table class="table form">
 

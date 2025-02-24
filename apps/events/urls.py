@@ -22,23 +22,11 @@ urlpatterns = [
     tie('last/', views.last_events),
     tie('archive/', views.past_events),
     tie('<slug:slug>/', views.detail_event),
-    path('<event:event>/cfp/', views.call_for_papers, name='cfp'),
-    path('<event:event>/cfp/thanks', views.proposal_received, name='thanks'),
-    path(
-        '<slug:slug>/waiting-list/',
-        views.waiting_list,
-        name='waiting_list',
-    ),
-    path(
-        '<slug:slug>/waiting-list/accepted/',
-        views.waiting_list_accepted,
-        name='waiting_list_accepted',
-    ),
-    path(
-        '<slug:slug>/refund/',
-        views.refund,
-        name='refund',
-    ),
+    tie('<event:event>/cfp/', views.call_for_papers),
+    tie('<event:event>/cfp/thanks', views.proposal_received),
+    tie('<event:event>/waiting-list/', views.waiting_list),
+    tie('<event:event>/waiting-list/accepted/', views.waiting_list_accepted),
+    tie('<event:event>/refund/', views.refund),
     path(
         '<slug:slug>/refund/accepted/<int:pk>/',
         views.refund_accepted,
