@@ -1,6 +1,8 @@
 from inspect import getmembers, isfunction
 
 from django.core.management.base import BaseCommand
+from rich.console import Console
+from rich.table import Table
 
 from apps.notices import repository
 from apps.notices.models import Notice, NoticeKind
@@ -9,18 +11,41 @@ from apps.notices.tasks import (
     create_notice_message,
     task_send_notice,
 )
-from utils.console import as_table, cyan, green, red, yes_no
+
 
 NOTICE_KIND = dict(getmembers(repository, isfunction))
+
+
+def red(txt):
+    return f'[red]{txt}[/red]'
+
+
+def green(txt):
+    return f'[green]{txt}[/green]'
+
+
+def cyan(txt):
+    return f'[cyan]{txt}[/cyan]'
+
+
+def yes_no(flag, yes='Si', no='no'):
+    return green(yes) if flag else red(no)
 
 
 class Command(BaseCommand):
 
     help = 'Gestión de avisos a socios'
 
+    def __init__(self, *args, **kwargs):
+        self.console = Console()
+        super().__init__(*args, **kwargs)
+
+    def print(self, *args, **kwargs):
+        self.console.print(*args, **kwargs)
+
     def add_arguments(self, parser):
         self.parser = parser
-        parser.add_argument('--verbose', action='store_true', help='Verboso')
+        parser.add_argument('--verbose', action='store_true', help='Verbose mode')
         subparser = parser.add_subparsers(dest="subcommand")
         # run
         run_parser = subparser.add_parser("run")
@@ -52,42 +77,67 @@ class Command(BaseCommand):
 
     def do_message(self, *args, **options):
         id_notice = options.get('id_notice')
-        notice = Notice.objects.get(pk=id_notice)
+        notice = Notice.load_notice(id_notice)
         email_message = create_notice_message(notice)
-        print(
+        self.print(
             cyan('From:'),
             f'{email_message._from_email._email}'
             f' <{email_message._from_email._name}>',
         )
-        print(cyan('Subject:'), email_message._subject)
-        print()
-        print(create_notice_body(notice))
-        print()
+        self.print(cyan('Subject:'), email_message._subject)
+        self.print()
+        self.print(create_notice_body(notice))
+        self.print()
+
+    def print_table_notices(self, notices):
+        tab = Table(title="Last notices (last {num_rows})")
+        tab.add_column("Id. msg", justify="right")
+        tab.add_column("Member")
+        tab.add_column("Notice")
+        tab.add_column("Ref. date")
+        tab.add_column("Delivered")
+        for notice in notices:
+            tab.add_row(
+                str(notice.pk),
+                str(notice.member),
+                str(notice.kind),
+                str(notice.reference_date),
+                yes_no(notice.status()),
+                )
+        self.print(tab)
 
     def do_list(self, *args, **options):
         num_rows = options.get('num_rows')
-        body = list(
-            (
-                notice.pk,
-                notice.member,
-                notice.kind,
-                notice.reference_date,
-                yes_no(notice.status()),
-            )
-            for notice in Notice.objects.order_by('-created_at')[0:num_rows]
-        )
-        if body:
-            headers = ['Msg.', 'Member', 'Notice', 'Ref. date', 'delivered']
-            print(as_table(headers, body))
+        notices = list(Notice.objects.order_by('-created_at')[0:num_rows])
+        if notices:
+            self.print_table_notices(notices)
         else:
-            print(cyan('No hay ningún aviso en la base de datos'))
+            self.print(cyan('No hay ningún aviso en la base de datos'))
+
+    def print_table_rules(self, rules):
+        tab = Table(title="Rules")
+        tab.add_column("Id. rule", justify="right")
+        tab.add_column("Description")
+        tab.add_column("Code")
+        tab.add_column("Days")
+        tab.add_column("Enabled")
+        for rule in rules:
+            status_code = callable(NOTICE_KIND.get(rule.code))
+            tab.add_row(
+                str(rule.pk),
+                rule.description,
+                green(rule.code) if status_code else red(rule.code),
+                str(rule.days),
+                yes_no(rule.enabled),
+                )
+        self.print(tab)
 
     def do_rules(self, *args, **options):
         body = []
         id_to_enable = options.get('enable')
         id_to_disable = options.get('disable')
         if id_to_enable and id_to_disable and id_to_enable == id_to_disable:
-            print(red("Las dos opciones son mutuamente exclueyentes"))
+            self.print(red("Las dos opciones son mutuamente exclueyentes"))
             return
         if id_to_enable:
             kind = NoticeKind.objects.get(pk=id_to_enable)
@@ -99,19 +149,17 @@ class Command(BaseCommand):
             if kind.enabled:
                 kind.enabled = False
                 kind.save()
-        for kind in NoticeKind.objects.all().order_by('pk'):
-            status_code = callable(NOTICE_KIND.get(kind.code))
-            body.append(
-                (
-                    kind.pk,
-                    kind.description,
-                    green(kind.code) if status_code else red(kind.code),
-                    kind.days,
-                    yes_no(kind.enabled),
-                )
-            )
-        headers = ["Id.", "Description", "Code", "Days", "Enabled"]
-        print(as_table(headers, body))
+        self.print_table_rules(NoticeKind.objects.all().order_by('pk'))
+
+    def print_table_checks(self, cheks):
+        tab = Table(title="Checks run")
+        tab.add_column("Member")
+        tab.add_column("Notice")
+        tab.add_column("Ref. date")
+        tab.add_column("Status")
+        for check in checks:
+            tab.add_row(*check)
+        self.print(tab)
 
     def do_run(self, **options):
         is_verbose = options.get('verbose')
@@ -120,7 +168,7 @@ class Command(BaseCommand):
         for kind in NoticeKind.objects.filter(enabled=True).all():
             code = NOTICE_KIND.get(kind.code)
             if not code:
-                print(red(f"ERROR: No existe {kind.code}"))
+                self.print(red(f"ERROR: No existe {kind.code}"))
                 continue
             if callable(code):
                 for ref_date, member in code(days=kind.days):
@@ -135,9 +183,8 @@ class Command(BaseCommand):
                             task_send_notice.delay(notice)
                             status = cyan("[Notice queued]")
                     body.append((member, notice.kind, ref_date, status))
-        if is_verbose or is_check:
-            headers = ['Member', 'Notice', 'Ref. date', 'Status']
-            print(as_table(headers, body))
+        if body and (is_verbose or is_check):
+            self.print_table_checks(body)
 
     def handle(self, *args, **options):
         subcommand = options.get('subcommand')

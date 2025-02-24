@@ -43,6 +43,7 @@ class NoticeKind(models.Model):
 
 
 class Notice(models.Model):
+
     class Meta:
         verbose_name = 'Aviso para miembro'
         verbose_name_plural = 'Avisos para miembros'
@@ -62,6 +63,23 @@ class Notice(models.Model):
         null=True,
         default=None,
     )
+
+    @classmethod
+    def load_notice(cls, id_notice: int):
+        """Load an instance of Notice from the database.
+
+        Parameters:
+
+            id_notice (int): Primary key of the notice.
+
+        Returns:
+
+            The notice, it if exists in the database, or ``None``.
+        """
+        try:
+            return cls.objects.get(pk=id_notice)
+        except cls.DoesNotExist:
+            return None
 
     def __str__(self):
         return f"Notice {self.pk}"
