@@ -327,24 +327,6 @@ RQ_QUEUES = {
 
 CURRENT_API_VERSION = 1
 
-# Twitter API
-TWITTER_API_KEY = config(
-    'TWITTER_API_KEY',
-    default='<Your Twitter API KEY here>',
-)
-TWITTER_API_SECRET_KEY = config(
-    'TWITTER_API_SECRET_KEY',
-    default='<Your Twitter API SECRET here>',
-)
-TWITTER_ACCESS_TOKEN = config(
-    'TWITTER_ACCESS_TOKEN',
-    default='<Your Twitter ACCESS TOKEN here>',
-)
-TWITTER_ACCESS_TOKEN_SECRET = config(
-    'TWITTER_ACCESS_TOKEN_SECRET',
-    default='<Your Twitter ACCESS SECRET here>',
-)
-
 # Random quote interval (seconds)
 RANDOM_QUOTE_INTERVAL = config(
     'RANDOM_QUOTE_INTERVAL', default=10, cast=lambda i: 1000 * int(i)
