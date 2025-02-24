@@ -1,0 +1,15 @@
+<div class="field">
+  <label class="label" for="{{ control_id }}">{{ field.label }}</label>
+  <div class="control">
+    <input name="{{ field.name }}" id="{{ control_id }}"
+           class="input"
+           value="{{ field.value }}"
+           type="tel" placeholder="{{ placeholder }}">
+    {% if field.errors %}
+      <ul class="errorlist">{% for error in field.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}</ul>
+    {% endif %}
+  </div>
+</div>
+
