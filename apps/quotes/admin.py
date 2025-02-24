@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from .models import Author, Quote
-from .forms import QuoteForm
-
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
+
+from .models import Author, Quote
+from .forms import QuoteForm
 
 
 class AuthorResource(resources.ModelResource):

@@ -104,7 +104,8 @@ class Ticket(models.Model):
         help_text=('Consecutive number within event '
                    '(if blank it will be automatically fulfilled)'),
         null=True,
-        blank=True)
+        blank=True,
+        )
     keycode = models.UUIDField(default=uuid.uuid4)
     sold_at = models.DateTimeField(auto_now_add=True)
     payment_id = models.CharField(max_length=128, blank=True)

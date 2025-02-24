@@ -1,22 +1,21 @@
 {% extends "events/base.html" %}
 
-{% load utils %}
-
-{% block title %}Eventos - {{ block.super }}{% endblock %}
-
-{% block body_class %}list-events-page{% endblock %}
-{% block content_class %}is-narrow{% endblock %}
-
 {% block content %}
 
-<h1 class="title title-list-events">
-  {% if archive %}
-    Eventos pasados
-  {% else %}
-    Próximos eventos
-  {% endif %}
-</h1>
+<h1 class="title title-list-events">Eventos pasados</h1>
 
-{% include "events/includes/events-list.html" %}
+<div class="columns">
+ <div class="column is-10-tablet is-8-desktop is-offset-1-tablet is-offset-2-desktop">
+
+  <section class="box has-text-centered">
+
+  {% include "events/includes/events-list.html" %}
+
+  {% include "events/includes/button_archive.html" %}
+
+  </section>
+ </div>
+</div>
+
 
 {% endblock content %}

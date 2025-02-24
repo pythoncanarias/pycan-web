@@ -34,8 +34,12 @@ class Event(models.Model):
     opened_ticket_sales = models.BooleanField(default=False)
     start_date = models.DateField()
     venue = models.ForeignKey(
-        Venue, related_name="events", null=True, blank=True, on_delete=models.PROTECT
-    )
+        Venue,
+        related_name="events",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        )
     # 50 minutes as default duration for each slot
     default_slot_duration = models.DurationField(default=50 * 60)
     short_description = models.TextField(
@@ -84,7 +88,8 @@ class Event(models.Model):
     )
 
     def call_for_paper_is_open(self) -> bool:
-        """Returns True if it is possible to present a proposal for the event."""
+        """Returns True if it's possible to present a proposal for the event
+        """
         if self.cfp_start_at is None:
             return False
         now = timezone.now()

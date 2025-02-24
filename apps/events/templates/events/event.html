@@ -10,7 +10,7 @@
       <h1 class="title is-1">{{ event.name }}</h1>
       <div class="subtitle is-4">
         <span class="event-header-date">
-          <i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}
+          <i class="fa-solid fa-calendar"></i> {{ event.start_date|as_short_date }}
         </span>
         {% if event.venue %}
           <span class="event-header-venue">
@@ -123,8 +123,9 @@
       </h1>
 
       <div class="section-detail">
-        <p><i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}</p>
-        <a id="add-to-google-calendar" target="_blank" href="{{ event.get_google_calendar_url }}"><i class="far fa-calendar-plus"></i> Añadir a Google Calendar</a>
+        <p><i class="fa-solid fa-calendar"></i> {{ event.start_date|as_short_date }}</p>
+        <a id="add-to-google-calendar" target="_blank" href="{{ event.get_google_calendar_url }}">
+        <i class="fa-solid fa-calendar"></i> Añadir a Google Calendar</a>
       </div>
 
       <div class="schedule-table">

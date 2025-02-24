@@ -1,35 +1,37 @@
 {% load utils %}
-    <div class="column {{ klass|default:"is-half" }}">
-      <div class="box event-item">
-       <article class="media">
+<div class="box event-item text-centered">
+  <article class="media">
 
-        {% if event.cover %}
-          <div class="media-left">
-            <figure class="image is-64x64">
-            <a href="{% url 'events:detail_event' slug=event.slug %}">
-            <img src="{{ event.cover.url }}" alt="{{ event.name }}">
-            </a>
-            </figure>
-          </div>
-        {% endif %}
-        <div class="media-content">
-            <h1 class="title is-3">
-              <a href="{% url 'events:detail_event' slug=event.slug %}">
-              <strong>{{ event.name }}</strong>
-              </a>
-            </h1>
-            <div class="event-date">
-              <i class="far fa-calendar-alt"></i> {{ event.start_date|as_date }}
-            </div>
-            {% if event.venue %}
-              <div class="event-location">
-                <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
-              </div>
-            {% endif %}
-          <div class="event-short-description m-4">
-            {{ event.short_description|as_markdown }}
-          </div>
-        </div>
-       </article>
-     </div>
+  {% if event.cover %}
+    <div class="media-left">
+      <figure class="image is-64x64">
+      <a href="{% url 'events:detail_event' slug=event.slug %}">
+      <img src="{{ event.cover.url }}" alt="{{ event.name }}">
+      </a>
+      </figure>
     </div>
+  {% endif %}
+  <div class="media-content">
+      <h2 class="is-size-3 has-text-left">
+        <a href="{% url 'events:detail_event' slug=event.slug %}">
+        <strong>{{ event.name }}</strong>
+        </a>
+      </h2>
+      <div class="event-data">
+        <i class="fas fa-calendar"></i>
+        &nbsp;
+        {{ event.start_date|as_date }}
+      </div>
+      {% if event.venue %}
+        <div class="event-data">
+          <i class="fas fa-map-marker-alt"></i>
+          &nbsp;
+          {{ event.venue.name }}
+        </div>
+      {% endif %}
+    <div class="event-short-description">
+      {{ event.short_description|as_markdown }}
+    </div>
+  </div>
+  </article>
+</div>

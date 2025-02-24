@@ -401,7 +401,7 @@ def resend_confirmation(request, slug):
 
 
 def past_events(request):
-    return render(request, "events/list-events.html", {
+    return render(request, "events/events-archive.html", {
         "titulo": "Archivo de eventos celebrados",
         "breadcrumbs": breadcrumbs.bc_past_events(),
         "events": models.Event.objects.filter(active=False),

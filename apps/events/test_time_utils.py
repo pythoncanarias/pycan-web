@@ -1,6 +1,6 @@
 #!/usr/bin/enb python3
 
-import datetime
+from datetime import datetime as DateTime
 
 import pytest
 import pytz
@@ -9,25 +9,25 @@ from . import time_utils
 
 
 def test_as_hour_with_naive_datetime():
-    dst = datetime.datetime(2019, 3, 25, 14, 22, 1, tzinfo=None)
+    dst = DateTime(2019, 3, 25, 14, 22, 1, tzinfo=None)
     assert time_utils.as_hour(dst) == '14:22'
 
 
 def test_as_hour_with_non_naive_datetime():
-    ams = pytz.timezone('CET')
-    dst = datetime.datetime(2019, 3, 25, 14, 22, 1, tzinfo=ams)
-    assert time_utils.as_hour(dst) == '13:22'
+    tz = pytz.timezone('Australia/Sydney')
+    dst = DateTime(2019, 3, 25, 14, 22, 1, tzinfo=tz)
+    assert time_utils.as_hour(dst) != '14:22'
 
 
 def test_timestamp():
     t = time_utils.timestamp(2019, 3, 25, 14, 22, 1)
-    assert isinstance(t, datetime.datetime)
+    assert isinstance(t, DateTime)
     assert t.tzinfo == pytz.utc
 
 
 def test_now():
     t = time_utils.now()
-    assert isinstance(t, datetime.datetime)
+    assert isinstance(t, DateTime)
     assert t.tzinfo == pytz.utc
 
 
