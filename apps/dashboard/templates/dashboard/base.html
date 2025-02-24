@@ -1,0 +1,36 @@
+{% load static %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/css/main.css' %}">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+
+  </head>
+  <body>
+  {% include "dashboard/includes/navbar.html" %}
+
+  <div class="columns displaced">
+   <div class="column is-narrow">
+    {% include "dashboard/includes/sidebar.html" %}
+   </div>
+
+   <div class="column">
+     <main>
+    {% block content %}
+
+
+  {% endblock content %}
+  </main>
+
+  </div>
+
+  <hr>
+
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+</body>
+</html>

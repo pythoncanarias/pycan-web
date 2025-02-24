@@ -19,6 +19,7 @@ urlpatterns = [
     path('jobs/', include('apps.jobs.urls', namespace='jobs')),
     path('learn/', include('apps.learn.urls', namespace='learn')),
     path('dashboard/', include('apps.dashboard.urls', namespace='dashboard')),
+    path('certificates/', include('apps.certificates.urls', namespace='certificates')),
     ]
 
 if settings.DEBUG:

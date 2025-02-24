@@ -1,0 +1,52 @@
+html {
+  overflow-y: auto;
+    --font-color: #ffffff;
+    --font-dark-color: #949ba2;
+    --font-darker-color: #5b646d;
+    --highlight-color: #ffa500;
+    --main-color: #f0f0f0;
+
+    --light-color: lighten($main-color, 3%);
+    --dark-color: darken(var(--main-color), 3%);
+    --lighter-color: lighten($main-color, 6%);
+    --darker-color: darken($main-color, 6%);
+
+    --gradient-color-start: var(--light-color);
+    --gradient-color-end: var(--dark-color);
+
+    --sidebar-width: 13rem;
+    --header-height: 3.25rem;
+    --padding: 2rem;
+
+  color: var(--font-color);
+  background-color: var(--main-color);
+}
+
+#logo {
+    width: 48px;
+    height: 48px;
+    min-height: 48!important;
+    max-height: none!important;
+    vertical-align: baseline;
+}
+
+.menu {
+    z-index: 10;
+    background-color: transparent;
+    border-right: 2px solid red;
+}
+
+
+
+nav:hover {
+    background-color: #E8E8E8;
+}
+
+nav.navbar {
+    box-shadow: 0 4px 22px #323232;
+    border-bottom: 2px solid #CCCCCC;
+}
+
+.displaced {
+    margin-top: 100px;
+}

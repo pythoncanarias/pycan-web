@@ -15,7 +15,6 @@ django-leaflet==0.31.0
 django-rq==3.0.0
 markdown2==2.4.0
 odfpy==1.4.1
-openpyxl==3.0.3
 pyqrcode==1.2.1
 sendgrid==5.6.0
 stripe==10.6.0

@@ -1,0 +1,28 @@
+{% load static %}
+<nav class="navbar is-fixed-top box-shadow-y" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-example">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+
+    <a href="#" class="navbar-item" title="Dashboard">
+        <img id="logo" src="{% static 'commons/img/logo.png' %}">
+    </a>
+  </div>
+
+  <div id="navbar-example" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'dashboard:index' %}">Inicio</a>
+      <a class="navbar-item">Eventos</a>
+      <a class="navbar-item">Socios</a>
+    </div>
+    <div class="navbar-end">
+        <a class="navbar-item">
+            Log out
+        </a>
+    </div>
+  </div>
+</nav>

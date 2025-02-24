@@ -1,10 +1,15 @@
 # Ejecutar comprobaciones del proyecto Django + Flake8 + Vulture
 check:
-    python manage.py check
+    python3 manage.py check
+    python3 manage.py validate_templates
     flake8 --count **/*.py
     ruff check .
     # vulture . --exclude node_modules/
 
+# Detectar código sospechoso, confuso o incompatible
+lint:
+    ruff --quiet  check .
+    vulture . --exclude node_modules
 
 # Borrar ficheros temporales y espurios
 clean:
@@ -14,10 +19,14 @@ clean:
     rm -r .ruff_cache/
     rm -r .pytest_cache/
 
+# Ejecuta las migraciones pendientes"
+migrate *args='':
+    python3 manage.py migrate {{ args }}
+
 
 # Ejecutar el servidor en modo producción
 run: check static
-    python manage.py runserver
+    python3 manage.py runserver
 
 
 # Ejecutar el servidor en modo desarrollo
@@ -36,6 +45,9 @@ static:
     #sass --sourcemap=none bulma/custom.scss:commons/static/commons/vendor.min.css
     #sass --sourcemap=none about/static/about/css/main.scss:about/static/about/custom.min.css
 
+# Actualiza en caliente contenidos estaticos js/css/png/svg
+watch: static
+    watchmedo shell-command  --patterns "*.css;*.js;*.png;*.jpg;*.webp;*.svg" --recursive --command "just static"
 
 # [Re]crear el fichero ctags
 tags:
@@ -68,8 +80,3 @@ makemigrations $APP='' *args='':
     python3 ./manage.py makemigrations {{APP}} {{ args }}
 
 alias mm := makemigrations
-
-
-# Apply migrations
-migrate $APP='' *args='':
-    python3 ./manage.py migrate {{APP}} {{ args }}

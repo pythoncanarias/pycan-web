@@ -1,0 +1,29 @@
+{% extends "dashboard/base.html" %}
+{% load utils %}
+
+{%block content %}
+
+<h2>{{ evento }}</h2>
+
+<h3>Asistentes</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Email<th>
+      <th></th>
+    </tr>
+  </thead>
+{% for attendee in attendees %}
+<tr>
+  <td>{{ attendee.name }}</td>
+  <td>{{ attendee.surname }}</td>
+  <td>{{ attendee.email }}</td>
+  <td>{{ attendee.is_issued }}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock content %}

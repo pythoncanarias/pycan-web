@@ -120,7 +120,8 @@ class RefundForm(forms.Form):
 
         if len(uuid) < UUID_LAST_DIGITS:
             raise ValidationError(
-                f"Necesito los últimos {UUID_LAST_DIGITS} caracteres del código"
+                f"Necesito los últimos {UUID_LAST_DIGITS} letras o dígitos "
+                "del código"
                 )
         uuid = uuid[-UUID_LAST_DIGITS:]
         tickets = list(
@@ -136,6 +137,6 @@ class RefundForm(forms.Form):
         self.ticket = tickets[0]
         if models.Refund.exists(self.event, self.ticket):
             raise ValidationError(
-                "Ya se ha solicitado una devolución del" " importe para ese ticket"
+                "Ya se ha solicitado una devolución del importe para ese ticket"
             )
         return uuid

@@ -89,6 +89,16 @@ class Event(models.Model):
         help_text="End of Call for Papers period (This day is not included)",
     )
 
+    @classmethod
+    def load_event(cls, pk: int):
+        try:
+            return cls.objects.get(pk=pk)
+        except cls.DoesNotExist:
+            return None
+
+    def __str__(self):
+        return self.name
+
     def call_for_paper_is_open(self) -> bool:
         """Returns True if it's possible to present a proposal for the event
         """
@@ -98,9 +108,6 @@ class Event(models.Model):
         if self.cfp_stop_at is None:
             return self.cfp_start_at <= now
         return self.cfp_start_at <= now < self.cfp_stop_at
-
-    def __str__(self):
-        return self.name
 
     @property
     def slug(self):
@@ -116,7 +123,12 @@ class Event(models.Model):
     def get_google_calendar_url(self):
         start_datetime = self.start_datetime().strftime("%Y%m%dT%H%M%SZ")
         end_datetime = self.end_datetime().strftime("%Y%m%dT%H%M%SZ")
-        return f"https://www.google.com/calendar/render?action=TEMPLATE&text={self.name}&details={self.description}&location={self.venue}&dates={start_datetime}%2F{end_datetime}"
+        return (
+            "https://www.google.com/calendar/render?action=TEMPLATE"
+            f"&text={self.name}&details={self.description}"
+            f"&location={self.venue}"
+            f"&dates={start_datetime}%2F{end_datetime}"
+            )
 
     @classmethod
     def get_by_slug(cls, slug):
@@ -506,7 +518,7 @@ class Proposal(models.Model):
     title = models.CharField(max_length=340, verbose_name="Título")
     description = models.TextField(
         verbose_name="Descripción",
-        help_text=("Cuéntamos en dos o tres párrafos tu propuesta de charla.")
+        help_text=("Cuéntamos en dos o tres párrafos tu propuesta de charla."),
     )
     presented_at = models.DateTimeField(auto_now=True)
 

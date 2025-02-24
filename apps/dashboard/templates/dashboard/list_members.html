@@ -1,0 +1,30 @@
+{% extends "dashboard/base.html" %}
+{% load utils %}
+
+{%block content %}
+
+<h2 class="title">Miembros (Por orden alfabético)</h2>
+
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th>Id. socio</th>
+      <th>Nombre y apellidos</th>
+      <th>Activo<th>
+      <th></th>
+    </tr>
+  </thead>
+{% for member in members %}
+<tr>
+  <td>
+    <a href="{% url 'admin:members_member_change' member.pk %}">
+    {{ member.pk }}
+    </a>
+  </td>
+  <td>{{ member.full_name }}</td>
+  <td>{{ member.active }}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock content %}

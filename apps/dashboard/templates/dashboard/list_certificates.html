@@ -1,0 +1,34 @@
+{% extends "dashboard/base.html" %}
+{% load utils %}
+
+{%block content %}
+
+<h2 class="title">Hay {{ num_certificates }} modelos de Certificados</h2>
+
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th>Id. modelo</th>
+      <th>Descripcion</th>
+      <th>Evento<th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for certificate in certificates %}
+<tr>
+  <td>
+    <a href="{% url 'admin:certificates_certificate_change' certificate.pk %}">
+    {{ certificate.pk }}
+    </a>
+  </td>
+  <td>{{ certificate.description }}</td>
+  <td>{{ certificate.event }}</td>
+</tr>
+{% endfor %}
+
+  </tbody>
+</table>
+
+{% endblock content %}
