@@ -133,7 +133,6 @@ class Command(BaseCommand):
         self.print(tab)
 
     def do_rules(self, *args, **options):
-        body = []
         id_to_enable = options.get('enable')
         id_to_disable = options.get('disable')
         if id_to_enable and id_to_disable and id_to_enable == id_to_disable:
@@ -151,7 +150,7 @@ class Command(BaseCommand):
                 kind.save()
         self.print_table_rules(NoticeKind.objects.all().order_by('pk'))
 
-    def print_table_checks(self, cheks):
+    def print_table_checks(self, checks):
         tab = Table(title="Checks run")
         tab.add_column("Member")
         tab.add_column("Notice")

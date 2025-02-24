@@ -1,8 +1,10 @@
-import datetime
+#!/usr/bin/env python3
+
+from datetime import datetime as DateTime
+from datetime import time as Time
 import locale
 import os
 import uuid
-from functools import partial
 
 from colorfield.fields import ColorField
 from django.conf import settings
@@ -108,8 +110,8 @@ class Event(models.Model):
         try:
             return self.schedule.order_by("end").last().end
         except AttributeError:
-            end_time = datetime.time(23, 59, 59, tzinfo=timezone.get_current_timezone())
-            return datetime.datetime.combine(self.start_date, end_time)
+            end_time = Time(23, 59, 59, tzinfo=timezone.get_current_timezone())
+            return DateTime.combine(self.start_date, end_time)
 
     def get_google_calendar_url(self):
         start_datetime = self.start_datetime().strftime("%Y%m%dT%H%M%SZ")
@@ -167,8 +169,8 @@ class Event(models.Model):
         try:
             return self.schedule.order_by("start").first().start
         except AttributeError:
-            start_time = datetime.time(0, 0, 0, tzinfo=timezone.get_current_timezone())
-            return datetime.datetime.combine(self.start_date, start_time)
+            start_time = Time(0, 0, 0, tzinfo=timezone.get_current_timezone())
+            return DateTime.combine(self.start_date, start_time)
 
     @property
     def start_hour(self):

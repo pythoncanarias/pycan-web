@@ -51,12 +51,10 @@ def last_events(request):
 
 def detail_event(request, slug):
     event = models.Event.get_by_slug(slug)
-    past_events = models.Event.objects.filter(active=False).exclude(pk=event.id)[:3]
     return render(request, "events/event.html", {
         "title": str(event),
         "breadcrumbs": breadcrumbs.bc_event(event),
-        # "event": event,
-        # "past_events": past_events,
+        "event": event,
         })
 
 
