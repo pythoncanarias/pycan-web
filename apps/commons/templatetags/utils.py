@@ -85,7 +85,7 @@ def as_boolean(value, options=None):
         else:
             _if_true, _rest = options.split(',', 1)
             if ',' in _rest:
-                _if_false, _if_does_not_apply = _resto.split(',', 1)
+                _if_false, _if_does_not_apply = _rest.split(',', 1)
             else:
                 _if_false = _if_does_not_apply = _rest
     if value is None:
