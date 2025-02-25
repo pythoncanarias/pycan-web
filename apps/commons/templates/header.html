@@ -34,7 +34,10 @@
           Eventos
           </a>
           <div class="navbar-dropdown is-boxed js-nav-dropdown collapsable--close">
-            <a class="navbar-item {% is_active 'events:next' %}" href="{% url 'events:next' %}">Próximo evento</a>
+            <a class="navbar-item {% is_active 'events:next_event' %}"i
+               href="{% url 'events:next_event' %}">
+              Próximo evento
+            </a>
             <a class="navbar-item {% is_active 'events:past_events' %}" href="{% url 'events:past_events' %}">Eventos pasados</a>
             </div>
       </div>

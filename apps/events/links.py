@@ -25,6 +25,13 @@ def to_refund(event):
         })
 
 
+def to_refund_accepted(event, pk):
+    return reverse_lazy("events:refund_accepted", kwargs={
+        'event': event,
+        'pk': pk,
+        })
+
+
 def ticket_purchase(id_article):
     id_article = int(id_article)
     return reverse_lazy('events:ticket_purchase', kwargs={'id_article': id_article})

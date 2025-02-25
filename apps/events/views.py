@@ -23,8 +23,8 @@ def index(request):
     return redirect("events:next")
 
 
-def next(request):
-    events = models.Event.objects.filter(active=True).order_by("-start_date")
+def next_event(request):
+    events = models.Event.active_events()
     num_events = events.count()
     if num_events == 0:
         return redirect("events:last_events")
@@ -39,7 +39,7 @@ def next(request):
 
 
 def last_events(request):
-    events = models.Event.objects.all().order_by("-start_date")[0:3]
+    events = models.Event.active_events()objects.all()[0:3]
     return render(request, "events/no-events.html", {
         "title": "Por el momento no hay eventos programados",
         "subtitle": "Estos son los 3 últimos eventos que hemos organizado.",
@@ -133,17 +133,15 @@ def refund(request, event):
         })
 
 
-def refund_accepted(request, slug, pk):
-    event = models.Event.get_by_slug(slug)
+def refund_accepted(request, event, pk):
     refund = models.Refund.objects.get(pk=pk)
-    return render(
-        request,
-        "events/refund-accepted.html",
-        {
-            "event": event,
-            "refund": refund,
-        },
-    )
+    return render( request, "events/refund-accepted.html", {
+        "title": "Su solicitud de devolución de la entrada ha sido aceptada",
+        "subtitle": str(event),
+        "breadcrumbs": breadcrumbs.bc_refund_accepted(event, pk),
+        "event": event,
+        "refund": refund,
+        })
 
 
 def stripe_payment_declined(request, charge):

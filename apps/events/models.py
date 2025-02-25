@@ -24,6 +24,7 @@ from . import time_utils
 
 
 class Event(models.Model):
+
     class Meta:
         ordering = ["-start_date"]
 
@@ -95,6 +96,10 @@ class Event(models.Model):
             return cls.objects.get(pk=pk)
         except cls.DoesNotExist:
             return None
+
+    @classmethod
+    def active_events(cls):
+        return cls.objects.filter(active=True).order_by("-start_date")
 
     def __str__(self):
         return self.name

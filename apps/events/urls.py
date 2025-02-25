@@ -17,9 +17,9 @@ def tie(url_path, view_function, name=None):
 register_converter(converters.EventConverter, 'event')
 
 urlpatterns = [
-    tie('', views.index, name='index'),
-    tie('next/', views.next, name='next'),
-    tie('last/', views.last_events),
+    tie('', views.index),
+    tie('next/', views.next_event),
+    tie('lastest/', views.last_events),
     tie('archive/', views.past_events),
     tie('<slug:slug>/', views.detail_event),
     tie('<event:event>/cfp/', views.call_for_papers),
@@ -27,11 +27,9 @@ urlpatterns = [
     tie('<event:event>/waiting-list/', views.waiting_list),
     tie('<event:event>/waiting-list/accepted/', views.waiting_list_accepted),
     tie('<event:event>/refund/', views.refund),
-    path(
-        '<slug:slug>/refund/accepted/<int:pk>/',
-        views.refund_accepted,
-        name='refund_accepted',
-    ),
+    tie('<event:event>/refund/accepted/<int:pk>/', views.refund_accepted),
+    tie('<event:event>/buy/', views.buy_ticket, name='buy_ticket'),
+
     path(
         '<slug:slug>/resend_ticket/',
         views.resend_ticket,
@@ -42,7 +40,6 @@ urlpatterns = [
         views.resend_confirmation,
         name='resend_confirmation',
     ),
-    path('<slug:slug>/buy/', views.buy_ticket, name='buy_ticket'),
     path(
         'ticket/purchase/bought/<int:id_article>/',
         views.article_bought,

@@ -45,6 +45,14 @@ def bc_refund(event):
         )
 
 
+def bc_refund_accepted(event, pk):
+    return bc_refund(event).step(
+        'Solicitud admitida',
+        links.to_refund_accepted(event, pk),
+        )
+
+
+
 def bc_next_events():
     return bc_root().step(
         'Últimos eventos',
