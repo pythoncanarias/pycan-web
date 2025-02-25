@@ -14,6 +14,8 @@ class EventConverter:
         return event
 
     def to_url(self, value):
+        if isinstance(value, str):  # A slug is a valid reference
+            return value
         if not isinstance(value, Event):
             raise ValueError(
                 "Se necesita una instancia de la clase Event, pero"

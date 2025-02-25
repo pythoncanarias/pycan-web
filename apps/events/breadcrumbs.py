@@ -53,10 +53,10 @@ def bc_refund_accepted(event, pk):
 
 
 
-def bc_next_events():
+def bc_next_event():
     return bc_root().step(
         'Últimos eventos',
-        reverse_lazy('events:next'),
+        reverse_lazy('events:next_event'),
         )
 
 

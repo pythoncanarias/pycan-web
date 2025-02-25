@@ -140,10 +140,7 @@ class Event(models.Model):
         return cls.objects.get(hashtag__iexact=slug)
 
     def get_full_url(self):
-        return "http://{}{}".format(
-            settings.DOMAIN,
-            links.event_detail(self.slug),
-        )
+        return f"http://{settings.DOMAIN}{links.to_event_detail(self.slug)}"
 
     def get_long_start_date(self, to_locale=settings.LC_TIME_SPANISH_LOCALE):
         locale.setlocale(locale.LC_TIME, to_locale)
@@ -473,7 +470,9 @@ class WaitingList(models.Model):
 
 
 # Refunds
+
 class Refund(models.Model):
+
     ticket = models.ForeignKey(Ticket, on_delete=models.PROTECT)
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
@@ -494,7 +493,7 @@ class Refund(models.Model):
             return "Refund for ticket {}".format(self.ticket)
 
     def get_absolute_url(self):
-        return links.refund_accepted(self.event.slug, self.pk)
+        return links.to_refund_accepted(self.event.slug, self.pk)
 
     def get_position(self):
         return (
@@ -509,6 +508,9 @@ class Refund(models.Model):
     @classmethod
     def exists(cls, event, ticket):
         return cls.objects.filter(event=event, ticket=ticket).count() > 0
+
+
+# Proposal for CFP
 
 
 class Proposal(models.Model):

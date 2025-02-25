@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
-    return redirect("events:next")
+    return redirect("events:next_event")
 
 
 def next_event(request):
@@ -33,13 +33,13 @@ def next_event(request):
         return redirect("events:detail_event", slug=event.slug)
     return render(request, "events/list-events.html", {
         "title": "Próximos eventos",
-        "breadcrumbs": breadcrumbs.bc_next_events(),
+        "breadcrumbs": breadcrumbs.bc_next_event(),
         "events": events.all(),
         })
 
 
 def last_events(request):
-    events = models.Event.active_events()objects.all()[0:3]
+    events = models.Event.active_events()[0:3]
     return render(request, "events/no-events.html", {
         "title": "Por el momento no hay eventos programados",
         "subtitle": "Estos son los 3 últimos eventos que hemos organizado.",
@@ -94,7 +94,7 @@ def waiting_list(request, event):
         form = forms.WaitingListForm(event, request.POST)
         if form.is_valid():
             form.save()
-            return redirect(links.waiting_list_accepted(event.slug))
+            return redirect(links.to_waiting_list_accepted(event.slug))
     else:
         form = forms.WaitingListForm(event)
     return render(request, "events/waiting-list.html", {
@@ -121,7 +121,7 @@ def refund(request, event):
             ticket = form.ticket
             rf = models.Refund(ticket=ticket, event=event)
             rf.save()
-            return redirect(links.refund_accepted(event.slug, rf.pk))
+            return redirect(links.to_refund_accepted(event.slug, rf.pk))
     else:
         form = forms.RefundForm(event)
     return render(request, "events/refund.html", {
@@ -171,15 +171,8 @@ def stripe_payment_error(request, exception):
     )
 
 
-def buy_ticket(request, slug):
-    logger.debug("buy_tickts starts : slug={}".format(slug))
-    event = models.Event.get_by_slug(slug)
+def buy_ticket(request, event):
     if event.external_tickets_url:
-        logger.debug(
-            "Redirecting to external URL for selling tickets: url={}".format(
-                event.external_tickets_url
-            )
-        )
         return redirect(event.external_tickets_url)
     all_articles = [a for a in event.all_articles()]
     active_articles = [a for a in all_articles if a.is_active()]
@@ -189,7 +182,7 @@ def buy_ticket(request, slug):
         return no_available_articles(request, event, all_articles)
     elif num_active_articles == 1:
         article = active_articles[0]
-        return redirect(links.ticket_purchase(article.pk))
+        return redirect(links.to_ticket_purchase(article.pk))
     else:
         return select_article(request, event, all_articles, active_articles)
 
@@ -256,7 +249,7 @@ def ticket_purchase(request, id_article):
                 )
                 ticket.save()
                 tasks.send_ticket.delay(ticket)
-                return redirect(links.article_bought(article.pk))
+                return redirect(links.to_article_bought(article.pk))
             else:
                 return stripe_payment_declined(request, charge)
         except stripe.error.StripeError as err:
