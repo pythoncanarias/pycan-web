@@ -11,6 +11,7 @@ urlpatterns = [
     path('', views.homepage, name='homepage'),
     path(admin_url, admin.site.urls),
     path('api/', include('apps.api.urls', namespace='api')),
+    path('debug/', include('apps.debug.urls', namespace='debug')),
     path('django-rq/', include('django_rq.urls')),
     path('events/', include('apps.events.urls', namespace='events')),
     path('about/', include('apps.about.urls', namespace='about')),

@@ -1,0 +1,27 @@
+{% extends "debug/base.html" %}
+
+{% block content %}
+
+{% include "debug/includes/tabs.html" with selected='index' %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for name,value in values.items %}
+    <tr>
+      <th class="name">{{ name }}</th>
+      <td class="value">{{ value }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock content %}
+
+

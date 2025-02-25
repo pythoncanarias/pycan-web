@@ -189,14 +189,12 @@ def buy_ticket(request, event):
 
 def no_available_articles(request, event, all_articles):
     organization = Organization.load_main_organization()
-    return render(
-        request,
-        "events/no-available-articles.html",
-        {
-            "event": event,
-            "contact_email": organization.email,
-        },
-    )
+    return render(request, "events/no-available-articles.html", {
+        "title": "No hay entradas disponibles",
+        "subtitle": str(event),
+        "event": event,
+        "contact_email": organization.email,
+        })
 
 
 def select_article(request, event, all_articles, active_articles):

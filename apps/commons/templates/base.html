@@ -10,7 +10,7 @@
 
   <title>{% block title %}
     {% if title %}
-      {{ title }} - {{ organization.name }}
+    {{ title }} - {% if subtitle %}{{ subtitle }} - {% endif %}{{ organization.name }}
     {% else %}
       {{ organization.name }}
     {% endif %}

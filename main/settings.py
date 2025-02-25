@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'apps.api',
     'apps.certificates',
     'apps.dashboard',
+    'apps.debug',
     'apps.commons',
     'apps.dev',
     'apps.events',
@@ -116,7 +117,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # 'apps.commons.context_processors.glob',
-                'apps.commons.context_processors.main_organization_data',
+                # 'apps.commons.context_processors.main_organization_data',
                 'apps.commons.context_processors.global_data',
             ],
         },
@@ -327,11 +328,6 @@ RQ_QUEUES = {
 }
 
 CURRENT_API_VERSION = 1
-
-# Random quote interval (seconds)
-RANDOM_QUOTE_INTERVAL = config(
-    'RANDOM_QUOTE_INTERVAL', default=10, cast=lambda i: 1000 * int(i)
-)
 
 if DEBUG:
     MESSAGE_LEVEL = message_constants.DEBUG

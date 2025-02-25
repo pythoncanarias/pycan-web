@@ -1,0 +1,30 @@
+{% load utils %}
+
+<p> selected: <code>{{ selected }}</code></p>
+
+<div class="tabs is-centered is-boxed">
+  <ul>
+
+    {% if selected == 'index' %}
+      <li class="is_active">
+      <a>Debug</a>
+      </li>
+    {% else %}
+      <li>
+        <a href="{% url 'debug:index' %}">Debug</a>
+      </li>
+    {% endif %}
+
+    {% if selected == 'vars' %}
+      <li class="is_active">
+      <a>Context processor added vars</a>
+      </li>
+    {% else %}
+      <li>
+      <a href="{% url 'debug:context_processor_vars' %}">
+        Context processor added vars</a>
+      </li>
+    {% endif %}
+      
+  </ul>
+</div>

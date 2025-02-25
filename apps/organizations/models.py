@@ -37,7 +37,6 @@ class Organization(models.Model):
             cache.set(key, org, timeout=604800)  # 7 días
         return org
 
-    @property
     def full_address(self):
         return (
             f'{self.address} {self.rest_address or ""}| '
@@ -46,6 +45,24 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'email': self.email,
+            'phone': self.phone,
+            'address': self.address,
+            'rest_address': self.rest_address,
+            'city': self.city,
+            'postal_code': self.postal_code,
+            'full_address': self.full_address(),
+            'url': self.url,
+            'cif': self.cif,
+            'registration_date': self.registration_date,
+            'bank': self.bank,
+            'iban': self.iban,
+            'registration_number': self.registration_number,
+            }
 
     def joint_organizations(self):
         return [

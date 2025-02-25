@@ -1,0 +1,33 @@
+{% extends "debug/base.html" %}
+
+{% block content %}
+
+{% include "debug/includes/tabs.html" with selected='vars' %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="name">current_date</th>
+      <td class="value">{{ current_date }}</td>
+    </tr>
+    <tr>
+      <th class="name">organization</th>
+      <td class="value">{{ organization }}</td>
+    </tr>
+    <tr>
+      <th class="name">DEBUG</th>
+      <td class="value">{{ DEBUG }}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+{% endblock content %}
+
+
