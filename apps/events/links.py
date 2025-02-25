@@ -46,3 +46,15 @@ def to_waiting_list_accepted(event):
     return reverse_lazy('events:waiting_list_accepted', kwargs={
         'event': event,
         })
+
+
+def to_resend_ticket(event):
+    return reverse_lazy('events:resend_ticket', kwargs={
+        'event': event,
+        })
+
+
+def to_resend_confirmation(event):
+    return reverse_lazy('events:resend_confirmation', kwargs={
+        'event': event,
+        })

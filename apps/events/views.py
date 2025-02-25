@@ -302,8 +302,7 @@ def find_tickets_by_email(event, email):
     return list(qs)
 
 
-def resend_ticket(request, slug):
-    event = models.Event.get_by_slug(slug)
+def resend_ticket(request, event):
     form = forms.EmailForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
@@ -312,27 +311,22 @@ def resend_ticket(request, slug):
             for ticket in tickets:
                 tasks.send_ticket.delay(ticket)
             return redirect("events:resend_confirmation", slug=event.slug)
-    return render(
-        request,
-        "events/resend-ticket.html",
-        {
-            "event": event,
-            "form": form,
-        },
-    )
+    return render(request, "events/resend-ticket.html", {
+        "title": "Reenviar entrada",
+        "subtitle": str(event),
+        "breadcrumbs": breadcrumbs.bc_resend_ticket(event),
+        "event": event,
+        "form": form,
+        })
 
 
-def resend_confirmation(request, slug):
-    event = models.Event.get_by_slug(slug)
-    organization = Organization.load_main_organization()
-    return render(
-        request,
-        "events/resend-confirmation.html",
-        {
-            "event": event,
-            "contact_email": organization.email,
-        },
-    )
+def resend_confirmation(request, event):
+    return render(request, "events/resend-confirmation.html", {
+        "title": "Entrada reenviada",
+        "subtitle": str(event),
+        "breadcrumbs": breadcrumbs.bc_resend_confirmation(event),
+        "event": event,
+        })
 
 
 def past_events(request):

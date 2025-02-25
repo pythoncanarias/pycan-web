@@ -29,17 +29,9 @@ urlpatterns = [
     tie('<event:event>/refund/', views.refund),
     tie('<event:event>/refund/accepted/<int:pk>/', views.refund_accepted),
     tie('<event:event>/buy/', views.buy_ticket, name='buy_ticket'),
+    tie('<event:event>/resend_ticket/', views.resend_ticket),
+    tie('<event:event>/resend_ticket/confirmation/', views.resend_confirmation),
 
-    path(
-        '<slug:slug>/resend_ticket/',
-        views.resend_ticket,
-        name='resend_ticket',
-    ),
-    path(
-        '<slug:slug>/resend_ticket/confirmation',
-        views.resend_confirmation,
-        name='resend_confirmation',
-    ),
     path(
         'ticket/purchase/bought/<int:id_article>/',
         views.article_bought,

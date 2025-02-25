@@ -28,5 +28,14 @@ def test_to_refund_accepted():
     assert links.to_refund_accepted('matraka', 4238) == '/events/matraka/refund/accepted/4238/'
 
 
+def test_to_resend_ticket():
+    assert links.to_resend_ticket('matraka') == '/events/matraka/resend_ticket/'
+
+
+def test_to_resend_confirmation():
+    expected = '/events/matraka/resend_ticket/confirmation/'
+    assert links.to_resend_confirmation('matraka') == expected
+
+
 if __name__ == '__main__':
     pytest.main()

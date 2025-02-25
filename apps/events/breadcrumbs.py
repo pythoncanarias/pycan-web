@@ -52,11 +52,24 @@ def bc_refund_accepted(event, pk):
         )
 
 
-
 def bc_next_event():
     return bc_root().step(
         'Últimos eventos',
         reverse_lazy('events:next_event'),
+        )
+
+
+def bc_resend_ticket(event):
+    return bc_event(event).step(
+        'Reenviar entrada',
+        links.to_resend_ticket(event),
+        )
+
+
+def bc_resend_confirmation(event):
+    return bc_resend_ticket(event).step(
+        'Entrada reenviada',
+        links.to_resend_confirmation(event),
         )
 
 

@@ -1,20 +1,13 @@
 {% extends "events/base.html" %}
 
-{% block title %}Entrada reenviada - {{ block.super }}{% endblock %}
-
-{% block content_class %}is-narrow{% endblock %}
-
 {% block content %}
 <div class="box has-text-centered">
-  <h1 class="title is-blue">{{ event.name }}</h1>
-  <h2 class="subtitle">Entrada reenviada</h2>
 
-  <p>
-    La entrada ha sido reenviada a la dirección de email que nos has indicado, y deberías recibirla en breve.
-    Si no fuera así, ponte en contacto con nosotros en
-    <a href="mailto://{{ contact_email }}">
-      <code>{{ contact_email }}</code>
-    </a>
-  </p>
+<p> La entrada ha sido reenviada a la dirección de email que nos has indicado, y deberías
+recibirla en breve.</p>
+
+<p> Si no fuera así, ponte en contacto con nosotros en
+<a href="mailto://{{ organization.email }}"><code>{{ organization.email }}</code></a>.</p>
+
 </div>
 {% endblock %}
