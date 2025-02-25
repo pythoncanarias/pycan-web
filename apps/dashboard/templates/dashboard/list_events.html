@@ -30,7 +30,7 @@
   <td>
     <b>{{ event.name }}</b><br>
     {{ event.description }}</td>
-  <td>{{ event.active|yesno }}</td>
+  <td>{{ event.active|as_boolean }}</td>
 </tr>
 {% endfor %}
 

@@ -13,4 +13,5 @@ def tie(ruta, vista, name=None):
 urlpatterns = [
     tie('', views.index),
     tie('vars/', views.context_processor_vars),
+    tie('settings/', views.settings),
     ]

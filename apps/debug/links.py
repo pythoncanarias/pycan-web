@@ -10,3 +10,7 @@ def to_index():
 
 def to_vars():
     return reverse_lazy('debug:context_processor_vars')
+
+
+def to_settings():
+    return reverse_lazy('debug:settings')

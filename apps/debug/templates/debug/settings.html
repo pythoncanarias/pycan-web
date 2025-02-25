@@ -1,0 +1,30 @@
+{% extends "debug/base.html" %}
+
+{% block content %}
+
+{% include "debug/includes/tabs.html" with selected='settings' %}
+
+<h2 class="is-size-3 has-text-info">MIDDLEWARE</h2>
+
+<ul>
+  {% for middleware in settings.MIDDLEWARE %}
+  <li><code>{{ middleware }}</code></li>
+  {% endfor %}
+</ul>
+
+
+
+<h2 class="is-size-3 has-text-info">DATABASE</h2>
+
+<ul>
+  <li>default: <code>{{ settings.DATABASES.default.NAME }}</code></li>
+</ul>
+
+<h2 class="is-size-3 has-text-info">LOG FILE</h2>
+
+<ul>
+  <li>default: <code>{{ settings.LOGFILE_NAME }}</code></li>
+</ul>
+
+
+{% endblock content %}

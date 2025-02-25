@@ -37,3 +37,13 @@ def context_processor_vars(request):
         "subtitle": 'Variables añadidas al contexto',
         "breadcrumbs": breadcrumbs.bc_vars(),
         })
+
+
+@login_required
+def settings(request):
+    from django.conf import settings
+    return render(request, 'debug/settings.html', {
+        "title": 'Django Settings',
+        "breadcrumbs": breadcrumbs.bc_settings(),
+        "settings": settings,
+        })

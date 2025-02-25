@@ -3,8 +3,6 @@
 
 {%block content %}
 
-<h2 class="title">Miembros (Por orden alfabético)</h2>
-
 <table class="table is-striped is-fullwidth">
   <thead>
     <tr>
@@ -22,7 +20,7 @@
     </a>
   </td>
   <td>{{ member.full_name }}</td>
-  <td>{{ member.active }}</td>
+  <td>{{ member.active|as_boolean }}</td>
 </tr>
 {% endfor %}
 </table>

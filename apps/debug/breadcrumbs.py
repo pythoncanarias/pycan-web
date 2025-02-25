@@ -16,3 +16,10 @@ def bc_vars():
         "Variables añadidas al contexto",
         links.to_vars(),
         )
+
+
+def bc_settings():
+    return bc_root().step(
+        "Settings",
+        links.to_settings(),
+        )

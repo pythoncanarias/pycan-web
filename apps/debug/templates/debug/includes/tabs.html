@@ -1,7 +1,5 @@
 {% load utils %}
 
-<p> selected: <code>{{ selected }}</code></p>
-
 <div class="tabs is-centered is-boxed">
   <ul>
 
@@ -26,5 +24,14 @@
       </li>
     {% endif %}
       
+    {% if selected == 'settings' %}
+      <li class="is_active">
+      <a>Settings</a>
+      </li>
+    {% else %}
+      <li>
+        <a href="{% url 'debug:settings' %}">Settings</a>
+      </li>
+    {% endif %}
   </ul>
 </div>

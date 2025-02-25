@@ -11,10 +11,26 @@ from apps.members.models import Member
 from apps.members.models import Membership
 from apps.quotes.models import Quote
 
+from . import breadcrumbs
+
+
+def demo(request, *args, **kwargs):
+    return render(request, 'dashboard/demo.html', {
+        'title': 'Dashboard',
+        'num_members': Membership.num_active_members(),
+        'num_events': Event.objects.count(),
+        'num_jobs': JobOffer.actives.count(),
+        'num_quotes': Quote.objects.count(),
+        'num_certificates': Certificate.objects.all().count(),
+        'pending_certificates': Attendee.objects.filter(issued_at=None).count(),
+        'total_certificates': Attendee.objects.count(),
+        })
+
 
 def index(request, *args, **kwargs):
     return render(request, 'dashboard/index.html', {
         'title': 'Dashboard',
+        'breadcrumbs': breadcrumbs.bc_root(),
         'num_members': Membership.num_active_members(),
         'num_events': Event.objects.count(),
         'num_jobs': JobOffer.actives.count(),
@@ -98,3 +114,8 @@ def issue_attendee(request, id_attendee):
             kwargs={'uuid': attendee.uuid}
             )
         )
+
+
+def list_notices(request, *args, **kwargs):
+    from django.http import HttpResponse
+    return HttpResponse("No implementado", content_type="text/plain")

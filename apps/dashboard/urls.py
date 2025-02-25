@@ -12,8 +12,10 @@ def tie(ruta, vista):
 
 urlpatterns = [
     tie('', views.index),
+    tie('demo/', views.demo),
     tie('members/', views.list_members),
     tie('events/', views.list_events),
+    tie('notices/', views.list_notices),
     tie('certificates/', views.list_certificates),
     tie('certificate/<int:id_certificate>/', views.view_certificate),
     tie('attendees/all/', views.all_attendees),

@@ -4,13 +4,15 @@
   </p>
   <ul class="menu-list">
     <li><a href="{% url 'dashboard:list_members' %}">Socios</a></li>
-    <li><a>Eventos</a></li>
-    <li><a>Oferts de trabajo</a>
+    <li><a href="{% url 'dashboard:list_events' %}">Eventos</a>
       <ul class="menu-list">
-        <li><a>Payments</a></li>
-        <li><a>Transfers</a></li>
-        <li><a>Balance</a></li>
+        <li><a href="#">Activos</a></li>
+        <li><a href="#">Inactivos</a></li>
+        <li><a href="#">Todos</a></li>
       </ul>
+    </li>
+    <li><a>Ofertas de trabajo</a>
+    <li><a href="{% url 'dashboard:list_notices' %}">Notices</a>
     </li>
   </ul>
 </aside>
