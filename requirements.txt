@@ -8,7 +8,6 @@ reportlab==4.2.2
 MarkupPy==1.14
 pyyaml==6.0.2
 django==3.2.25
-django-colorfield==0.12.0
 django_redis==5.4.0
 django-import-export==2.7.1
 django-leaflet==0.31.0

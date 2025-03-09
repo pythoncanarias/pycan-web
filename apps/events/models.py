@@ -6,7 +6,6 @@ import locale
 import os
 import uuid
 
-from colorfield.fields import ColorField
 from django.conf import settings
 from django.db import models
 from django.db.models import Max
@@ -370,17 +369,21 @@ class Badge(models.Model):
         default="0,0",
     )
     name_font_size = models.PositiveIntegerField(default=24)
-    name_color = ColorField(default="#FFFFFF")
+    name_color = models.CharField(default="#FFFFFF", max_length=18)
     number_coordinates = models.CharField(
-        max_length=255, verbose_name="Ticket number coordinates", default="0,0"
-    )
+        max_length=255,
+        verbose_name="Ticket number coordinates",
+        default="0,0",
+        )
     number_font_size = models.PositiveIntegerField(default=24)
-    number_color = ColorField(default="#FFFFFF")
+    number_color = models.CharField(default="#FFFFFF", max_length=18)
     category_coordinates = models.CharField(
-        max_length=255, verbose_name="Ticket category coordinates", default="0,0"
+        max_length=255,
+        verbose_name="Ticket category coordinates",
+        default="0,0",
     )
     category_font_size = models.PositiveIntegerField(default=24)
-    category_color = ColorField(default="#FFFFFF")
+    category_color = models.CharField(default="#FFFFFF", max_length=18)
 
     def __str__(self):
         return f"Badge for {self.event.name}"
@@ -401,13 +404,14 @@ class Badge(models.Model):
     def _hex_to_rgb(color: str) -> tuple:
         return tuple(int(color.lstrip("#")[i : i + 2], 16) for i in (0, 2, 4))
 
-    def add_field(
-        self, image_draw: ImageDraw, text: str, coord: str, font_size: int, color: str
-    ):
+    def add_field(self, image_draw: ImageDraw, text: str, coord: str, font_size: int, color: str):
         font = ImageFont.truetype("fonts/arial.ttf", size=font_size)
         image_draw.text(
-            self.coord_to_tuple(coord), text, fill=self._hex_to_rgb(color), font=font
-        )
+            self.coord_to_tuple(coord),
+            text,
+            fill=self._hex_to_rgb(color),
+            font=font,
+            )
         return image_draw
 
     def render(self, ticket: Ticket):
