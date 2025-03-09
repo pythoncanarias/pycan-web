@@ -125,9 +125,6 @@ class RefundForm(forms.Form):
     def clean_uuid(self):
         email = self.cleaned_data["email"]
         uuid = self.cleaned_data["uuid"]
-        if uuid == "tu puta madre":
-            raise ValidationError("Cuida ese vocabulario")
-
         if len(uuid) < UUID_LAST_DIGITS:
             raise ValidationError(
                 f"Necesito los últimos {UUID_LAST_DIGITS} letras o dígitos "
@@ -150,6 +147,14 @@ class RefundForm(forms.Form):
                 "Ya se ha solicitado una devolución del importe para ese ticket"
             )
         return uuid
+
+    def save(self):
+        assert self.is_valid()
+        rf = models.Refund(ticket=self.ticket, event=self.event)
+        rf.save()
+        return rf
+
+
 
 
 class StripeForm(forms.Form):

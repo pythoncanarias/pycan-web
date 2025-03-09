@@ -4,9 +4,7 @@ import logging
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import Http404
 from django.shortcuts import redirect, render
-import stripe
 
 from . import breadcrumbs
 from . import forms
@@ -15,7 +13,7 @@ from . import models
 from . import stripe_utils
 from . import tasks
 from apps.organizations.models import Organization
-from apps.tickets.models import Article, Gift, Ticket
+from apps.tickets.models import Article, Gift
 
 
 logger = logging.getLogger(__name__)
@@ -129,9 +127,8 @@ def refund(request, event):
     if request.method == "POST":
         form = forms.RefundForm(event, request.POST)
         if form.is_valid():
-            ticket = form.ticket
-            rf = models.Refund(ticket=ticket, event=event)
-            rf.save()
+            rf = form.save()
+            messages.add_message(request, messages.SUCCESS, 'Entrada devuelta')
             return redirect(links.to_refund_accepted(event, rf.pk))
     else:
         form = forms.RefundForm(event)
@@ -383,7 +380,6 @@ def article_bought(request, pk):
         "breadcrumbs": breadcrumbs.bc_article_bought(article),
         "article": article,
         "event": event,
-        "contact_email": organization.email,
         })
 
 
