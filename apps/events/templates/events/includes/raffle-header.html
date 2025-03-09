@@ -1,2 +1,11 @@
+<div class="box">
 <h1 class="title is-blue"><a href="{% url 'events:raffle' event.slug %}">Sorteo</a></h1>
 <h2 class="subtitle"><a href="{% url 'events:detail_event' event.slug %}">{{ event.name }}</a></h2>
+
+{% if gifts %}
+  <h3>
+    ¡Habrá sorteo entre los asistentes!
+    Ver <a href="{% url 'events:raffle_gifts' event=event %}">La lista de premios a sortear</a>
+  </h3>
+{% endif %}
+</div>

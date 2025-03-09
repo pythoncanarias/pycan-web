@@ -242,6 +242,21 @@ class Event(models.Model):
         qs = qs.filter(article__event=self)
         return qs
 
+    def find_tickets_by_email(self, email: str) -> list:
+        '''Return a list of all tickets purchased by una user.
+
+        The user is identified by her/his email.
+
+        Params:
+
+            email: Email used to buy the ticket/s
+
+        Return:
+
+            A list with the tickets.
+        '''
+        return list(self.all_tickets().filter(customer_email=email))
+
     def all_articles(self):
         """Get all the articles we can sold for a particular event.
 
@@ -253,7 +268,7 @@ class Event(models.Model):
         return qs
 
     def num_sold_tickets(self):
-        return sum([a.num_sold_tickets for a in self.articles.all()])
+        return sum([a.num_sold_tickets() for a in self.articles.all()])
 
     def num_available_tickets(self):
         return sum([a.num_available_tickets for a in self.articles.all()])

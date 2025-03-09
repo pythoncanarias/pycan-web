@@ -28,40 +28,19 @@ urlpatterns = [
     tie('<event:event>/waiting-list/accepted/', views.waiting_list_accepted),
     tie('<event:event>/refund/', views.refund),
     tie('<event:event>/refund/accepted/<int:pk>/', views.refund_accepted),
-    tie('<event:event>/buy/', views.buy_ticket, name='buy_ticket'),
+    tie('<event:event>/raffle/', views.raffle),
+    tie('<event:event>/raffle/gifts/', views.raffle_gifts),
+    tie('<event:event>/raffle/results/', views.raffle_results),
+    tie('<event:event>/raffle/<int:pk>/', views.raffle_gift),
+    tie('<event:event>/raffle/<int:pk>/match/', views.raffle_gift_match),
+    tie('<event:event>/raffle/close/', views.close_raffle),
+
+    tie('<event:event>/buy/', views.buy_ticket),
+    tie('ticket/purchase/<int:id_article>/', views.ticket_purchase),
+    # ----[ por aqui ]--
     tie('<event:event>/resend_ticket/', views.resend_ticket),
     tie('<event:event>/resend_ticket/confirmation/', views.resend_confirmation),
-
-    path(
-        'ticket/purchase/bought/<int:id_article>/',
-        views.article_bought,
-        name='article_bought',
-    ),
-    path(
-        'ticket/purchase/<int:id_article>/',
-        views.ticket_purchase,
-        name='ticket_purchase',
-    ),
-    path(
-        'ticket/purchase/<int:id_article>/nocc/',  # no credit card
-        views.ticket_purchase_nocc,
-        name='ticket_purchase_nocc',
-    ),
-    path('<slug:slug>/raffle/', views.raffle, name='raffle'),
-    path(
-        '<slug:slug>/raffle/<int:gift_id>/',
-        views.raffle_gift,
-        name='raffle_gift',
-    ),
-    path(
-        '<slug:slug>/raffle/<int:gift_id>/match/',
-        views.raffle_gift,
-        {'match': True},
-        name='raffle_gift_match',
-    ),
-    path(
-        '<slug:slug>/raffle/results/',
-        views.raffle_results,
-        name='raffle_results',
-    ),
-]
+    tie('ticket/purchase/bought/<int:pk>/', views.article_bought),
+    # no credit card
+    tie('ticket/purchase/<int:id_article>/nocc/', views.ticket_purchase_nocc),
+    ]

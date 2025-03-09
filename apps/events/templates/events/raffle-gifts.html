@@ -1,0 +1,54 @@
+{% extends "events/base.html" %}
+{% load utils %}
+
+{% block content %}
+
+{% include 'events/includes/raffle-header.html' %}
+
+<div class="box">
+
+  <div class="gifts">
+
+    <h2>Regalos del sorteo</h2>
+  <div class="table-container">
+    <table class="table is-striped is-fullwidth">
+      <thead>
+        <tr>
+          <th>Premio / Descripción</th>
+          <th>Ticket ganador</th>
+        </tr>
+      </thead>
+    <tbody>
+    {% for gift in gifts %}<tr>
+      <td>
+        <big><b>{{ gift.name }}</b></big><br>
+        {{ gift.description|as_markdown }}
+      </td>
+      <td>
+        {% if gift.awarded_ticket %}
+        <code>{{  gift.awarded_ticket }}</code>
+        {% else %}
+        {% if user.is_staff %}
+          <a class="button is-primary"
+             role="button"
+             href="{% url 'events:raffle_gift_match' event=event pk=gift.pk %}">
+            Sortearlo
+          </a>
+        {% else %}
+          <a class="button is-primary"
+             disabled
+             role="button"
+             href="#">
+            Sortearlo (Requiere autentificación)
+          </a>
+        {% endif %}
+        {% endif %}
+      </td>
+      </tr>{% endfor %}
+    </tbody>
+    </table>
+
+  </div>
+  </div>
+
+{% endblock %}

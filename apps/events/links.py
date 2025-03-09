@@ -39,7 +39,9 @@ def to_ticket_purchase(id_article):
 
 def to_article_bought(id_article):
     id_article = int(id_article)
-    return reverse_lazy('events:article_bought', kwargs={'id_article': id_article})
+    return reverse_lazy('events:article_bought', kwargs={
+        'pk': id_article,
+        })
 
 
 def to_waiting_list_accepted(event):
@@ -58,3 +60,29 @@ def to_resend_confirmation(event):
     return reverse_lazy('events:resend_confirmation', kwargs={
         'event': event,
         })
+
+
+def to_raffle(event):
+    return reverse_lazy('events:raffle', kwargs={
+        'event': event,
+        })
+
+
+def to_raffle_gifts(event):
+    return reverse_lazy('events:raffle_gifts', kwargs={
+        'event': event,
+        })
+
+
+def to_raffle_results(event):
+    return reverse_lazy('events:raffle_results', kwargs={
+        'event': event,
+        })
+
+
+def to_buy_ticket(event):
+    return reverse_lazy('events:buy_ticket', kwargs={
+        'event': event,
+        })
+
+

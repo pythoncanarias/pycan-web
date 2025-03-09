@@ -115,7 +115,7 @@ class Footer(BaseReport):
         # hashtag
         start_x += 38 * mm
         self.canvas.setFont('fira', 9)
-        self.canvas.drawString(start_x, start_y, self.ticket.event.qualified_hashtag)
+        self.canvas.drawString(start_x, start_y, self.ticket.event.qualified_hashtag())
 
         # Right side of footer
         start_x = self.x + self.width - 33 * mm

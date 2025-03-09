@@ -1,59 +1,48 @@
 {% extends "events/base.html" %}
-
-{% load static %}
 {% load utils %}
-{% load social %}
-
-{% block title %}Entrada comprada - {{ block.super }}{% endblock %}
-
-{% block body_class %}tickets-page ticket-bought-page{% endblock %}
 
 {% block content %}
-  <div class="box">
-    <h1 class="title is-blue">¡Felicidades!<br/>¡Ya has conseguido tu entrada!</h1>
+<div class="box">
 
-    <h2 class="subtitle is-5">{{ event.name }}</h2>
+  <h1 class="title is-blue">¡Felicidades!<br/>¡Ya has conseguido tu entrada!</h1>
 
-    <div class="tags is-centered">
-      <div class="tag is-medium">
-        <span class="icon">
-          <i class="fa-solid fa-calendar"></i>
-        </span>
-        <span>{{ event.start_date|as_date }}</span>
-      </div>
+  <h2 class="subtitle is-5">{{ event.name }}</h2>
 
-      <div class="tag is-medium">
-        <span class="icon">
-          <i class="fas fa-map-marker-alt"></i>
-        </span>
-        <span>{{ event.venue.name }}</span>
-      </div>
-
-      <div class="tag is-medium">
-        <span class="icon">
-          <i class="fas fa-ticket-alt"></i>
-        </span>
-        <span>{{ article.category.name }}</span>
-      </div>
+  <div class="tags is-centered">
+    <div class="tag is-medium">
+      <span class="icon">
+        <i class="fa-solid fa-calendar"></i>
+      </span>
+      <span>{{ event.start_date|as_date }}</span>
     </div>
 
-    <p class="text-info-mail">En breve te enviaremos a tu dirección de correo un pdf con la entrada.
-    En caso de que no te llegue o la pierdas, puedes solicitar que se te envíe de nuevo
-    a tu correo siempre que quieras en esta página: <a href="{% url 'events:resend_ticket' event=event %}">
-    Reenviar la entrada por correo</a>. Si aun así no te llega, o tienes
-    cualquier otro problema con la entrada, ponte
-    en contacto con nosotros en
-    <a href="mailto://{{ organization.contact_email }}">{{ organization.contact_email }}</a>. </p>
-
-    <p>
-      Si quieres hacernos un poco de <b>publicidad en Twitter</b>, nos harías un gran favor, solo pulsa en
-      el siguiente enlace y deja que tus seguidores sepan a donde ir para pedirte un autógrafo:
-    </p>
-
-    <div class="notification is-info">
-      <i class="fab fa-twitter"></i>
-      {% tweet event.get_full_url %}Ya he comprado mi entrada para el evento "{{ event.name }}". ¿Nos vemos allí? {{ event.qualified_hashtag }} @pythoncanarias{% endtweet %}
+    <div class="tag is-medium">
+      <span class="icon">
+        <i class="fas fa-map-marker-alt"></i>
+      </span>
+      <span>{{ event.venue.name }}</span>
     </div>
 
+    <div class="tag is-medium">
+      <span class="icon">
+        <i class="fas fa-ticket-alt"></i>
+      </span>
+      <span>{{ article.category.name }}</span>
+    </div>
   </div>
+
+  <p class="text-info-mail">En breve te enviaremos a tu dirección de correo un pdf con la entrada.
+  En caso de que no te llegue o la pierdas, puedes solicitar que se te envíe de nuevo
+  a tu correo siempre que quieras en esta página: <a href="{% url 'events:resend_ticket' event=event %}">
+  Reenviar la entrada por correo</a>. Si aun así no te llega, o tienes
+  cualquier otro problema con la entrada, ponte
+  en contacto con nosotros en
+  <a href="mailto://{{ organization.contact_email }}">{{ organization.contact_email }}</a>. </p>
+
+  <p>
+    Si quieres hacernos un poco de <b>publicidad en Twitter</b>, nos harías un gran favor, solo pulsa en
+    el siguiente enlace y deja que tus seguidores sepan a donde ir para pedirte un autógrafo:
+  </p>
+
+</div>
 {% endblock content %}

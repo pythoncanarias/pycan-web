@@ -29,7 +29,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
     def sold_vs_available(self, obj):
         return "{}/{}".format(
-            obj.num_sold_tickets,
+            obj.num_sold_tickets(),
             obj.num_available_tickets,
             )
 
@@ -105,22 +105,26 @@ class TicketAdmin(ImportExportActionModelAdmin):
 
 @admin.register(Raffle)
 class RaffleAdmin(admin.ModelAdmin):
+
     inlines = [GiftInline]
     list_display = [
-        'event', 'is_opened', 'delivered_vs_total_gifts', 'created_at',
-        'raffle_url'
-    ]
+        'event',
+        'is_opened',
+        'delivered_vs_total_gifts',
+        'created_at',
+        'raffle_url',
+        ]
     actions = [reset_raffle]
 
     def raffle_url(self, obj):
-        return format_html(
-            f'<a href="{obj.get_absolute_url()}">{obj.get_absolute_url()}</a>')
+        url = obj.get_absolute_url()
+        return format_html(f'<a href="{url}">{url}</a>')
 
     def delivered_vs_total_gifts(self, obj):
         return f'{obj.get_delivered_gifts().count()}/{obj.gifts.count()}'
-
     def is_opened(self, obj):
         return obj.opened
+
     is_opened.short_description = 'opened'
     is_opened.boolean = True
 

@@ -1,17 +1,11 @@
 {% extends "events/base.html" %}
-
 {% load static %}
-
-{% block title %}Sorteo {{event.name}} - {{ block.super }}{% endblock %}
-
-{% block body_class %}raffle-base raffle-results-page{% endblock %}
-{% block content_class %}is-narrow{% endblock %}
 
 {% block content %}
 
-<div class="box">
-  {% include 'events/includes/raffle-header.html' %}
+{% include 'events/includes/raffle-header.html' %}
 
+<div class="box">
   <table class="table is-bordered is-striped is-hoverable is-fullwidth">
     <thead>
       <tr>
@@ -27,6 +21,7 @@
             {{ gift.awarded_ticket_for_display|title }}
           {% else %}
             <i class="far fa-frown-open"></i>
+            Aun no sorteado
           {% endif %}
         </td>
       </tr>

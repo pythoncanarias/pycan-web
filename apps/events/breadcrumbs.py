@@ -92,3 +92,45 @@ def bc_proposal_received(event):
         'Propuesta recibida',
         links.to_proposal_received(event),
         )
+
+
+def bc_raffle(event):
+    return bc_event(event).step(
+        'Sorteo',
+        links.to_raffle(event),
+        )
+
+
+def bc_raffle_gifts(event):
+    return bc_raffle(event).step(
+        'Regalos',
+        links.to_raffle_gifts(event),
+        )
+
+
+def bc_raffle_results(event):
+    return bc_raffle(event).step(
+        'Resultados',
+        links.to_raffle_results(event),
+        )
+
+
+def bc_buy_ticket(event):
+    return bc_event(event).step(
+        'Comprar entrada',
+        links.to_buy_ticket(event),
+        )
+
+
+def bc_article_bought(article):
+    return bc_event(article.event).step(
+        'Articulo {article} comprado',
+        links.at_article_bought(article),
+        )
+
+
+def bc_payment_error(event):
+    return bc_event(event).step(
+        'Error en la compra de una entrada',
+        links.at_buy_article(event),
+        )

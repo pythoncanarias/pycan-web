@@ -1,23 +1,20 @@
 {% extends "events/base.html" %}
 
-{% block title %}Error al realizar el cobro - {{ block.super }}{% endblock %}
-
-{% block content_class %}is-narrow{% endblock %}
-
 {% block content %}
-  <div class="box">
 
-    <h1 class="title">Se ha producido un error al realizar el cobro </h1>
+{% if extra_info %}
+  <h3 class="subtitle">{{ info }}</h3>
+{% endif %}
 
-    <h2 class="subtitle">{{ msg }}</h2>
+<div class="box">
 
-    {% if extra_info %} <h3 class="subtitle">{{ info }}</h3> {% endif %}
+  <p>El mensaje de error recibido es: <b>{{ error }}</b></p>
 
-    <div class="content">
-      <p>Por el momento no se ha producido ningún cargo a su tarjeta.</p>
+  <div class="content">
+    <p>Por el momento no se ha producido ningún cargo a su tarjeta.</p>
 
-      {% include 'events/includes/contact_us.html' %}
-    </div>
-
+    {% include 'events/includes/contact_us.html' %}
   </div>
+
+</div>
 {% endblock content %}

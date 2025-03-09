@@ -1,23 +1,30 @@
+#!/usr/bin/env python3
+
 import io
 import os
 import random
 import uuid
 from decimal import Decimal
 
-import pyqrcode
 from django.conf import settings
 from django.db import models
 from django.db.models import Max
 from django.urls import reverse
 from django.utils import timezone as dj_timezone
-
-from apps.tickets.services.ticket_maker import TicketMaker
+import pyqrcode
 
 from . import links
 from .constants import PAYMENT_METHOD
+from .services.ticket_maker import TicketMaker
+from utils.dates import just_today
 
 
 class TicketCategory(models.Model):
+    """Un evento puede tener distintos tipos de entrada.
+
+    Este modelo permite crear esos tipos diferentes, que
+    puedenn tener un nombre, slug y descripción propia.
+    """
     # Twin, Early, Normal, ...
 
     class Meta:
@@ -60,19 +67,40 @@ class Article(models.Model):
     release_at = models.DateTimeField(null=True, blank=True)
     participate_in_raffle = models.BooleanField(
         default=True,
-        help_text=('Indicates if people with this article can be awarded in a '
-                   'potential raffle at event'))
+        help_text=(
+            'Indicates if people with this article'
+            ' can be awarded in a potential raffle'
+            ' at event'
+            ),
+        )
+
+    @classmethod
+    def load_article(cls, pk):
+        """Returns an instance of the article.
+        """
+        try:
+            return (
+                cls.objects
+                .select_related("event")
+                .get(pk=pk)
+                )
+        except cls.DoesNotExist:
+            return None
 
     def __str__(self):
         return '{} [{}]'.format(self.category, self.event)
 
-    @property
-    def num_sold_tickets(self):
-        return self.tickets.exclude(refunded_at__isnull=False).count()
+    def num_sold_tickets(self) -> int:
+        """Return the total number of saled tickets.
+        """
+        return (
+            self.tickets
+            .exclude(refunded_at__isnull=False)
+            .count()
+            )
 
-    @property
     def num_available_tickets(self):
-        return self.stock - self.num_sold_tickets
+        return self.stock - self.num_sold_tickets()
 
     @property
     def price_in_cents(self):
@@ -87,19 +115,28 @@ class Article(models.Model):
         return self.status() == Article.SALEABLE
     is_active.boolean = True
 
+    def all_sold(self) -> bool:
+        return self.num_available_tickets() <= 0
+
+    def sale_ended(self) -> bool:
+        return self.event.start_date < just_today()
+
     def status(self):
         if self.release_at is None:
             return Article.HIDDEN
         now = dj_timezone.now()
         if self.release_at > now:
             return Article.UPCOMING
-        today = now.date()
-        if self.num_available_tickets <= 0 or self.event.start_date < today:
+        if self.all_sold() or self.sale_ended():
             return Article.SOLDOUT
         return Article.SALEABLE
 
 
 class Ticket(models.Model):
+
+    class Meta:
+        ordering = ['sold_at']
+
     number = models.PositiveIntegerField(
         help_text=('Consecutive number within event '
                    '(if blank it will be automatically fulfilled)'),
@@ -176,21 +213,23 @@ class Ticket(models.Model):
 
 
 class Raffle(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    event = models.OneToOneField('events.Event',
-                                 related_name='raffle',
-                                 on_delete=models.CASCADE)
-    closed_at = models.DateTimeField(null=True, blank=True)
-
-    def __str__(self):
-        return f'Sorteo para {self.event.qualified_hashtag}'
 
     class Meta:
         ordering = ['created_at']
 
+    event = models.OneToOneField(
+        'events.Event',
+        related_name='raffle',
+        on_delete=models.CASCADE,
+        )
+    created_at = models.DateTimeField(auto_now_add=True)
+    closed_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f'Sorteo para {self.event}'
+
     def get_candidate_tickets(self):
-        return self.event.all_tickets().filter(
-            article__participate_in_raffle=True)
+        return self.event.all_tickets().filter(article__participate_in_raffle=True)
 
     def get_delivered_gifts(self):
         return self.gifts.filter(awarded_ticket__isnull=False)
@@ -248,31 +287,43 @@ class Raffle(models.Model):
 
 
 class Gift(models.Model):
-    name = models.CharField(max_length=256)
-    description = models.TextField(blank=True)
-    raffle = models.ForeignKey('tickets.Raffle',
-                               related_name='gifts',
-                               on_delete=models.CASCADE)
-    awarded_ticket = models.OneToOneField('tickets.Ticket',
-                                          related_name='gift',
-                                          null=True,
-                                          blank=True,
-                                          on_delete=models.CASCADE)
-    awarded_at = models.DateTimeField(null=True, blank=True)
-    missing_tickets = models.ManyToManyField('tickets.Ticket',
-                                             related_name='missing_gifts')
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         ordering = ['name', 'description']
 
-    def order(self):
-        gifts_ids = list(Gift.objects.filter(raffle=self.raffle).values_list(
-            'pk', flat=True))
+    name = models.CharField(max_length=256)
+    description = models.TextField(blank=True)
+    raffle = models.ForeignKey(
+        'tickets.Raffle',
+        related_name='gifts',
+        on_delete=models.CASCADE,
+        )
+    awarded_ticket = models.OneToOneField(
+        'tickets.Ticket',
+        related_name='gift',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        )
+    awarded_at = models.DateTimeField(null=True, blank=True)
+    missing_tickets = models.ManyToManyField(
+        'tickets.Ticket',
+        related_name='missing_gifts',
+        )
+
+    def __str__(self):
+        return self.name
+
+    def order(self) -> int:
+        gifts_ids = list(
+            Gift.objects
+            .filter(raffle=self.raffle)
+            .values_list('pk', flat=True)
+            )
         return gifts_ids.index(self.id) + 1
 
-    def awarded_ticket_for_display(self):
-        return f'{self.awarded_ticket.customer_full_name} \
-            (#{self.awarded_ticket.number})'
+    def awarded_ticket_for_display(self) -> str:
+        return (
+            f'{self.awarded_ticket.customer_full_name} '
+            f'(#{self.awarded_ticket.number})'
+            )

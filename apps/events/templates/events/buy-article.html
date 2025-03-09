@@ -1,15 +1,9 @@
 {% extends "events/base.html" %}
+{% load static utils controls %}
 
-{% load static %}
-{% load utils %}
-
-{% block title %}Compra de entradas - {{ block.super }}{% endblock %}
-
-{% block body_class %}tickets-page buy-article-page{% endblock %}
-
-{% block content %}
+{% block js %}
+  {{ block.super }}
   <script src="https://checkout.stripe.com/checkout.js"></script>
-
   <script>
     window.STRIPE_SETTINGS = {
       key: '{{ stripe_public_key }}',
@@ -17,104 +11,69 @@
       amount: parseInt('{{ article.price_in_cents }}'),
     }
   </script>
+{% endblock js %}
 
-  <div class="box">
-    <h1 class="title is-blue">Compra de entradas</h1>
-    <h2 class="subtitle">{{ event.name }}</h2>
+{% block content %}
 
-    <div class="tags">
-      <div class="tag is-medium price-tag">
-        <b>Entrada {{ article.category.name }}:</b>&nbsp;{{ article.price }}&nbsp;€
-      </div>
-      <span>
-        <i class="fas fa-shopping-cart"></i>
-        Quedan <b>{{ article.num_available_tickets }}</b> disponible{{ article.num_available_tickets|pluralize }}
-      </span>
+<div class="box">
+
+  <div class="tags">
+    <div class="tag is-medium price-tag">
+      <b>Entrada {{ article.category.name }}:</b>&nbsp;{{ article.price }}&nbsp;€
+    </div>
+    <span>
+      <i class="fas fa-shopping-cart"></i>
+      Quedan <b>{{ article.num_available_tickets }}</b> disponible{{ article.num_available_tickets|pluralize }}
+    </span>
+  </div>
+
+  <form method="POST" action="." id="buy-article-form">
+  {% csrf_token %}
+
+  <div class="columns is-multiline">
+
+    <div class="column is-12-mobile is-4-tablet">
+
+      {% text_field form.name id='name-input' placeholder='Nombre' %}
+
     </div>
 
-    <form method="POST" action="." id="buy-article-form">
-      {% csrf_token %}
+    <div class="column is-12-mobile is-8-tablet">
+      {% text_field form.surname id='surname-input' placeholder='Apellidos' %}
+    </div>
 
-      <div class="columns is-multiline">
-        <div class="column is-12-mobile is-6-tablet">
-          <div class="field">
-            <label class="label">Nombre</label>
-            <div class="control">
-              <input type="text" id="name-input" name="name" size="32" class="input" placeholder="Nombre">
-            </div>
-          </div>
-        </div>
+    <div class="column is-12-mobile is-4-tablet">
+      {% tel_field form.phone id='phone-input' placeholder='Teléfono' %}
+    </div>
 
-        <div class="column is-12-mobile is-6-tablet">
-          <div class="field">
-            <label class="label">Apellidos</label>
-            <div class="control">
-              <input type="text" id="surname-input" name="surname" size="32" class="input" placeholder="Apellidos">
-            </div>
-          </div>
-        </div>
+    <div class="column is-12-mobile is-4-tablet">
+      {% checkbox_field form.privacy_policy id='chk_privacy_policy' %}
+    </div>
 
-        <div class="column is-12-mobile is-6-tablet">
-          <div class="field">
-            <label class="label">Teléfono</label>
-            <div class="control">
-              <input type="text" id="phone-input" name="phone" size="16" class="input" placeholder="Teléfono">
-            </div>
-            <p class="help">
-              Opcional (Solo lo usaremos para resolver posibles problemas con la compra de la entrada)
-            </p>
-          </div>
-        </div>
-      </div>
+    <div class="column is-12-mobile is-4-tablet">
+      {% checkbox_field form.purchase_terms id='chk_purchase_terms' %}
+    </div>
 
-      <div class="terms">
-        <label class="checkbox">
-          <input type="checkbox">
-          Acepto la <a href="{% url 'legal:privacy_policy' %}">Política de Privacidad</a>.
-        </label>
+    <div class="column is-12-mobile is-12-tablet">
+        <span class="icon">
+          <i class="fas fa-info-circle"></i>
+        </span>
+        Las entradas se enviarán a tu correo electrónico
+        (que se solicitará al realizar el pago)
+    </div>
 
-        <label class="checkbox">
-          <input type="checkbox">
-          Acepto las <a href="{% url 'legal:purchase_terms' %}">Condiciones generales de compra</a>.
-        </label>
-      </div>
+    <div class="column is-12-mobile is-12-tablet">
+      <button id="button-go-to-payment"
+              class="button is-warning">Continuar</button>
+    </div>
 
-      <div class="message is-info message-tickets-on-mail">
-        <div class="message-body">
-          <span class="icon">
-            <i class="fas fa-info-circle"></i>
-          </span>
-          Las entradas se enviarán a tu correo electrónico (que se solicitará al realizar el pago)
-        </div>
-      </div>
+    <p class="is-warning is-centered">
+      Pulsa <a href="{% url 'events:ticket_purchase_nocc' id_article=article.id %}">aquí</a> si no dispones de tarjeta bancaria
+    </p>
 
-      {% with id='name-validation-message' message='Debe rellenar el campo Nombre' %}
-        {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
-      {% endwith %}
-
-      {% with id='surname-validation-message' message='Debe rellenar el campo Apellidos' %}
-        {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
-      {% endwith %}
-
-      {% with id='phone-validation-message' message='El formato del campo Teléfono no es adecuado' %}
-        {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
-      {% endwith %}
-
-      {% with id='checkboxes-validation-message' message='Debe aceptar todas las casillas de verificación' %}
-        {% include "./forms/validation-message.html" with id=id message=message is_hidden=True only %}
-      {% endwith %}
-
-      <div class="control has-text-centered">
-        <button id="button-go-to-payment" class="button is-warning">Continuar</button>
-      </div>
-
-      <p class="has-text-centered help">
-        Pulsa <a href="{% url 'events:ticket_purchase_nocc' id_article=article.id %}">aquí</a> si no dispones de tarjeta bancaria
-      </p>
-
-      <div class="spinner-background is-hidden">
-        <i class="fas fa-spinner fa-spin"></i>
-      </div>
-    </form>
-  </div>
+    <div class="spinner-background is-hidden">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+  </form>
+</div>
 {% endblock content %}

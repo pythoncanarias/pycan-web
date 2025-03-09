@@ -1,6 +1,6 @@
 {% extends "events/base.html" %}
 
-{% load static %}
+{% load static utils %}
 
 {% block title %}Sorteo {{event.name}} - {{ block.super }}{% endblock %}
 
@@ -9,14 +9,19 @@
 
 {% block content %}
 
-<div class="box">
-  {% include 'events/includes/raffle-header.html' %}
+{% include 'events/includes/raffle-header.html' %}
 
-  <progress class="progress is-primary" value="{{ progress_value }}" max="100">{{ progress_value }}%</progress>
+<div class="box">
+
+<progress class="progress is-primary"
+  value="{{ progress_value }}"
+  max="100">{{ progress_value }}%</progress>
 
   <div id="current-gift" class="current-gift">
     <i class="fas fa-gift"></i>
-    {{ current_gift }}
+    <big> <b> {{ current_gift.name }} </b> </big>
+    <br>
+    {{ current_gift.description|as_markdown }}
   </div>
 
   {% if current_gift.awarded_ticket %}

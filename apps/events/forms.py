@@ -3,11 +3,20 @@
 import logging
 
 from django import forms
+from django.conf import settings
+from django.utils.safestring import mark_safe
+from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
+import stripe
 
 from . import models
+from apps.tickets.models import Ticket
+from utils.results import Success, Failure, Result
 
 UUID_LAST_DIGITS = 12
+
+
+logger = logging.getLogger(__name__)
 
 
 class ProposalForm(forms.ModelForm):
@@ -104,6 +113,7 @@ class WaitingListForm(forms.Form):
 
 
 class RefundForm(forms.Form):
+
     email = forms.EmailField(label="Tu email", max_length=192)
     uuid = forms.CharField()
 
@@ -140,3 +150,91 @@ class RefundForm(forms.Form):
                 "Ya se ha solicitado una devolución del importe para ese ticket"
             )
         return uuid
+
+
+class StripeForm(forms.Form):
+
+    stripeEmail = forms.EmailField(label="Tu email", max_length=192)
+    name = forms.CharField(label="Nombre propio", max_length=256)
+    surname = forms.CharField(label="Apellidos", max_length=256)
+    phone = forms.CharField(
+        label='Teléfono',
+        max_length=32,
+        required=False,
+        help_text=(
+            'Opcional (Solo lo usaremos para resolver posibles problemas'
+            ' con la compra de la entrada)'
+            ),
+        )
+    url_privacy_policy = reverse_lazy('legal:privacy_policy')
+    privacy_policy = forms.BooleanField(
+        label='Política de Privacidad',
+        help_text=mark_safe(
+            'Acepto las  <a href="{url_privacy_policy}">Condiciones'
+            ' generales de compra</a>.'
+            ),
+        )
+    url_purchase_terms = reverse_lazy('legal:purchase_terms')
+    purchase_terms = forms.BooleanField(
+        label='Condiciones generales de compra',
+        help_text=mark_safe(
+            'Acepto las <a href="{url_purchase_terms}">'
+            'Condiciones generales de compra'
+            '</a>.'
+            ),
+        )
+    stripeToken = forms.CharField(max_length=512)
+
+    def __init__(self, article, *args, **kwargs):
+        self.article = article
+        super().__init__(*args, **kwargs)
+
+    def charge_payment(self) -> Result:
+        assert self.is_valid()
+        email = self.cleaned_data["stripeEmail"]
+        name = self.cleaned_data["name"]
+        surname = self.cleaned_data["surname"]
+        token = self.cleaned_data["stripeToken"]
+        phone = self.cleaned_data.get("phone", None)
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        try:
+            customer = stripe.Customer.create(
+                email=email,
+                source=token,
+                description="{}, {}".format(surname, name),
+            )
+            charge = stripe.Charge.create(
+                customer=customer.id,
+                amount=self.article.price_in_cents,
+                currency="EUR",
+                description="{}/{}, {}".format(
+                    self.ticket.event.hashtag,
+                    surname,
+                    name,
+                ),
+            )
+            if charge.paid:
+                ticket = Ticket(
+                    article=self.article,
+                    customer_name=name,
+                    customer_surname=surname,
+                    customer_email=email,
+                    customer_phone=phone,
+                    payment_id=charge.id,
+                )
+                ticket.save()
+                return Success({
+                    'charge': charge,
+                    'ticket': ticket,
+                    })
+            else:
+                return Failure(
+                    'Error al procesar el pago en Stripe',
+                    extra={'charge': charge},
+                    )
+        except stripe.error.StripeError as err:
+            logger.error(f"Error de stripe: {err}")
+            return Failure(f"Error de stripe: {err}")
+        except Exception as err:
+            logger.error(f"Error interno: {err}")
+            return Failure(f"Error interno: {err}")

@@ -19,7 +19,7 @@
       </div>
 
       {% if event.opened_ticket_sales %}
-        <a href="{% url 'events:buy_ticket' slug=event.slug %}" class="button is-warning">Comprar entrada</a>
+        <a href="{% url 'events:buy_ticket' event=event %}" class="button is-warning">Comprar entrada</a>
         {% if not event.external_tickets_url %}
           <br>
           <a href="{% url 'events:resend_ticket' event=event %}" class="link-to-resend-ticket">¿Has perdido tu entrada?</a>
