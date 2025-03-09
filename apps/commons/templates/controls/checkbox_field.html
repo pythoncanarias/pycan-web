@@ -1,10 +1,10 @@
 <div class="field">
-  <label class="label" for="{{ control_id }}">{{ field.label }}</label>
   <div class="control">
     <input name="{{ field.name }}" id="{{ control_id }}"
-           class="input"
-           value="{% if is_bound %}{{ field.value }}{% endif %}"
-           type="tel" placeholder="{{ placeholder }}">
+           {% if checked %}checked{% endif %}
+           value="{{ field.value }}"
+           type="checkbox">
+    <label class="checkbox" for="{{ control_id }}">{{ field.label }}</label>
     {% if field.help_text %}
       <p class="help">{{ field.help_text }}</p>
     {% endif %}

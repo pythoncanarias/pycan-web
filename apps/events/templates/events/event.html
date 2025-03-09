@@ -22,7 +22,7 @@
         <a href="{% url 'events:buy_ticket' slug=event.slug %}" class="button is-warning">Comprar entrada</a>
         {% if not event.external_tickets_url %}
           <br>
-          <a href="{% url 'events:resend_ticket' slug=event.slug %}" class="link-to-resend-ticket">¿Has perdido tu entrada?</a>
+          <a href="{% url 'events:resend_ticket' event=event %}" class="link-to-resend-ticket">¿Has perdido tu entrada?</a>
           <br>
           <div class="tags has-addons ticket-availability">
             <span class="tag num-available-tickets">{{ event.num_available_tickets }} disponible{{ event.num_available_tickets|pluralize }}</span>

@@ -39,10 +39,11 @@
 
     <p class="text-info-mail">En breve te enviaremos a tu dirección de correo un pdf con la entrada.
     En caso de que no te llegue o la pierdas, puedes solicitar que se te envíe de nuevo
-    a tu correo siempre que quieras <a href="{% url 'events:resend_ticket' slug=event.slug%}">en
-        esta página: Reenviar la entrada por correo</a>. Si aun así no te llega, o tienes
+    a tu correo siempre que quieras en esta página: <a href="{% url 'events:resend_ticket' event=event %}">
+    Reenviar la entrada por correo</a>. Si aun así no te llega, o tienes
     cualquier otro problema con la entrada, ponte
-    en contacto con nosotros en <a href="mailto://{{ contact_email }}">{{ contact_email }}</a>. </p>
+    en contacto con nosotros en
+    <a href="mailto://{{ organization.contact_email }}">{{ organization.contact_email }}</a>. </p>
 
     <p>
       Si quieres hacernos un poco de <b>publicidad en Twitter</b>, nos harías un gran favor, solo pulsa en

@@ -3,7 +3,7 @@
   <div class="control">
     <input name="{{ field.name }}" id="{{ control_id }}"
            class="input"
-           value="{{ field.value }}"
+           value="{% if is_bound %}{{ field.value }}{% endif %}"
            type="text" placeholder="{{ placeholder }}">
     {% if field.errors %}
       <ul class="errorlist">{% for error in field.errors %}
