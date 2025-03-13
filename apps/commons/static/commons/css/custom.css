@@ -66,7 +66,24 @@
 
   --modal-z: 3000;
   --modal-background-background-color: rgba(7, 8, 16, 0.86);
+
+  --section-header-color: #46474c;
 }
+
+.section-header {
+  background-color: var(--section-header-color);
+  color: white;
+  font-weight: bolder;
+  font-size: 120%;
+  padding-left: 1em;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.section-body {
+  margin: 2em;
+}
+
 
 p {
   margin-top: 0.5rem;
@@ -127,6 +144,11 @@ hr {
   padding: 0.35rem 1rem;
 }
 
+.navbar-item {
+  background-color: var(--header-bg)!important;
+  color: var(--header-fg)!important;
+}
+
 .navbar .navbar-brand .logo {
   margin-top: 2px; /* offset logo */
   max-height: var(--header-height);
@@ -163,8 +185,12 @@ hr {
 }
 
 /* Styles for Breadcrumbs */
+
 .breadcrumb {
-  padding-left: 1em;
+  margin-top: 24px;
+  padding: 0;
+
+  padding-left: 0.5em;
   border-top: 1px solid #833471;
   background: var(--breadcrumbs-bg);
   color: var(--breadcrumbs-fg);
@@ -257,6 +283,10 @@ article {
 
 .anchor {
   scroll-margin-top: var(--header-height) + 1rem;
+}
+
+.message-header {
+  background-color: #ffffff;
 }
 
 .message-header .dyn-anchor-link i:hover {

@@ -7,43 +7,69 @@
   <a href="{% url 'about:join' %}" class="link button is-link is-medium is-outlined">Forma parte de la asociación</a>
 </div>
 
+<a name"intro"></a>
 <article class="anchor" id="intro">
-  <div class="message-header dyn-anchor-heading">
-    Introducción 
+
+  <div class="section-header dyn-anchor-heading">
+    Introducción
     <a class="dyn-anchor-link" href="#intro"><i class="fas fa-link"></i></a>
   </div>
 
-  <div class="message-body">
-    <b>{{ organization.name }}</b> es una asociación sin ánimo de lucro cuyos objetivos, son, entre otros, promover el <strong>uso del lenguaje</strong> de programación Python, dar <strong>soporte</strong> a quienes deseen aprenderlo y promover la programación como una <strong>competencia educativa básica</strong>.</p>
+  <div class="section-body">
 
-  <p>La asociación fue creada el <b>{{ organization.registration_date|date:"d/m/Y" }}</b> y desde
-  entonces ha organizado <a href="{% url 'events:index' %}">diferentes
+    <p><b>{{ organization.name }}</b> es una asociación sin ánimo de lucro cuyos objetivos,
+    son, entre otros, promover el uso del <a href="https://python.org/">lenguaje de
+    programación Python</a>, dar <b>soporte</b> a quienes deseen aprenderlo y promover la
+    programación como una <b>competencia educativa básica</b>.</p>
+
+    <p>La asociación fue creada el <b>{{ organization.registration_date|date:"d/m/Y" }}</b>
+    y desde entonces ha organizado <a href="{% url 'events:index' %}">diferentes
     eventos</a> de difusión del lenguaje de programación Python
-  colaborando en el incremento de la comunidad de usuarios de Python en
-  Canarias.</p>
+    colaborando en el incremento de la comunidad de usuarios de Python en
+    Canarias.</p>
 
-    <p>Te recomendamos que no dejes de <a href="{% url 'about:history' %}">repasar la historia de Python Canarias</a>.</p>
+    <p>Te recomendamos que no dejes de <a href="{% url 'about:history' %}">repasar
+    la historia de Python Canarias</a>.</p>
 
-    <p>Si quieres apoyar nuestra labor para que podamos abordar proyectos cada vez más ambiciosos, <a href="{% url 'about:join' %}">hazte socio/a!</a> Estamos deseando escuchar tus propuestas.</p>
+    <p>Si quieres apoyar nuestra labor para que podamos abordar proyectos cada vez
+    más ambiciosos, <a href="{% url 'about:join' %}">hazte socio/a!</a> Estamos deseando
+    escuchar tus propuestas.</p>
+
   </div>
 </article>
 
+<a name="whypython"></a>
 <article class="anchor" id="whypython">
-  <div class="message-header dyn-anchor-heading">
-    <h3>¿Por qué Python?</h3>
+
+  <div class="section-header dyn-anchor-heading">
+    ¿Por qué Python?
     <a class="dyn-anchor-link" href="#whypython"><i class="fas fa-link"></i></a>
   </div>
-  <div class="message-body">
-    <p>Python es un lenguaje dinámico, de alto nivel y con una sintaxis clara. Es de propósito general lo que permite usarlo para cualquier tipo de programa o herramienta. Dispone de una inmensa cantidad de librerías, tanto internas como de terceras partes. Por si todo esto fuera poco, es software libre, multiplataforma (Unix, Windows u OS/X entre otras) y multiparadigma (orientación a objetos, funcional o imperativo). Python es utilizado hoy en día por empresas tan destacadas como Instagram, The New York Times, Google, Dropbox, NASA, Mercedes-Benz, Pinterest, National Geographic, The Washington Post, YouTube, Blender o Industrial Light & Magic.</p>
+
+
+  <div class="section-body">
+
+    <p>Python es un lenguaje dinámico, de alto nivel y con una sintaxis clara. Es de
+    propósito general lo que permite usarlo para cualquier tipo de programa o herramienta.
+    Dispone de una inmensa cantidad de librerías, tanto internas como de terceras partes.
+    Por si todo esto fuera poco, es software libre, multiplataforma (Unix, Windows u OS/X
+    entre otras) y multiparadigma (orientación a objetos, funcional o imperativo). Python es
+    utilizado hoy en día por empresas tan destacadas como Instagram, The New York Times,
+    Google, Dropbox, NASA, Mercedes-Benz, Pinterest, National Geographic, The Washington
+    Post, YouTube, Blender o Industrial Light & Magic.</p>
+
   </div>
 </article>
 
+<a name="fiscal"></a>
 <article class="anchor" id="fiscal">
-  <div class="message-header dyn-anchor-heading">
+
+  <div class="section-header dyn-anchor-heading">
     Datos fiscales
     <a class="dyn-anchor-link" href="#fiscal"><i class="fas fa-link"></i></a>
   </div>
-  <div class="message-body">
+
+  <div class="section-body">
     <p>
       Asociación cultural {{ organization.name }}<br>
       CIF {{ organization.cif }}<br>
@@ -59,12 +85,16 @@
   </div>
 </article>
 
+<a name="board"></a>
 <article class="anchor" id="board">
-  <div class="message-header dyn-anchor-heading">
+
+  <div class="section-header dyn-anchor-heading">
     Junta directiva
     <a class="dyn-anchor-link" href="#board"><i class="fas fa-link"></i></a>
   </div>
-  <div class="message-body">
+
+  <div class="section-body">
+
     <p>Actualmente la <b>junta directiva</b> está formada por:</p>
 
   <table class="table is-hoverable is-fullwidth">
@@ -89,12 +119,15 @@
   </div>
 </article>
 
+<a name="docs"></a>
 <article class="anchor" id="docs">
-  <div class="message-header dyn-anchor-heading">
+
+  <div class="section-header dyn-anchor-heading">
     Documentación
     <a class="dyn-anchor-link" href="#docs"><i class="fas fa-link"></i></a>
   </div>
-  <div class="content message-body">
+
+  <div class="section-body">
     <ul>
       <li><a href="https://github.com/pythoncanarias/pycan-docs/blob/main/asociacion/estatutos/estatutos.pdf">Estatutos</a></li>
       <li><a href="https://github.com/pythoncanarias/pycan-docs/tree/main/actas/junta-directiva">Actas de la junta directiva</a></li>
@@ -106,13 +139,15 @@
   </div>
 </article>
 
+<a name="regulation"></a>
 <article class="message" id="regulation">
-  <a id="regulation"></a>
-  <div class="message-header dyn-anchor-heading">
+  <div class="section-header dyn-anchor-heading">
     Normativa de aplicación
     <a class="dyn-anchor-link" href="#regulation"><i class="fas fa-link"></i></a>
   </div>
-  <div class="content message-body">
+
+  <div class="section-body">
+
     <ul>
       <li><a href="https://www.boe.es/buscar/pdf/2003/BOE-A-2003-6500-consolidado.pdf">Ley 4/2003, de 28 de febrero, de Asociaciones de Canarias</a></li>
       <li><a href="http://www.gobiernodecanarias.org/boc/2007/038/001.html">Decreto 12/2007, de 5 de febrero, por el que se aprueba el Reglamento de Asociaciones de Canarias</a></li>

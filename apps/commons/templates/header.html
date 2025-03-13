@@ -3,7 +3,11 @@
 <nav class="header-page navbar is-paddingless is-fixed-top">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img class="logo" src="{% static 'commons/img/logo-python-canarias-white.svg' %}" alt="{{ organization.name }}" />
+      <img class="logo"
+            src="{% static 'commons/img/logo-python-canarias-white.svg' %}"
+            alt="{{ organization.name }}"
+            height="100px"
+            />
     </a>
 
     <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
@@ -34,7 +38,7 @@
           Eventos
           </a>
           <div class="navbar-dropdown is-boxed js-nav-dropdown collapsable--close">
-            <a class="navbar-item {% is_active 'events:next_event' %}"i
+            <a class="navbar-item {% is_active 'events:next_event' %}"
                href="{% url 'events:next_event' %}">
               Próximo evento
             </a>

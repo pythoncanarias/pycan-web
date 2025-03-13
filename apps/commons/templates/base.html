@@ -5,34 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Python Canarias">
   <meta name="author" content="Python Canarias">
-
   <link rel="icon" href="{% static 'commons/img/favicon.ico' %}">
-
-  <title>{% block title %}
+  <title>
     {% if title %}
-    {{ title }} - {% if subtitle %}{{ subtitle }} - {% endif %}{{ organization.name }}
+      {{ title }}{% if subtitle %} - {{ subtitle }}{% endif %} - {{ organization.name }}
     {% else %}
       {{ organization.name }}
     {% endif %}
-
-  {% endblock title %}</title>
-
+  </title>
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">
-
   {% block styles %}
   <link rel="stylesheet" href="{% static 'commons/css/font-awesome.css' %}">
   <link rel="stylesheet" href="{% static 'commons/css/bulma.min.css' %}">
   <link rel="stylesheet" href="{% static 'commons/css/custom.css' %}">
   {% endblock styles %}
-
 </head>
-<body class="{% block body_class %}{% endblock %} has-navbar-fixed-top">
-  .
-  {% include "header.html" %}
 
-  {% if breadcrumbs %}
-    {% include "includes/breadcrumbs.html" %}
-  {% endif %}
+<body class="{% block body_class %}{% endblock %} has-navbar-fixed-top">
+
+  {% include "header.html" %}
+  {% include "includes/breadcrumbs.html" %}
 
   {% block container %}
 
@@ -47,11 +39,7 @@
     </div>
   {% endif %}
 
-  <div class="{% block default_content_class %}container content-page{% endblock %} {% block content_class %}{% endblock %}
-      {% if menu %}
-        is-wide
-      {% endif %}
-    " id="content-page">
+  <div class="container content-page is-wide" id="content-page">
     {% if menu %}
       <div class="columns is-display">
         <div class="column is-one-quarter">
@@ -59,9 +47,15 @@
         </div>
         <div class="column is-three-quarters">
     {% endif %}
-    {% if title %}<h1 class="title">{{ title }}</h1>{% endif %}
-    {% if subtitle %}<h2 class="subtitle">{{ subtitle }}</h2>{% endif %}
-    {% block content %} {% endblock content %}
+
+    {% block title %}
+      {% if title %}<h1 class="title">{{ title }}</h1>{% endif %}
+      {% if subtitle %}<h2 class="subtitle">{{ subtitle }}</h2>{% endif %}
+    {% endblock title %}
+
+    {% block content %}
+    {% endblock content %}
+
     {% if menu %}
         </div>
       </div>

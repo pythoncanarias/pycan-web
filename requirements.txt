@@ -21,3 +21,4 @@ uWSGI==2.0.26
 xlrd==1.2.0
 xlwt==1.3.0
 rich==13.9.4
+watchdog==6.0.0

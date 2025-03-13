@@ -270,7 +270,7 @@ class Event(models.Model):
         return sum([a.num_sold_tickets() for a in self.articles.all()])
 
     def num_available_tickets(self):
-        return sum([a.num_available_tickets for a in self.articles.all()])
+        return sum([a.num_available_tickets() for a in self.articles.all()])
 
     def next_ticket_number(self):
         """Get the number for the next ticket within this event."""

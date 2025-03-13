@@ -1,5 +1,5 @@
-{% block breadcrumbs %}
-<nav class="breadcrumb" aria-label="Ruta">
+{% if breadcrumbs %}
+<nav class="breadcrumb has-succeeds-separator" aria-label="Ruta">
   <ul>{% for text,url in breadcrumbs %}
     {% if forloop.last %}
       <li class="is-active"><b>{{ text }}</b></li>
@@ -8,4 +8,4 @@
     {% endif %}
   {% endfor %}</ul>
 </nav>
-{% endblock breadcrumbs %}
+{% endif %}

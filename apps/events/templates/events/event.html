@@ -1,12 +1,14 @@
 {% extends "events/base.html" %}
 {% load static leaflet_tags utils l10n %}
 
+{% block title %}{% endblock title %}
+
 {% block content %}
 
 <div>
   <div class="event-header" {% if event.hero %} style="background-image: url('{{ event.hero.url }}');" {% endif %}>
     <div class="inner">
-      <h1 class="title is-1">{{ event.name }}</h1>
+      <h1 class="title is-1 has-text-white">{{ event.name }}</h1>
       <div class="subtitle is-4">
         <span class="event-header-date">
           <i class="fa-solid fa-calendar"></i> {{ event.start_date|as_short_date }}

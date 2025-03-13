@@ -30,7 +30,7 @@ class ArticleAdmin(admin.ModelAdmin):
     def sold_vs_available(self, obj):
         return "{}/{}".format(
             obj.num_sold_tickets(),
-            obj.num_available_tickets,
+            obj.num_available_tickets(),
             )
 
 
