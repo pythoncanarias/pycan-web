@@ -295,6 +295,14 @@ LOGGING = {
             'level': LOG_LEVEL,
             'propagate': True,
         },
+        'asyncio': {
+            'handlers': ['logfile', 'console'],
+            'level': 'WARNING',
+        },
+        'watchdog': {
+            'handlers': ['logfile', 'console'],
+            'level': 'WARNING',
+        },
     },
 }
 
