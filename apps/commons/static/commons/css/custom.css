@@ -34,7 +34,7 @@
 
   --custom-mobile: 36rem;
 
-  --header-height: 4rem;
+  --header-height: 3.5rem;
   --footer-height: 6rem;
   --footer-mobile-height: 3rem;
 
@@ -50,7 +50,7 @@
   --subtitle-negative-margin: -1rem;
   --content-heading-weight: 500;
   --radius: 0.15rem;
-  --navbar-height: 4.3rem;
+  --navbar-height: 4rem;
 
   --section-title-margin-bottom: 2.1rem;
 
@@ -184,12 +184,17 @@ hr {
   color: var(--header-fg);
 }
 
+/* Hero */
+
+.hero {
+  min-height: 300px;
+}
+
 /* Styles for Breadcrumbs */
 
 .breadcrumb {
-  margin-top: 24px;
+  margin-top: 16px;
   padding: 0;
-
   padding-left: 0.5em;
   border-top: 1px solid #833471;
   background: var(--breadcrumbs-bg);
@@ -315,7 +320,6 @@ body {
 }
 
 .header-page {
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
   background-color: var(--header-bg);
   z-index: 99;
 }

@@ -36,7 +36,7 @@
           <div class="content is-centered">
             {% for event in active_events.all %}
             <div class="event-launcher">
-            <h2><a class="event-target" href="{% url 'events:detail_event' slug=event.slug %}">
+            <h2><a class="event-target" href="{% url 'events:detail_event' event=event %}">
                 {{ event.name }}
               </a></h2>
               {% if event.call_for_paper_is_open %}

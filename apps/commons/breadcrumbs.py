@@ -4,6 +4,7 @@ from typing import Any
 
 from django.urls import reverse
 from django.urls.exceptions import NoReverseMatch
+from django.utils.safestring import mark_safe
 
 
 class BreadCrumb():
@@ -77,4 +78,4 @@ class BreadCrumb():
         return '\n'.join(buff)
 
 
-HOMEPAGE = BreadCrumb('Inicio', '/')
+HOMEPAGE = BreadCrumb('⌂', '/',)
