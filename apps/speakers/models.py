@@ -46,33 +46,31 @@ class Speaker(models.Model):
         return [{'code': c.social.code, 'href': c.href}
                 for c in self.contacts.order_by('social__name')]
 
-    @property
     def photo_url(self):
         if self.photo:
             return self.photo.url
-        else:
-            return static('speakers/img/noavatar.png')
+        return static('speakers/img/noavatar.png')
 
-    def talks(self, event=None):
-        """Returns a list with all the talks (schedule & slot) for a given speaker.
-        If we pass an event as a parameter, it returns only a list of the
-        speaker's talks given in this event.
+    # def talks(self, event=None):
+        # """Returns a list with all the talks (schedule & slot) for a given speaker.
+        # If we pass an event as a parameter, it returns only a list of the
+        # speaker's talks given in this event.
 
-        Params:
+        # Params:
 
-        - event (class Event) [optional]: if provided, if filter the talks to be
-          from this event.
+        # - event (class Event) [optional]: if provided, if filter the talks to be
+          # from this event.
 
-        Return:
+        # Return:
 
-        - A list of talks from this speaker (and event, if provided). Empty
-        list if no talks from this speaker.
-        """
-        qs = self.schedule.select_related('slot')
-        if event:
-            qs = qs.filter(event=event)
-        qs = qs.order_by('slot__name')
-        return list(qs)
+        # - A list of talks from this speaker (and event, if provided). Empty
+        # list if no talks from this speaker.
+        # """
+        # qs = self.schedule.select_related('slot')
+        # if event:
+            # qs = qs.filter(event=event)
+        # qs = qs.order_by('slot__name')
+        # return list(qs)
 
 
 class Contact(models.Model):
