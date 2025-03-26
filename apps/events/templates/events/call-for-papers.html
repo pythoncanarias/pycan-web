@@ -10,7 +10,7 @@
     <div class="content box">
       <h1>Call for papers <i class="fas fa-inbox"></i></h1>
       <h2>
-          <a href="{% url 'events:detail_event' slug=event.slug %}">{{ event.name }}</a>
+        <a href="{% url 'events:detail_event' event=event %}">{{ event.name }}</a>
       </h2>
       <p><em>{{ event.short_description|as_markdown }}</em></p>
       <p>

@@ -1,0 +1,35 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+{% include "events/includes/event-header.html" %}
+{% include "events/includes/event-tabs.html" with selected="talks" %}
+
+<section id="talks" class="section talks anchor">
+
+  <div class="schedule-table">
+  {% for row in event.schedule_for_display %}
+    {% if row.type == 'tracks' %}
+      {% include "./event-components/schedule/tracks.html" with tracks=row.tracks only %}
+    {% elif row.type == 'plenary_scheduled_item' %}
+      {% include "./event-components/schedule/plenary-scheduled-item.html" with schedule=row.schedule only %}
+    {% elif row.type == 'scheduled_items' %}
+      {% include "./event-components/schedule/scheduled-items.html" with tracks=row.tracks only %}
+    {% endif %}
+  {% empty %}
+    <div class="column is-full has-text-centered coming-soon">
+      <p>
+        <div class="tag is-warning is-medium not-closed-schedule centered">
+          <i class="fas fa-info-circle"></i>
+          La agenda aún no está cerrada!
+        </div>
+        <i class="fas fa-box-open"></i>
+        Más información próximamente!
+      </p>
+    </div>
+  {% endfor %}
+  </div>
+</section>
+
+
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% extends "events/base.html" %}
+{% load static leaflet_tags utils %}
+
+{% block content %}
+
+{% include "events/includes/event-header.html" %}
+{% include "events/includes/event-tabs.html" with selected="speakers" %}
+
+<section class="box section what-is has-background-white">
+  <div class="container">
+    {% filter as_markdown %} {{ event.description }} {% endfilter %}
+  </div>
+</section>
+
+
+<p> <b> speakers </b>: <tt> {{ speakers|pprint }} </tt> </p>
+
+<section id="speakers" class="section speakers anchor">
+
+
+
+  <div class="columns is-multiline is-mobile is-centered">
+    {% for speaker in speakers %}
+
+      {% comment %}{% include "./event-components/modals/speaker-modal.html" with speaker=speaker %}{% endcomment %}
+
+      <div class="column is-12-mobile is-4-tablet is-3-desktop">
+        <div class="card">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-96x96">
+                  <img src="{{ speaker.photo_url }}"
+                       class="is-rounded"
+                       alt="{{ speaker.name }} {{ speaker.surname }}">
+                </figure>
+              </div>
+              <div class="media-content">
+                <h2 class="title is-3">{{ speaker.name }}</h2>
+                <h3 class="subtitle is-5">{{ speaker.surname }}</h3>
+              </div>
+            </div>
+          <hr>
+
+          <div class="speaker-bio">
+            {{ speaker.bio|as_markdown }}
+          </div>
+
+          {% comment %}<footer class="card-footer">{% endcomment %}
+            {% comment %}{% for social in speaker.socials_for_display %}{% endcomment %}
+              {% comment %}<a href="{{ social.href }}">{% endcomment %}
+                {% comment %}<i class="fab fa-{{ social.code }}"></i>{% endcomment %}
+              {% comment %}</a>&nbsp;{% endcomment %}
+            {% comment %}{% endfor %}{% endcomment %}
+          {% comment %}</footer>{% endcomment %}
+
+        </div>
+      </div>
+    </div>
+
+    {% empty %}
+      <div class="column is-full has-text-centered coming-soon">
+        <p>
+          <i class="fas fa-box-open"></i>
+          Más información próximamente!
+        </p>
+      </div>
+    {% endfor %}
+</section>
+
+{% endblock content %}

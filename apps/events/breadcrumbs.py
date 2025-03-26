@@ -16,9 +16,21 @@ def bc_root():
 def bc_event(event):
     return bc_root().step(
         str(event),
-        reverse_lazy("events:detail_event", kwargs={
-            'slug': event.slug,
-            }),
+        links.to_event_detail(event.slug),
+        )
+
+
+def bc_speakers(event):
+    return bc_event(event).step(
+        "Ponentes",
+        links.to_speakers(event.slug),
+        )
+
+
+def bc_talks(event):
+    return bc_event(event).step(
+        "Agenda",
+        links.to_talks(event.slug),
         )
 
 

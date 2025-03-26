@@ -30,7 +30,7 @@ def next_event(request):
         return redirect("events:last_events")
     if num_events == 1:
         event = events.first()
-        return redirect("events:detail_event", slug=event.slug)
+        return redirect(links.to_event_detail(event.slug))
     return render(request, "events/list-events.html", {
         "title": "Próximos eventos",
         "breadcrumbs": breadcrumbs.bc_next_event(),
@@ -57,13 +57,35 @@ def past_events(request):
         })
 
 
-def detail_event(request, slug):
-    event = models.Event.get_by_slug(slug)
+def detail_event(request, event):
     return render(request, "events/event.html", {
         "title": str(event),
         "breadcrumbs": breadcrumbs.bc_event(event),
         "event": event,
         })
+
+
+def speakers(request, event):
+    speakers = event.get_non_org_speakers()
+    return render(request, "events/speakers.html", {
+        "title": str(event),
+        "subtitle": "Ponentes",
+        "breadcrumbs": breadcrumbs.bc_speakers(event),
+        "event": event,
+        "speakers": speakers,
+        })
+
+
+def talks(request, event):
+    return render(request, "events/talks.html", {
+        "title": str(event),
+        "subtitle": "Agenda",
+        "breadcrumbs": breadcrumbs.bc_talks(event),
+        "event": event,
+        })
+
+
+
 
 
 def call_for_papers(request, event):

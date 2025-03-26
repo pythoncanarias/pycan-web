@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static leaflet_tags %}
+{% load static leaflet_tags utils %}
 
 {% block styles %}
   {{ block.super }}
@@ -11,3 +11,39 @@
   {{ block.super }}
   {% leaflet_js %}
 {% endblock js %}
+
+{% block hero %}
+<section class="hero is-link is-with-navbar"
+         style="background-image: url('{{ event.hero.url }}');">
+  <div class="hero-body">
+    <h1 class="title is-1 has-text-white">{{ event.name }}</h1>
+    <div class="subtitle is-4">
+      <span class="event-header-date">
+        <i class="fa-solid fa-calendar"></i> {{ event.start_date|as_short_date }}
+      </span>
+      {% if event.venue %}
+        <span class="event-header-venue">
+          <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
+        </span>
+      {% endif %}
+    </div>
+
+    {% if event.opened_ticket_sales %}
+      <a href="{% url 'events:buy_ticket' event=event %}" class="button is-warning">Comprar entrada</a>
+      {% if not event.external_tickets_url %}
+        <br>
+        <a href="{% url 'events:resend_ticket' event=event %}" class="link-to-resend-ticket">¿Has perdido tu entrada?</a>
+        <br>
+        <div class="tags has-addons ticket-availability">
+          <span class="tag num-available-tickets">{{ event.num_available_tickets }} disponible{{ event.num_available_tickets|pluralize }}</span>
+          <span class="tag is-primary num-sold-tickets">{{ event.num_sold_tickets }} vendida{{ event.num_sold_tickets|pluralize }}</span>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if not event.active %}
+      <span class="tag is-danger is-medium">Evento cerrado</span>
+    {% endif %}
+  </div>
+</section>
+{% endblock hero %}

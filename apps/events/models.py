@@ -229,7 +229,12 @@ class Event(models.Model):
             .exclude(slot__category__code="organizing")
             .values_list("speakers", flat=True)
         )
-        return Speaker.objects.filter(pk__in=speakers_ids).order_by("name", "surname")
+        return (
+            Speaker.objects
+            .prefetch_related('contact__social')
+            .filter(pk__in=speakers_ids)
+            .order_by("name", "surname")
+            )
 
     def all_tickets(self):
         """Get all the tickets sold for a particular event.

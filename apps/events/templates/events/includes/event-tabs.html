@@ -1,0 +1,37 @@
+<div class="tabs is-centered is-medium is_boxed">
+<ul>
+  {% if selected == 'speakers' %}
+    <li class="is-active"><a href="#">
+  {% else %}
+    <li><a href="{% url 'events:speakers' event=event %}">
+  {% endif %}
+    Ponentes
+    </a></li>
+
+  {% if selected == 'talks' %}
+    <li class="is-active"><a href="#">
+  {% else %}
+    <li><a href="{% url 'events:talks' event=event %}">
+  {% endif %}
+    Agenda
+    </a></li>
+
+  <li>
+    <a href="#venue">Localización</a>
+  </li>
+
+  <li>
+  <a href="#sponsors">Entidades</a>
+  </li>
+
+  <li>
+  <a href="{% url 'legal:coc' %}">Código de conducta</a>
+  </li>
+  {% if event.raffle.closed %}
+    <li>
+    <a href="{% url 'events:raffle_results' event.slug %}">Sorteo</a>
+    <li>
+  {% endif %}
+</ul>
+</div>
+

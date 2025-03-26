@@ -4,11 +4,23 @@ from django.urls import reverse_lazy
 
 
 def to_event_detail(slug):
-    return reverse_lazy('events:detail_event', kwargs={'slug': slug})
+    return reverse_lazy('events:detail_event', kwargs={'event': slug})
 
 
 def to_proposal_received(event):
     return reverse_lazy("events:proposal_received", kwargs={
+        "event": event,
+        })
+
+
+def to_speakers(event):
+    return reverse_lazy("events:speakers", kwargs={
+        "event": event,
+        })
+
+
+def to_talks(event):
+    return reverse_lazy("events:talks", kwargs={
         "event": event,
         })
 

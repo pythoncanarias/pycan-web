@@ -5,7 +5,7 @@
   {% if event.cover %}
     <div class="media-left">
       <figure class="image is-64x64">
-      <a href="{% url 'events:detail_event' slug=event.slug %}">
+      <a href="{% url 'events:detail_event' event=event %}">
       <img src="{{ event.cover.url }}" alt="{{ event.name }}">
       </a>
       </figure>
@@ -13,7 +13,7 @@
   {% endif %}
   <div class="media-content">
       <h2 class="is-size-3 has-text-left">
-        <a href="{% url 'events:detail_event' slug=event.slug %}">
+        <a href="{% url 'events:detail_event' event=event %}">
         <strong>{{ event.name }}</strong>
         </a>
       </h2>

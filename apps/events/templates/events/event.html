@@ -1,41 +1,14 @@
 {% extends "events/base.html" %}
-{% load static leaflet_tags utils l10n %}
+{% load static leaflet_tags utils %}
 
 {% block title %}{% endblock title %}
 
 {% block content %}
 
+
 <div>
   <div class="event-header" {% if event.hero %} style="background-image: url('{{ event.hero.url }}');" {% endif %}>
     <div class="inner">
-      <h1 class="title is-1 has-text-white">{{ event.name }}</h1>
-      <div class="subtitle is-4">
-        <span class="event-header-date">
-          <i class="fa-solid fa-calendar"></i> {{ event.start_date|as_short_date }}
-        </span>
-        {% if event.venue %}
-          <span class="event-header-venue">
-            <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
-          </span>
-        {% endif %}
-      </div>
-
-      {% if event.opened_ticket_sales %}
-        <a href="{% url 'events:buy_ticket' event=event %}" class="button is-warning">Comprar entrada</a>
-        {% if not event.external_tickets_url %}
-          <br>
-          <a href="{% url 'events:resend_ticket' event=event %}" class="link-to-resend-ticket">¿Has perdido tu entrada?</a>
-          <br>
-          <div class="tags has-addons ticket-availability">
-            <span class="tag num-available-tickets">{{ event.num_available_tickets }} disponible{{ event.num_available_tickets|pluralize }}</span>
-            <span class="tag is-primary num-sold-tickets">{{ event.num_sold_tickets }} vendida{{ event.num_sold_tickets|pluralize }}</span>
-          </div>
-        {% endif %}
-      {% endif %}
-
-      {% if not event.active %}
-        <span class="tag is-danger is-medium">Evento cerrado</span>
-      {% endif %}
     </div>
   </div>
 
@@ -79,225 +52,219 @@
   </section>
 
 
-  <section id="speakers" class="section speakers anchor">
-    <div class="container">
-      <h1 class="title section-title dyn-anchor-heading">
-        Ponentes
-        <a class="dyn-anchor-link" href="#speakers"><i class="fas fa-link"></i></a>
-      </h1>
-      <div class="columns is-multiline is-mobile is-centered">
-        {% for speaker in event.get_non_org_speakers %}
+  {% comment %}<section id="speakers" class="section speakers anchor">{% endcomment %}
+    {% comment %}<div class="container">{% endcomment %}
+      {% comment %}<h1 class="title section-title dyn-anchor-heading">{% endcomment %}
+        {% comment %}Ponentes{% endcomment %}
+        {% comment %}<a class="dyn-anchor-link" href="#speakers"><i class="fas fa-link"></i></a>{% endcomment %}
+      {% comment %}</h1>{% endcomment %}
+      {% comment %}<div class="columns is-multiline is-mobile is-centered">{% endcomment %}
+        {% comment %}{% for speaker in event.get_non_org_speakers %}{% endcomment %}
 
-          {% include "./event-components/modals/speaker-modal.html" with speaker=speaker only %}
+          {% comment %}{% include "./event-components/modals/speaker-modal.html" with speaker=speaker only %}{% endcomment %}
 
-          <div class="column is-6-mobile is-4-tablet is-3-desktop">
-            <div class="box speaker-box">
-              <a href="#speaker={{ speaker.slug }}" class="speaker-box-link">
-                <span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>
-                <h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>
-              </a>
-              <div class="speaker-socials">
-                {% for social in speaker.socials_for_display %}
-                  <a href="{{ social.href }}" target="_blank"><i class="fab fa-{{ social.code }}"></i></a>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        {% empty %}
-          <div class="column is-full has-text-centered coming-soon">
-            <p>
-              <i class="fas fa-box-open"></i>
-              Más información próximamente!
-            </p>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-
-
-  <section id="schedule" class="section schedule has-background-white anchor">
-    <div class="container">
-      <h1 class="title section-title dyn-anchor-heading">
-        <p>
-          Agenda
-          <a class="dyn-anchor-link" href="#schedule"><i class="fas fa-link"></i></a>
-        </p>
-      </h1>
-
-      <div class="section-detail">
-        <p><i class="fa-solid fa-calendar"></i> {{ event.start_date|as_short_date }}</p>
-        <a id="add-to-google-calendar" target="_blank" href="{{ event.get_google_calendar_url }}">
-        <i class="fa-solid fa-calendar"></i> Añadir a Google Calendar</a>
-      </div>
-
-      <div class="schedule-table">
-        {% for row in event.schedule_for_display %}
-          {% if row.type == 'tracks' %}
-            {% include "./event-components/schedule/tracks.html" with tracks=row.tracks only %}
-          {% elif row.type == 'plenary_scheduled_item' %}
-            {% include "./event-components/schedule/plenary-scheduled-item.html" with schedule=row.schedule only %}
-          {% elif row.type == 'scheduled_items' %}
-            {% include "./event-components/schedule/scheduled-items.html" with tracks=row.tracks only %}
-          {% endif %}
-        {% empty %}
-          <div class="column is-full has-text-centered coming-soon">
-            <p>
-              <i class="fas fa-box-open"></i>
-              Más información próximamente!
-            </p>
-          </div>
-        {% endfor %}
-      </div>
-
-      {% if event.schedule_for_display and not event.closed_schedule %}
-      <div class="section-detail">
-            <div class="tag is-warning is-medium not-closed-schedule centered">
-            <i class="fas fa-info-circle"></i>
-            La agenda aún no está cerrada!
-          </div>
-        </div>
-      {% endif %}
-    </div>
-  </section>
+          {% comment %}<div class="column is-6-mobile is-4-tablet is-3-desktop">{% endcomment %}
+            {% comment %}<div class="box speaker-box">{% endcomment %}
+              {% comment %}<a href="#speaker={{ speaker.slug }}" class="speaker-box-link">{% endcomment %}
+                {% comment %}<span class="speaker-photo" style="background-image: url('{{ speaker.photo_url }}');"></span>{% endcomment %}
+                {% comment %}<h2 class="speaker-name">{{ speaker.name }} {{ speaker.surname }}</h2>{% endcomment %}
+              {% comment %}</a>{% endcomment %}
+              {% comment %}<div class="speaker-socials">{% endcomment %}
+                {% comment %}{% for social in speaker.socials_for_display %}{% endcomment %}
+                  {% comment %}<a href="{{ social.href }}" target="_blank"><i class="fab fa-{{ social.code }}"></i></a>{% endcomment %}
+                {% comment %}{% endfor %}{% endcomment %}
+              {% comment %}</div>{% endcomment %}
+            {% comment %}</div>{% endcomment %}
+          {% comment %}</div>{% endcomment %}
+        {% comment %}{% empty %}{% endcomment %}
+          {% comment %}<div class="column is-full has-text-centered coming-soon">{% endcomment %}
+            {% comment %}<p>{% endcomment %}
+              {% comment %}<i class="fas fa-box-open"></i>{% endcomment %}
+              {% comment %}Más información próximamente!{% endcomment %}
+            {% comment %}</p>{% endcomment %}
+          {% comment %}</div>{% endcomment %}
+        {% comment %}{% endfor %}{% endcomment %}
+      {% comment %}</div>{% endcomment %}
+    {% comment %}</div>{% endcomment %}
+  {% comment %}</section>{% endcomment %}
 
 
-  <section id="venue" class="section venue anchor">
-    <div class="container">
-      <h1 class="title section-title dyn-anchor-heading">
-        Localización
-        <a class="dyn-anchor-link" href="#venue"><i class="fas fa-link"></i></a>
-      </h1>
-      <div>
-        <div class="columns is-multiline">
-          {% if event.venue %}
-            <div class="column is-12-tablet is-6-desktop">
-            {% if event.venue.is_online %}
-              <div class="venue-youtube map-section">
-                <img src="{% static 'events/img/youtube-logo.png' %}">
-              </div>
-            {% else %}
-              <div class="map-wrapper">
-                {% localize off %}
-                  {% leaflet_map "event-map" %}
-                  <a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
-                {% endlocalize %}
-              </div>
-            {% endif %}
-            </div>
-            <div class="column is-12-tablet is-6-desktop">
-              <strong class="venue-name">
-                {% if event.venue.website %}
-                  <a href="{{ event.venue.website }}"><i class="fas fa-info-circle"></i> {{ event.venue.name }}</a>
-                {% else %}
-                  <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
-                {% endif %}
-              </strong>
-              {% if not event.venue.is_online %}
-                <address>
-                  <a class="venue-address">
-                    {% localize off %}
-                      <a href="https://maps.google.com/maps?q={{ event.venue.latitude }},{{ event.venue.longitude }}">
-                        {{ event.venue.address }}
-                      </a>
-                    {% endlocalize %}
-                  </p>
-                </address>
-              {% endif %}
-              <hr/>
-              <p class="venue-description">{{ event.venue.description|as_markdown }}</p>
-              {% if event.venue.photo %}
-                <hr/>
-                <a href="{{ event.venue.photo.url }}"><img class="venue-photo" src="{{ event.venue.photo.url }}" alt="Fotografía de la localización"></a>
-              {% endif %}
-            </div>
-          {% else %}
-            <div class="column is-full has-text-centered coming-soon">
-              <p>
-                <i class="fas fa-box-open"></i>
-                Más información próximamente!
-              </p>
-            </div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
+  {% comment %}<section id="schedule" class="section schedule has-background-white anchor">{% endcomment %}
+    {% comment %}<div class="container">{% endcomment %}
+      {% comment %}<h1 class="title section-title dyn-anchor-heading">{% endcomment %}
+        {% comment %}<p>{% endcomment %}
+          {% comment %}Agenda{% endcomment %}
+          {% comment %}<a class="dyn-anchor-link" href="#schedule"><i class="fas fa-link"></i></a>{% endcomment %}
+        {% comment %}</p>{% endcomment %}
+      {% comment %}</h1>{% endcomment %}
 
-    {% localize off %}
-      <script type="text/javascript">
-        window.addEventListener('map:init', function (e) {
-            const map = e.detail.map;
-            const coordinates = ['{{ event.venue.latitude }}', '{{ event.venue.longitude }}'];
-            const zoom = 17;
-            map.setView(coordinates, zoom);
-            L.marker(coordinates).addTo(map);
-        }, false);
-      </script>
-    {% endlocalize %}
-  </section>
+      {% comment %}<div class="section-detail">{% endcomment %}
+        {% comment %}<p><i class="fa-solid fa-calendar"></i> {{ event.start_date|as_short_date }}</p>{% endcomment %}
+        {% comment %}<a id="add-to-google-calendar" target="_blank" href="{{ event.get_google_calendar_url }}">{% endcomment %}
+        {% comment %}<i class="fa-solid fa-calendar"></i> Añadir a Google Calendar</a>{% endcomment %}
+      {% comment %}</div>{% endcomment %}
+
+      {% comment %}<div class="schedule-table">{% endcomment %}
+        {% comment %}{% for row in event.schedule_for_display %}{% endcomment %}
+          {% comment %}{% if row.type == 'tracks' %}{% endcomment %}
+            {% comment %}{% include "./event-components/schedule/tracks.html" with tracks=row.tracks only %}{% endcomment %}
+          {% comment %}{% elif row.type == 'plenary_scheduled_item' %}{% endcomment %}
+            {% comment %}{% include "./event-components/schedule/plenary-scheduled-item.html" with schedule=row.schedule only %}{% endcomment %}
+          {% comment %}{% elif row.type == 'scheduled_items' %}{% endcomment %}
+            {% comment %}{% include "./event-components/schedule/scheduled-items.html" with tracks=row.tracks only %}{% endcomment %}
+          {% comment %}{% endif %}{% endcomment %}
+        {% comment %}{% empty %}{% endcomment %}
+          {% comment %}<div class="column is-full has-text-centered coming-soon">{% endcomment %}
+            {% comment %}<p>{% endcomment %}
+              {% comment %}<i class="fas fa-box-open"></i>{% endcomment %}
+              {% comment %}Más información próximamente!{% endcomment %}
+            {% comment %}</p>{% endcomment %}
+          {% comment %}</div>{% endcomment %}
+        {% comment %}{% endfor %}{% endcomment %}
+      {% comment %}</div>{% endcomment %}
+
+      {% comment %}{% if event.schedule_for_display and not event.closed_schedule %}{% endcomment %}
+      {% comment %}<div class="section-detail">{% endcomment %}
+            {% comment %}<div class="tag is-warning is-medium not-closed-schedule centered">{% endcomment %}
+            {% comment %}<i class="fas fa-info-circle"></i>{% endcomment %}
+            {% comment %}La agenda aún no está cerrada!{% endcomment %}
+          {% comment %}</div>{% endcomment %}
+        {% comment %}</div>{% endcomment %}
+      {% comment %}{% endif %}{% endcomment %}
+    {% comment %}</div>{% endcomment %}
+  {% comment %}</section>{% endcomment %}
 
 
-  <section id="sponsors" class="section sponsors has-background-white anchor">
-    <div class="container">
-      <h1 class="title section-title dyn-anchor-heading">
-        Entidades
-        <a class="dyn-anchor-link" href="#sponsors"><i class="fas fa-link"></i></a>
-      </h1>
-      {% for role, categories in event.memberships_for_display.items %}
-        <h1 class="role-title title is-4 has-text-centered">{{ role.display_name }}</h1>
-        {% for category, organizations in categories.items %}
-          {% if category.name != role.name %}
-            <h2 class="category-title subtitle is-5 has-text-centered">{{ category.display_name }}</h2>
-          {% endif %}
-          <div class="columns is-mobile is-multiline is-centered">
-            {% for organization in organizations %}
-              <div class="column is-6-mobile is-4-tablet">
-                <a class="organization-box" href="{{ organization.url }}" title="{{ organization.name }}" target="_blank">
-                  <img src="{{ organization.logo.url }}"/>
-                </a>
-              </div>
-            {% endfor %}
-          </div>
-        {% endfor %}
-      {% empty %}
-        <div class="column is-full has-text-centered coming-soon">
-          <p>
-            <i class="fas fa-box-open"></i>
-            Más información próximamente!
-          </p>
-        </div>
-      {% endfor %}
-    </div>
-  </section>
+  {% comment %}<section id="venue" class="section venue anchor">{% endcomment %}
+    {% comment %}<div class="container">{% endcomment %}
+      {% comment %}<h1 class="title section-title dyn-anchor-heading">{% endcomment %}
+        {% comment %}Localización{% endcomment %}
+        {% comment %}<a class="dyn-anchor-link" href="#venue"><i class="fas fa-link"></i></a>{% endcomment %}
+      {% comment %}</h1>{% endcomment %}
+      {% comment %}<div>{% endcomment %}
+        {% comment %}<div class="columns is-multiline">{% endcomment %}
+          {% comment %}{% if event.venue %}{% endcomment %}
+            {% comment %}<div class="column is-12-tablet is-6-desktop">{% endcomment %}
+            {% comment %}{% if event.venue.is_online %}{% endcomment %}
+              {% comment %}<div class="venue-youtube map-section">{% endcomment %}
+                {% comment %}<img src="{% static 'events/img/youtube-logo.png' %}">{% endcomment %}
+              {% comment %}</div>{% endcomment %}
+            {% comment %}{% else %}{% endcomment %}
+              {% comment %}<div class="map-wrapper">{% endcomment %}
+                  {% comment %}{% leaflet_map "event-map" %}{% endcomment %}
+                  {% comment %}<a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>{% endcomment %}
+              {% comment %}</div>{% endcomment %}
+            {% comment %}{% endif %}{% endcomment %}
+            {% comment %}</div>{% endcomment %}
+            {% comment %}<div class="column is-12-tablet is-6-desktop">{% endcomment %}
+              {% comment %}<strong class="venue-name">{% endcomment %}
+                {% comment %}{% if event.venue.website %}{% endcomment %}
+                  {% comment %}<a href="{{ event.venue.website }}"><i class="fas fa-info-circle"></i> {{ event.venue.name }}</a>{% endcomment %}
+                {% comment %}{% else %}{% endcomment %}
+                  {% comment %}<i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}{% endcomment %}
+                {% comment %}{% endif %}{% endcomment %}
+              {% comment %}</strong>{% endcomment %}
+              {% comment %}{% if not event.venue.is_online %}{% endcomment %}
+                {% comment %}<address>{% endcomment %}
+                  {% comment %}<a class="venue-address">{% endcomment %}
+                      {% comment %}<a href="https://maps.google.com/maps?q={{ event.venue.latitude }},{{ event.venue.longitude }}">{% endcomment %}
+                        {% comment %}{{ event.venue.address }}{% endcomment %}
+                      {% comment %}</a>{% endcomment %}
+                  {% comment %}</p>{% endcomment %}
+                {% comment %}</address>{% endcomment %}
+              {% comment %}{% endif %}{% endcomment %}
+              {% comment %}<hr/>{% endcomment %}
+              {% comment %}<p class="venue-description">{{ event.venue.description|as_markdown }}</p>{% endcomment %}
+              {% comment %}{% if event.venue.photo %}{% endcomment %}
+                {% comment %}<hr/>{% endcomment %}
+                {% comment %}<a href="{{ event.venue.photo.url }}"><img class="venue-photo" src="{{ event.venue.photo.url }}" alt="Fotografía de la localización"></a>{% endcomment %}
+              {% comment %}{% endif %}{% endcomment %}
+            {% comment %}</div>{% endcomment %}
+          {% comment %}{% else %}{% endcomment %}
+            {% comment %}<div class="column is-full has-text-centered coming-soon">{% endcomment %}
+              {% comment %}<p>{% endcomment %}
+                {% comment %}<i class="fas fa-box-open"></i>{% endcomment %}
+                {% comment %}Más información próximamente!{% endcomment %}
+              {% comment %}</p>{% endcomment %}
+            {% comment %}</div>{% endcomment %}
+          {% comment %}{% endif %}{% endcomment %}
+        {% comment %}</div>{% endcomment %}
+      {% comment %}</div>{% endcomment %}
+    {% comment %}</div>{% endcomment %}
 
-  <section id="past-events" class="section past-events anchor">
-    <div class="container">
-      <h1 class="title section-title dyn-anchor-heading">
-        Eventos pasados
-        <a class="dyn-anchor-link" href="#past-events"><i class="fas fa-link"></i></a>
-      </h1>
-      <div class="columns is-centered">
-        {% for past_event in past_events %}
-          <div class="column has-text-centered">
-            <div class="past-event-box">
-              <a href="{% url 'events:detail_event' slug=past_event.slug %}">
-                <img src="{{ past_event.cover.url }}">
-                <p class="past-event-details">
-                  {{ past_event.name }}
-                  <div class="tag is-rounded is-light">
-                    {{ past_event.start_date|as_date }}
-                  </div>
-                </p>
-              </a>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-      <div class="more-past-events has-text-centered">
-        <a class="button is-info is-outlined" href="{% url 'events:past_events' %}">Ver más eventos pasados!</a>
-      </div>
-    </div>
-  </section>
+    {% comment %}<script type="text/javascript">{% endcomment %}
+      {% comment %}window.addEventListener('map:init', function (e) {{% endcomment %}
+          {% comment %}const map = e.detail.map;{% endcomment %}
+          {% comment %}const coordinates = ['{{ event.venue.latitude }}', '{{ event.venue.longitude }}'];{% endcomment %}
+          {% comment %}const zoom = 17;{% endcomment %}
+          {% comment %}map.setView(coordinates, zoom);{% endcomment %}
+          {% comment %}L.marker(coordinates).addTo(map);{% endcomment %}
+      {% comment %}}, false);{% endcomment %}
+    {% comment %}</script>{% endcomment %}
+  {% comment %}</section>{% endcomment %}
+
+
+  {% comment %}<section id="sponsors" class="section sponsors has-background-white anchor">{% endcomment %}
+    {% comment %}<div class="container">{% endcomment %}
+      {% comment %}<h1 class="title section-title dyn-anchor-heading">{% endcomment %}
+        {% comment %}Entidades{% endcomment %}
+        {% comment %}<a class="dyn-anchor-link" href="#sponsors"><i class="fas fa-link"></i></a>{% endcomment %}
+      {% comment %}</h1>{% endcomment %}
+      {% comment %}{% for role, categories in event.memberships_for_display.items %}{% endcomment %}
+        {% comment %}<h1 class="role-title title is-4 has-text-centered">{{ role.display_name }}</h1>{% endcomment %}
+        {% comment %}{% for category, organizations in categories.items %}{% endcomment %}
+          {% comment %}{% if category.name != role.name %}{% endcomment %}
+            {% comment %}<h2 class="category-title subtitle is-5 has-text-centered">{{ category.display_name }}</h2>{% endcomment %}
+          {% comment %}{% endif %}{% endcomment %}
+          {% comment %}<div class="columns is-mobile is-multiline is-centered">{% endcomment %}
+            {% comment %}{% for organization in organizations %}{% endcomment %}
+              {% comment %}<div class="column is-6-mobile is-4-tablet">{% endcomment %}
+                {% comment %}<a class="organization-box" href="{{ organization.url }}" title="{{ organization.name }}" target="_blank">{% endcomment %}
+                  {% comment %}<img src="{{ organization.logo.url }}"/>{% endcomment %}
+                {% comment %}</a>{% endcomment %}
+              {% comment %}</div>{% endcomment %}
+            {% comment %}{% endfor %}{% endcomment %}
+          {% comment %}</div>{% endcomment %}
+        {% comment %}{% endfor %}{% endcomment %}
+      {% comment %}{% empty %}{% endcomment %}
+        {% comment %}<div class="column is-full has-text-centered coming-soon">{% endcomment %}
+          {% comment %}<p>{% endcomment %}
+            {% comment %}<i class="fas fa-box-open"></i>{% endcomment %}
+            {% comment %}Más información próximamente!{% endcomment %}
+          {% comment %}</p>{% endcomment %}
+        {% comment %}</div>{% endcomment %}
+      {% comment %}{% endfor %}{% endcomment %}
+    {% comment %}</div>{% endcomment %}
+  {% comment %}</section>{% endcomment %}
+
+  {% comment %}<section id="past-events" class="section past-events anchor">{% endcomment %}
+    {% comment %}<div class="container">{% endcomment %}
+      {% comment %}<h1 class="title section-title dyn-anchor-heading">{% endcomment %}
+        {% comment %}Eventos pasados{% endcomment %}
+        {% comment %}<a class="dyn-anchor-link" href="#past-events"><i class="fas fa-link"></i></a>{% endcomment %}
+      {% comment %}</h1>{% endcomment %}
+      {% comment %}<div class="columns is-centered">{% endcomment %}
+        {% comment %}{% for past_event in past_events %}{% endcomment %}
+          {% comment %}<div class="column has-text-centered">{% endcomment %}
+            {% comment %}<div class="past-event-box">{% endcomment %}
+              {% comment %}<a href="{% url 'events:detail_event' event=past_event %}">{% endcomment %}
+                {% comment %}<img src="{{ past_event.cover.url }}">{% endcomment %}
+                {% comment %}<p class="past-event-details">{% endcomment %}
+                  {% comment %}{{ past_event.name }}{% endcomment %}
+                  {% comment %}<div class="tag is-rounded is-light">{% endcomment %}
+                    {% comment %}{{ past_event.start_date|as_date }}{% endcomment %}
+                  {% comment %}</div>{% endcomment %}
+                {% comment %}</p>{% endcomment %}
+              {% comment %}</a>{% endcomment %}
+            {% comment %}</div>{% endcomment %}
+          {% comment %}</div>{% endcomment %}
+        {% comment %}{% endfor %}{% endcomment %}
+      {% comment %}</div>{% endcomment %}
+      {% comment %}<div class="more-past-events has-text-centered">{% endcomment %}
+        {% comment %}<a class="button is-info is-outlined" href="{% url 'events:past_events' %}">Ver más eventos pasados!</a>{% endcomment %}
+      {% comment %}</div>{% endcomment %}
+    {% comment %}</div>{% endcomment %}
+  {% comment %}</section>{% endcomment %}
 
 </div>
 
