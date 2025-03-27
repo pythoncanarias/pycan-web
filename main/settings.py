@@ -233,7 +233,7 @@ STRIPE_SECRET_KEY = config(
 
 GOCARDLESS_ACCESS_TOKEN = config(
     'GOCARDLESS_ACCESS_TOKEN',
-    default='sandbox_957GJDGdpUo5D-Mt6X4ZX2IH6-3_Mwv8E4Qx_-8m',
+    default='<your GoCardless ACCESS TOKEN here>',
     )
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='<sengrid api key>')
