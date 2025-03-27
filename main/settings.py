@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django_rq',
-    'leaflet',
+    # 'leaflet',
     'import_export',
     'apps.about',
     'apps.api',
@@ -229,6 +229,13 @@ STRIPE_SECRET_KEY = config(
     default='Set your Stripe api secret key in .env file',
 )
 
+# GoCardless settings
+
+GOCARDLESS_ACCESS_TOKEN = config(
+    'GOCARDLESS_ACCESS_TOKEN',
+    default='sandbox_957GJDGdpUo5D-Mt6X4ZX2IH6-3_Mwv8E4Qx_-8m',
+    )
+
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='<sengrid api key>')
 
 LOGFILE_NAME = BASE_DIR / 'web.log'
@@ -269,6 +276,18 @@ LOGGING = {
             'handlers': ['console'],
             'level': LOG_LEVEL,
             'propagate': True,
+        },
+        'asyncio': {
+            'handlers': ['logfile', 'console'],
+            'level': 'ERROR',
+        },
+        'httpx': {
+            'handlers': ['logfile', 'console'],
+            'level': 'ERROR',
+        },
+        'watchdog': {
+            'handlers': ['logfile', 'console'],
+            'level': 'ERROR',
         },
         'tickets': {
             'handlers': ['logfile', 'console'],
