@@ -1,18 +1,15 @@
 {% extends "base.html" %}
-{% load static leaflet_tags utils %}
+{% load static utils %}
 
 {% block styles %}
   {{ block.super }}
   <link rel="stylesheet" href="{% static 'events/css/events.css' %}">
-  {% leaflet_css %}
 {% endblock styles %}
 
-{% block js %}
-  {{ block.super }}
-  {% leaflet_js %}
-{% endblock js %}
-
 {% block hero %}
+
+{% if event %}
+  
 <section class="hero is-link is-with-navbar"
          style="background-image: url('{{ event.hero.url }}');">
   <div class="hero-body">
@@ -46,4 +43,5 @@
     {% endif %}
   </div>
 </section>
+{% endif %}
 {% endblock hero %}

@@ -39,7 +39,7 @@ def next_event(request):
 
 
 def last_events(request):
-    events = models.Event.active_events()[0:3]
+    events = models.Event.objects.all()[0:3]
     return render(request, "events/no-events.html", {
         "title": "Por el momento no hay eventos programados",
         "subtitle": "Estos son los 3 últimos eventos que hemos organizado.",
@@ -52,7 +52,7 @@ def past_events(request):
     return render(request, "events/events-archive.html", {
         "titulo": "Archivo de eventos celebrados",
         "breadcrumbs": breadcrumbs.bc_past_events(),
-        "events": models.Event.objects.filter(active=False),
+        "events": models.Event.past_events(),
         "archive": True,
         })
 

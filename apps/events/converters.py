@@ -7,7 +7,7 @@ class EventConverter:
     regex = r'[A-Za-z0-9_\-]+'
 
     def to_python(self, value):
-        event = Event.get_by_slug(value)
+        event = Event.load_event_by_slug(value)
         if not event:
             raise ValueError("El identificador del evento es incorrecto")
         return event

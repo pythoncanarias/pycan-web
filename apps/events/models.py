@@ -97,8 +97,16 @@ class Event(models.Model):
             return None
 
     @classmethod
+    def load_event_by_slug(cls, slug):
+        return cls.objects.get(hashtag__iexact=slug)
+
+    @classmethod
     def active_events(cls):
-        return cls.objects.filter(active=True).order_by("-start_date")
+        return cls.objects.filter(active=True)
+
+    @classmethod
+    def past_events(cls):
+        return cls.objects.filter(active=False)
 
     def __str__(self):
         return self.name
@@ -133,10 +141,6 @@ class Event(models.Model):
             f"&location={self.venue}"
             f"&dates={start_datetime}%2F{end_datetime}"
             )
-
-    @classmethod
-    def get_by_slug(cls, slug):
-        return cls.objects.get(hashtag__iexact=slug)
 
     def get_full_url(self):
         return f"http://{settings.DOMAIN}{links.to_event_detail(self.slug)}"
@@ -185,10 +189,6 @@ class Event(models.Model):
             start_time = Time(0, 0, 0, tzinfo=timezone.get_current_timezone())
             return DateTime.combine(self.start_date, start_time)
 
-    @property
-    def start_hour(self):
-        return time_utils.as_hour(self.start_datetime())
-
     def _scheduled_items_for_display(self, start=None, end=None):
         result = {"type": "scheduled_items", "tracks": []}
         exist_scheduled_item = False
@@ -231,7 +231,7 @@ class Event(models.Model):
         )
         return (
             Speaker.objects
-            .prefetch_related('contact__social')
+            .prefetch_related('contacts__social')
             .filter(pk__in=speakers_ids)
             .order_by("name", "surname")
             )
@@ -283,7 +283,6 @@ class Event(models.Model):
         current_number = data.get("number__max", 0) or 0
         return current_number + 1
 
-    @property
     def qualified_hashtag(self):
         return f"#{self.hashtag}"
 

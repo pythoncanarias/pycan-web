@@ -209,20 +209,20 @@ def active_events(request):
 def detail_event(request, slug):
     """Details from event indicated, with URL pointing to more resources.
     """
-    event = Event.get_by_slug(slug)
+    event = Event.load_event_by_slug(slug)
     return serialize_event(event)
 
 
 @api
 def list_speakers(request, slug):
-    event = Event.get_by_slug(slug)
+    event = Event.load_event_by_slug(slug)
     speakers = event.speakers()
     return [serialize_speaker(event, speaker) for speaker in speakers]
 
 
 @api
 def list_talks(request, slug):
-    event = Event.get_by_slug(slug)
+    event = Event.load_event_by_slug(slug)
     talks = (
         s
         for s
@@ -236,7 +236,7 @@ def list_talks(request, slug):
 
 @api
 def list_tracks(request, slug):
-    event = Event.get_by_slug(slug)
+    event = Event.load_event_by_slug(slug)
     tracks = event.tracks()
     return [{
         'name': track.name,
@@ -246,7 +246,7 @@ def list_tracks(request, slug):
 
 @api
 def list_sponsors(request, slug):
-    event = Event.get_by_slug(slug)
+    event = Event.load_event_by_slug(slug)
     sponsors = event.memberships.all().order_by('category__role__order')
     return [serializer_sponsor(sponsor) for sponsor in sponsors]
 
