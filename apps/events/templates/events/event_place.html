@@ -1,0 +1,123 @@
+{% extends "events/base.html" %}
+{% load static utils leaflet_tags %}
+
+{% block title %}{% endblock title %}
+
+{% block js %}
+  {{ block.super }}
+  {% leaflet_js %}
+{% endblock js %}
+
+{% block styles %}
+  {{ block.super }}
+  {% leaflet_css %}
+{% endblock styles %}
+
+{% block content %}
+
+
+{% include "events/includes/event-tabs.html" with selected="place" %}
+
+
+<div class="columns">
+
+  <div class="column is-two-thirds">
+    <div class="map-wrapper">
+      {% leaflet_map "event-map" %}
+      <a class="link-open-map"
+         href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
+    </div>
+  </div>
+
+  <div class="column is-one-third">
+
+   <p class="venue-name">
+     {% if event.venue.website %}
+       <a href="{{ event.venue.website }}"><i class="fas fa-info-circle"></i>
+       {{ event.venue.name }}
+       </a>
+     {% else %}
+       <i class="fas fa-map-marker-alt"></i>
+       {{ event.venue.name }}
+     {% endif %}
+   </p>
+
+        {% if not event.venue.is_online %}
+          <address>
+            <a class="venue-address">
+                <a href="https://maps.google.com/maps?q={{ event.venue.latitude }},{{ event.venue.longitude }}">
+                  {{ event.venue.address }}
+                </a>
+            </p>
+          </address>
+        {% endif %}
+        <hr/>
+        <p class="venue-description">{{ event.venue.description|as_markdown }}</p>
+        {% if event.venue.photo %}
+          <hr/>
+          <a href="{{ event.venue.photo.url }}"><img class="venue-photo" src="{{ event.venue.photo.url }}" alt="Fotografía de la localización"></a>
+        {% endif %}
+      </div>
+
+  </div>
+</div>
+</div>
+
+
+<section style="border: 1px dotted green!important;">
+
+
+  <div class="columns is-multiline">
+      {% if event.venue %}
+        <div class="column is-12-tablet is-6-desktop">
+        {% if event.venue.is_online %}
+          <div class="venue-youtube map-section">
+            <img src="{% static 'events/img/youtube-logo.png' %}">
+          </div>
+        {% else %}
+          <div class="map-wrapper">
+              {% leaflet_map "event-map" %}
+              <a class="link-open-map" href="https://www.openstreetmap.org/?mlat={{ event.venue.latitude }}&amp;mlon={{ event.venue.longitude }}#map=16/{{ event.venue.latitude }}/{{ event.venue.longitude }}" target="_blank">Ver mapa más grande</a>
+          </div>
+        {% endif %}
+        </div>
+        <div class="column is-12-tablet is-6-desktop">
+          <strong class="venue-name">
+            {% if event.venue.website %}
+              <a href="{{ event.venue.website }}"><i class="fas fa-info-circle"></i> {{ event.venue.name }}</a>
+            {% else %}
+              <i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}
+            {% endif %}
+          </strong>
+          {% if not event.venue.is_online %}
+            <address>
+              <a class="venue-address">
+                  <a href="https://maps.google.com/maps?q={{ event.venue.latitude }},{{ event.venue.longitude }}">
+                    {{ event.venue.address }}
+                  </a>
+              </p>
+            </address>
+          {% endif %}
+          <hr/>
+          <p class="venue-description">{{ event.venue.description|as_markdown }}</p>
+          {% if event.venue.photo %}
+            <hr/>
+            <a href="{{ event.venue.photo.url }}"><img class="venue-photo" src="{{ event.venue.photo.url }}" alt="Fotografía de la localización"></a>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="column is-full has-text-centered coming-soon">
+          <p>
+            <i class="fas fa-box-open"></i>
+            Más información próximamente!
+          </p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+    </div>
+
+</section>
+
+
+{% endblock content %}

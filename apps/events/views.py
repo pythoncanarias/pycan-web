@@ -85,6 +85,15 @@ def talks(request, event):
         })
 
 
+def event_place(request, event):
+    return render(request, "events/event_place.html", {
+        "title": str(event),
+        "subtitle": "Localización",
+        "breadcrumbs": breadcrumbs.bc_place(event),
+        "event": event,
+        })
+
+
 
 
 

@@ -5,28 +5,8 @@
 
 {% block content %}
 
+{% include "events/includes/event-tabs.html" %}
 
-<div>
-  <div class="event-header" {% if event.hero %} style="background-image: url('{{ event.hero.url }}');" {% endif %}>
-    <div class="inner">
-    </div>
-  </div>
-
-
-  <nav class="event-menu">
-    <a class="event-menu-item" href="#speakers">Ponentes</a>
-    <a class="event-menu-item" href="#schedule">Agenda</a>
-    <a class="event-menu-item" href="#venue">Localización</a>
-    <a class="event-menu-item" href="#sponsors">Entidades</a>
-    <a class="event-menu-item" href="{% url 'legal:coc' %}">Código de conducta</a>
-    {% if event.raffle.closed %}
-      <a class="event-menu-item" href="{% url 'events:raffle_results' event.slug %}">Sorteo</a>
-    {% endif %}
-    <a class="event-menu-item" href="{{ event.twitter_hashtag_url }}">
-      <i class="fab fa-twitter"></i>
-      {{ event.qualified_hashtag }}
-    </a>
-  </nav>
 
 {% if event.call_for_paper_is_open %}
   <section id="cfp" class="section cfp">

@@ -1,12 +1,6 @@
-<div class="tabs is-centered is-medium is_boxed">
+
+<div class="tabs is-centered is-medium is-boxed">
 <ul>
-  {% if selected == 'speakers' %}
-    <li class="is-active"><a href="#">
-  {% else %}
-    <li><a href="{% url 'events:speakers' event=event %}">
-  {% endif %}
-    Ponentes
-    </a></li>
 
   {% if selected == 'talks' %}
     <li class="is-active"><a href="#">
@@ -16,8 +10,22 @@
     Agenda
     </a></li>
 
-  <li>
-    <a href="#venue">Localización</a>
+  {% if selected == 'speakers' %}
+    <li class="is-active"><a href="#">
+  {% else %}
+    <li><a href="{% url 'events:speakers' event=event %}">
+  {% endif %}
+    Ponentes
+    </a></li>
+
+
+  {% if selected == 'place' %}
+    <li class="is-active"><a href="#">
+  {% else %}
+    <li><a href="{% url 'events:event_place' event=event %}">
+  {% endif %}
+    Localización
+    </a>
   </li>
 
   <li>

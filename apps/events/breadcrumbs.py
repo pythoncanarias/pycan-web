@@ -34,6 +34,13 @@ def bc_talks(event):
         )
 
 
+def bc_place(event):
+    return bc_event(event).step(
+        "Localización",
+        links.to_event_place(event.slug),
+        )
+
+
 def bc_event_cfp(event):
     return bc_event(event).step(
         'Call for papers',

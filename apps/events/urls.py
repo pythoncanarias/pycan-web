@@ -24,6 +24,7 @@ urlpatterns = [
     tie('<event:event>/', views.detail_event),
     tie('<event:event>/speakers/', views.speakers),
     tie('<event:event>/talks/', views.talks),
+    tie('<event:event>/place/', views.event_place),
     tie('<event:event>/cfp/', views.call_for_papers),
     tie('<event:event>/cfp/thanks', views.proposal_received),
     tie('<event:event>/waiting-list/', views.waiting_list),

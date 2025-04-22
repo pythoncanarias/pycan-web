@@ -414,29 +414,28 @@ section.cfp {
   color: var(--blue-text-light);
 }
 
-.section.venue .venue-name {
+.venue-name {
+  background-color: silver;
   margin-bottom: 0.2em;
   display: inline-block;
+  font-size: 120%!important;
+  font-weight: bolder;
 }
 
-.section.venue .venue-name i {
-  margin-right: 0.3em;
-}
-
-.section.venue .venue-address {
+.venue-address {
   color: #57575f;
 }
 
-.section.venue .venue-description {
+.venue-description {
   font-size: 0.9em;
 }
 
-.section.venue .venue-photo {
+.venue-photo {
   width: 100%;
   border-radius: 3%;
 }
 
-.section.venue .venue-youtube {
+.venue-youtube {
   text-align: center;
 }
 

@@ -3,7 +3,6 @@
 
 {% block content %}
 
-{% include "events/includes/event-header.html" %}
 {% include "events/includes/event-tabs.html" with selected="speakers" %}
 
 <section class="box section what-is has-background-white">
@@ -13,11 +12,7 @@
 </section>
 
 
-<p> <b> speakers </b>: <tt> {{ speakers|pprint }} </tt> </p>
-
 <section id="speakers" class="section speakers anchor">
-
-
 
   <div class="columns is-multiline is-mobile is-centered">
     {% for speaker in speakers %}

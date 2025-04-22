@@ -25,6 +25,12 @@ def to_talks(event):
         })
 
 
+def to_event_place(event):
+    return reverse_lazy("events:event_place", kwargs={
+        "event": event,
+        })
+
+
 def to_waiting_list(event):
     return reverse_lazy("events:waiting_list", kwargs={
         'event': event,

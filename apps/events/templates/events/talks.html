@@ -1,13 +1,15 @@
 {% extends "events/base.html" %}
 
+{% block title %}{% endblock title %}
+
 {% block content %}
 
-{% include "events/includes/event-header.html" %}
 {% include "events/includes/event-tabs.html" with selected="talks" %}
 
 <section id="talks" class="section talks anchor">
 
   <div class="schedule-table">
+
   {% for row in event.schedule_for_display %}
     {% if row.type == 'tracks' %}
       {% include "./event-components/schedule/tracks.html" with tracks=row.tracks only %}
@@ -17,6 +19,7 @@
       {% include "./event-components/schedule/scheduled-items.html" with tracks=row.tracks only %}
     {% endif %}
   {% empty %}
+
     <div class="column is-full has-text-centered coming-soon">
       <p>
         <div class="tag is-warning is-medium not-closed-schedule centered">

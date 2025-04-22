@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django_rq',
-    # 'leaflet',
+    'leaflet',
     'import_export',
     'apps.about',
     'apps.api',
