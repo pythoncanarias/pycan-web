@@ -1,41 +1,40 @@
-{% load static %}
-{% load utils %}
-
-<!doctype html>
+{% load static utils %}<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Python Canarias">
+  <meta name="author" content="Python Canarias">
 
-  <link rel="icon" href="{{ assets|get_asset_key:'commons/img/favicon.ico' }}">
+  <link rel="icon" href="{% static 'commons/img/favicon.ico' %}">
 
   <title>{% block title %}{{ organization.name }}{% endblock title %}</title>
 
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">
 
-  <link rel="stylesheet" href="{{ assets|get_asset_key:'commons/vendor.min.css' }}">
-  {% block style %}{% endblock %}
+  {% block styles %}
+  <link rel="stylesheet" href="{% static 'commons/css/bulma.min.css' %}">
+  {% endblock  styles %}
+
 </head>
 <body class="{% block body_class %}{% endblock %} has-navbar-fixed-top">
-
+  .
   {% include "header.html" %}
 
   {% block container %}
 
-    {% if messages %}
-      <div class="messages">
-        {% for message in messages %}
-          <div class="notification {{ message.tags|msgtag_to_bulmaclass }}">
-            <button class="delete"></button>
-            {{ message }}
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+       <div class="notification {{ message.tags|msgtag_to_bulmaclass }}">
+         <button class="delete"></button>
+         {{ message }}
+       </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 
-    <div class="{% block default_content_class %}container content-page{% endblock %} {% block content_class %}{% endblock %}
+  <div class="{% block default_content_class %}container content-page{% endblock %} {% block content_class %}{% endblock %}
       {% if menu %}
         is-wide
       {% endif %}
@@ -57,7 +56,7 @@
 
   {% include "footer.html" %}
 
-  <script src="{{ assets|get_asset_key:'commons/custom.min.js' }}"></script>
+  <script src="{% static 'commons/custom.min.js' %}"></script>
   {% block js %}
     {% if current_date.month == 12 and current_date.day >= 21 and current_date.day <= 31  %}
       <script src="https://app.embed.im/snow.js" defer></script>
