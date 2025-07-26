@@ -80,3 +80,7 @@ makemigrations $APP='' *args='':
     python3 ./manage.py makemigrations {{APP}} {{ args }}
 
 alias mm := makemigrations
+
+# Acceso al servidor via ssh
+remote:
+    ssh jileon@www.pythoncanarias.es
