@@ -103,3 +103,4 @@ certificates/media
 .parcel-cache/
 .python-version
 exported/
+exported.zip
