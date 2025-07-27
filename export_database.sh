@@ -1,6 +1,6 @@
 #/bin/bash
 
-pg_dump --username pythoncanarias_user --dbname pythoncanarias_web --password > pythoncanarias.db
+# pg_dump --username pythoncanarias_user --dbname pythoncanarias_web --password > pythoncanarias.db
 
 ./manage.py dumpdata about --indent 4  > exported/about.json
 ./manage.py dumpdata certificates --indent 4  > exported/certificates.json
@@ -10,7 +10,7 @@ pg_dump --username pythoncanarias_user --dbname pythoncanarias_web --password > 
 ./manage.py dumpdata jobs --indent 4  > exported/jobs.json
 ./manage.py dumpdata learn --indent 4  > exported/learn.json
 ./manage.py dumpdata locations --indent 4  > exported/locations.json
-./manage.py dumpdata members --indent 4  > exported/members.json
+./manage.py dumpdata members.member members.membership --indent 4 > exported/members.json
 ./manage.py dumpdata notices --indent 4  > exported/notices.json
 ./manage.py dumpdata organizations --indent 4  > exported/organizations.json
 ./manage.py dumpdata quotes --indent 4  > exported/quotes.json
