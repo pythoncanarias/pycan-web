@@ -1,5 +1,7 @@
 #/bin/bash
 
+source ~/.pyenv/versions/pycanweb/bin/activate
+
 # pg_dump --username pythoncanarias_user --dbname pythoncanarias_web --password > pythoncanarias.db
 
 ./manage.py dumpdata about --indent 4  > exported/about.json
