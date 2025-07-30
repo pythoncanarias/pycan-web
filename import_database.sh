@@ -1,7 +1,9 @@
 #/bin/bash
 
-# scp jileon@www.pythoncanarias.es:web/exported.zip .
-# unzip exported.zip
+scp jileon@www.pythoncanarias.es:web/exported.zip .
+unzip exported.zip
+
+source .env/bin/activate
 
 ./manage.py loaddata exported/about.json
 ./manage.py loaddata exported/organizations.json

@@ -172,7 +172,6 @@ class Schedule(models.Model):
         } for speaker in qs]
         return result
 
-    @property
     def size_for_display(self):
         t = round((self.end - self.start) / self.event.default_slot_duration)
         return t if t > 0 else 1
