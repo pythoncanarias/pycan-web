@@ -5,7 +5,7 @@ django==3.2.25
 django-colorfield==0.1.15
 django-import-export==2.7.1
 django-leaflet==0.31.0
-django-rq==2.4.1
+django-rq==3.1
 markdown2==2.4.0
 odfpy==1.4.1
 openpyxl==3.0.3
@@ -14,9 +14,9 @@ prettyconf==2.1.0
 psycopg2-binary==2.9.9
 pyqrcode==1.2.1
 qr==0.6.0
-redis==5.0.8
+redis==6.4.0
 reportlab==4.2.2
-rq==2.1.0
+rq==2.4.1
 sendgrid==5.6.0
 stripe==10.6.0
 tabulate==0.8.9
