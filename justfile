@@ -84,3 +84,7 @@ alias mm := makemigrations
 # Acceso al servidor via ssh
 remote:
     ssh jileon@www.pythoncanarias.es
+
+# Copiar los ficheros media del servidor localmente
+syncmedia:
+    rsync -r -a --progress jileon@www.pythoncanarias.es:/var/local/web/media .media
