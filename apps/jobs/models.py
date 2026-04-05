@@ -6,7 +6,6 @@ from django.db import models
 from django.urls import reverse
 
 from apps.commons.filters import date_from_now
-from apps.commons.twitter import Twitter
 from apps.organizations.models import Organization
 
 # Create your models here.
@@ -95,12 +94,3 @@ class JobOffer(models.Model):
         path = reverse('jobs:index') + f'#job{self.pk}'
         organization = Organization.load_main_organization()
         return urllib.parse.urljoin(organization.url, path)
-
-    def save(self, *args, **kwargs):
-        already_exists = self.pk is not None
-        super().save(*args, **kwargs)
-        ''' tweepy.error.TweepError: [{'message': 'You currently have access to a subset of Twitter API v2 endpoints and limited v1.1 endpoints (e.g. media post, oauth) only. If you need access to this endpoint, you may need a different access level. You can learn more here: https://developer.twitter.com/en/portal/product', 'code': 453}]
-        if not already_exists and self.approved:
-            t = Twitter()
-            msg = f'💼  Oferta de empleo: {self} {self.get_full_url()}'
-            t.post(msg)'''

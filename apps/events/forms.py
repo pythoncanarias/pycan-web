@@ -100,7 +100,7 @@ class RefundForm(forms.Form):
         if len(uuid) < UUID_LAST_DIGITS:
             raise forms.ValidationError(
                 "Necesito los últimos () letras o dígitos "
-                "del código".format(UUID_LAST_DIGITS)
+                "del código"
             )
         uuid = uuid[-UUID_LAST_DIGITS:]
         tickets = list(
