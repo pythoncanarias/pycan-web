@@ -1,8 +1,8 @@
-colorama==0.4.4
+colorama==0.4.6
 MarkupPy==1.14
 pyyaml==6.0.2
 django==3.2.25
-django-colorfield==0.1.15
+django-colorfield==0.14.0
 django-import-export==2.7.1
 django-leaflet==0.31.0
 django-rq==3.1
