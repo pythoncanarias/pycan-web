@@ -2,8 +2,8 @@
 
 from django.core.management.base import BaseCommand
 
-from certificates.utils import create_certificate
-from tickets.models import Ticket
+from apps.certificates.utils import create_certificate
+from apps.tickets.models import Ticket
 
 
 class Command(BaseCommand):

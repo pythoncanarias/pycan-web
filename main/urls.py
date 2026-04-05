@@ -5,11 +5,11 @@ from django.urls import include, path
 
 from apps.homepage import views
 
-admin_url = 'admin' if settings.DEBUG else 'python-canarias-admin-zone'
+admin_url = 'admin/' if settings.DEBUG else 'python-canarias-admin-zone/'
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
-    path(f'{admin_url}/', admin.site.urls),
+    path(admin_url, admin.site.urls),
     path('api/', include('apps.api.urls', namespace='api')),
     path('django-rq/', include('django_rq.urls')),
     path('events/', include('apps.events.urls', namespace='events')),

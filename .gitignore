@@ -40,6 +40,7 @@ develop-eggs/
 dist/
 downloads/
 eggs/
+exported/
 lib/
 lib64/
 parts/
@@ -102,3 +103,4 @@ certificates/media
 .parcel-cache/
 fixtures/*
 backup.zip
+exported.zip

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
-{% load utils %}
+{% load static %}
 
-{% block style %}
-  <link rel="stylesheet" href="{{ assets|get_asset_key:'members/custom.min.css' }}">
-{% endblock style %}
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'members/css/members.css' %}">
+{% endblock styles %}
 
 {% block menu %}
   {% include 'as_menu.html' %}

@@ -15,11 +15,11 @@
   <link rel="stylesheet" href="{{ assets|get_asset_key:'homepage/vendor.min.css' }}">
   <link rel="stylesheet" href="{{ assets|get_asset_key:'homepage/custom.min.css' }}">
 
-  <meta property="og:url" content="{{ organization.url }}" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Python Canarias" />
-  <meta property="og:description" content="Web de la asociación {{ organization.name }}" />
-  <meta property="og:image" content="{% static 'commons/img/logo.png' %}" />
+  <meta property="og:url" content="{{ organization.url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Python Canarias">
+  <meta property="og:description" content="Web de la asociación {{ organization.name }}">
+  <meta property="og:image" content="{% static 'commons/img/logo.png' %}">
 
   <meta name="twitter:title" content="Python Canarias">
   <meta name="twitter:description" content="Web de la asociación {{ organization.name }}.">
@@ -35,7 +35,7 @@
     <div class="hero-body">
       <div class="container has-text-centered">
 
-        <a href="{% url 'about:index' %}"><img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias" /></a>
+        <a href="{% url 'about:index' %}"><img class="logo" src="{{ assets|get_asset_key:'commons/img/logo_text.png' }}" alt="Python Canarias"></a>
 
         {% if active_events.count > 0 %}
           <div class="content is-centered">
@@ -73,46 +73,59 @@
           </div>
         {% endif %}
 
-        <h4 class="content blog-message">Para más noticias, pásate por nuestro
-          <a href="https://medium.com/pythoncanarias" target="_blank" class="blog-link">
+        <p class="content blog-message">Para más noticias, pásate por nuestro
+          <a href="https://medium.com/pythoncanarias" class="blog-link">
             blog
             <span class="icon">
               <i class="fab fa-medium"></i>
             </span>
           </a>
-        </h4>
+        </p>
 
         <div class="social buttons is-centered">
-          <a href="https://twitter.com/pythoncanarias" target="_blank" class="button is-medium">
+
+          <a href="https://github.com/pythoncanarias/" class="button is-medium">
             <span class="icon">
-              <i class="fab fa-twitter"></i>
+              <i class="fab fa-github"></i>
             </span>
           </a>
-          <a href="https://www.instagram.com/pythoncanarias/" target="_blank" class="button is-medium">
-            <span class="icon">
-              <i class="fab fa-instagram"></i>
-            </span>
-          </a>
-          <a href="https://t.me/joinchat/AJ7pmT-X0xZVPgWDIzGA-A" target="_blank" class="button is-medium">
+
+          <a href="https://t.me/joinchat/AJ7pmT-X0xZVPgWDIzGA-A" class="button is-medium">
             <span class="icon">
               <i class="fab fa-telegram"></i>
             </span>
           </a>
-          <a href="https://www.youtube.com/channel/UCIH5U0UXk-NL1HdFSo__63A" target="_blank" class="button is-medium">
+
+          <a href="https://www.instagram.com/pythoncanarias/" class="button is-medium">
+            <span class="icon">
+              <i class="fab fa-instagram"></i>
+            </span>
+          </a>
+
+          <a href="https://www.youtube.com/channel/UCIH5U0UXk-NL1HdFSo__63A" class="button is-medium">
             <span class="icon">
               <i class="fab fa-youtube"></i>
             </span>
           </a>
-          <a href="https://www.facebook.com/pythoncanarias/" target="_blank" class="button is-medium">
+
+          <a href="https://www.facebook.com/pythoncanarias/" class="button is-medium">
             <span class="icon">
               <i class="fab fa-facebook"></i>
             </span>
           </a>
-          <a href="mailto:{{ organization.email }}" target="_blank" class="button is-medium">
+
+          <a href="https://twitter.com/pythoncanarias" class="button is-medium">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+          </a>
+
+          <a href="mailto:{{ organization.email }}" class="button is-medium">
             <span class="icon">
               <i class="fas fa-envelope-open"></i>
             </span>
           </a>
+
         </div>
 
       </div>

@@ -4,6 +4,7 @@ check:
     # python manage.py validate_templates # Esperar a Django 4.
     flake8 --count **/*.py
     ruff check .
+    # vulture . --exclude node_modules/
 
 
 # Borrar ficheros temporales y espurios
@@ -11,7 +12,6 @@ clean:
     find . -type f -name "*.pyc" -delete
     find . -type d -name "__pycache__" -exec rm -r "{}" \;
     find . -type d -name ".sass-cache" -exec rm -r "{}" \;
-
 
 
 # Ejecutar el servidor en modo producción
@@ -40,7 +40,6 @@ static:
 tags:
     ctags -R --exclude=@ctags-exclude-names.txt .
 
-
 # Muestas las versiones de Python y Django
 versions:
     python -V
@@ -48,19 +47,38 @@ versions:
     psql --version
     python -m site
 
-# Mostrar migraciones Django
-showmigrations $APP='': check
-    python manage.py showmigrations {{APP}}
+# Ejecutar los test pasados como paræmetro (Empezará por el último que haya fallado)
+test *args='.':
+    python3 -m pytest --failed-first -vv -x --log-cli-level=INFO --doctest-modules -m "not slow" {{ args }}
 
-alias sm := showmigrations
+# Muestra información del Harware / S.O. / Python / Django
+info:
+    @echo "This is an {{arch()}} machine"
+    @echo "OS: {{os()}} / {{os_family()}}"
+    python3 -V
+    python3 -c "import django; print(django.__version__)"
+    uptime
 
-# Crear nuevas migraciones Django
-makemigrations $APP='': check
-    python manage.py makemigrations {{APP}}
+# Acceso al DBShell
+dbshell *args='default':
+    python3 manage.py dbshell --database {{ args }}
 
-alias mm := makemigrations
 
 # Ejecutar migraciones Django
 migrate $APP='': check
     python manage.py migrate {{APP}} --database default
     python manage.py migrate {{APP}} --database test_default
+
+
+# Mostrar migraciones Django
+showmigrations $APP='' *args='':
+    python3 ./manage.py showmigrations {{APP}} {{ args }}
+
+alias sm := showmigrations
+
+
+# Crear nuevas migraciones Django
+makemigrations $APP='' *args='':
+    python3 ./manage.py makemigrations {{APP}} {{ args }}
+
+alias mm := makemigrations

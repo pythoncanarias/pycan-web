@@ -2,6 +2,7 @@
 
 {% load utils %}
 
-{% block style %}
+{% block styles %}
+  {{ block.super }}
   <link rel="stylesheet" href="{{ assets|get_asset_key:'about/custom.min.css' }}">
-{% endblock style %}
+{% endblock styles %}
