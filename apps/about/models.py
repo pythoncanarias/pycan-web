@@ -4,6 +4,11 @@ from django.db import models
 class Ally(models.Model):
     '''Organizaciones/Asociaciones aliadas'''
 
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Aliado'
+        verbose_name_plural = 'Aliados'
+
     name = models.CharField('Nombre', max_length=120)
     description = models.CharField('Descripción', max_length=220)
     logo = models.ImageField(upload_to='about/allies/', blank=True)
@@ -13,11 +18,6 @@ class Ally(models.Model):
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        ordering = ['name']
-        verbose_name = 'Aliado'
-        verbose_name_plural = 'Aliados'
 
 
 class FAQItem(models.Model):

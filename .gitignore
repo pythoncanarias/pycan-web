@@ -101,4 +101,6 @@ tags
 certificates/media
 .prettierignore
 .parcel-cache/
+fixtures/*
+backup.zip
 exported.zip

@@ -1,7 +1,9 @@
 # Ejecutar comprobaciones del proyecto Django + Flake8 + Vulture
 check:
     python manage.py check
+    # python manage.py validate_templates # Esperar a Django 4.
     flake8 --count **/*.py
+    ruff check .
     # vulture . --exclude node_modules/
 
 
@@ -10,11 +12,6 @@ clean:
     find . -type f -name "*.pyc" -delete
     find . -type d -name "__pycache__" -exec rm -r "{}" \;
     find . -type d -name ".sass-cache" -exec rm -r "{}" \;
-
-
-# Ejecuta las migraciones pendientes"
-migrate:
-    python manage.py migrate
 
 
 # Ejecutar el servidor en modo producción
@@ -43,6 +40,13 @@ static:
 tags:
     ctags -R --exclude=@ctags-exclude-names.txt .
 
+# Muestas las versiones de Python y Django
+versions:
+    python -V
+    python -c "import django; print(django.__version__)"
+    psql --version
+    python -m site
+
 # Ejecutar los test pasados como paræmetro (Empezará por el último que haya fallado)
 test *args='.':
     python3 -m pytest --failed-first -vv -x --log-cli-level=INFO --doctest-modules -m "not slow" {{ args }}
@@ -59,15 +63,22 @@ info:
 dbshell *args='default':
     python3 manage.py dbshell --database {{ args }}
 
-# Show migrations
+
+# Ejecutar migraciones Django
+migrate $APP='': check
+    python manage.py migrate {{APP}} --database default
+    python manage.py migrate {{APP}} --database test_default
+
+
+# Mostrar migraciones Django
 showmigrations $APP='' *args='':
     python3 ./manage.py showmigrations {{APP}} {{ args }}
 
 alias sm := showmigrations
 
-# Make migrations
+
+# Crear nuevas migraciones Django
 makemigrations $APP='' *args='':
     python3 ./manage.py makemigrations {{APP}} {{ args }}
 
 alias mm := makemigrations
-

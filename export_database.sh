@@ -1,24 +1,38 @@
-#/bin/bash
+#!/usr/bin/env bash
 
 source ~/.pyenv/versions/pycanweb/bin/activate
 
-# pg_dump --username pythoncanarias_user --dbname pythoncanarias_web --password > pythoncanarias.db
+function dump () {
+    echo -n "Dumping $1";
+    ./manage.py dumpdata --verbosity 1 --indent 4 $1 > ./fixtures/$1.json
+}
 
-./manage.py dumpdata about --indent 4  > exported/about.json
-./manage.py dumpdata certificates --indent 4  > exported/certificates.json
-./manage.py dumpdata certificates --indent 4  > exported/certificates.json
-./manage.py dumpdata events --indent 4  > exported/events.json
-./manage.py dumpdata invoices --indent 4  > exported/invoices.json
-./manage.py dumpdata jobs --indent 4  > exported/jobs.json
-./manage.py dumpdata learn --indent 4  > exported/learn.json
-./manage.py dumpdata locations --indent 4  > exported/locations.json
-./manage.py dumpdata members.member members.membership --indent 4 > exported/members.json
-./manage.py dumpdata notices --indent 4  > exported/notices.json
-./manage.py dumpdata organizations --indent 4  > exported/organizations.json
-./manage.py dumpdata quotes --indent 4  > exported/quotes.json
-./manage.py dumpdata schedule --indent 4  > exported/schedule.json
-./manage.py dumpdata speakers --indent 4  > exported/speakers.json
-./manage.py dumpdata tickets --indent 4  > exported/tickets.json
 
-zip -r exported.zip exported
+dumpdata('auth')
+dumpdata('about')
+dumpdata('api')
+dumpdata('admin')
+dumpdata('certificates')
+dumpdata('contenttypes')
+dumpdata('staticfiles')
+dumpdata('flatpages')
+dumpdata('commons')
+dumpdata('events')
+dumpdata('homepage')
+dumpdata('invoices')
+dumpdata('jobs')
+dumpdata('learn')
+dumpdata('legal')
+dumpdata('locations')
+dumpdata('members')
+dumpdata('messages')
+dumpdata('notices')
+dumpdata('organizations')
+dumpdata('quotes')
+dumpdata('schedule')
+dumpdata('sessions')
+dumpdata('sites')
+dumpdata('speakers')
+dumpdata('tickets')
 
+zip -r backup.zip fixtures/*.json

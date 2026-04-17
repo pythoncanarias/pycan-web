@@ -325,7 +325,7 @@ class Event(models.Model):
 
 class Badge(models.Model):
     event = models.ForeignKey("events.Event", on_delete=models.CASCADE)
-    base_image = models.ImageField(upload_to=f"events/badges/", blank=False)
+    base_image = models.ImageField(upload_to="events/badges/", blank=False)
     # Coordinates start from the top-left corner
     name_coordinates = models.CharField(
         max_length=255,
