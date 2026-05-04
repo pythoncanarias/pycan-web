@@ -215,6 +215,10 @@ LEAFLET_CONFIG = {
     'MIN_ZOOM': 5,
     'MAX_ZOOM': 19,
     'RESET_VIEW': False,
+     'TILES': [('OSM', 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        'attribution': '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        'referrerPolicy': 'strict-origin',
+    })],
 }
 
 # Stripe settings

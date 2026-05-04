@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
+from urllib.parse import quote
 
 from django.templatetags.static import static
 from django.db import models
@@ -35,6 +36,12 @@ class Venue(models.Model):
     def is_online(self):
         return self.address == ''
 
+    def url_google__directions(self):
+        return(
+            'https://www.google.com/maps/dir/?api=1'
+            f'&destination={quote(self.name)}'
+            f'/@{self.latitude},{self.longitude}'
+            )
 
 class Location(models.Model):
     venue = models.ForeignKey(

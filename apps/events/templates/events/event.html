@@ -222,6 +222,7 @@
                 Más información próximamente!
               </p>
             </div>
+
           {% endif %}
         </div>
       </div>
@@ -238,6 +239,19 @@
         }, false);
       </script>
     {% endlocalize %}
+
+
+            {% with event.venue as loc %}
+               {% if loc.latitude and loc.longitude and loc.name %}
+              <div class="column is-full has-text-centered coming-soon">
+	       <p class="lead">Pulsa aquí para <a href="{{ loc.url_google__directions }}">obtener
+		       instrucciones de cómo llegar a {{ loc.name }}
+		       usando Google Maps</a>
+	       </p>
+	      </div>  
+	       {% endif %}
+	    {% endwith %}   
+
   </section>
 
 
