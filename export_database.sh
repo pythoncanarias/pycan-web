@@ -2,7 +2,7 @@
 
 source ~/.pyenv/versions/pycanweb/bin/activate
 
-function dump () {
+function dumpdata () {
     echo -n "Dumping $1";
     ./manage.py dumpdata --verbosity 1 --indent 4 $1 > ./fixtures/$1.json
 }

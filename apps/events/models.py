@@ -36,7 +36,10 @@ class Event(models.Model):
         Venue, related_name="events", null=True, blank=True, on_delete=models.PROTECT
     )
     # 50 minutes as default duration for each slot
-    default_slot_duration = models.DurationField(default=50 * 60)
+    default_slot_duration = models.DurationField(
+        default=50 * 60,
+        help_text='En segundos, por ejemplo 50 minutos = 3000 (50*60)',
+        )
     short_description = models.TextField(
         blank=True,
         help_text="Shown in events list",
