@@ -25,3 +25,4 @@ xlrd==1.2.0
 xlwt==1.3.0
 tweepy==3.10.0
 django_redis==5.4.0
+pygal
