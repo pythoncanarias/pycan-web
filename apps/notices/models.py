@@ -2,6 +2,11 @@ from django.db import models
 
 from apps.members.models import Member
 
+class NoticeKindManager(models.Manager):
+
+    def get_by_natural_key(self, code):
+        return self.get(code=code)
+
 
 class NoticeKind(models.Model):
     class Meta:
@@ -22,8 +27,17 @@ class NoticeKind(models.Model):
     )
     enabled = models.BooleanField(default=True)
 
+    objects = NoticeKindManager()
+
     def __str__(self):
         return self.description
+
+    def natural_key(self):
+        '''Se debe devolver una tupla con los valores de la clave
+        natural, en el mismo orden es que las espera
+        el método `get_by_natural_key` del Manager.
+        '''
+        return (self.code,)
 
     def send_notice(self, member, reference_date):
         notice = Notice(

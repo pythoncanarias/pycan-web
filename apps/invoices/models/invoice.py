@@ -1,19 +1,26 @@
-import os
-from datetime import date
+#!/usr/bin/env python3
+
+from datetime import date as Date
 from decimal import Decimal
+import os
 
 from django.conf import settings
 from django.db import models
 
-from ..constants import RETENTION_CHOICES, RETENTION_MULTIPLIER, TAX_CHOICES, TAX_MULTIPLIER
+from ..constants import (
+    RETENTION_CHOICES,
+    RETENTION_MULTIPLIER,
+    TAX_CHOICES,
+    TAX_MULTIPLIER,
+    )
 from ..services.invoice_maker import InvoiceMaker
 
 
 class InvoiceManager(models.Manager):
 
     def for_year(self, year):
-        first_day = date(year, 1, 1)
-        last_day = date(year, 12, 31)
+        first_day = Date(year, 1, 1)
+        last_day = Date(year, 12, 31)
         return self.filter(date__gte=first_day, date__lte=last_day)
 
     def for_event(self, event):

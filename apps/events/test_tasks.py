@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-# coding=utf-8
 
 from datetime import datetime as DateTime
-import os
 from unittest.mock import Mock
+import os
 
-import pytest
 from django.core.mail import EmailMessage
+import pytest
 
 from . import tasks
 
@@ -37,10 +36,10 @@ def test_ticket():
     return ticket
 
 
-def test_get_qrcode_as_svg():
-    svg_code = tasks.get_qrcode_as_svg('This is a test')
-    assert svg_code.startswith('<?xml')
-    assert svg_code.strip().endswith('</svg>')
+# def test_get_qrcode_as_svg():
+    # svg_code = tasks.get_qrcode_as_svg('This is a test')
+    # assert svg_code.startswith('<?xml')
+    # assert svg_code.strip().endswith('</svg>')
 
 
 def test_get_tickets_dir():

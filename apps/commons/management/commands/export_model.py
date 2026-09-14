@@ -1,25 +1,14 @@
 #!/usr/bin/env python3
 
-import json
 from pathlib import Path
 
-from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
 from django.core.management.base import BaseCommand
 from utils.console import cyan, green 
 from django.apps import apps
-from django.forms.models import model_to_dict
-from django.db.models.fields.files import ImageFieldFile
+
 
 EXPORT_DIRECTORT = Path('exported')
-
-
-class ExtendedEncoder(DjangoJSONEncoder):
-    def default(self, o):
-        if isinstance(o, ImageFieldFile):
-            return str(o)
-        else:
-            return super().default(o)
-
 
 
 class Command(BaseCommand):
@@ -36,14 +25,16 @@ class Command(BaseCommand):
         model_name = options.get('model_name')
         print( f'{green(app_name)}.{green(model_name)}', end=' ')
         Model = apps.get_model(app_name, model_name)
-        num_rows = Model.objects.all().count()
+        all_rows = Model.objects.all().order_by('pk')
+        num_rows = all_rows.count()
         print(f'[{num_rows} registros]', end=' ')
-        rows = [
-            model_to_dict(row)
-            for row in Model.objects.all().order_by('pk')
-            ]
         filename = EXPORT_DIRECTORT / f'{app_name}_{model_name}.json'
         print(f'a {cyan(filename)}', end=' ')
         with open(filename, 'w', encoding='utf-8') as f_out:
-            json.dump(rows, f_out, indent=4, cls=ExtendedEncoder)
+            serializers.serialize('json', all_rows,
+                stream=f_out,
+                use_natural_foreign_keys=True,
+                use_natural_primary_keys=True,
+                indent=4,
+                )
         print(green('[OK]'))

@@ -1,8 +1,9 @@
+#!/usr/bin/env python3
+
 import datetime
 import locale
 import os
 import uuid
-from functools import partial
 
 from colorfield.fields import ColorField
 from django.conf import settings
@@ -492,41 +493,41 @@ class Refund(models.Model):
 # Trade class (intermedite between WaitingList and Refund)
 
 
-class Trade(models.Model):
+# class Trade(models.Model):
 
-    TERM_IN_HOURS = 3
+    # TERM_IN_HOURS = 3
 
-    sell_code = models.UUIDField(default=uuid.uuid4, unique=True)
-    buy_code = models.UUIDField(default=uuid.uuid4, unique=True)
-    start_at = models.DateTimeField(default=time_utils.now)
-    finish_at = models.DateTimeField(
-        default=partial(time_utils.now_plus, hours=TERM_IN_HOURS)
-    )
-    fixed_at = models.DateTimeField(default=None, blank=True, null=True)
-    finished = models.BooleanField(default=False)
-    sucessful = models.BooleanField(default=False)
+    # sell_code = models.UUIDField(default=uuid.uuid4, unique=True)
+    # buy_code = models.UUIDField(default=uuid.uuid4, unique=True)
+    # start_at = models.DateTimeField(default=time_utils.now)
+    # finish_at = models.DateTimeField(
+        # default=partial(time_utils.now_plus, hours=TERM_IN_HOURS)
+    # )
+    # fixed_at = models.DateTimeField(default=None, blank=True, null=True)
+    # finished = models.BooleanField(default=False)
+    # sucessful = models.BooleanField(default=False)
 
-    @classmethod
-    def load_active_trade(cls):
-        qs = cls.objects.filter(finished=False)
-        num_trades = qs.count()
-        assert num_trades in (0, 1)
-        return qs.first() if num_trades == 1 else None
+    # @classmethod
+    # def load_active_trade(cls):
+        # qs = cls.objects.filter(finished=False)
+        # num_trades = qs.count()
+        # assert num_trades in (0, 1)
+        # return qs.first() if num_trades == 1 else None
 
-    def finish(self, sucessful=False):
-        if not self.finished:
-            now = time_utils.now()
-            self.finished = True
-            self.finish_at = now
-            if sucessful:
-                self.sucessful = True
-                self.fixed_at = now
-            self.save()
+    # def finish(self, sucessful=False):
+        # if not self.finished:
+            # now = time_utils.now()
+            # self.finished = True
+            # self.finish_at = now
+            # if sucessful:
+                # self.sucessful = True
+                # self.fixed_at = now
+            # self.save()
 
-    def is_due(self):
-        if not self.finished and time_utils.now() > self.finish_at:
-            self.finish(sucessful=False)
-        return self.finished
+    # def is_due(self):
+        # if not self.finished and time_utils.now() > self.finish_at:
+            # self.finish(sucessful=False)
+        # return self.finished
 
 
 class Proposal(models.Model):
