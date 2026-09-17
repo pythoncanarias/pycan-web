@@ -23,6 +23,7 @@ from . import time_utils
 
 
 class Event(models.Model):
+
     class Meta:
         ordering = ["-start_date"]
 

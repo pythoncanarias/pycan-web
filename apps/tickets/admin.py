@@ -90,7 +90,7 @@ class TicketAdmin(ImportExportActionModelAdmin):
             create_certificate(
                 'attendance',
                 output_name=ticket.keycode,
-                name=ticket.customer_full_name,
+                name=ticket.customer_full_name(),
                 )
 
     gen_certificate.short_description = 'Generar certificado de asistencia'
@@ -133,6 +133,6 @@ class GiftAdmin(admin.ModelAdmin):
 
     def awarded_participant(self, obj):
         if obj.awarded_ticket:
-            return obj.awarded_ticket.customer_full_name
+            return obj.awarded_ticket.customer_full_name()
         else:
             return None

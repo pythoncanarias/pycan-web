@@ -12,7 +12,7 @@ from apps.commons.filters import as_markdown
 from apps.organizations.models import Organization
 
 
-def create_ticket_message(ticket):
+def create_ticket_message(ticket, organization=None):
     event = ticket.article.event
     tmpl = loader.get_template("events/email/ticket_message.md")
     subject = "Entrada para {}".format(event.name)
@@ -24,11 +24,12 @@ def create_ticket_message(ticket):
             "event": event,
         }
     )
-    organization = Organization.load_main_organization()
+    if organization is None:
+        organization = Organization.load_main_organization()
     mail = Mail(
         from_email=Email(organization.email, organization.name),
         subject=subject,
-        to_email=Email(ticket.customer_email),
+        to_emails=[Email(ticket.customer_email)],
         content=Content("text/html", as_markdown(body)),
     )
 

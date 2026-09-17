@@ -1,29 +1,24 @@
 {% extends "learn/base.html" %}
-
 {% load utils %}
 
-{% block title %}Aprende Python - {{ block.super }}{% endblock %}
+{% block title %}Aprende Python - {{ label }} - {{ block.super }}{% endblock %}
 
-{% block body_class %}learn-resources_by_label{% endblock %}
 
 {% block content %}
 
-<nav class="breadcrumb" aria-label="breadcrumbs">
-  <ul>
-    <li><a href="{% url "learn:index" %}">Aprende Python</a></li>
-    <li class="is-active"><a href="#" aria-current="page">{{ label }}</a></li>
-  </ul>
-</nav>
+<h1 class="is-1 title">
+  <i class="fa-solid fa-tag"></i>
+  {{ label }}
+</h1>
 
-<h1 class="title"><i class="fas fa-tag"></i> {{ label }}</h1>
-
-<table class="table resources">
-  {% for resource in resources %}
-    <tr>
-      <td>
-        <a class="resource" href="{{ resource.url }}">{{ resource }}</a>
-      </td>
-      <td>
+{% for resource in resources %}
+  <div class="card">
+  <div class="card-content">
+    <div class="content">
+      {{ resource }}
+    </div>
+  </div>a
+  <footer class="card-footer">
         {% for label in resource.labels.all %}
           <a class="label"
             style="background-color: #{{ label.color }}; color: #{{ label.foreground_color }}"
@@ -31,8 +26,35 @@
             {{ label }}
           </a>
         {% endfor %}
+  </footer>
+</div>
+{% endfor %}
+
+
+<table class="table">
+  {% for resource in resources %}
+    <tr>
+      <td>
+        <a class="resource" href="{{ resource.url }}">
+          <span class="subtitle is-3">
+          {{ resource }}
+          </span>
+        </a>
       </td>
-    </tr>  
+      <td>
+        <ul class="label-list">
+        {% for label in resource.labels.all %}
+          <li>
+          <a class="label"
+            style="background-color: #{{ label.color }}; color: #{{ label.foreground_color }}"
+            href="{% url "learn:resources_by_label" label=label %}">
+            {{ label }}
+          </a>
+        </ul>
+        {% endfor %}
+        </ul>
+      </td>
+    </tr>
   {% endfor %}
 </table>
 

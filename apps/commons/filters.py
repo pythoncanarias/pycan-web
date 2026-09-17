@@ -1,10 +1,8 @@
 '''Remember to register new filters in apps/commons/templatetags/utils.py'''
 
 import datetime
-import os
 from typing import Union
 
-from django.conf import settings
 from markdown2 import markdown
 
 _months = [
@@ -92,8 +90,8 @@ def get_key(dictionary, key):
     return dictionary.get(key, "")
 
 
-def get_asset_key(dictionary, key):
-    return os.path.join(settings.STATIC_URL, dictionary.get(key, "") or key)
+# def get_asset_key(dictionary, key):
+    # return os.path.join(settings.STATIC_URL, dictionary.get(key, "") or key)
 
 
 def as_markdown(s):

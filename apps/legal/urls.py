@@ -4,11 +4,14 @@ from . import views
 
 app_name = 'legal'
 
+def tie(ruta, vista, name=None):
+    return path(ruta, vista, name=name or vista.__name__)
+
 urlpatterns = [
-    path('', views.legal_notice, name='legal_notice'),
-    path('privacy_policy/', views.privacy_policy, name='privacy_policy'),
-    path('purchase_terms/', views.purchase_terms, name='purchase_terms'),
-    path('cookie_policy/', views.cookie_policy, name='cookie_policy'),
-    path('coc/', views.coc, name='coc'),
-    path('coc/<language>/', views.coc, name='coc'),
-]
+    tie('', views.legal_notice),
+    tie('privacy_policy/', views.privacy_policy),
+    tie('purchase_terms/', views.purchase_terms),
+    tie('cookie_policy/', views.cookie_policy),
+    tie('coc/', views.coc),
+    tie('coc/<language>/', views.coc),
+    ]

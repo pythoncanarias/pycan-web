@@ -1,8 +1,14 @@
 # Añadir una nueva aplicación al proyecto
 
-Los proyectos Django se organizan internamente en aplicaciones. Cada aplicación representa una sección o parte de nuestro proyecto. En el caso de que necesitemos añadir una nueva aplicación tendremos que hacer uso de las herramientas que Django nos proporciona.
+Los proyectos Django se organizan internamente en aplicaciones. Cada
+aplicación representa una sección o parte de nuestro proyecto. En el
+caso de que necesitemos añadir una nueva aplicación tendremos que hacer
+uso de las herramientas que Django nos proporciona.
 
-Teniendo en cuenta que el [entorno de desarrollo está basado en Docker](dev.md) debemos tener los contenedores corriendo (`docker-compose up`) y ejecutar lo siguiente (_quizás en otra terminal_):
+Teniendo en cuenta que el [entorno de desarrollo está basado en
+Docker](dev.md) debemos tener los contenedores corriendo
+(`docker-compose up`) y ejecutar lo siguiente (_quizás en otra
+terminal_):
 
 ```console
 ## Situados en el raíz del proyecto...
@@ -22,7 +28,9 @@ Basados en el diseño de nuestro proyecto, se deben llevar a cabo algunos pasos 
 
 ## Plantillas
 
-Se recomienda la creación de una plantilla `<app>/templates/<app>/base.html` para la nueva `<app>` con este esqueleto:
+Se recomienda la creación de una plantilla
+`<app>/templates/<app>/base.html` para la nueva `<app>` con este
+esqueleto:
 
 ```django
 {% extends "base.html" %} <!-- commons/base.html -->
@@ -31,18 +39,22 @@ Se recomienda la creación de una plantilla `<app>/templates/<app>/base.html` pa
 
 <!-- Sólo en el caso de necesitar estilos propios css -->
 {% block style %}
-  <link rel="stylesheet" href="{{ assets|get_asset_key:'<app>/custom.min.css' }}">
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static '<app>/css/<app>.css' %}">
 {% endblock style %}
 
 <!-- Sólo en el caso de necesitar código propio js -->
 {% block js %}
-  <script src="{{ assets|get_asset_key:'<app>/custom.min.js' }}"></script>
+  {{ block.super }}
+  <script src="{% static '<app>/js/<app>.js' %}"></script>
 {% endblock js %}
 ```
 
-> `custom.min.css` y `custom.min.js` son ficheros generados automáticamente por el proceso `gulp` que corre en background.
+Nota: Ya no usamos `gulp` ni ningún otro sistema para convertir el CSS.
 
-El resto de plantillas de la aplicación, al menos, deberían extender la plantilla base y se recomienda que incluyan una directiva definiendo su propia clase CSS para evitar conflictos posteriores:
+El resto de plantillas de la aplicación, al menos, deberían extender la
+plantilla base y se recomienda que incluyan una directiva definiendo su
+propia clase CSS para evitar conflictos posteriores:
 
 ```django
 {% extends "<app>/base.html" %}
@@ -50,27 +62,3 @@ El resto de plantillas de la aplicación, al menos, deberían extender la planti
 {% block body_class %}<app>-<subsection>{% endblock %}
 
 ...
-
-```
-
-## Estilos CSS
-
-Primero que nada hay que añadir la aplicación a la constante `APPS` de `gulp/config.js` para que `gulp` compile los ficheros de estilos.
-
-A continuación hay que crear el archivo `<app>/static/<app>/css/main.scss` con, al menos, el siguiente contenido:
-
-```scss
-@import 'apps/commons/static/commons/css/base';
-
-.<app>-<subsection> {
-   ...
-}
-```
-
-> Se recomienda crear nuevos ficheros `.scss` e importarlos desde `main.scss` para modularizar el código.
-
-## Código JS
-
-En el caso de que se necesite código JS se debe crear el archivo `<app>/static/<app>/js/main.js`
-
-> Se recomienda crear nuevos ficheros `.js` e importarlos desde `main.js` para modularizar el código.

@@ -28,7 +28,7 @@ class Command(BaseCommand):
         output_filename = create_certificate(
             'attendance',
             output_name=ticket.keycode,
-            name=ticket.customer_full_name,
+            name=ticket.customer_full_name(),
             )
         if tron:
             print('File {} created'.format(output_filename))

@@ -1,0 +1,41 @@
+a.label {
+  display: inline-block;
+  font-size: 1.2rem;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 9px;
+  padding-right: 9px;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  }
+
+a.label:hover {
+  background-color: #154360 !important;
+  color: white !important;
+  }
+
+a.label span.badge {
+  background-color: rgba(255, 255, 255, 0.518);
+  margin-left: 3px;
+  border-radius: 12px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-size: 0.8rem;
+  }
+
+ul.label-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 80%;
+  margin-left: 10%;
+  }
+
+ul.label-list > li {
+  padding: 4px;
+  }
+
+

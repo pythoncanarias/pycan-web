@@ -190,7 +190,7 @@ class TicketMaker(BaseReport):
         else:
             event_hour = start.strftime('%H:%Mh')
         data = (
-            ('\uf554', 'asistente', self.ticket.customer_full_name),
+            ('\uf554', 'asistente', self.ticket.customer_full_name()),
             ('\uf0e0', 'email', self.ticket.customer_email),
             ('\uf784', 'fecha del evento', event_date),
             ('\uf017', 'hora de comienzo', event_hour),

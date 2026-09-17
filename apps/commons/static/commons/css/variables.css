@@ -1,0 +1,35 @@
+:root {
+  --dark-red: #3f0b1a;
+
+  --radius: 0.15rem;
+  --blue-text: #2673b5;
+  --brown-text-for-yellow-bg: #332702;
+  --yellow-bg: #efc23b;
+
+  --header-height: 4rem;
+  --header-bg: #e2285d;
+  --header-fg: white;
+
+  --footer-height: 6rem;
+  --footer-bg: var(--dark-red);
+  --footer-fg: lighten(var(--header-bg), 20%);
+
+  --notification-width: 25rem;
+
+  --error-message: red;
+
+
+  }
+
+#breadcrumbs {
+  --bulma-breadcrumb-item-color: #e0e0e0;
+  --bulma-breadcrumb-item-hover-color: #c0c0c0;
+  --bulma-breadcrumb-item-active-color: white;
+  --bulma-breadcrumb-item-padding-vertical: 0.8rem;
+  --bulma-breadcrumb-item-padding-horizontal: 0.25rem;
+  --bulma-breadcrumb-item-separator-color: white;
+}
+
+#footer {
+  --footer-background-color: teal;
+}

@@ -21,7 +21,7 @@ Canarias es un territorio muy prolífico en el campo de las nuevas tecnologías.
       {% if ally.logo %}
       <img class="logo" src="{{ ally.logo.url }}">
       {% else %}
-      <img class="logo" src="{{ assets | get_asset_key:'about/img/ally-placeholder.png' }}">
+      <img class="logo" src="{% static 'about/img/ally-placeholder.png' %}">
       {% endif %}
       {{ ally.name }}
       <a class="dyn-anchor-link" href="#{{ ally.name|slugify }}"><i class="fas fa-link"></i></a>
@@ -30,9 +30,6 @@ Canarias es un territorio muy prolífico en el campo de las nuevas tecnologías.
     <ul>
       {% if ally.url %}
         <li><i class="fas fa-home"></i> <a href="{{ ally.url }}">{{ ally.url }}</a></li>
-      {% endif %}
-      {% if ally.twitter %}
-        <li><i class="fab fa-twitter"></i> <a href="{{ ally.twitter }}">{{ ally.twitter }}</a></li>
       {% endif %}
       {% if ally.email %}
         <li><i class="far fa-envelope"></i> <a href="mailto:{{ ally.email }}">{{ ally.email }}</a></li>

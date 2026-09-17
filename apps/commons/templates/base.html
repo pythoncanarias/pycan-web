@@ -13,13 +13,22 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">
 
   {% block styles %}
+  <link rel="stylesheet" href="{% static 'commons/css/variables.css' %}">
+  <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
   <link rel="stylesheet" href="{% static 'commons/css/bulma.min.css' %}">
+  <link rel="stylesheet" href="{% static 'commons/css/base.css' %}">
   {% endblock styles %}
 
 </head>
 <body class="{% block body_class %}{% endblock %} has-navbar-fixed-top">
   .
-  {% include "header.html" %}
+  {% block header %}
+    {% include "header.html" %}
+  {% endblock header %}
+
+  {% block breadcrumbs %}
+    {% include "includes/breadcrumbs.html" %}
+  {% endblock breadcrumbs %}
 
   {% block container %}
 
@@ -46,7 +55,12 @@
         </div>
         <div class="column is-three-quarters">
     {% endif %}
-    {% block content %} {% endblock content %}
+
+    <main>
+    {% block content %}
+    {% endblock content %}
+    </main>
+
     {% if menu %}
         </div>
       </div>
@@ -54,7 +68,9 @@
   </div>
   {% endblock container %}
 
-  {% include "footer.html" %}
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock footer %}
 
   <script src="{% static 'commons/custom.min.js' %}"></script>
   {% block js %}

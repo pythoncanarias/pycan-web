@@ -21,7 +21,9 @@ class TicketCategory(models.Model):
     # Twin, Early, Normal, ...
 
     class Meta:
-        verbose_name_plural = 'ticket categories'
+        ordering = ['name']
+        verbose_name = 'Categoría de entrada'
+        verbose_name_plural = 'Categorías de entradas'
 
     name = models.CharField(max_length=256)
     slug = models.SlugField(unique=True)
@@ -60,8 +62,12 @@ class Article(models.Model):
     release_at = models.DateTimeField(null=True, blank=True)
     participate_in_raffle = models.BooleanField(
         default=True,
-        help_text=('Indicates if people with this article can be awarded in a '
-                   'potential raffle at event'))
+        help_text=(
+            'Indicates if people with this article'
+            ' can be awarded in a potential'
+            ' raffle at event'
+            ),
+        )
 
     def __str__(self):
         return '{} [{}]'.format(self.category, self.event)
@@ -100,9 +106,18 @@ class Article(models.Model):
 
 
 class Ticket(models.Model):
+
+    class Meta:
+        ordering = ['number']
+        verbose_name = 'Entrada'
+        verbose_name_plural = 'Entradas'
+
     number = models.PositiveIntegerField(
-        help_text=('Consecutive number within event '
-                   '(if blank it will be automatically fulfilled)'),
+        help_text=(
+            'Consecutive number within event'
+            ' (if blank it will be automatically'
+            ' fulfilled)'
+            ),
         null=True,
         blank=True)
     keycode = models.UUIDField(default=uuid.uuid4)
@@ -136,9 +151,10 @@ class Ticket(models.Model):
     def event(self):
         return self.article.event
 
-    @property
-    def customer_full_name(self):
-        return '{} {}'.format(self.customer_name, self.customer_surname)
+    def customer_full_name(self) -> str:
+        """Nombre completo del comprador de la entrada.
+        """
+        return f'{self.customer_name} {self.customer_surname}'
 
     def save(self, *args, **kwargs):
         if not self.number:
@@ -175,6 +191,10 @@ class Ticket(models.Model):
 
 
 class Raffle(models.Model):
+
+    class Meta:
+        ordering = ['created_at']
+
     created_at = models.DateTimeField(auto_now_add=True)
     event = models.OneToOneField('events.Event',
                                  related_name='raffle',
@@ -183,9 +203,6 @@ class Raffle(models.Model):
 
     def __str__(self):
         return f'Sorteo para {self.event.qualified_hashtag}'
-
-    class Meta:
-        ordering = ['created_at']
 
     def get_candidate_tickets(self):
         return self.event.all_tickets().filter(
@@ -247,6 +264,12 @@ class Raffle(models.Model):
 
 
 class Gift(models.Model):
+
+    class Meta:
+        ordering = ['name', 'description']
+        verbose_name = 'Obsequio'
+        verbose_name_plural = 'Obsequios'
+
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True)
     raffle = models.ForeignKey('tickets.Raffle',
@@ -264,14 +287,11 @@ class Gift(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
-        ordering = ['name', 'description']
-
     def order(self):
         gifts_ids = list(Gift.objects.filter(raffle=self.raffle).values_list(
             'pk', flat=True))
         return gifts_ids.index(self.id) + 1
 
     def awarded_ticket_for_display(self):
-        return f'{self.awarded_ticket.customer_full_name} \
+        return f'{self.awarded_ticket.customer_full_name()} \
             (#{self.awarded_ticket.number})'

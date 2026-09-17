@@ -1,13 +1,13 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 import sendgrid
+from sendgrid.helpers.mail import Content, Email, Mail
+
 from django.conf import settings
 from django.template import Context, Template
 from django.utils import timezone
 from django_rq import job
 from python_http_client.exceptions import HTTPError
-from sendgrid.helpers.mail import Content, Email, Mail
 
 from apps.commons.filters import as_markdown
 from apps.organizations.models import Organization
@@ -15,14 +15,12 @@ from apps.organizations.models import Organization
 
 def create_notice_body(notice):
     kind = notice.kind
-    context = Context(
-        {
-            'kind': kind,
-            'notice': notice,
-            'member': notice.member,
-            'user': notice.member.user,
-        }
-    )
+    context = Context({
+        'kind': kind,
+        'notice': notice,
+        'member': notice.member,
+        'user': notice.member.user,
+        })
     template = Template(kind.template)
     return template.render(context)
 
