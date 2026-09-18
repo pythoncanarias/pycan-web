@@ -1,0 +1,66 @@
+<section id="method" class="message is-info anchor">
+  <div class="message-header">
+    <h2 class="dyn-anchor-heading">
+      Procedimiento para convertirse/renovar como socio/socia
+    </h2>
+    <a class="dyn-anchor-link" href="#method"><i class="fas fa-link"></i></a>
+  </div>
+  <div class="message-body">
+   <div class="box">
+    <h3 class="subtitle is-3">
+    <span class="icon">
+    <i class="fa fa-eur" aria-hidden="true"></i>
+    </span>
+    Paso 1: Realiza una transferencia bancaria indicando los siguientes datos:
+    </h3>
+    <ul>
+      <li><strong>Banco</strong>: {{ organization.bank}}</li>
+      <li><strong>IBAN</strong>: {{ organization.iban }}</li>
+      <li><strong>Importe</strong>: <em>el de la cuota seleccionada</em></li>
+      <li><strong>Concepto</strong>: Alta de socio/a <i class="fas fa-thumbtack"></i></li>
+      <li><strong>Beneficiario</strong>: {{ organization.name }}</li>
+    </ul>
+   </div>
+
+  <div class="box">
+    <h3 class="subtitle is-3">
+    <span class="icon">
+    <i class="fa fa-envelope" aria-hidden="true"></i>
+    </span>
+    Paso 2: Envía un correo a <a href="mailto:{{ organization.email }}">{{ organization.email }}</a> indicando los siguientes datos:
+    </h3>
+
+    <ul>
+      <li><strong>Asunto</strong>: Alta de socio/a <i class="fas fa-thumbtack"></i></li>
+      <li><strong>Cuerpo</strong>: <i class="fas fa-bell"></i>
+      <p>
+      Nombre y apellidos<br>
+      Nickname <small>(no puede contener espacios)</small><br>
+      Teléfono de contacto<br>
+      Dirección<br>
+      </p>
+      </li>
+    </ul>
+
+    <span class="tag is-warning">IMPORTANTE</span> <b>Adjuntar el
+      justificante de la transferencia en formato PDF</b>
+
+  <p>Una vez que recibamos este email te responderemos indicando
+  que tu solicitud de alta (o continuidad) se ha procesado
+  correctamente, y pasarás a formar parte de nuestra
+  <strong>comunidad pitónica</strong> 🎉</p>
+
+
+
+  <p>
+    <i class="fas fa-thumbtack"></i> Indicar <strong>"Renovación de socio/a"</strong> si procede.
+    <br>
+    <i class="fas fa-bell"></i> En caso de renovar, no es necesario
+    indicar <i>nickname</i>, teléfono ni dirección, salvo para actualizar datos.
+  </p>
+
+   </div>
+  </div>
+
+
+</section>

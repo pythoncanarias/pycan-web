@@ -1,0 +1,15 @@
+{% extends "about/base.html" %}
+{% load static utils %}
+
+{% block content %}
+<div class="columns">
+  <div class="column is-two-thirds">
+    {% include "about/includes/instructions.html" %}
+  </div>
+  <div class="column is-one-third">
+    {% include "about/includes/rates.html" %}
+  </div>
+</div>
+
+
+{% endblock content %}

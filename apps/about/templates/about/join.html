@@ -1,91 +1,64 @@
 {% extends "about/base.html" %}
-{% load utils %}
-{% load static %}
-
-{% block title %}Únete - {{ block.super }}{% endblock %}
+{% load static utils %}
 
 {% block content %}
 
 <div class="content box">
-<div id="join" class="section anchor">
 
-<h1  class="dyn-anchor-heading" >
-  No nos mires, ¡únete! <i class="fas fa-people-carry"></i>
-  <a class="dyn-anchor-link" href="#join"><i class="fas fa-link"></i></a>
-</h1>
+<article id="join" class="message is-info anchor">
 
-<p>
-Python Canarias es una <strong>asociación sin ánimo de lucro</strong>. Para desarrollar nuestras actividades necesitamos un <strong>soporte económico</strong> que se convierte en servicios para la comunidad, principalmente en <a href="{% url 'events:past_events' %}">forma de eventos</a>. Las aportaciones de empresas colaboradoras y patrocinios son super importantes, pero aún así seguimos necesitando de otras ayudas.
-</p>
+  <div class="message-header">
+    <h1 class="dyn-anchor-heading">
+    <i class="fas fa-people-carry"></i>
+     No nos mires, ¡únete!
+    <a class="dyn-anchor-link" href="#join"><i class="fas fa-link"></i></a>
+    </h1>
+  </div>
 
-<article class="message">
   <div class="message-body">
-    Ser socio o socia de Python Canarias es apoyar el desarrollo tecnológico en nuestra región. Significa creer en un proyecto de la comunidad para la comunidad. Cada nueva persona que se une es un empujón que nos impulsa a seguir adelante.
+    <p>
+    Python Canarias es una <strong>asociación sin ánimo de
+    lucro</strong>. Para desarrollar nuestras actividades necesitamos
+    un <strong>soporte económico</strong> que se convierte en servicios
+    para la comunidad, principalmente en
+    <a href="{% url 'events:past_events' %}">forma de eventos</a>. Las
+    aportaciones de empresas colaboradoras y patrocinios son super
+    importantes, pero aún así seguimos necesitando de otras ayudas.
+    </p>
+  </div>
+
+  <p>Ser socio o socia de Python Canarias es apoyar el desarrollo
+  tecnológico en nuestra región. Significa creer en un proyecto de la
+  comunidad para la comunidad. Cada nueva persona que se une es un
+  empujón que nos impulsa a seguir adelante.</p>
+
+  <p>
+  Si te animas a formar parte de Python Canarias, también queremos
+  devolverte algo. En este sentido habrá <strong>descuentos en eventos y
+  promociones con prioridad para socios y socias</strong>.  </p>
+
+
+
+    <div class="fixed-grid has-2-cols">
+      <div class="grid">
+
+        <div class="cell has-text-centered">
+          <p>Si todavía no eres socio, pulsa el siguiente botón
+          para</p>
+          <a href="{% url 'about:join_method' %}" class="link button
+            is-warning is-medium is-outlined">Formar parte de la asociación</a>
+          </p>
+        </div>
+
+        <div class="cell has-text-centered">
+  <p>Si ya eres socio/a, pulsa en el siguiente botón para</p> <a
+    class="button is-link is-medium is-outline" href="{% url
+    'members:login' %}">Acceder como
+    socio/a</a>
+</div>
+      </div>
+    </div>
   </div>
 </article>
-
-<p>
-Si te animas a formar parte de Python Canarias, también queremos devolverte algo. En este sentido habrá <strong>descuentos en eventos y promociones con prioridad para socios y socias</strong>.
-</p>
-
-<p>Si ya eres socio/a, pulsa en el siguiente botón para aceder:</p>
-<a class="button is-link" href="{% url 'members:login' %}">Acceso para socios/as</a>
-
-</div>
-<div id="fee" class="section anchor">
-<h2 class="dyn-anchor-heading ">
-  Cuota
-  <a class="dyn-anchor-link" href="#fee"><i class="fas fa-link"></i></a>
-</h2>
-
-La cuota de socio/socia es anual y su cuantía está recogida en el <a href="https://github.com/pythoncanarias/pycan-docs/blob/main/asociacion/estatutos/estatutos.pdf">artículo 24 de los estatutos de la asociación</a>:
-<ul>
-  <li><span class="tag is-info is-medium">20€</span> Importe general.</li>
-  <li><span class="tag is-primary is-medium">10€</span> Estudiantes y/o personas desempleadas.</li>
-</ul>
-</div>
-<div id="method" class="section anchor">
-<h2  class="dyn-anchor-heading ">
-  Procedimiento para convertirse/renovar como socio/socia
-  <a class="dyn-anchor-link" href="#method"><i class="fas fa-link"></i></a>
-</h2>
-
-<ol>
-  <li>
-    Realiza una transferencia bancaria indicando los siguientes datos:
-    <ul>
-      <li><strong>Banco</strong>: {{ organization.bank}}</li>
-      <li><strong>IBAN</strong>: {{ organization.iban }}</li>
-      <li><strong>Importe</strong>: <em>el de la cuota seleccionada</em></li>
-      <li><strong>Concepto</strong>: Alta de socio/a <i class="fas fa-thumbtack"></i></li>
-      <li><strong>Beneficiario</strong>: {{ organization.name }}</li>
-    </ul>
-  </li>
-
-  <li>Envía un correo a <a href="mailto:{{ organization.email }}">{{ organization.email }}</a> indicando los siguientes datos:
-    <ul>
-      <li><strong>Asunto</strong>: Alta de socio/a <i class="fas fa-thumbtack"></i></li>
-      <li><strong>Cuerpo</strong>: <i class="fas fa-bell"></i>
-      <p>
-      Nombre y apellidos<br>
-      Nickname <small>(no puede contener espacios)</small><br>
-      Teléfono de contacto<br>
-      Dirección<br>
-      </p>
-      </li>
-    </ul>
-    <span class="tag is-warning">IMPORTANTE</span> Adjuntar el justificante de la transferencia en formato PDF
-  </li>
-
-  <li>Una vez que recibamos este email te responderemos indicando que tu solicitud de alta (o continuidad) se ha procesado correctamente, y pasarás a formar parte de nuestra <strong>comunidad pitónica</strong> 🎉</li>
-</ol>
-
-<p>
-  <i class="fas fa-thumbtack"></i> Indicar <strong>"Renovación de socio/a"</strong> si procede.
-  <br>
-  <i class="fas fa-bell"></i> En caso de renovar, no es necesario indicar nickname, teléfono y dirección, salvo para actualizar datos.
-</p>
-</div>
-</div>
 
 {% endblock content %}

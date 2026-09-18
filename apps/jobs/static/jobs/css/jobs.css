@@ -25,14 +25,14 @@
 .details {
   display: flex;
   justify-content: space-between;
-
-  .collab {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 20px;
-
-    a {
-      padding-top: 4px;
-    }
-  }
 }
+
+.details .collab {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+  }
+
+.details .collab a {
+  padding-top: 4px;
+  }

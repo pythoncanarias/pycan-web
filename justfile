@@ -82,3 +82,15 @@ makemigrations $APP='' *args='':
     python3 ./manage.py makemigrations {{APP}} {{ args }}
 
 alias mm := makemigrations
+
+# Buscar en ficheros Python
+fpy *args='':
+    pss --py --ignore-dir .venv {{ args }}
+
+# Buscar en ficheros CSS
+fcss *args='':
+    pss --css --ignore-dir .venv {{ args }}
+
+# Buscar en ficheros Html
+fhtml *args='':
+    pss --html --ignore-dir .venv {{ args }}

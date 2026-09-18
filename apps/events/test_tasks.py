@@ -57,7 +57,6 @@ def test_get_qrcode_as_svg(test_ticket):
 
 def test_get_tickets_dir(test_ticket):
     path = test_ticket.get_tickets_dir()
-    from icecream import ic; ic(path)
     assert 'temporal' in str(path)
     assert 'tickets' in str(path)
     assert os.path.isdir(path)
