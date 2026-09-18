@@ -11,51 +11,32 @@
   {{ label }}
 </h1>
 
-{% for resource in resources %}
-  <div class="card">
-  <div class="card-content">
-    <div class="content">
-      {{ resource }}
-    </div>
-  </div>a
-  <footer class="card-footer">
-        {% for label in resource.labels.all %}
-          <a class="label"
-            style="background-color: #{{ label.color }}; color: #{{ label.foreground_color }}"
-            href="{% url "learn:resources_by_label" label=label %}">
-            {{ label }}
-          </a>
-        {% endfor %}
-  </footer>
-</div>
-{% endfor %}
-
-
-<table class="table">
+<div class="fixed-grid has-1-cols-mobile">
+  <div class="grid">
   {% for resource in resources %}
-    <tr>
-      <td>
-        <a class="resource" href="{{ resource.url }}">
-          <span class="subtitle is-3">
-          {{ resource }}
-          </span>
-        </a>
-      </td>
-      <td>
-        <ul class="label-list">
-        {% for label in resource.labels.all %}
+    <div class="cell box">
+      <h2 class="subtitle is-3">
+        {{ resource.name }}
+      </h2>
+      <h3 class="subtitle">
+        <i class="fas fa-link"></i>
+        <a class="url" href="{{ resource.url }}">{{ resource.url }}</a>
+      </h3>
+          <ul class="label-list">
+          {% for label in resource.labels.all %}
           <li>
-          <a class="label"
-            style="background-color: #{{ label.color }}; color: #{{ label.foreground_color }}"
-            href="{% url "learn:resources_by_label" label=label %}">
-            {{ label }}
-          </a>
-        </ul>
-        {% endfor %}
-        </ul>
-      </td>
-    </tr>
+            <a class="label"
+              style="background-color: #{{ label.color }}; color: #{{ label.foreground_color }}"
+              href="{% url "learn:resources_by_label" label=label %}">
+              {{ label }}
+            </a>
+          </li>
+          {% endfor %}
+          </ul>
+    </div><!-- de cell -->
   {% endfor %}
-</table>
+  </div>
+</div>
+
 
 {% endblock content %}

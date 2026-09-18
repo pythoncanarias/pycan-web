@@ -206,6 +206,16 @@ body {
   padding-top: 2rem;
 }
 
+a.url {
+  font-family: monospace;
+  font-size: 90%;
+  text-decoration: none;
+}
+
+a.url:hover {
+  text-decoration: underline;
+}
+
 
 #breadcrumbs {
   border: 0px dotted green;
