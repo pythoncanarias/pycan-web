@@ -56,7 +56,7 @@ class ProposalForm(forms.ModelForm):
             {
                 "id": "cfp-title",
                 "cols": "60",
-                "rows": "20",
+                "rows": "12",
                 "placeholder": ("El texto de tu maravillosa charla. "
                                 "¿Aceptamos markdown? ¡Por supuesto!"),
                 "class": "textarea",

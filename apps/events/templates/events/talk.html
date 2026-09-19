@@ -1,0 +1,32 @@
+{% extends "events/base.html" %}
+{% load static utils l10n %}
+
+{% block content %}
+
+{% include 'events/includes/event-header.html' with event=event %}
+
+{% include 'events/includes/event-tabs.html' with section='talks' %}
+
+<section class="container">
+
+<div class="hero">
+<div class="hero-body">
+<h1 class="title">{{ talk.title }}</h1>
+<h2 class="subtitle">Por
+  {% for speaker in talk.speakers.all %}
+    {% if not forloop.first %}{% if forloop.last %} y {% else %}, {% endif %}{% endif %}
+    {{ speaker.name }} {{ speaker.surname }}
+  {% endfor %}
+  </h2>
+
+  <div class="box">
+    {{ talk.summary|as_markdown }}
+  </div>
+
+</div>
+</div>
+
+</section>
+
+{% endblock content %}
+

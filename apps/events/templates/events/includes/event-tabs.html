@@ -1,0 +1,63 @@
+<nav class="tabs event-tabs">
+<div class="tabs is-centered">
+  <ul>
+
+    {% if section == 'speakers' %}
+      <li class="is-active">
+        <a href="#start">
+    {% else %}
+      <li>
+        <a href="{% url 'events:event_speakers' event=event %}#start">
+    {% endif %}
+        Ponentes
+      </a>
+      </li>
+
+    {% if section == 'talks' %}
+      <li class="is-active">
+        <a href="#start">
+    {% else %}
+      <li>
+      <a href="{% url 'events:event_talks' event=event %}#start">
+    {% endif %}
+        Agenda
+      </a>
+    </li>
+
+    {% if section == 'location' %}
+      <li class="is-active">
+        <a href="#start">
+    {% else %}
+      <li>
+      <a href="{% url 'events:event_location' event=event %}#start">
+    {% endif %}
+        Localización
+      </a>
+    </li>
+
+    {% if section == 'sponsors' %}
+      <li class="is-active">
+        <a href="#start">
+    {% else %}
+      <li>
+      <a href="{% url 'events:event_sponsors' event=event %}#start">
+    {% endif %}
+        Patrocinadores
+      </a>
+    </li>
+
+    <li><a>Código de conducta</a></li>
+    <li><a>Sorteo</a></li>
+
+    {% if event.raffle.closed %}
+    <li>
+      <a class="event-menu-item"
+         href="{% url 'events:raffle_results' event.slug %}">
+          Sorteo
+        </a>
+      </li>
+    {% endif %}
+
+  </ul>
+</div>
+</nav>

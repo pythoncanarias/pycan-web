@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from datetime import datetime as DateTime
+from datetime import time as Time
 import datetime
 import locale
 import os
@@ -100,15 +102,15 @@ class Event(models.Model):
         return self.name
 
     @property
-    def slug(self):
+    def slug(self) -> str:
         return self.hashtag.lower()
 
-    def end_datetime(self):
+    def end_datetime(self) -> DateTime:
         try:
             return self.schedule.order_by("end").last().end
         except AttributeError:
-            end_time = datetime.time(23, 59, 59, tzinfo=timezone.get_current_timezone())
-            return datetime.datetime.combine(self.start_date, end_time)
+            end_time = Time(23, 59, 59, tzinfo=timezone.get_current_timezone())
+            return DateTime.combine(self.start_date, end_time)
 
     def get_google_calendar_url(self):
         start_datetime = self.start_datetime().strftime("%Y%m%dT%H%M%SZ")
@@ -155,6 +157,44 @@ class Event(models.Model):
                 result[role] = r
         return result
 
+    def is_multitrack(self) -> bool:
+        return self.schedule.values_list("track").distinct().count() > 1
+
+    def all_talks(self):
+        qs = (
+            self.schedule
+            .prefetch_related('speakers')
+            .select_related('slot')
+            .select_related('slot__category')
+            .select_related('slot__level')
+            .prefetch_related('slot__tags')
+            .all()
+            )
+        for sched in qs:
+            yield {
+                'pk': sched.pk,
+                'title': sched.title,
+                'track': sched.track.name,
+                'summary': sched.slot.description,
+                'level': sched.slot.level.pk,
+                'level_name': sched.slot.level.name,
+                'category': sched.slot.category.pk,
+                'category_name': sched.slot.category.name,
+                'start_at': sched.start,
+                'speakers': [{
+                         'speaker_id': _s.pk,
+                         'speaker_name': _s.name,
+                         'speaker_surname': _s.surname,
+                         'speaker_slug': _s.slug,
+                    } for _s in sched.speakers.all()],
+                'tags': [{
+                         'tag_id': _t.pk,
+                         'tag_name': _t.name,
+                         'tag_slug': _t.slug,
+                         'tag_description': _t.description,
+                    } for _t in sched.slot.tags.all()],
+                }
+
     def tracks(self):
         tracks_ids = self.schedule.values_list("track").distinct()
         return Track.objects.filter(pk__in=tracks_ids).order_by("order", "name")
@@ -162,12 +202,12 @@ class Event(models.Model):
     def plenary_scheduled_items(self):
         return self.schedule.filter(track__isnull=True).order_by("start")
 
-    def start_datetime(self):
+    def start_datetime(self) -> DateTime:
         try:
             return self.schedule.order_by("start").first().start
         except AttributeError:
-            start_time = datetime.time(0, 0, 0, tzinfo=timezone.get_current_timezone())
-            return datetime.datetime.combine(self.start_date, start_time)
+            start_time = Time(0, 0, 0, tzinfo=timezone.get_current_timezone())
+            return DateTime.combine(self.start_date, start_time)
 
     @property
     def start_hour(self):
@@ -235,25 +275,20 @@ class Event(models.Model):
         qs = qs.order_by("category__name")
         return qs
 
-    def num_sold_tickets(self):
+    def num_sold_tickets(self) -> int:
         return sum([a.num_sold_tickets for a in self.articles.all()])
 
-    def num_available_tickets(self):
+    def num_available_tickets(self) -> int:
         return sum([a.num_available_tickets for a in self.articles.all()])
 
-    def next_ticket_number(self):
+    def next_ticket_number(self) -> int:
         """Get the number for the next ticket within this event."""
         data = self.all_tickets().aggregate(Max("number"))
         current_number = data.get("number__max", 0) or 0
         return current_number + 1
 
-    @property
-    def qualified_hashtag(self):
+    def qualified_hashtag(self) -> str:
         return f"#{self.hashtag}"
-
-    @property
-    def twitter_hashtag_url(self):
-        return f"https://twitter.com/hashtag/{self.slug}?f=live"
 
     def render_all_badges(self, pdf_only=False, remove_badges=True):
         """

@@ -9,11 +9,15 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from apps.organizations.models import Organization
 from apps.tickets.models import Article, Gift, Raffle, Ticket
+from apps.schedule.models import Schedule
 
-from . import forms, links, stripe_utils
-from .models import Event, Refund, WaitingList
-from .tasks import send_ticket, send_proposal_acknowledge, send_proposal_notification
-from .forms import ProposalForm
+from . import breadcrumbs
+from . import forms
+from . import links
+from . import models
+from . import stripe_utils
+from . import tasks
+
 
 logger = logging.getLogger(__name__)
 
@@ -23,46 +27,49 @@ def index(request):
 
 
 def next(request):
-    events = Event.objects.filter(active=True).order_by("-start_date")
+    events = models.Event.objects.filter(active=True).order_by("-start_date")
     num_events = events.count()
-    if num_events == 0:
-        past_events = Event.objects.all().order_by("-start_date")[0:3]
-        return render(
-            request,
-            "events/no-events.html",
-            {
-                "past_events": past_events,
-            },
-        )
-    if num_events == 1:
-        event = events.first()
-        return redirect("events:detail_event", slug=event.slug)
-    else:
-        return render(request, "events/list-events.html", {"events": events.all()})
+    match num_events:
+        case 0:
+            past_events = models.Event.objects.all().order_by("-start_date")[0:3]
+            return render(request, "events/no-events.html", {
+                'titulo': 'No hay eventos previstos',
+                'breadcrumbs': breadcrumbs.bc_events(),
+                'past_events': past_events,
+                })
+        case 1:
+            event = events.first()
+            return redirect("events:detail_event", slug=event.slug)
+        case _:
+            return render(request, "events/list-events.html", {
+                "events": events.all(),
+                })
 
 
-def detail_event(request, slug):
-    event = Event.get_by_slug(slug)
+def detail_event(request, event):
+    """Pagina princial del evento.
+    """
     past_events = (
-        Event.objects.filter(active=False)
+        models.Event.objects.filter(active=False)
         .exclude(pk=event.id)
         .order_by("-start_date")[:3]
     )
-    return render(
-        request,
-        "events/event.html",
-        {"event": event, "past_events": past_events},
-    )
+    return render(request, "events/event.html", {
+        'titulo': event.name,
+        'breadcrumbs': breadcrumbs.bc_event(event),
+        'event': event,
+        "past_events": past_events,
+        })
 
 
 def call_for_papers(request, event):
     initial = {}
     if request.method == "POST":
-        form = ProposalForm(event, request.POST)
+        form = forms.ProposalForm(event, request.POST)
         if form.is_valid():
             proposal = form.save()
-            send_proposal_acknowledge.delay(proposal)
-            send_proposal_notification.delay(proposal)
+            tasks.send_proposal_acknowledge.delay(proposal)
+            tasks.send_proposal_notification.delay(proposal)
             return redirect(reverse("events:thanks", kwargs={"event": event}))
     else:
         if request.user.is_authenticated:
@@ -70,35 +77,82 @@ def call_for_papers(request, event):
             initial['name'] = user.first_name
             initial['surname'] = user.last_name
             initial['email'] = user.email
-        form = ProposalForm(event, initial=initial)
-    return render(
-        request,
-        "events/call-for-papers.html",
-        {
-            "title": f"Call for papers / {event}",
-            "event": event,
-            "form": form,
+        form = forms.ProposalForm(event, initial=initial)
+    return render(request, "events/call-for-papers.html", {
+        'titulo': f"Call for papers / {event}",
+        'breadcrumbs': breadcrumbs.bc_event_cfp(event),
+        'event': event,
+        'form': form,
         },
     )
 
 
 def proposal_received(request, event):
-    return render(
-        request,
-        "events/cfp-thanks.html",
-        {
-            "title": f"Gracias por su propuesta / {event}",
-            "event": event,
-        },
-    )
+    return render(request, "events/cfp-thanks.html", {
+        "titulo": f"Gracias por su propuesta / {event}",
+        'breadcrumbs': breadcrumbs.bc_event_cfp_thanks(event),
+        "event": event,
+        })
 
+
+def event_location(request, event):
+    """Pagina de la localización del evento.
+    """
+    return render(request, "events/event-location.html", {
+        'titulo': f"Como llegar - {event.name}",
+        'breadcrumbs': breadcrumbs.bc_event_location(event),
+        'event': event,
+        })
+
+
+def event_talks(request, event):
+    """Pagina que muestra la agenda o programa del evento.
+    """
+    return render(request, "events/event-talks.html", {
+        'titulo': f"Programa - {event.name}",
+        'breadcrumbs': breadcrumbs.bc_event_talks(event),
+        'event': event,
+        })
+
+
+def event_speakers(request, event):
+    """Pagina que muestra los ponentes de un evento.
+    """
+    return render(request, "events/event-speakers.html", {
+        'titulo': f"Ponentes - {event.name}",
+        'breadcrumbs': breadcrumbs.bc_event_speakers(event),
+        'event': event,
+        })
+
+
+def event_sponsors(request, event):
+    """Pagina que muestra los patrocinadores de un evento.
+    """
+    return render(request, "events/event-sponsors.html", {
+        'titulo': f"Patrocinadores - {event.name}",
+        'breadcrumbs': breadcrumbs.bc_event_sponsors(event),
+        'event': event,
+        })
+
+
+def detail_task(request, event, pk):
+    talk = Schedule.load_schedule(pk)
+    return render(request, "events/talk.html", {
+        'titulo': f"Charla {talk.title}",
+        'breadcrumbs': breadcrumbs.bc_talk(event, talk),
+        'event': event,
+        'talk': talk,
+        })
+
+
+    return HttpResponse("detail_task no implementado", content_type="text/plain")
 
 def waiting_list(request, slug):
-    event = Event.get_by_slug(slug)
+    event = models.Event.get_by_slug(slug)
     if request.method == "POST":
         form = forms.WaitingListForm(request.POST)
         if form.is_valid():
-            wl = WaitingList(
+            wl = models.WaitingList(
                 event=event,
                 name=form.cleaned_data["name"],
                 surname=form.cleaned_data["surname"],
@@ -121,7 +175,7 @@ def waiting_list(request, slug):
 
 def refund(request, slug):
     logging.error('refund(request, "{}") starts'.format(slug))
-    event = Event.get_by_slug(slug)
+    event = models.Event.get_by_slug(slug)
     logging.error("   request method is {}".format(request.method))
     if request.method == "POST":
         form = forms.RefundForm(event, request.POST)
@@ -129,7 +183,7 @@ def refund(request, slug):
         logging.error("   form.errors is {}".format(form.errors))
         if form.is_valid():
             ticket = form.ticket
-            rf = Refund(ticket=ticket, event=event)
+            rf = models.Refund(ticket=ticket, event=event)
             rf.save()
             return redirect(links.refund_accepted(event.slug, rf.pk))
     else:
@@ -145,8 +199,8 @@ def refund(request, slug):
 
 
 def refund_accepted(request, slug, pk):
-    event = Event.get_by_slug(slug)
-    refund = Refund.objects.get(pk=pk)
+    event = models.Event.get_by_slug(slug)
+    refund = models.Refund.objects.get(pk=pk)
     return render(
         request,
         "events/refund-accepted.html",
@@ -158,7 +212,7 @@ def refund_accepted(request, slug, pk):
 
 
 def waiting_list_accepted(request, slug):
-    event = Event.get_by_slug(slug)
+    event = models.Event.get_by_slug(slug)
     return render(
         request,
         "events/waiting-list-accepted.html",
@@ -169,9 +223,9 @@ def waiting_list_accepted(request, slug):
 
 
 def trade(request, slug, sell_code, buy_code):
-    event = Event.get_by_slug(slug)
-    refund = Refund.load_by_sell_code(sell_code)
-    waiting_list = WaitingList.load_by_buy_code(buy_code)
+    event = models.Event.get_by_slug(slug)
+    refund = models.Refund.load_by_sell_code(sell_code)
+    waiting_list = models.WaitingList.load_by_buy_code(buy_code)
     """Pseudo codigo
     GET:
     1) A partir del ticket comprado obtener el tipo de ticket (articulo)
@@ -224,7 +278,7 @@ def stripe_payment_error(request, exception):
 
 def buy_ticket(request, slug):
     logger.debug("buy_tickts starts : slug={}".format(slug))
-    event = Event.get_by_slug(slug)
+    event = models.Event.get_by_slug(slug)
     if event.external_tickets_url:
         logger.debug(
             "Redirecting to external URL for selling tickets: url={}".format(
@@ -306,7 +360,7 @@ def ticket_purchase(request, id_article):
                     payment_id=charge.id,
                 )
                 ticket.save()
-                send_ticket.delay(ticket)
+                tasks.send_ticket.delay(ticket)
                 return redirect(links.article_bought(article.pk))
             else:
                 return stripe_payment_declined(request, charge)
@@ -363,14 +417,14 @@ def find_tickets_by_email(event, email):
 
 
 def resend_ticket(request, slug):
-    event = Event.get_by_slug(slug)
+    event = models.Event.get_by_slug(slug)
     form = forms.EmailForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
             email = form.cleaned_data["email"]
             tickets = find_tickets_by_email(event, email)
             for ticket in tickets:
-                send_ticket.delay(ticket)
+                tasks.send_ticket.delay(ticket)
             return redirect("events:resend_confirmation", slug=event.slug)
     return render(
         request,
@@ -383,7 +437,7 @@ def resend_ticket(request, slug):
 
 
 def resend_confirmation(request, slug):
-    event = Event.get_by_slug(slug)
+    event = models.Event.get_by_slug(slug)
     organization = Organization.load_main_organization()
     return render(
         request,
@@ -396,20 +450,21 @@ def resend_confirmation(request, slug):
 
 
 def past_events(request):
-    events = Event.objects.filter(active=False).order_by("-start_date")
-    return render(
-        request,
-        "events/list-events.html",
-        {"events": events.all(), "archive": True},
-    )
+    events = models.Event.objects.filter(active=False).order_by("-start_date")
+    return render(request, "events/past-events.html", {
+        'events': events.all(),
+        'archive': True,
+        'titulo': 'Eventos pasados',
+        'breadcrumbs': breadcrumbs.bc_past_events(),
+        })
 
 
 @staff_member_required
 def raffle(request, slug):
     try:
-        event = Event.get_by_slug(slug)
+        event = models.Event.get_by_slug(slug)
         raffle = event.raffle
-    except (Event.DoesNotExist, Raffle.DoesNotExist):
+    except (models.Event.DoesNotExist, Raffle.DoesNotExist):
         return redirect("/")
     gifts = raffle.gifts.all()
     candidate_tickets = raffle.get_candidate_tickets()
@@ -430,9 +485,9 @@ def raffle(request, slug):
 @staff_member_required
 def raffle_gift(request, slug, gift_id, match=False):
     try:
-        event = Event.get_by_slug(slug)
+        event = models.Event.get_by_slug(slug)
         raffle = event.raffle
-    except (Event.DoesNotExist, Raffle.DoesNotExist):
+    except (models.Event.DoesNotExist, Raffle.DoesNotExist):
         return redirect("/")
     current_gift = Gift.objects.get(pk=gift_id)
     if match:
@@ -460,9 +515,9 @@ def raffle_gift(request, slug, gift_id, match=False):
 
 def raffle_results(request, slug):
     try:
-        event = Event.get_by_slug(slug)
+        event = models.Event.get_by_slug(slug)
         raffle = event.raffle
-    except (Event.DoesNotExist, Raffle.DoesNotExist):
+    except (models.Event.DoesNotExist, Raffle.DoesNotExist):
         return redirect("/")
     if request.user.is_staff and raffle.opened:
         raffle.closed_at = datetime.datetime.now()

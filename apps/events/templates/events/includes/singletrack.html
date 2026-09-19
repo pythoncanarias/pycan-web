@@ -1,0 +1,47 @@
+{% load utils %}
+<table class="table is-striped is-hoverable">
+  <thead>
+    <tr>
+      <th>Hora</th>
+      <th style="width: 50%;">
+        Título /
+        Resumen</th>
+      <th>Categoría</th>
+      <th>Nivel</th>
+    </tr>
+  </thead>
+  {% for talk in event.all_talks %}
+  <tr>
+    <td>
+      {{ talk.start_at.hour }}:{{ talk.start_at.minute }}
+    </td>
+    <td>
+      <h2 class="title is-3">
+        <a href="{% url 'events:detail_task' event=event pk=talk.pk %}#start">
+        {{ talk.title }}
+        </a>
+      </h2>
+      <h3 class="subtitle is-5">
+      {{ talk.summary|as_markdown }}
+      </h3>
+      {% for tag in talk.tags %}
+      <span class="tag is-info">{{ tag.tag_name }}</span>
+      {% endfor %}
+      <p class="speakers">Por
+      {% for speaker in talk.speakers %}
+        {% if not forloop.first %}{% if forloop.last %} y {% else %}, {% endif %}{% endif %}
+        {{ speaker.speaker_name }} {{ speaker.speaker_surname }}
+      {% endfor %}
+      </p>
+      <p>
+      </p>
+    </td>
+    <td>
+      {{ talk.category_name }}
+    </td>
+    <td>
+      {{ talk.level_name }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>

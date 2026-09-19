@@ -153,6 +153,26 @@ class Schedule(models.Model):
         default=SPANISH,
     )
 
+    @classmethod
+    def load_schedule(cls, pk):
+        try:
+            return (
+                cls.objects
+                .prefetch_related('speakers')
+                .select_related('slot')
+                .get(pk=pk)
+            )
+        except cls.DoesNotExist:
+            return None
+
+    @property
+    def title(self):
+        return self.slot.name
+
+    @property
+    def summary(self):
+        return self.slot.description
+
     def __str__(self):
         return "{} {}-{}".format(
             self.start.date(),

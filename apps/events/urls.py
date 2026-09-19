@@ -7,13 +7,23 @@ app_name = 'events'
 
 register_converter(converters.EventConverter, 'event')
 
+
+def tie(ruta, vista, name=None):
+    return path(ruta, vista, name=name or vista.__name__)
+
+
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('next/', views.next, name='next'),
+    tie('', views.index),
+    tie('next/', views.next),
     path('archive/', views.past_events, name='past_events'),
-    path('<slug:slug>/', views.detail_event, name='detail_event'),
-    path('<event:event>/cfp/', views.call_for_papers, name='cfp'),
-    path('<event:event>/cfp/thanks', views.proposal_received, name='thanks'),
+    tie('<event:event>/', views.detail_event),
+    tie('<event:event>/talks/<int:pk>/', views.detail_task),
+    tie('<event:event>/talks/', views.event_talks),
+    tie('<event:event>/speakers/', views.event_speakers),
+    tie('<event:event>/location/', views.event_location),
+    tie('<event:event>/sponsors/', views.event_sponsors),
+    tie('<event:event>/cfp/', views.call_for_papers, name='cfp'),
+    tie('<event:event>/cfp/thanks/', views.proposal_received, name='thanks'),
     path(
         '<slug:slug>/waiting-list/',
         views.waiting_list,

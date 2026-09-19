@@ -1,0 +1,43 @@
+{% load utils %}
+<div class="hero"><div class="hero-body">
+
+  {% if event.hero %}
+    <img src="{{ event.hero.url }}" alt="{{ event.name }}">
+
+  {% else %}
+
+    <div class="box container">
+    <h1 class="title is-1">{{ event.name }}</h1>
+    <h2 class="subtitle is-4">
+      <span class="event-header-date">
+        <i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}
+      </span> | {{ event.venue.name }}
+    </h2>
+
+    </div>
+  {% endif %}
+
+</div></div>
+
+<a name="start">&nbsp;</a>
+
+<nav class="level">
+  <div class="level-item has-text-centered" style="width:50%;">
+    <p>
+    <mark title="Si quieres promocionar este evento en tus redes sociales
+    te agradeceríamos que usaras este hashtag" class="hashtag">{{ event.qualified_hashtag }}</mark>
+    </p>
+  </div>
+  <div class="level-item has-text-centered" style="width:50%;">
+    <p>
+    <a id="add-to-google-calendar"
+      class="button is-warning"
+      target="_blank"
+      href="{{ event.get_google_calendar_url }}">
+      <i class="far fa-calendar-plus"></i> Añadir a Google Calendar</a>
+    </p>
+  </div>
+</nav>
+
+
+

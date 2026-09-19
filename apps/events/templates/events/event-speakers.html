@@ -1,0 +1,16 @@
+{% extends "events/base.html" %}
+{% load static utils l10n %}
+
+{% block content %}
+
+{% include 'events/includes/event-header.html' with event=event %}
+{% include 'events/includes/event-tabs.html' with section='speakers' %}
+
+<div class="columns is-multiline">
+{% for speaker in event.get_non_org_speakers %}
+  <div class="column is-half">
+    {% include 'events/includes/speaker-card.html' with speaker=speaker %}
+  </div>
+{% endfor %}
+
+{% endblock content %}

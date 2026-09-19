@@ -1,0 +1,52 @@
+{% load utils %}
+
+<div class="box card is-info">
+  <div class="card-content">
+
+    <article class="media">
+      <figure class="media-left">
+        <p class="image is-64x64">
+        <img src="{{ speaker.photo.url }}"
+             alt="Foto de {{ speaker.name }} {{ speaker.surname }}"
+             >
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="content">
+          <h2 class="subtitle is-4">
+            {{ speaker.name }} {{ speaker.surname }}
+          </h2>
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <div class="speaker-bio">
+    {{ speaker.bio|as_markdown }}
+    </div>
+
+    {% with speaker.schedule.all.0.slot as talk %}
+    <div class="message">
+    <div class="message-body">
+     <h3 class="subtitle">
+       <a href="{% url 'events:detail_task' event=event pk=talk.schedule.all.0.pk %}#start">
+     {{ talk.name }}
+       </a>
+     </h3>
+    </div>
+    </div>
+    {% endwith %}
+
+    {% if speaker.socials_for_display %}
+    <footer class="card-footer">
+        {% for social in speaker.socials_for_display %}
+          <a href="{{ social.href }}" target="_blank">
+            <i class="fab fa-{{ social.code }}"></i>
+          </a>
+        {% endfor %}
+    </footer>
+    {% endif %}
+
+  </div>
+</div>
+

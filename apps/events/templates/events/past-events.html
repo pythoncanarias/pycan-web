@@ -1,0 +1,15 @@
+{% extends "events/base.html" %}
+{% load utils %}
+
+{% block content %}
+
+<div class="hero is-shadowed">
+<div class="container" style="border: 1px dotted red;">
+  <p>queseto</p>
+<h1 class="title is-1 is-centered"> Eventos pasados </h1>
+</div>
+</div>
+
+{% include "events/includes/events-list.html" %}
+
+{% endblock content %}

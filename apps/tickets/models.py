@@ -202,7 +202,7 @@ class Raffle(models.Model):
     closed_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f'Sorteo para {self.event.qualified_hashtag}'
+        return f'Sorteo para {self.event.qualified_hashtag()}'
 
     def get_candidate_tickets(self):
         return self.event.all_tickets().filter(

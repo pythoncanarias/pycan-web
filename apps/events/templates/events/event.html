@@ -1,9 +1,5 @@
 {% extends "events/base.html" %}
-
-{% load static %}
-{% load leaflet_tags %}
-{% load utils %}
-{% load l10n %}
+{% load static leaflet_tags utils l10n %}
 
 {% block title %}{{event.name}} - {{ block.super }}{% endblock %}
 
@@ -56,10 +52,6 @@
     {% if event.raffle.closed %}
       <a class="event-menu-item" href="{% url 'events:raffle_results' event.slug %}">Sorteo</a>
     {% endif %}
-    <a class="event-menu-item" href="{{ event.twitter_hashtag_url }}">
-      <i class="fab fa-twitter"></i>
-      {{ event.qualified_hashtag }}
-    </a>
   </nav>
 
 {% if event.call_for_paper_is_open %}
@@ -298,7 +290,7 @@
         {% for past_event in past_events %}
           <div class="column has-text-centered">
             <div class="past-event-box">
-              <a href="{% url 'events:detail_event' slug=past_event.slug %}">
+              <a href="{% url 'events:detail_event' event=past_event %}">
                 <img src="{{ past_event.cover.url }}">
                 <p class="past-event-details">
                   {{ past_event.name }}

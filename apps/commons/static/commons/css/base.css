@@ -24,10 +24,6 @@ hr {
   border-color: #c8dfec;
 }
 
-.tag {
-  background-color: #f3f3f7;
-}
-
 .collapsable--close {
   display: none;
 }
@@ -202,9 +198,6 @@ body {
   scroll-margin-top: var(--header-height) + 1rem;
 }
 
-.container {
-  padding-top: 2rem;
-}
 
 a.url {
   font-family: monospace;
@@ -215,7 +208,6 @@ a.url {
 a.url:hover {
   text-decoration: underline;
 }
-
 
 #breadcrumbs {
   border: 0px dotted green;

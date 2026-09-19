@@ -1,0 +1,59 @@
+{% extends "events/base.html" %}
+{% load static utils l10n %}
+
+{% block body_class %}event-page{% endblock %}
+
+{% block content %}
+
+{% include 'events/includes/event-header.html' with event=event %}
+
+{% include 'events/includes/event-tabs.html' with section='talks' %}
+
+<div class="container">
+{% if event.is_multitrack %}
+  {% include "events/includes/multitrack.html" %}
+{% else %}
+  {% include "events/includes/singletrack.html" %}
+{% endif %}
+<h2>
+</div>
+
+<section id="schedule" class="section schedule has-background-white anchor">
+
+      <div class="section-detail">
+        <p><i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}</p>
+        <a id="add-to-google-calendar" target="_blank" href="{{ event.get_google_calendar_url }}"><i class="far fa-calendar-plus"></i> Añadir a Google Calendar</a>
+      </div>
+
+      <div class="schedule-table">
+        {% for row in event.schedule_for_display %}
+          {% if row.type == 'tracks' %}
+            {% include "./event-components/schedule/tracks.html" with tracks=row.tracks only %}
+          {% elif row.type == 'plenary_scheduled_item' %}
+            {% include "./event-components/schedule/plenary-scheduled-item.html" with schedule=row.schedule only %}
+          {% elif row.type == 'scheduled_items' %}
+            {% include "./event-components/schedule/scheduled-items.html" with tracks=row.tracks only %}
+          {% endif %}
+        {% empty %}
+          <div class="column is-full has-text-centered coming-soon">
+            <p>
+              <i class="fas fa-box-open"></i>
+              Más información próximamente!
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if event.schedule_for_display and not event.closed_schedule %}
+      <div class="section-detail">
+            <div class="tag is-warning is-medium not-closed-schedule centered">
+            <i class="fas fa-info-circle"></i>
+            La agenda aún no está cerrada!
+          </div>
+        </div>
+      {% endif %}
+    </div>
+</section>
+
+
+{% endblock content %}

@@ -1,17 +1,20 @@
 {% extends "events/base.html" %}
-
 {% load static utils %}
-
-{% block title %}Call For Papers - {{ event }} - {{ block.super }}{% endblock %}
 
 {% block content %}
 
-<div class="container content-page">
-    <div class="content box">
-      <h1>Call for papers <i class="fas fa-inbox"></i></h1>
-      <h2>
-          <a href="{% url 'events:detail_event' slug=event.slug %}">{{ event.name }}</a>
+    <article class="message is-info">
+      <div class="message-header">
+      <h1 class="title is-1">
+        <a href="{% url 'events:detail_event' event=event %}">{{ event.name }}</a>
+      </h1>
+      <h2 class="subtitle is-3">
+        Call for papers <i class="fas fa-inbox"></i>
       </h2>
+      </div>
+
+      <div class="message-body">
+
       <p><em>{{ event.short_description|as_markdown }}</em></p>
       <p>
         <i class="far fa-calendar-check"></i>
@@ -21,16 +24,32 @@
         La duración máxima de la charla será de <strong>{{ event.default_slot_duration|duration_in_minutes }}<strong> minutos.
       </p>
 
-        <form action="./" method="post" class="uniForm">
-          {% csrf_token %}
-            <table class="table">
-                {{ form.as_table }}
-            </table>
-          <p>
-          <input class="input is-rounded has-background-warning" style="width: auto" type="submit" value="Enviar propuesta" name="ok" id="pb_submit"/>
-          </p>
+      <form action="./" method="post" class="uniForm">
+      {% csrf_token %}
+        <div class="columns">
+          <div class="column is-half">{{ form.name }}</div>
+          <div class="column is-half">{{ form.surname }}</div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-half">{{ form.email }}</div>
+          <div class="column is-half">{{ form.title }}</div>
+        </div>
+        <div class="columns">
+            <div class="column is-full">
+              {{ form.description }}
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-full">
+              <input class="input is-rounded has-background-warning"
+                     style="width: auto" type="submit"
+                     value="Enviar propuesta"
+                     name="ok" id="pb_submit"/>
+            </div>
+        </div>
         </form>
-    </div>
-</div>
+      </div>
+    </article>
 
 {% endblock content %}
