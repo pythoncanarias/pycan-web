@@ -52,12 +52,15 @@
       </a>
 
       {% if request.user.is_authenticated %}
-        <a class="navbar-item {% is_active 'members:homepage' %}" href="{% url 'members:profile' %}">
-          <i class="fas fa-user-cog"></i>
-          {{ request.user.username }}
+        <a class="navbar-item {% is_active 'members:homepage' %}"
+           href="{% url 'members:homepage' %}"
+          title="{{ request.user.username }}"
+          >
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+          Perfil
         </a>
       {% else %}
-        <a class="navbar-item" href="{% url 'members:login' %}">
+        <a class="navbar-item" href="{% url 'members:member_login' %}">
           <i class="fas fa-sign-in-alt"></i>
         </a>
       {% endif %}

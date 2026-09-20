@@ -1,14 +1,11 @@
 {% extends 'members/base.html' %}
 
-{% block title %}Perfil de socio/a - {{ block.super }}{% endblock %}
-
 {% block content %}
 <div class="box">
 
   <nav class="panel" id="personal">
-    <h3 class="panel-heading dyn-anchor-heading">
+    <h3 class="panel-heading">
       Datos personales
-      <a class="dyn-anchor-link" href="#personal"><i class="fas fa-link"></i></a>
     </h3>
     <div class="panel-block">
       <table class="table table-striped">
@@ -21,9 +18,8 @@
   </nav>
 
   <nav class="panel" id="address">
-    <h3 class="panel-heading dyn-anchor-heading">
+    <h3 class="panel-heading">
       Socio/a: #{{ member.pk }}
-      <a class="dyn-anchor-link" href="#address"><i class="fas fa-link"></i></a>
     </h3>
     <div class="panel-block pb-vertical">
       <table class="table table-striped">
@@ -49,7 +45,13 @@
         </tr>
       </table>
 
-      <a href="{% url 'members:address_change' %}"><i class="fas fa-edit"></i> Actualizar datos</a>
+      <p class="is-pulled-right">
+      <a role="button" class="button is-link"
+         href="{% url 'members:address_change' %}">
+        <i class="fas fa-edit"></i> Actualizar datos
+      </a>
+      </p>
+
     </div>
   </nav>
 </div>

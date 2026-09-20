@@ -18,7 +18,8 @@
     {% endblock title %}
   </title>
 
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">
+  {% comment %}<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">{% endcomment %}
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Lora:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 
   {% block styles %}
   <link rel="stylesheet" href="{% static 'commons/css/variables.css' %}">
@@ -28,8 +29,8 @@
   {% endblock styles %}
 
 </head>
-<body class="{% block body_class %}{% endblock %} has-navbar-fixed-top">
-  .
+<body class="{% block body_class %}{% endblock %} is-navbar-fixed-top">
+
   {% block header %}
     {% include "header.html" %}
   {% endblock header %}

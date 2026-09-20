@@ -44,18 +44,14 @@ class LoginForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update(
-            {
-                'class': "input",
-                'size': '40',
-            }
-        )
-        self.fields['password'].widget.attrs.update(
-            {
-                'class': "input",
-                'size': '40',
-            }
-        )
+        self.fields['username'].widget.attrs.update({
+            'class': "input",
+            'placeholder': "Username",
+            })
+        self.fields['password'].widget.attrs.update({
+            'class': "input",
+            'placeholder': "Contraseña",
+            })
         self.user = None
 
     def clean_username(self):

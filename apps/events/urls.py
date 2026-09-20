@@ -15,7 +15,7 @@ def tie(ruta, vista, name=None):
 urlpatterns = [
     tie('', views.index),
     tie('next/', views.next),
-    path('archive/', views.past_events, name='past_events'),
+    tie('archive/', views.past_events),
     tie('<event:event>/', views.detail_event),
     tie('<event:event>/talks/<int:pk>/', views.detail_task),
     tie('<event:event>/talks/', views.event_talks),
@@ -24,11 +24,7 @@ urlpatterns = [
     tie('<event:event>/sponsors/', views.event_sponsors),
     tie('<event:event>/cfp/', views.call_for_papers, name='cfp'),
     tie('<event:event>/cfp/thanks/', views.proposal_received, name='thanks'),
-    path(
-        '<slug:slug>/waiting-list/',
-        views.waiting_list,
-        name='waiting_list',
-    ),
+    tie('<event:event>/waiting-list/', views.waiting_list),
     path(
         '<slug:slug>/waiting-list/accepted/',
         views.waiting_list_accepted,
@@ -43,11 +39,6 @@ urlpatterns = [
         '<slug:slug>/refund/accepted/<int:pk>/',
         views.refund_accepted,
         name='refund_accepted',
-    ),
-    path(
-        '<slug:slug>/trade/<uuid:sell_code>/<uuid:buy_code>/',
-        views.trade,
-        name='trade',
     ),
     path(
         '<slug:slug>/resend_ticket/',

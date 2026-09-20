@@ -147,8 +147,7 @@ def detail_task(request, event, pk):
 
     return HttpResponse("detail_task no implementado", content_type="text/plain")
 
-def waiting_list(request, slug):
-    event = models.Event.get_by_slug(slug)
+def waiting_list(request, event):
     if request.method == "POST":
         form = forms.WaitingListForm(request.POST)
         if form.is_valid():
@@ -163,12 +162,11 @@ def waiting_list(request, slug):
             return redirect(links.waiting_list_accepted(event.slug))
     else:
         form = forms.WaitingListForm()
-    return render(
-        request,
-        "events/waiting-list.html",
-        {
-            "event": event,
-            "form": form,
+    return render(request, "events/waiting-list.html", {
+        'titulo': f"Lista de espera - {event}",
+        'breadcrumbs': breadcrumbs.bc_event_waiting_list(event),
+        "event": event,
+        "form": form,
         },
     )
 
@@ -222,58 +220,23 @@ def waiting_list_accepted(request, slug):
     )
 
 
-def trade(request, slug, sell_code, buy_code):
-    event = models.Event.get_by_slug(slug)
-    refund = models.Refund.load_by_sell_code(sell_code)
-    waiting_list = models.WaitingList.load_by_buy_code(buy_code)
-    """Pseudo codigo
-    GET:
-    1) A partir del ticket comprado obtener el tipo de ticket (articulo)
-    2) A partir del waiting list, obtener los datos del nuevo comprador
-    3) Preparar el formulario de compra. Idealmente un solo boton
-    POST:
-    1) obtener timestamp
-    2) Marcar el waiting list como fixed
-    3) Marcar el refund como fixed
-    4) Notificar a ambos que el acuerdo esta cerrado
-    """
-
-    return render(
-        request,
-        "events/trade.html",
-        {
-            "event": event,
-            "waiting_list": waiting_list,
-            "refund": refund,
-        },
-    )
-
-
 def stripe_payment_declined(request, charge):
     organization = Organization.load_main_organization()
-    return render(
-        request,
-        "events/payment-declined.html",
-        {
-            "email": organization.email,
-            "charge_id": charge.id,
-        },
-    )
+    return render(request, "events/payment-declined.html", {
+        "email": organization.email,
+        "charge_id": charge.id,
+        })
 
 
 def stripe_payment_error(request, exception):
     msg, extra_info = stripe_utils.get_description_from_exception(exception)
     organization = Organization.load_main_organization()
-    return render(
-        request,
-        "events/payment-error.html",
-        {
-            "msg": msg,
-            "extra_info": extra_info,
-            "error": str(exception),
-            "email": organization.email,
-        },
-    )
+    return render(request, "events/payment-error.html", {
+        "msg": msg,
+        "extra_info": extra_info,
+        "error": str(exception),
+        "email": organization.email,
+        })
 
 
 def buy_ticket(request, slug):
@@ -450,12 +413,16 @@ def resend_confirmation(request, slug):
 
 
 def past_events(request):
-    events = models.Event.objects.filter(active=False).order_by("-start_date")
+    events = (
+        models.Event.objects
+        .filter(active=False)
+        .order_by("-start_date")
+        )
     return render(request, "events/past-events.html", {
-        'events': events.all(),
-        'archive': True,
         'titulo': 'Eventos pasados',
         'breadcrumbs': breadcrumbs.bc_past_events(),
+        'events': events.all(),
+        'archive': True,
         })
 
 

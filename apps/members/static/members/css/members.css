@@ -1,5 +1,3 @@
-@import 'apps/commons/static/commons/css/base';
-
 .pb-vertical {
   flex-direction: column;
   align-items: baseline;

@@ -145,6 +145,7 @@ body {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
   background-color: var(--header-bg);
   z-index: 99;
+  height: var(--header-height);
 }
 
 .content-page {
@@ -181,19 +182,21 @@ body {
 /* Float notification messages at top of pages */
 .messages {
   position: absolute;
-  right: 0;
-  top: var(--header-height) + 1rem;
+  right: 24px;
+  top: var(--header-height) + 4rem;
   width: 100%;
-  z-index: 1;
-
-  & .notification {
-    width: var(--notification-width);
-    margin-left: auto;
-    margin-right: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 0;
+  z-index: 1000;
   }
-}
+
+.messages .notification {
+  width: var(--notification-width);
+  margin-left: auto;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  z-index: 1000;
+  margin-bottom: 0;
+  }
+
 .message {
   scroll-margin-top: var(--header-height) + 1rem;
 }
@@ -214,9 +217,9 @@ a.url:hover {
   background-color: #3f0b1a;
   color: #EEEEEE;
   z-index: 1000;
-  margin-top: 5px;
+  margin-top: var(--header-height);
   margin-left: 0px;
-  line-height: 1.4rem;
+  line-height: 1.2rem;
   padding-left: 1ex;
 }
 

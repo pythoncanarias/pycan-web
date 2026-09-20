@@ -25,13 +25,12 @@ def bc_event_sponsors(event):
         )
 
 
-def bc_event_cfp(event):
+def bc_event_waiting_list(event):
     return bc_event(event).step(
-        "Call for papers",
-        'events:cfp',
+        "Lista de espera",
+        'events:waiting_list',
         event=event,
         )
-
 
 
 def bc_event_cfp(event):

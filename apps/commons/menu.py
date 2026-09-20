@@ -5,9 +5,13 @@ from django.urls import reverse_lazy
 
 class MenuItem:
 
-    def __init__(self, text, link):
+    def __init__(self, text, link, section):
         self.text = text
         self.url = reverse_lazy(link)
+        self.section = section
+
+    def is_active(self) -> bool:
+        return self.url == self.section.menu.request.path
 
 
 class MenuSection:
@@ -22,7 +26,7 @@ class MenuSection:
             yield item
 
     def add_menu_item(self, text, link):
-        new_item = MenuItem(text, link)
+        new_item = MenuItem(text, link, section=self)
         self.items.append(new_item)
         return self
 
@@ -30,10 +34,12 @@ class MenuSection:
         return self.menu
 
 
+
 class Menu:
 
-    def __init__(self):
+    def __init__(self, request):
         self.sections = collections.OrderedDict({})
+        self.request = request
 
     def __iter__(self):
         for section in self.sections.values():

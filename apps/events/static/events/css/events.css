@@ -35,10 +35,13 @@ section.cfp {
   background-position: 50% 50%;
   text-align: center;
 }
+
 .event-header > .inner {
-  padding: 4.5em 0.8em 4.2em 0.8em;
+  padding: 24.5em 0.8em 4.2em 0.8em;
   background-color: #000d19b8;
 }
+
+
 .event-header > .inner .title, .event-header > .inner .subtitle {
   margin: 0;
   color: #fff;

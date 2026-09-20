@@ -76,10 +76,32 @@ class EmailForm(forms.Form):
 
 
 class WaitingListForm(forms.Form):
+
     email = forms.EmailField(label="Tu email", max_length=192)
     name = forms.CharField(label="Nombre", max_length=256)
     surname = forms.CharField(label="Apellidos", max_length=256)
     phone = forms.CharField(label="Teléfono", max_length=32)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["name"].widget.attrs.update({
+            "placeholder": "Tu nombre",
+            "class": "input is-rounded",
+            })
+        self.fields["surname"].widget.attrs.update({
+            "placeholder": "Apellidos",
+            "class": "input is-rounded",
+            })
+        self.fields["phone"].widget.attrs.update({
+            "placeholder": "Teléfono",
+            "class": "input is-rounded",
+            })
+        self.fields["email"].widget.attrs.update({
+            "placeholder": "Correo electrónico",
+            "class": "input is-rounded",
+            })
+
+
 
 
 class RefundForm(forms.Form):

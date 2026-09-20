@@ -4,14 +4,16 @@ from . import views
 
 app_name = 'members'
 
+
+def tie(ruta, vista, name=None):
+    return path(ruta, vista, name=name or vista.__name__)
+
+
 urlpatterns = [
-    path('', views.homepage, name='homepage'),
-    path("profile/", views.profile, name="profile"),
-    path("membership/", views.view_membership, name="membership"),
-    path("password/change/", views.password_change, name="password_change"),
-    path(
-        "address/change/", views.ChangeAddress.as_view(), name="address_change"
-    ),
-    path("login/", views.member_login, name="login"),
-    path("logout/", views.member_logout, name="logout"),
-]
+    tie('', views.homepage),
+    tie("membership/", views.membership),
+    tie("password/change/", views.password_change),
+    tie("address/change/", views.address_change),
+    tie("login/", views.member_login),
+    tie("logout/", views.member_logout),
+    ]

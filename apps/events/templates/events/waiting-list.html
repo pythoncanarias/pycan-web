@@ -1,25 +1,37 @@
 {% extends "events/base.html" %}
-{% load static %}
-{% load utils %}
-{% block title %}Lista de espera - {{event.name}} - {{ block.super }}{% endblock %}
+{% load static utils %}
 
 {% block content %}
 
-<h1> {{ event.name }} 
-    <small> Lista de espera </small>
-</h1>
+{% include 'events/includes/event-header.html' with event=event %}
+{% include 'events/includes/event-tabs.html' with section='actions' %}
 
+<div class="box">
 <form method="POST" action =".">
+{% csrf_token %}
 
-    {% csrf_token %}
+<div class="columns is-multiline">
+  <div class="column is-half">
+    {{ form.name }}
+  </div>
+  <div class="column is-half">
+    {{ form.surname }}
+  </div>
 
-    <table class="table form">
-
-    {{ form.as_table }}
-
-    </table>
-
-<input type="submit" name="Apuntarse en la lista de espera">
+  <div class="column is-two-thirds">
+    {{ form.email }}
+  </div>
+  <div class="column is-one-third">
+    {{ form.phone }}
+  </div>
+  <div class="column is-full">
+    <input class="button is-link"
+      type="submit"
+      name="ok"
+      value="Apuntarse en la lista de espera">
+  </div>
+</div><!-- de columns -->
 </form>
+</div>
 
 {% endblock content %}
