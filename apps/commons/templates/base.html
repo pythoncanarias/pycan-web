@@ -11,9 +11,13 @@
   <title>
     {% block title %}
     {% if titulo %}
-      {{ titulo }}
+      {% if subtitulo %}
+        {{ titulo }} - {{ subtitulo }}
+      {% else %}
+        {{ titulo }}
+      {% endif %}
     {% else %}
-      {{ organization.name }}
+      Falta título - {{ organization.name }}
     {% endif %}
     {% endblock title %}
   </title>
@@ -31,54 +35,44 @@
 </head>
 <body class="{% block body_class %}{% endblock %} is-navbar-fixed-top">
 
-  {% block header %}
-    {% include "header.html" %}
-  {% endblock header %}
+{% block header %}
+  {% include "includes/header.html" %}
+{% endblock header %}
 
-  {% block breadcrumbs %}
-    {% include "includes/breadcrumbs.html" %}
-  {% endblock breadcrumbs %}
+{% block breadcrumbs %}
+  {% include "includes/breadcrumbs.html" %}
+{% endblock breadcrumbs %}
 
-  {% block container %}
+{% block container %}
 
-  {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-       <div class="notification {{ message.tags|msgtag_to_bulmaclass }}">
-         <button class="delete"></button>
-         {{ message }}
-       </div>
-      {% endfor %}
-    </div>
-  {% endif %}
+{% block hero %}
+{% endblock hero %}
 
-  <div class="{% block default_content_class %}container content-page{% endblock %} {% block content_class %}{% endblock %}
-      {% if menu %}
-        is-wide
-      {% endif %}
-    " id="content-page">
-    {% if menu %}
-      <div class="columns is-display">
-        <div class="column is-one-quarter">
-          {% block menu %}{% endblock menu %}
-        </div>
-        <div class="column is-three-quarters">
+<main class="container">
+  <div class="titulo-subtitulo">
+    {% if titulo %}
+      <h1 class="title is-3"> {{ titulo }} </h1>
     {% endif %}
-
-    <main>
-    {% block content %}
-    {% endblock content %}
-    </main>
-
-    {% if menu %}
-        </div>
-      </div>
+    {% if subtitulo %}
+      <h2 class="subtitle is-5"> {{ subtitulo }} </h1>
     {% endif %}
+  </div>
+
+  {% block content %}
+  {% endblock content %}
+</main>
+
+    {% comment %}{% if menu %}{% endcomment %}
+        {% comment %}</div>{% endcomment %}
+      {% comment %}</div>{% endcomment %}
+    {% comment %}{% endif %}{% endcomment %}
   </div>
   {% endblock container %}
 
+  {% include "includes/messages.html" %}
+
   {% block footer %}
-    {% include "footer.html" %}
+    {% include "includes/footer.html" %}
   {% endblock footer %}
 
   <script src="{% static 'commons/custom.min.js' %}"></script>

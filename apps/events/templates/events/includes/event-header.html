@@ -1,43 +1,50 @@
 {% load utils %}
-<div class="hero"><div class="hero-body">
+<a name="start">
+<nav class="level is-centered">
 
-  {% if event.hero %}
-    <img src="{{ event.hero.url }}" alt="{{ event.name }}">
-
-  {% else %}
-
-    <div class="box container">
-    <h1 class="title is-1">{{ event.name }}</h1>
-    <h2 class="subtitle is-4">
-      <span class="event-header-date">
-        <i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}
-      </span> | {{ event.venue.name }}
-    </h2>
-
+  {% if not event.active %}
+    <div class="level-item">
+      <a href="#" role="button" class="button is-danger">
+        Evento cerrado
+      </a>
     </div>
   {% endif %}
 
-</div></div>
-
-<a name="start">&nbsp;</a>
-
-<nav class="level">
-  <div class="level-item has-text-centered" style="width:50%;">
-    <p>
-    <mark title="Si quieres promocionar este evento en tus redes sociales
-    te agradeceríamos que usaras este hashtag" class="hashtag">{{ event.qualified_hashtag }}</mark>
-    </p>
+  {% if event.active and event.opened_ticket_sales %}
+    <div class="level-item">
+      <a href="{% url 'events:buy_ticket' slug=event.slug %}"
+         role="button"
+         class="button is-warning">
+        Comprar entrada
+      </a>
   </div>
-  <div class="level-item has-text-centered" style="width:50%;">
-    <p>
+  {% endif %}
+
+  {% if event.active and not event.external_tickets_url %}
+    <div class="level-item">
+      <a href="{% url 'events:resend_ticket' event=event %}"
+         role="button" class="button is-info"
+         title="Si has perdido tu entrada, podemos reenviartela">
+        Reenviar entrada
+      </a>
+    </div>
+  {% endif %}
+
+  {% if event.active %}
+    <div class="level-item">
+      <a href="#" role="button" class="button is-info"
+         title="Si quieres promocionarlo en tus redes sociales te agradeceríamos que usaras este hashtag">{{ event.qualified_hashtag }}
+      </a>
+    </div>
+  {% endif %}
+
+  {% if event.active %}
+  <div class="level-item">
     <a id="add-to-google-calendar"
-      class="button is-warning"
-      target="_blank"
+      class="button is-info"
       href="{{ event.get_google_calendar_url }}">
       <i class="far fa-calendar-plus"></i> Añadir a Google Calendar</a>
-    </p>
   </div>
+  {% endif %}
 </nav>
-
-
-
+</a>

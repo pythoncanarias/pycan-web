@@ -1,5 +1,28 @@
 {% extends "base.html" %}
-{% load static leaflet_tags %}
+{% load static utils leaflet_tags %}
+
+{% block hero %}
+{% if event %}<div class="container">
+{% if event.hero %}
+  <div class="hero">
+{% else %}
+  <div class="hero is-small">
+{% endif %}
+    <div class="hero-body">
+    {% if event.hero %}
+      <img src="{{ event.hero.url }}">
+    {% else %}
+      <h1 class="title is-1">{{ event.name }}</h1>
+      <h2 class="subtitle is-4">
+        <span class="event-header-date">
+          <i class="far fa-calendar-alt"></i> {{ event.start_date|as_short_date }}
+        </span> | {{ event.venue.name }}
+      </h2>
+    {% endif %}
+  {% include 'events/includes/event-header.html' with event=event %}
+  </div>
+</div>{% endif %}
+{% endblock hero %}
 
 {% block styles %}
   {{ block.super }}

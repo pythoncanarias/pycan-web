@@ -49,16 +49,10 @@ def next(request):
 def detail_event(request, event):
     """Pagina princial del evento.
     """
-    past_events = (
-        models.Event.objects.filter(active=False)
-        .exclude(pk=event.id)
-        .order_by("-start_date")[:3]
-    )
     return render(request, "events/event.html", {
         'titulo': event.name,
         'breadcrumbs': breadcrumbs.bc_event(event),
         'event': event,
-        "past_events": past_events,
         })
 
 
@@ -100,6 +94,7 @@ def event_location(request, event):
     """
     return render(request, "events/event-location.html", {
         'titulo': f"Como llegar - {event.name}",
+        'subtitulo': event.venue,
         'breadcrumbs': breadcrumbs.bc_event_location(event),
         'event': event,
         })
@@ -110,6 +105,7 @@ def event_talks(request, event):
     """
     return render(request, "events/event-talks.html", {
         'titulo': f"Programa - {event.name}",
+        'subtitulo': f"Tenemos {event.num_talks()} charlas previstas",
         'breadcrumbs': breadcrumbs.bc_event_talks(event),
         'event': event,
         })
@@ -129,7 +125,8 @@ def event_sponsors(request, event):
     """Pagina que muestra los patrocinadores de un evento.
     """
     return render(request, "events/event-sponsors.html", {
-        'titulo': f"Patrocinadores - {event.name}",
+        'titulo': "Organismo patrocinadores y colaboradores",
+        'subtitulo': str(event.name),
         'breadcrumbs': breadcrumbs.bc_event_sponsors(event),
         'event': event,
         })
@@ -379,8 +376,7 @@ def find_tickets_by_email(event, email):
     return list(qs)
 
 
-def resend_ticket(request, slug):
-    event = models.Event.get_by_slug(slug)
+def resend_ticket(request, event):
     form = forms.EmailForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
@@ -389,14 +385,13 @@ def resend_ticket(request, slug):
             for ticket in tickets:
                 tasks.send_ticket.delay(ticket)
             return redirect("events:resend_confirmation", slug=event.slug)
-    return render(
-        request,
-        "events/resend-ticket.html",
-        {
-            "event": event,
-            "form": form,
-        },
-    )
+    return render( request, "events/resend-ticket.html", {
+        'titulo': 'Reenviar entrada',
+        'subtitulo': str(event),
+        'breadcrumbs': breadcrumbs.bc_resend_ticket(event),
+        "event": event,
+        'form': form,
+        })
 
 
 def resend_confirmation(request, slug):

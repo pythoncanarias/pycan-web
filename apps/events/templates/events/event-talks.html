@@ -1,11 +1,7 @@
 {% extends "events/base.html" %}
 {% load static utils l10n %}
 
-{% block body_class %}event-page{% endblock %}
-
 {% block content %}
-
-{% include 'events/includes/event-header.html' with event=event %}
 
 {% include 'events/includes/event-tabs.html' with section='talks' %}
 

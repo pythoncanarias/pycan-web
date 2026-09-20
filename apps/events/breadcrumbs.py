@@ -24,6 +24,12 @@ def bc_event_sponsors(event):
         event=event,
         )
 
+def bc_resend_ticket(event):
+    return bc_event(event).step(
+        'Reenviar ticket',
+        'events:resend_ticket',
+        event=event,
+        )
 
 def bc_event_waiting_list(event):
     return bc_event(event).step(

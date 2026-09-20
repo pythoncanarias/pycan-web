@@ -160,6 +160,9 @@ class Event(models.Model):
     def is_multitrack(self) -> bool:
         return self.schedule.values_list("track").distinct().count() > 1
 
+    def num_talks(self) -> int:
+        return self.schedule.count()
+
     def all_talks(self):
         qs = (
             self.schedule

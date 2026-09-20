@@ -40,11 +40,7 @@ urlpatterns = [
         views.refund_accepted,
         name='refund_accepted',
     ),
-    path(
-        '<slug:slug>/resend_ticket/',
-        views.resend_ticket,
-        name='resend_ticket',
-    ),
+    tie('<event:event>/resend_ticket/', views.resend_ticket),
     path(
         '<slug:slug>/resend_ticket/confirmation',
         views.resend_confirmation,

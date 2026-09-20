@@ -212,17 +212,41 @@ a.url:hover {
   text-decoration: underline;
 }
 
+
 #breadcrumbs {
-  border: 0px dotted green;
+  border-bottom: 0px dotted green;
+  margin-bottom: 0;
   background-color: #3f0b1a;
   color: #EEEEEE;
   z-index: 1000;
   margin-top: var(--header-height);
-  margin-left: 0px;
+  margin-left: 0;
+  margin-right: 0;
   line-height: 1.2rem;
   padding-left: 1ex;
 }
 
+.hero-body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  //min-height: 148px;
+  text-align: center;
+  border: 0px dotted green;
+}
+
+.hero-body img {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.titulo-subtitulo {
+  padding-top: 0.5rem;
+  padding-bottom: 0.8rem;
+  text-align: center;
+  border: 0px solid red;
+}
 
 .footer-button {
   position: absolute;

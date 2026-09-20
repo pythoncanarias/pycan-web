@@ -1,21 +1,24 @@
 {% extends "events/base.html" %}
 
-{% block title %}Reenviar entrada - {{ block.super }}{% endblock %}
-
-{% block body_class %}resend-ticket-page{% endblock %}
-{% block content_class %}is-narrow{% endblock %}
-
 {% block content %}
-<div class="box has-text-centered">
-  <h1 class="title is-blue">{{ event.name }}</h1>
 
-  <h2 class="subtitle">Reenviar la entrada</h2>
+<form method="post" action=".">
+{% csrf_token %}
+
+{% include 'events/includes/event-tabs.html' with section='main' %}
+
+<div class="box has-text-centered">
 
   <p>Si has perdido tu entrada, podemos reenviartela de nuevo.</p>
-  <p>Para ello, tienes que indicarnos el email que usaste para comprarla:</p>
+  <p>Para ello, solo tienes que indicarnos el email que usaste
+  para comprarla:</p>
 
-  <form method="post" action=".">
-    {% csrf_token %}
+  <div class="field">
+    <label class="label">{{ form.email.label }}</label>
+    <div class="control">
+       {{ form.email }}
+    </div>
+  </div>
 
     {{ form.as_table }}
 
