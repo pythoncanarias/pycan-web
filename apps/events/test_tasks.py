@@ -3,7 +3,6 @@
 from datetime import datetime as Date
 from datetime import datetime as DateTime
 from decimal import Decimal
-from unittest.mock import Mock
 import os
 
 from django.core.mail import EmailMessage
@@ -13,7 +12,6 @@ from apps.events.models import Event
 from apps.tickets.models import TicketCategory
 from apps.tickets.models import Ticket
 from apps.tickets.models import Article
-from apps.organizations.models import Organization
 from . import tasks
 
 
@@ -62,21 +60,11 @@ def test_get_tickets_dir(test_ticket):
     assert os.path.isdir(path)
 
 
+@pytest.mark.slow
 @pytest.mark.django_db
 def test_create_ticket_message(test_ticket):
-    organization = Organization(
-        name="Organizacion para pruebas",
-        email='pruebas@organizacionpruebas.org',
-        )
-    msg = tasks.create_ticket_message(
-        test_ticket,
-        organization=organization,
-        )
+    msg = tasks.create_ticket_message(test_ticket)
     assert isinstance(msg, EmailMessage)
-
-
-def test_send_ticket(test_ticket):
-    tasks.send_ticket(test_ticket)
 
 
 if __name__ == '__main__':

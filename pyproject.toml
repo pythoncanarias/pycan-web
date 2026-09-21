@@ -33,7 +33,6 @@ dependencies = [
     "redis==8.1.0",
     "reportlab==5.0.1",
     "rq",
-    "sendgrid==6.12.5",
     "stripe>=15.6.1",
     "tabulate==0.10.0",
     "uwsgi==2.0.31",

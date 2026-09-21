@@ -5,7 +5,6 @@ from django.core.management.base import BaseCommand
 from apps.notices import repository
 from apps.notices.models import Notice, NoticeKind
 from apps.notices.tasks import (
-    create_notice_body,
     create_notice_message,
     task_send_notice,
 )
@@ -52,17 +51,9 @@ class Command(BaseCommand):
 
     def do_message(self, *args, **options):
         id_notice = options.get('id_notice')
-        notice = Notice.objects.get(pk=id_notice)
-        email_message = create_notice_message(notice)
-        print(
-            cyan('From:'),
-            f'{email_message._from_email._email}'
-            f' <{email_message._from_email._name}>',
-        )
-        print(cyan('Subject:'), email_message._subject)
-        print()
-        print(create_notice_body(notice))
-        print()
+        email_message = create_notice_message(id_notice)
+        print(cyan('From:'), f'{email_message.from_email}')
+        print(cyan('Subject:'), email_message.subject)
 
     def do_list(self, *args, **options):
         num_rows = options.get('num_rows')
@@ -132,7 +123,7 @@ class Command(BaseCommand):
                             status = green("[Notice would be queued]")
                         else:
                             notice = kind.send_notice(member, ref_date)
-                            task_send_notice.delay(notice)
+                            task_send_notice.delay(notice.pk)
                             status = cyan("[Notice queued]")
                     body.append((member, notice.kind, ref_date, status))
         if is_verbose or is_check:

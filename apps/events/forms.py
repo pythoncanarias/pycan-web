@@ -74,6 +74,12 @@ class ProposalForm(forms.ModelForm):
 class EmailForm(forms.Form):
     email = forms.EmailField(label="Tu email", max_length=192)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["email"].widget.attrs.update({
+            "placeholder": "Correo electrónico",
+            "class": "input is-rounded",
+            })
 
 class WaitingListForm(forms.Form):
 

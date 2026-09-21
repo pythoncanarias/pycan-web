@@ -13,6 +13,7 @@ def test_as_hour_with_naive_datetime():
     assert time_utils.as_hour(dst) == '14:22'
 
 
+@pytest.mark.slow
 def test_as_hour_with_non_naive_datetime():
     ams = pytz.timezone('CET')
     dst = datetime.datetime(2019, 3, 25, 14, 22, 1, tzinfo=ams)

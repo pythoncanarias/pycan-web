@@ -17,7 +17,6 @@ qr==0.6.0
 redis==6.4.0
 reportlab==4.2.2
 rq==2.4.1
-sendgrid==5.6.0
 stripe==10.6.0
 tabulate==0.8.9
 uWSGI==2.0.26

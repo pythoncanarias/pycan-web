@@ -1,12 +1,14 @@
-import datetime
 import logging
 
 import stripe
+from django.utils import timezone
+from django.http import HttpResponse
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+
 from apps.organizations.models import Organization
 from apps.tickets.models import Article, Gift, Raffle, Ticket
 from apps.schedule.models import Schedule
@@ -62,8 +64,8 @@ def call_for_papers(request, event):
         form = forms.ProposalForm(event, request.POST)
         if form.is_valid():
             proposal = form.save()
-            tasks.send_proposal_acknowledge.delay(proposal)
-            tasks.send_proposal_notification.delay(proposal)
+            tasks.send_proposal_acknowledge.delay(proposal.pk)
+            tasks.send_proposal_notification.delay(proposal.pk)
             return redirect(reverse("events:thanks", kwargs={"event": event}))
     else:
         if request.user.is_authenticated:
@@ -140,8 +142,6 @@ def detail_task(request, event, pk):
         'event': event,
         'talk': talk,
         })
-
-
     return HttpResponse("detail_task no implementado", content_type="text/plain")
 
 def waiting_list(request, event):
@@ -383,7 +383,7 @@ def resend_ticket(request, event):
             email = form.cleaned_data["email"]
             tickets = find_tickets_by_email(event, email)
             for ticket in tickets:
-                tasks.send_ticket.delay(ticket)
+                tasks.send_ticket.delay(ticket.pk)
             return redirect("events:resend_confirmation", slug=event.slug)
     return render( request, "events/resend-ticket.html", {
         'titulo': 'Reenviar entrada',
@@ -456,7 +456,7 @@ def raffle_gift(request, slug, gift_id, match=False):
         if current_gift.awarded_ticket:
             current_gift.missing_tickets.add(current_gift.awarded_ticket)
         current_gift.awarded_ticket = raffle.get_random_ticket()
-        current_gift.awarded_at = datetime.datetime.now()
+        current_gift.awarded_at = timezone.now()
         current_gift.save()
     next_gift = raffle.get_undelivered_gifts().first()
     progress_value = current_gift.order() / raffle.gifts.count() * 100
@@ -482,7 +482,7 @@ def raffle_results(request, slug):
     except (models.Event.DoesNotExist, Raffle.DoesNotExist):
         return redirect("/")
     if request.user.is_staff and raffle.opened:
-        raffle.closed_at = datetime.datetime.now()
+        raffle.closed_at = timezone.now()
         raffle.save()
     gifts = raffle.gifts.all()
     return render(

@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'colorfield',
     'leaflet',
     'import_export',
+    'adapters.emailer',
     'apps.commons',
     'apps.homepage',
     'apps.jobs',
@@ -241,7 +242,6 @@ STRIPE_SECRET_KEY = config(
     default='Set your Stripe api secret key in .env file',
 )
 
-SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='<sengrid api key>')
 
 LOGFILE_NAME = os.path.join(BASE_DIR, 'web.log')
 LOGFILE_SIZE = 1 * 1024 * 1024
@@ -325,6 +325,12 @@ REDIS_DB = config('REDIS_DB', default=0, cast=int)
 REDIS_PREFIX = config('REDIS_PREFIX', default='pycan-web')
 
 RQ_QUEUES = {
+    'high': {
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
+        'DB': REDIS_DB,
+        'DEFAULT_TIMEOUT': 360,
+    },
     'default': {
         'HOST': REDIS_HOST,
         'PORT': REDIS_PORT,
@@ -335,6 +341,26 @@ RQ_QUEUES = {
         'HOST': REDIS_HOST,
         'PORT': REDIS_PORT,
         'DB': REDIS_DB,
+    },
+}
+
+# Email
+CONTACT_EMAIL = config('CONTACT_EMAIL', default='info@pythoncanarias.es')
+AWS_SNS_SERVER = config('AWS_SNS_SERVER')
+AWS_SNS_PORT = config('AWS_SNS_PORT', cast=int, default=587)
+AWS_SNS_USERNAME = config('AWS_SNS_USERNAME')
+AWS_SNS_PASSWORD = config('AWS_SNS_PASSWORD')
+
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "OPTIONS": {
+            "host": AWS_SNS_SERVER,
+            "port": AWS_SNS_PORT,
+            "use_tls": True,
+            "username": AWS_SNS_USERNAME,
+            "password": AWS_SNS_PASSWORD,
+        },
     },
 }
 

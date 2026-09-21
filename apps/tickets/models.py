@@ -140,6 +140,14 @@ class Ticket(models.Model):
     send_at = models.DateTimeField(default=None, blank=True, null=True)
     refunded_at = models.DateTimeField(default=None, blank=True, null=True)
 
+    @classmethod
+    def load_ticket(cls, pk):
+        try:
+            return cls.objects.get(pk=pk)
+        except cls.DoesNotExist:
+            return None
+
+
     def __str__(self):
         return '{}/{} [{}]'.format(
             self.number,

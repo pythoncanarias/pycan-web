@@ -2,7 +2,6 @@
 
 from datetime import datetime as DateTime
 from datetime import time as Time
-import datetime
 import locale
 import os
 import uuid
@@ -32,12 +31,17 @@ class Event(models.Model):
     name = models.CharField(max_length=256)
     hashtag = models.SlugField(unique=True)
     active = models.BooleanField(
-        help_text="The current event is shown in the events page", default=False
-    )
+        help_text="The current event is shown in the events page",
+        default=False,
+        )
     opened_ticket_sales = models.BooleanField(default=False)
     start_date = models.DateField()
     venue = models.ForeignKey(
-        Venue, related_name="events", null=True, blank=True, on_delete=models.PROTECT
+        Venue,
+        related_name="events",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
     )
     # 50 minutes as default duration for each slot
     default_slot_duration = models.DurationField(
@@ -124,7 +128,7 @@ class Event(models.Model):
     def get_full_url(self):
         return "http://{}{}".format(
             settings.DOMAIN,
-            links.event_detail(self.slug),
+            links.event_detail(self),
         )
 
     def get_long_start_date(self, to_locale=settings.LC_TIME_SPANISH_LOCALE):

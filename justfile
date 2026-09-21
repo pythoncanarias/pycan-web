@@ -94,3 +94,7 @@ fcss *args='':
 # Buscar en ficheros Html
 fhtml *args='':
     pss --html --ignore-dir .venv {{ args }}
+
+# Arrancar workers para las tras clasess high, default y low
+workers:
+    python3 manage.py rqworker high default low

@@ -1,8 +1,8 @@
 from django.urls import reverse
 
 
-def event_detail(slug):
-    return reverse('events:detail_event', kwargs={'slug': slug})
+def event_detail(event):
+    return reverse('events:detail_event', kwargs={'event': event})
 
 
 def ticket_purchase(id_article):

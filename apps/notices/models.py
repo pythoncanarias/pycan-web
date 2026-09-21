@@ -80,6 +80,14 @@ class Notice(models.Model):
     def __str__(self):
         return f"Notice {self.pk}"
 
+    @classmethod
+    def load_notice(cls, pk):
+        try:
+            return cls.objects.get(pk=pk)
+        except cls.DoesNotExist:
+            return None
+
+
     def status(self):
         if not self.send_at:
             return 'Waiting'
