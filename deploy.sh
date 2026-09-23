@@ -2,14 +2,11 @@
 
 # Commands to deploy project in production
 
-echo "Empieza el despliegue"
-echo $USER
-source ~/.pyenv/versions/pycanweb/bin/activate
+echo "$USER Empieza el despliegue"
+source .venv/bin/activate
 git pull
-pip install -r requirements.txt
-npm install --no-save
-gulp
-python manage.py migrate
-python manage.py collectstatic --noinput --clear
-supervisorctl restart rq
-supervisorctl restart web
+uv sync
+uv run python manage.py migrate
+uv run python manage.py collectstatic --noinput --clear
+# supervisorctl restart pycan-rq
+supervisorctl restart pycan-web

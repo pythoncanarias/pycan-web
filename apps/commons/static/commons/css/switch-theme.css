@@ -1,5 +1,5 @@
 #switch-theme-button:hover {
-  border: 1px dotted green;
+  border: 0px dotted green;
 }
 
 @media (prefers-color-scheme: dark) {
