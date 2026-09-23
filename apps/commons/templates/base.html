@@ -7,33 +7,28 @@
   <meta name="author" content="Python Canarias">
 
   <link rel="icon" href="{% static 'commons/img/favicon.ico' %}">
+{% spaceless %}
+<title>{% block title %}
+{% if titulo %}{{ titulo }}{% if subtitulo %} - {{ subtitulo }}{% endif %}
+{% else %}Falta título - {{ organization.name }}{% endif %}
+{% endblock title %}</title>
+{% endspaceless %}
 
-  <title>
-    {% block title %}
-    {% if titulo %}
-      {% if subtitulo %}
-        {{ titulo }} - {{ subtitulo }}
-      {% else %}
-        {{ titulo }}
-      {% endif %}
-    {% else %}
-      Falta título - {{ organization.name }}
-    {% endif %}
-    {% endblock title %}
-  </title>
-
-  {% comment %}<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">{% endcomment %}
+{% block fonts %}
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Lora:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+{% endblock fonts %}
 
   {% block styles %}
   <link rel="stylesheet" href="{% static 'commons/css/variables.css' %}">
   <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
   <link rel="stylesheet" href="{% static 'commons/css/bulma.min.css' %}">
   <link rel="stylesheet" href="{% static 'commons/css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'commons/css/switch-theme.css' %}">
   {% endblock styles %}
-
 </head>
+
 <body class="{% block body_class %}{% endblock %} is-navbar-fixed-top">
+
 
 {% block header %}
   {% include "includes/header.html" %}
@@ -66,21 +61,21 @@
         {% comment %}</div>{% endcomment %}
       {% comment %}</div>{% endcomment %}
     {% comment %}{% endif %}{% endcomment %}
-  </div>
-  {% endblock container %}
+{% endblock container %}
 
-  {% include "includes/messages.html" %}
+{% include "includes/messages.html" %}
 
-  {% block footer %}
-    {% include "includes/footer.html" %}
-  {% endblock footer %}
+{% block footer %}
+  {% include "includes/footer.html" %}
+{% endblock footer %}
 
+{% block js %}
   <script src="{% static 'commons/custom.min.js' %}"></script>
-  {% block js %}
-    {% if current_date.month == 12 and current_date.day >= 21 and current_date.day <= 31  %}
-      <script src="https://app.embed.im/snow.js" defer></script>
-    {% endif %}
-  {% endblock %}
+  <script src="{% static 'commons/js/switch-theme.js' %}"></script>
+  {% if current_date.month == 12 and current_date.day >= 21 and current_date.day <= 31  %}
+    <script src="https://app.embed.im/snow.js" defer></script>
+  {% endif %}
+{% endblock %}
 
 </body>
 </html>

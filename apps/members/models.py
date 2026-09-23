@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 from .constants import (
     DEFAULT_MEMBERSHIP_PERIOD,
@@ -63,12 +64,24 @@ class Member(models.Model):
         return valid_until is None or datetime.date.today() <= valid_until
 
 
+class PositionManager(models.Manager):
+
+    def actives(self):
+        return (
+            super().get_queryset()
+            .select_related('member__user')
+            .exclude(until__lt=timezone.now())
+            )
+        
+
 class Position(models.Model):
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
     position = models.CharField(max_length=3, choices=MEMBER_POSITION.CHOICES)
     since = models.DateField()
     until = models.DateField(blank=True, null=True)
     remarks = models.CharField(max_length=512, blank=True)
+
+    objects = PositionManager()
 
     def save(self, *args, **kwargs):
         created = not self.id

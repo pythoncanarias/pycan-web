@@ -2,18 +2,14 @@
 
 {% block content %}
 
-<p class="title is-1">Asociación </p>
-<p class="subtitle is-3">{{ organization.name }}</p>
-
 <div class="box has-text-centered">
   <a href="{% url 'about:join_method' %}" class="link button is-warning
     is-medium is-outlined">Formar parte de la asociación</a>
 </div>
 
-<article class="message" id="intro">
-  <div class="message-header dyn-anchor-heading">
-    Introducción 
-    <a class="dyn-anchor-link" href="#intro"><i class="fa fa-link"></i></a>
+<article class="message is-info" id="intro">
+  <div class="message-header">
+    Introducción
   </div>
   <div class="message-body">
     <strong>{{ organization.name }}</strong> es una asociación sin ánimo de lucro cuyos objetivos, son, entre otros, promover el <strong>uso del lenguaje</strong> de programación Python, dar <strong>soporte</strong> a quienes deseen aprenderlo y promover la programación como una <strong>competencia educativa básica</strong>.</p>
@@ -26,7 +22,7 @@
   </div>
 </article>
 
-<article class="message" id="whypython">
+<article class="message is-info" id="whypython">
   <div class="message-header dyn-anchor-heading">
     ¿Por qué Python?
     <a class="dyn-anchor-link" href="#whypython"><i class="fa fa-link"></i></a>
@@ -36,7 +32,7 @@
   </div>
 </article>
 
-<article class="message" id="fiscal">
+<article class="message is-info" id="fiscal">
   <div class="message-header dyn-anchor-heading">
     Datos fiscales
     <a class="dyn-anchor-link" href="#fiscal"><i class="fa fa-link"></i></a>
@@ -57,17 +53,18 @@
   </div>
 </article>
 
-<article class="message" id="board">
+<article class="message is-info" id="board">
   <div class="message-header dyn-anchor-heading">
     Junta directiva
     <a class="dyn-anchor-link" href="#board"><i class="fa fa-link"></i></a>
   </div>
   <div class="content message-body">
     <p>Actualmente la <strong>junta directiva</strong> de {{ organization.name }} está formada por:</p>
-    <table class="table is-bordered is-striped is-narrow">
+    <table class="table is-info is-bordered is-striped is-hoverable
+      is-fullwidth">
       {% for position in positions %}
         <tr>
-          <td>{{ position.get_position_display }}</td>
+          <th>{{ position.get_position_display }}</th>
           <td>{{ position.member }}</td>
         </tr>
       {% endfor %}
@@ -75,7 +72,7 @@
   </div>
 </article>
 
-<article class="message" id="docs">
+<article class="message is-info" id="docs">
   <div class="message-header dyn-anchor-heading">
     Documentación
     <a class="dyn-anchor-link" href="#docs"><i class="fa fa-link"></i></a>
@@ -92,7 +89,7 @@
   </div>
 </article>
 
-<article class="message" id="regulation">
+<article class="message is-info" id="regulation">
   <a id="regulation"></a>
   <div class="message-header dyn-anchor-heading">
     Normativa de aplicación

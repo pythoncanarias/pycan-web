@@ -18,7 +18,8 @@ def index(request):
 def us(request):
     positions = [p for p in Position.objects.all() if p.active]
     return render(request, 'about/index.html', {
-        'titulo': f"La asociación {settings.ORGANIZATION_NAME}",
+        'titulo': "La asociación",
+        'subtitulo': settings.ORGANIZATION_NAME,
         'breadcrumbs': breadcrumbs.bc_us(),
         'positions': positions,
         },

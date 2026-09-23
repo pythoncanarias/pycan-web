@@ -21,7 +21,7 @@ def homepage(request: HttpRequest) -> HttpResponse:
     """
     member = request.user.member
     return render(request, "members/homepage.html", {
-        'titulo': "Perfil socio {member.pk}: {member.full_name}",
+        'titulo': f"Perfil socio {member.full_name}",
         'breadcrumbs': breadcrumbs.bc_members(),
         'member': member,
         'menu': menu.main_menu(request),

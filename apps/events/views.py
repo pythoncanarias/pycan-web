@@ -422,26 +422,24 @@ def past_events(request):
 
 
 @staff_member_required
-def raffle(request, slug):
-    try:
-        event = models.Event.get_by_slug(slug)
-        raffle = event.raffle
-    except (models.Event.DoesNotExist, Raffle.DoesNotExist):
-        return redirect("/")
+def raffle(request, event):
+    raffle = event.raffle
     gifts = raffle.gifts.all()
     candidate_tickets = raffle.get_candidate_tickets()
-    success_probability = gifts.count() / candidate_tickets.count() * 100
-    return render(
-        request,
-        "events/raffle.html",
-        {
-            "event": event,
-            "raffle": raffle,
-            "gifts": gifts,
-            "candidate_tickets": candidate_tickets,
-            "success_probability": success_probability,
-        },
-    )
+    num_tickets = candidate_tickets.count()
+    if num_tickets > 0:
+        success_probability = gifts.count() / candidate_tickets.count() * 100
+    else:
+        success_probability = None
+    return render(request, "events/raffle.html", {
+        'titulo': "Sorteo",
+        'subtitulo': settings.ORGANIZATION_NAME,
+        'event': event,
+        'raffle': raffle,
+        'gifts': gifts,
+        'candidate_tickets': candidate_tickets,
+        'success_probability': success_probability,
+        })
 
 
 @staff_member_required

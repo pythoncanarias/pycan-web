@@ -5,9 +5,8 @@ description = "Python Canarias Web Site"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "boto3>=1.43.97",
-    "colorama==0.4.6",
-    "django==6.1.1",
+    "boto3>=1.43.100",
+    "colorama>=0.4.6",
     "django-colorfield==0.14.0",
     "django-debug-toolbar>=4.3.0",
     "django-extensions==4.1",
@@ -15,6 +14,7 @@ dependencies = [
     "django-leaflet==0.34.0",
     "django-redis==7.0.0",
     "django-rq==4.2.0",
+    "django==6.1.1",
     "markdown2==2.5.5",
     "markuppy==1.18",
     "odfpy==1.4.1",
@@ -25,9 +25,10 @@ dependencies = [
     "pydotplus>=2.0.2",
     "pygal>=3.1.3",
     "pyqrcode==1.2.1",
-    "pytest>=9.1.1",
     "pytest-django>=4.14.0",
     "pytest-sugar>=1.1.1",
+    "pytest>=9.1.1",
+    "pytz",
     "pyyaml==6.0.3",
     "qr==0.6.0",
     "redis==8.1.0",
@@ -43,10 +44,35 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "ipython>=9.17.1",
-    "rope>=1.14.0",
-    "flake8>=7.3.0",
-    "black>=26.5.1",
-    "vulture>=2.16",
+    "black",
+    "django-stubs>=6.1.0",
+    "flake8",
     "icecream",
+    "ipython>=9.17.1",
+    "mypy>=2.3.1",
+    "rope>=1.14.0",
+    "vulture",
 ]
+
+[tool.ruff]
+line-length = 74
+
+[tool.ruff.lint]
+ignore = ['I001', 'EXE001', 'UP031', 'UP032', 'RUF012', 'BLE001']
+
+[tool.pytest.ini-options]
+testpaths = [
+    "tests",
+    ]
+addopts = "--reuse-db --no-migrations --failed-first --debug --ds=main.settings"
+markers = [
+    "wip",   # Work in progress
+    "slow",  # marks tests as slow (deselect with '-m "not slow"')
+    ]
+
+[tool.mypy]
+plugins = "mypy_django_plugin.main"
+
+[tool.django-stubs]
+django_settings_module="main.settings"
+ignore_missing_model_attributes=true

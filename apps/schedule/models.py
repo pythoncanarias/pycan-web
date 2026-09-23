@@ -17,6 +17,10 @@ class SlotCategory(models.Model):
 
 
 class SlotTag(models.Model):
+
+    class Meta:
+        ordering = ['name']
+
     # Machine Learning, Science, DevOps, ...
     name = models.CharField(max_length=256)
     slug = models.SlugField(unique=True)
@@ -24,9 +28,6 @@ class SlotTag(models.Model):
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        ordering = ['name']
 
 
 class SlotLevel(models.Model):

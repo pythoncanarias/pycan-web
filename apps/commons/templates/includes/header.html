@@ -18,6 +18,8 @@
   <div class="navbar-menu" id="navMenu">
     <div class="navbar-end">
       <div class="navbar-item has-dropdown is-hoverable">
+
+
         <a class="navbar-item  {% is_active 'about:index' %} js-nav-item" href="{% url 'about:index' %}">
           <i class="fas fa-user-friends"></i>
          Asociación
@@ -64,6 +66,11 @@
           <i class="fas fa-sign-in-alt"></i>
         </a>
       {% endif %}
+        <a class="navbar-item js-nav-item" id="switch-theme-button">
+          <i class="fa-solid fa-sun" id="switch-theme-icon-day"></i>
+          <i class="fa-solid fa-moon" id="switch-theme-icon-night"></i>
+        </a>
+
     </div>
   </div>
   </div>

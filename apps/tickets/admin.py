@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.http import HttpResponse
-from django.utils.html import format_html
 from import_export.admin import ImportExportActionModelAdmin
 
 from apps.certificates.utils import create_certificate
@@ -107,14 +106,17 @@ class TicketAdmin(ImportExportActionModelAdmin):
 class RaffleAdmin(admin.ModelAdmin):
     inlines = [GiftInline]
     list_display = [
-        'event', 'is_opened', 'delivered_vs_total_gifts', 'created_at',
-        'raffle_url'
+        'event',
+        'is_opened',
+        'delivered_vs_total_gifts',
+        'created_at',
+        'raffle_url',
     ]
     actions = [reset_raffle]
 
     def raffle_url(self, obj):
-        return format_html(
-            f'<a href="{obj.get_absolute_url()}">{obj.get_absolute_url()}</a>')
+        url = obj.get_absolute_url()
+        return f'<a href="{url}">{url}</a>'
 
     def delivered_vs_total_gifts(self, obj):
         return f'{obj.get_delivered_gifts().count()}/{obj.gifts.count()}'

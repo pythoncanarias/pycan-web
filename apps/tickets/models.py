@@ -202,6 +202,8 @@ class Raffle(models.Model):
 
     class Meta:
         ordering = ['created_at']
+        verbose_name_plural = 'Sorteos'
+        verbose_name = 'Sorteo'
 
     created_at = models.DateTimeField(auto_now_add=True)
     event = models.OneToOneField('events.Event',
@@ -260,7 +262,7 @@ class Raffle(models.Model):
             gift.save()
 
     def get_absolute_url(self):
-        return reverse('events:raffle', args=(self.event.slug,))
+        return reverse('events:raffle', kwargs={'event': self.event})
 
     @property
     def closed(self):

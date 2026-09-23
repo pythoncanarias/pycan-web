@@ -45,8 +45,20 @@
       </a>
     </li>
 
-    <li><a>Código de conducta</a></li>
-    <li><a>Sorteo</a></li>
+    <li><a href="{% url 'legal:coc' %}">Código de conducta</a></li>
+
+  {% if event.raffle %}
+    {% if section == 'raffle' %}
+      <li class="is-active">
+        <a href="#start">
+    {% else %}
+      <li>
+      <a href="{% url 'events:raffle' event=event %}#start">
+    {% endif %}
+        Sorteo
+      </a>
+    </li>
+  {% endif %}
 
     {% if event.raffle.closed %}
     <li>

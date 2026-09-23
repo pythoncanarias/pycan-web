@@ -16,7 +16,7 @@ def create_message(
         subject: str,
         template: str,
         from_email: str = None,
-        attachments: Optional(list) = None,
+        attachments: Optional[list] = None,
         **kwargs,
         ) -> EmailMessage:
     assert len(recipients) > 0, "No se han indicado destinatarios"

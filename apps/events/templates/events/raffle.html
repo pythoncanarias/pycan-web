@@ -1,9 +1,5 @@
 {% extends "events/base.html" %}
-
-{% load static %}
-{% load utils %}
-
-{% block title %}Sorteo {{event.name}} - {{ block.super }}{% endblock %}
+{% load static utils %}
 
 {% block body_class %}raffle-base raffle-page{% endblock %}
 {% block content_class %}is-narrow{% endblock %}
@@ -38,9 +34,12 @@
         <p>
           Se sortearán <strong>{{ gifts.count }} regalos</strong> entre <strong>{{ candidate_tickets.count }} tickets</strong> candidatos sin reemplazo!
         </p>
+        {% if success_probability %}
         <p>
           Probabilidad de que te toque algo: <span class="tag is-info">{{ success_probability|floatformat:2 }} %</span>
+
         </p>
+        {% endif %}
       </div>
       <div class="launch-raffle">
         <a class="button is-primary is-outlined" href="{% url 'events:raffle_gift' event.slug gifts.0.id %}">

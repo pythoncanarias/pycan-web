@@ -1,0 +1,24 @@
+#switch-theme-button:hover {
+  border: 1px dotted green;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+     data-theme: "dark";
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+     data-theme: "light";
+  }
+}
+
+html[data-theme=dark] #switch-theme-icon-day {
+  display: none;
+}
+
+html[data-theme=light] #switch-theme-icon-night {
+  display: none;
+}
+

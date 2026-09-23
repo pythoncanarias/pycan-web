@@ -4,10 +4,8 @@
     <tr>
       <th>Hora</th>
       <th style="width: 50%;">
-        Título /
-        Resumen</th>
-      <th>Categoría</th>
-      <th>Nivel</th>
+        Título / Resumen</th>
+      <th>Categoría / Nivel</th>
     </tr>
   </thead>
   {% for talk in event.all_talks %}
@@ -38,9 +36,8 @@
     </td>
     <td>
       {{ talk.category_name }}
-    </td>
-    <td>
-      {{ talk.level_name }}
+      <br>
+      Nivel {{ talk.level_name }}
     </td>
   </tr>
   {% endfor %}

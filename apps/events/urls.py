@@ -62,7 +62,7 @@ urlpatterns = [
         views.ticket_purchase_nocc,
         name='ticket_purchase_nocc',
     ),
-    path('<slug:slug>/raffle/', views.raffle, name='raffle'),
+    tie('<event:event>/raffle/', views.raffle),
     path(
         '<slug:slug>/raffle/<int:gift_id>/',
         views.raffle_gift,
