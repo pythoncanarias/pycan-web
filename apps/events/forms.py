@@ -138,8 +138,8 @@ class RefundForm(forms.Form):
         )
         if len(tickets) != 1:
             raise forms.ValidationError(
-                "El correo o las últimos {} letras o dígitos del"
-                " codigo están mal.".format(UUID_LAST_DIGITS)
+                f"El correo o las últimos {UUID_LAST_DIGITS} letras o dígitos del"
+                " codigo están mal."
             )
         self.ticket = tickets[0]
         if Refund.exists(self.event, self.ticket):

@@ -26,7 +26,7 @@ class NoticeAdmin(admin.ModelAdmin):
     )
 
     def get_queryset(self, request):
-        qs = super(NoticeAdmin, self).get_queryset(request)
+        qs = super().get_queryset(request)
         return (
             qs.select_related('kind')
             .select_related('member')

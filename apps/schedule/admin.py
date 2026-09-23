@@ -2,8 +2,9 @@ from django import forms
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import Schedule, Slot, SlotCategory, SlotLevel, SlotTag, Track
 from apps.locations.models import Location
+
+from .models import Schedule, Slot, SlotCategory, SlotLevel, SlotTag, Track
 
 
 class ScheduleInline(admin.StackedInline):
@@ -72,8 +73,7 @@ class ScheduleAdmin(admin.ModelAdmin):
         content = ','.join(emails)
         filename = 'emails.txt'
         response = HttpResponse(content, content_type='text/plain')
-        response['Content-Disposition'] = 'attachment; filename={}'.format(
-            filename)
+        response['Content-Disposition'] = f'attachment; filename={filename}'
         return response
 
     download_speakers_emails.short_description = "Download speakers' emails"

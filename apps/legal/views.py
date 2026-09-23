@@ -22,7 +22,7 @@ def privacy_policy(request):
 
 
 def coc(request, language='es'):
-    template = 'legal/coc-{}.html'.format(language)
+    template = f'legal/coc-{language}.html'
     titulo = "Código de conducta"
     if language == 'en':
         titulo = "Code of conduct"

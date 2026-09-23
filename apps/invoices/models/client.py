@@ -11,4 +11,4 @@ class Client(models.Model):
     email = models.EmailField(max_length=150, blank=True, null=True)
 
     def __str__(self):
-        return '{} nif: {}'.format(self.name, self.nif)
+        return f'{self.name} nif: {self.nif}'

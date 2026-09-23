@@ -1,12 +1,11 @@
 import logging
 
-from django.shortcuts import redirect, render
 from django.conf import settings
+from django.shortcuts import redirect, render
 
 from apps.members.models import Position
 
-from . import models
-from . import breadcrumbs
+from . import breadcrumbs, models
 
 logger = logging.getLogger(__name__)
 

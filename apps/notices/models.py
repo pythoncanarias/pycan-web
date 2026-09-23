@@ -2,6 +2,7 @@ from django.db import models
 
 from apps.members.models import Member
 
+
 class NoticeKindManager(models.Manager):
 
     def get_by_natural_key(self, code):

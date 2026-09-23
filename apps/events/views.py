@@ -1,25 +1,19 @@
 import logging
 
 import stripe
-from django.utils import timezone
-from django.http import HttpResponse
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils import timezone
 
 from apps.organizations.models import Organization
-from apps.tickets.models import Article, Gift, Raffle, Ticket
 from apps.schedule.models import Schedule
+from apps.tickets.models import Article, Gift, Raffle, Ticket
 
-from . import breadcrumbs
-from . import forms
-from . import links
-from . import models
-from . import stripe_utils
-from . import tasks
-
+from . import breadcrumbs, forms, links, models, stripe_utils, tasks
 
 logger = logging.getLogger(__name__)
 
@@ -169,13 +163,13 @@ def waiting_list(request, event):
 
 
 def refund(request, slug):
-    logging.error('refund(request, "{}") starts'.format(slug))
+    logging.error(f'refund(request, "{slug}") starts')
     event = models.Event.get_by_slug(slug)
-    logging.error("   request method is {}".format(request.method))
+    logging.error(f"   request method is {request.method}")
     if request.method == "POST":
         form = forms.RefundForm(event, request.POST)
-        logging.error("   form.is_valid() is {}".format(form.is_valid()))
-        logging.error("   form.errors is {}".format(form.errors))
+        logging.error(f"   form.is_valid() is {form.is_valid()}")
+        logging.error(f"   form.errors is {form.errors}")
         if form.is_valid():
             ticket = form.ticket
             rf = models.Refund(ticket=ticket, event=event)
@@ -237,13 +231,11 @@ def stripe_payment_error(request, exception):
 
 
 def buy_ticket(request, slug):
-    logger.debug("buy_tickts starts : slug={}".format(slug))
+    logger.debug(f"buy_tickts starts : slug={slug}")
     event = models.Event.get_by_slug(slug)
     if event.external_tickets_url:
         logger.debug(
-            "Redirecting to external URL for selling tickets: url={}".format(
-                event.external_tickets_url
-            )
+            f"Redirecting to external URL for selling tickets: url={event.external_tickets_url}"
         )
         return redirect(event.external_tickets_url)
     all_articles = [a for a in event.all_articles()]
@@ -298,17 +290,13 @@ def ticket_purchase(request, id_article):
             customer = stripe.Customer.create(
                 email=email,
                 source=token,
-                description="{}, {}".format(surname, name),
+                description=f"{surname}, {name}",
             )
             charge = stripe.Charge.create(
                 customer=customer.id,
                 amount=article.price_in_cents,
                 currency="EUR",
-                description="{}/{}, {}".format(
-                    event.hashtag,
-                    surname,
-                    name,
-                ),
+                description=f"{event.hashtag}/{surname}, {name}",
             )
             if charge.paid:
                 ticket = Ticket(
@@ -334,7 +322,7 @@ def ticket_purchase(request, id_article):
             messages.add_message(request, messages.ERROR, "Hello world.")
             from django.http import HttpResponse
 
-            return HttpResponse("Something goes wrong\n{}".format(err))
+            return HttpResponse(f"Something goes wrong\n{err}")
     else:
         return render(
             request,

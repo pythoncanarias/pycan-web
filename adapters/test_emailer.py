@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import pytest
-from adapters import emailer
-
-from django.core.mail import send_mail
 from django.conf import settings
+from django.core.mail import send_mail
+
+from adapters import emailer
 
 
 def test_create_message():

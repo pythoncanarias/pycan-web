@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
+from django.conf import settings
 from django.shortcuts import render
 
-from django.conf import settings
-
 from apps.events.models import Event
-from apps.quotes.models import Quote
 from apps.jobs.models import JobOffer
+from apps.quotes.models import Quote
 
 
 def homepage(request):

@@ -1,12 +1,11 @@
 import random
 import string
-from typing import Tuple
 
 BLACK = '000000'
 WHITE = 'FFFFFF'
 
 
-def get_rgb_from_hex(value: str) -> Tuple[int, int, int, int]:
+def get_rgb_from_hex(value: str) -> tuple[int, int, int, int]:
     red = int(value[:2], base=16)
     green = int(value[2:4], base=16)
     blue = int(value[4:6], base=16)

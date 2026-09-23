@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Member, Position, Membership
+from .models import Member, Membership, Position
 
 
 class MembershipInline(admin.StackedInline):

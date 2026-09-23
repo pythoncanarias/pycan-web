@@ -2,8 +2,8 @@
 
 from urllib.parse import urljoin
 
-from django.templatetags.static import static
 from django.db import models
+from django.templatetags.static import static
 
 
 class Social(models.Model):
@@ -34,7 +34,7 @@ class Speaker(models.Model):
     )
 
     def __str__(self):
-        return '{} {}'.format(self.name, self.surname)
+        return f'{self.name} {self.surname}'
 
     def socials(self):
         return {

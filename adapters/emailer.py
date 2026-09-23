@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-from typing import Optional
 from email.message import EmailMessage
+from typing import Optional
 
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.utils import timezone
-from django.core.mail import EmailMultiAlternatives
 
 from apps.commons.filters import as_markdown
 

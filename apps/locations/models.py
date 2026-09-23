@@ -2,8 +2,8 @@
 
 from urllib.parse import quote
 
-from django.templatetags.static import static
 from django.db import models
+from django.templatetags.static import static
 
 # Nomenclature of classes based on https://goo.gl/2B5Q4U
 

@@ -5,9 +5,9 @@ from import_export.admin import ImportExportActionModelAdmin
 from apps.certificates.utils import create_certificate
 from apps.events.tasks import send_ticket
 
+from .admin_actions import reset_raffle
 from .admin_inlines import ArticleInline, GiftInline
 from .models import Article, Gift, Raffle, Ticket, TicketCategory
-from .admin_actions import reset_raffle
 
 
 @admin.register(TicketCategory)
@@ -27,10 +27,7 @@ class ArticleAdmin(admin.ModelAdmin):
         )
 
     def sold_vs_available(self, obj):
-        return "{}/{}".format(
-            obj.num_sold_tickets,
-            obj.num_available_tickets,
-            )
+        return f"{obj.num_sold_tickets}/{obj.num_available_tickets}"
 
 
 @admin.register(Ticket)
@@ -50,10 +47,7 @@ class TicketAdmin(ImportExportActionModelAdmin):
     list_filter = ('article', 'sold_at', )
 
     def full_name(self, obj):
-        return "{}, {}".format(
-            obj.customer_surname,
-            obj.customer_name,
-            )
+        return f"{obj.customer_surname}, {obj.customer_name}"
 
     def is_mail_send(self, obj):
         return bool(obj.sold_at)
@@ -78,8 +72,7 @@ class TicketAdmin(ImportExportActionModelAdmin):
         content = ','.join(distinct_emails)
         filename = 'emails.txt'
         response = HttpResponse(content, content_type='text/plain')
-        response['Content-Disposition'] = 'attachment; filename={}'.format(
-            filename)
+        response['Content-Disposition'] = f'attachment; filename={filename}'
         return response
 
     download_emails.short_description = "Download customers' emails"

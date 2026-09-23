@@ -2,11 +2,11 @@
 
 from pathlib import Path
 
+from django.apps import apps
 from django.core import serializers
 from django.core.management.base import BaseCommand
-from utils.console import cyan, green 
-from django.apps import apps
 
+from utils.console import cyan, green
 
 EXPORT_DIRECTORT = Path('exported')
 

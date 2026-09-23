@@ -18,7 +18,7 @@ class Author(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '{} {}'.format(self.name, self.surname)
+        return f'{self.name} {self.surname}'
 
 
 class Quote(models.Model):
@@ -33,7 +33,7 @@ class Quote(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '{}\n--\n{}'.format(self.text, self.author)
+        return f'{self.text}\n--\n{self.author}'
 
     @classmethod
     def get_random_quote(cls):

@@ -21,7 +21,7 @@ from reportlab.platypus import (
 from apps.organizations.models import Organization
 
 
-class InvoiceMaker(object):
+class InvoiceMaker:
     PAGE_HEIGHT = A4[1]
     PAGE_WIDTH = A4[0]
 
@@ -121,9 +121,9 @@ class InvoiceMaker(object):
 
     def _configure_fonts(self, font):
         self.normal = font
-        self.italic = '{}It'.format(self.normal)
-        self.bold = '{}Bd'.format(self.normal)
-        self.bold_italic = '{}BdIt'.format(self.normal)
+        self.italic = f'{self.normal}It'
+        self.bold = f'{self.normal}Bd'
+        self.bold_italic = f'{self.normal}BdIt'
 
         fonts_path = os.path.join(
             os.path.dirname(os.path.realpath(__file__)), 'resources', 'fonts'
@@ -244,9 +244,7 @@ class InvoiceMaker(object):
         canvas.drawString(
             1.7 * cm,
             vertical_1,
-            '{} {}'.format(
-                self.python_canarias.postal_code, self.python_canarias.city
-            ),
+            f'{self.python_canarias.postal_code} {self.python_canarias.city}',
         )
 
         canvas.setFont(self.bold, 9)
@@ -287,10 +285,7 @@ class InvoiceMaker(object):
         canvas.drawString(
             self.PAGE_WIDTH / 2 + 0.6 * cm,
             vertical_2,
-            '{} {}'.format(
-                self.invoice.organization.postal_code,
-                self.invoice.organization.city,
-            ),
+            f'{self.invoice.organization.postal_code} {self.invoice.organization.city}',
         )
         canvas.setFont(self.bold, 9)
         canvas.drawRightString(
@@ -341,7 +336,7 @@ class InvoiceMaker(object):
         subtotal = self.invoice.concepts_total
 
         canvas.drawRightString(
-            self.PAGE_WIDTH - 1.5 * cm, 5.3 * cm, '{} €'.format(subtotal)
+            self.PAGE_WIDTH - 1.5 * cm, 5.3 * cm, f'{subtotal} €'
         )
 
         retention = 0
@@ -358,7 +353,7 @@ class InvoiceMaker(object):
             )
             taxes = subtotal * taxes_percentage / 100
             canvas.drawRightString(
-                self.PAGE_WIDTH - 1.5 * cm, 4.8 * cm, '{} €'.format(taxes)
+                self.PAGE_WIDTH - 1.5 * cm, 4.8 * cm, f'{taxes} €'
             )
 
         canvas.drawString(
@@ -374,7 +369,7 @@ class InvoiceMaker(object):
             )
             retention = subtotal * retention_percentage / 100
             canvas.drawRightString(
-                self.PAGE_WIDTH - 1.5 * cm, 4.3 * cm, '-{} €'.format(retention)
+                self.PAGE_WIDTH - 1.5 * cm, 4.3 * cm, f'-{retention} €'
             )
 
         grantotal = subtotal + taxes - retention
@@ -385,7 +380,7 @@ class InvoiceMaker(object):
         canvas.setFont(self.bold, 12)
         canvas.drawString(self.PAGE_WIDTH - 9.5 * cm, 3.5 * cm, 'TOTAL:')
         canvas.drawRightString(
-            self.PAGE_WIDTH - 1.5 * cm, 3.5 * cm, '{} €'.format(grantotal)
+            self.PAGE_WIDTH - 1.5 * cm, 3.5 * cm, f'{grantotal} €'
         )
 
         canvas.setFont(self.normal, 14)

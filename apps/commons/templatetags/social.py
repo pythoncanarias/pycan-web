@@ -1,4 +1,5 @@
 from urllib.parse import quote_plus
+
 from django import template
 
 register = template.Library()
@@ -8,10 +9,10 @@ def make_tweet(msg, url=''):
     msg = quote_plus(str(msg))
     buff = [
         'https://twitter.com/intent/tweet?',
-        'text={}'.format(msg)
+        f'text={msg}'
     ]
     if url:
-        buff.append('&url={}'.format(url))
+        buff.append(f'&url={url}')
     return ''.join(buff)
 
 
@@ -36,7 +37,4 @@ class TweetNode(template.Node):
     def render(self, context):
         msg = self.nodelist.render(context)
         url = self.url.resolve(context)
-        return '''<a href="{url}">{msg}</a>'''.format(
-            url=make_tweet(msg, url),
-            msg=msg,
-            )
+        return f'''<a href="{make_tweet(msg, url)}">{msg}</a>'''

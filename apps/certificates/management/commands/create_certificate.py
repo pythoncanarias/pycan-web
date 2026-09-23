@@ -24,11 +24,11 @@ class Command(BaseCommand):
         ticket_id = options['ticket_id']
         ticket = Ticket.objects.get(pk=ticket_id)
         if tron:
-            print('Creating certificate for ticket {}'.format(ticket))
+            print(f'Creating certificate for ticket {ticket}')
         output_filename = create_certificate(
             'attendance',
             output_name=ticket.keycode,
             name=ticket.customer_full_name(),
             )
         if tron:
-            print('File {} created'.format(output_filename))
+            print(f'File {output_filename} created')

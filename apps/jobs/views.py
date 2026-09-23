@@ -1,8 +1,7 @@
-from django.shortcuts import render
 from django.conf import settings
+from django.shortcuts import render
 
-from . import models
-from . import breadcrumbs
+from . import breadcrumbs, models
 
 
 def list_active_job_offers(request):

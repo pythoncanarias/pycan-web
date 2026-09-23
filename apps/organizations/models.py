@@ -185,7 +185,7 @@ class Membership(models.Model):
         return invoices.get().concepts_total
 
     def __str__(self):
-        return "{} {} {}".format(self.organization, self.category, self.amount)
+        return f"{self.organization} {self.category} {self.amount}"
 
     def get_email(self):
         return self.management_email or self.organization.email

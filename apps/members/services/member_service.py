@@ -4,7 +4,7 @@ from datetime import timedelta
 logger = logging.getLogger(__name__)
 
 
-class MemberService():
+class MemberService:
     @staticmethod
     def renew_membership(member):
         new_membership_date = member.member_until

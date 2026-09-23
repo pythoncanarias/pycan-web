@@ -35,6 +35,9 @@ ALLOWED_HOSTS = config(
     cast=config.list,
     default='localhost, 127.0.0.1',
 )
+ALLOWED_HOSTS.append('beta.pythoncanarias.es')
+
+
 
 if DEBUG:
     # tricks to have debug toolbar when developing with docker
@@ -45,6 +48,7 @@ if DEBUG:
         'localhost',
         '127.0.0.1',
         '0.0.0.0',
+        'beta.pythoncanarias.es',
     ]
 
 # Application definition

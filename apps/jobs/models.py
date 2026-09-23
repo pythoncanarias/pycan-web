@@ -80,10 +80,7 @@ class JobOffer(models.Model):
 
     def __str__(self):
         if self.employer and self.employer.upper() != 'N/A':
-            return "{} en {}".format(
-                self.title,
-                self.employer,
-            )
+            return f"{self.title} en {self.employer}"
         else:
             return self.title
 

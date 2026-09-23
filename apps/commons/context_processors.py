@@ -1,9 +1,8 @@
 
-from django.utils import timezone
 from django.conf import settings
+from django.utils import timezone
 
 from apps.organizations.models import Organization
-
 
 # def glob(request):
     # static_folder_path = settings.STATIC_ROOT

@@ -34,7 +34,7 @@ class TicketCategory(models.Model):
 
     def image(self):
         return {
-            'url': 'events/img/ticket-{}.png'.format(self.slug),
+            'url': f'events/img/ticket-{self.slug}.png',
             'width': 222,
             'height': 64,
         }
@@ -70,7 +70,7 @@ class Article(models.Model):
         )
 
     def __str__(self):
-        return '{} [{}]'.format(self.category, self.event)
+        return f'{self.category} [{self.event}]'
 
     @property
     def num_sold_tickets(self):
@@ -149,11 +149,7 @@ class Ticket(models.Model):
 
 
     def __str__(self):
-        return '{}/{} [{}]'.format(
-            self.number,
-            self.article.event,
-            self.customer_email
-        )
+        return f'{self.number}/{self.article.event} [{self.customer_email}]'
 
     @property
     def event(self):

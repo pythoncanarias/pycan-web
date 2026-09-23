@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-from datetime import datetime as DateTime
-from datetime import time as Time
 import locale
 import os
 import uuid
+from datetime import datetime as DateTime
+from datetime import time as Time
 
 from colorfield.fields import ColorField
 from django.conf import settings
@@ -126,10 +126,7 @@ class Event(models.Model):
         return cls.objects.get(hashtag__iexact=slug)
 
     def get_full_url(self):
-        return "http://{}{}".format(
-            settings.DOMAIN,
-            links.event_detail(self),
-        )
+        return f"http://{settings.DOMAIN}{links.event_detail(self)}"
 
     def get_long_start_date(self, to_locale=settings.LC_TIME_SPANISH_LOCALE):
         locale.setlocale(locale.LC_TIME, to_locale)
@@ -324,7 +321,7 @@ class Event(models.Model):
         # Calculate the size of the page (A4) depending on the base image dpi.
         dpi = Image.open(badge.base_image.path).info.get("dpi")
         if not dpi:
-            print(("There was an error getting the DPI from the badge. " "Aborting"))
+            print("There was an error getting the DPI from the badge. " "Aborting")
             raise KeyError
         pdf_pages = []
         offset_top = 50
@@ -480,18 +477,9 @@ class WaitingList(models.Model):
 
     def __str__(self):
         if self.fixed_at:
-            return "{}, {} ({}) FIXED".format(
-                self.surname,
-                self.name,
-                self.email,
-            )
+            return f"{self.surname}, {self.name} ({self.email}) FIXED"
         else:
-            return "{}, {} ({}) waiting since {}".format(
-                self.surname,
-                self.name,
-                self.email,
-                self.created_at,
-            )
+            return f"{self.surname}, {self.name} ({self.email}) waiting since {self.created_at}"
 
 
 # Refunds
@@ -511,9 +499,9 @@ class Refund(models.Model):
 
     def __str__(self):
         if self.fixed_at:
-            return "Refund for ticket {} [FIXED]".format(self.ticket)
+            return f"Refund for ticket {self.ticket} [FIXED]"
         else:
-            return "Refund for ticket {}".format(self.ticket)
+            return f"Refund for ticket {self.ticket}"
 
     def get_absolute_url(self):
         return links.refund_accepted(self.event.slug, self.pk)

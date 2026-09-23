@@ -64,6 +64,6 @@ class InvoiceAdmin(admin.ModelAdmin):
         if not os.path.isfile(invoice.path):
             invoice.render()
         url = invoice.filename_url()
-        return mark_safe('<a href="{}" download>Download</a>'.format(url))
+        return mark_safe(f'<a href="{url}" download>Download</a>')
 
     invoice_pdf.short_description = 'File Download'

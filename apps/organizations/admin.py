@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import (Membership, Organization, OrganizationCategory,
-                     OrganizationRole)
+from .models import Membership, Organization, OrganizationCategory, OrganizationRole
 
 
 class MembershipInline(admin.StackedInline):
@@ -25,7 +24,7 @@ class OrganizationAdmin(admin.ModelAdmin):
     list_filter = ('memberships__event', 'city')
 
     def memberships(self, obj):
-        return (', '.join('[{}] {}'.format(x.event, x.category)
+        return (', '.join(f'[{x.event}] {x.category}'
                           for x in obj.memberships.all()))
 
 
@@ -53,8 +52,7 @@ class MembershipAdmin(admin.ModelAdmin):
         content = ','.join([m.get_email() for m in queryset])
         filename = 'emails.txt'
         response = HttpResponse(content, content_type='text/plain')
-        response['Content-Disposition'] = 'attachment; filename={}'.format(
-            filename)
+        response['Content-Disposition'] = f'attachment; filename={filename}'
         return response
 
     download_emails.short_description = 'Download management emails'

@@ -1,5 +1,6 @@
 from apps.commons.breadcrumbs import BreadCrumb
 
+
 def bc_learn():
     return BreadCrumb('Aprender', 'learn:index')
 

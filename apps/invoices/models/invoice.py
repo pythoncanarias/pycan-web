@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
+import os
 from datetime import date as Date
 from decimal import Decimal
-import os
 
 from django.conf import settings
 from django.db import models
@@ -12,7 +12,7 @@ from ..constants import (
     RETENTION_MULTIPLIER,
     TAX_CHOICES,
     TAX_MULTIPLIER,
-    )
+)
 from ..services.invoice_maker import InvoiceMaker
 
 
@@ -62,7 +62,7 @@ class Invoice(models.Model):
 
     @property
     def filename(self):
-        return '{}.pdf'.format(self.verbose_invoice_number)
+        return f'{self.verbose_invoice_number}.pdf'
 
     @property
     def path(self):
@@ -78,7 +78,7 @@ class Invoice(models.Model):
         if not self.invoice_number:
             self.invoice_number = self.next_invoice_number()
         self.render()
-        return super(Invoice, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def next_invoice_number(self):
         year = self.date.year
@@ -87,11 +87,11 @@ class Invoice(models.Model):
 
     @property
     def verbose_invoice_number(self):
-        return '{}{:06d}'.format(str(self.date.year)[-2:], self.invoice_number)
+        return f'{str(self.date.year)[-2:]}{self.invoice_number:06d}'
 
     def render(self):
         invoice_rendered = InvoiceMaker(self)
         return invoice_rendered
 
     def __str__(self):
-        return '{} {}'.format(self.verbose_invoice_number, self.date)
+        return f'{self.verbose_invoice_number} {self.date}'

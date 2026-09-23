@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-from .models import Label
 from . import breadcrumbs
+from .models import Label
 
 
 def index(request):

@@ -175,11 +175,7 @@ class Schedule(models.Model):
         return self.slot.description
 
     def __str__(self):
-        return "{} {}-{}".format(
-            self.start.date(),
-            self.start.time(),
-            self.end.time(),
-        )
+        return f"{self.start.date()} {self.start.time()}-{self.end.time()}"
 
     def get_speakers(self):
         qs = self.speakers.all().order_by('surname', 'name')

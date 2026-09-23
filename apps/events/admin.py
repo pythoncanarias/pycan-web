@@ -53,10 +53,7 @@ class WaitingListAdmin(admin.ModelAdmin):
     )
 
     def full_name(self, obj):
-        return "{}, {}".format(
-            obj.surname,
-            obj.name,
-        )
+        return f"{obj.surname}, {obj.name}"
 
 
 @admin.register(Refund)

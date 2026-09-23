@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
+import logging
 import os
 import re
 import subprocess
 import sys
-import logging
-
 
 current_module = sys.modules[__name__]
 base_dir = os.path.dirname(current_module.__file__)
@@ -31,7 +30,7 @@ def get_output_full_name(filename, base=base_dir):
 def inkscape_export(source_filename, target_filename, tron=False):
     commands = [
         "inkscape",
-        "--export-pdf={}".format(target_filename),
+        f"--export-pdf={target_filename}",
         source_filename,
         ]
     if tron:
@@ -43,16 +42,15 @@ def create_certificate(template, output_name, **kwargs):
 
     def extract_value(match):
         name = match.group(1)[2:-2].strip()
-        return kwargs.get(name, 'Value {} not found'.format(name))
+        return kwargs.get(name, f'Value {name} not found')
 
     pat = re.compile(r'(\{\{.+\}\})')
-    full_input_name = get_template_full_name('{}.svg'.format(template))
-    full_output_name = get_output_full_name('{}.svg'.format(output_name))
-    with open(full_input_name, 'r') as fin:
-        with open(full_output_name, 'w') as fout:
-            template = fin.read()
-            output = pat.sub(extract_value, template)
-            fout.write(output)
-    pdf_filename = get_output_full_name('{}.pdf'.format(output_name))
+    full_input_name = get_template_full_name(f'{template}.svg')
+    full_output_name = get_output_full_name(f'{output_name}.svg')
+    with open(full_input_name, 'r') as fin, open(full_output_name, 'w') as fout:
+        template = fin.read()
+        output = pat.sub(extract_value, template)
+        fout.write(output)
+    pdf_filename = get_output_full_name(f'{output_name}.pdf')
     inkscape_export(full_output_name, pdf_filename)
     return pdf_filename

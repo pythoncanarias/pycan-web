@@ -1,5 +1,6 @@
 from apps.commons.menu import Menu
 
+
 def main_menu(request):
     return (Menu(request)
         .add_section('general', 'General')

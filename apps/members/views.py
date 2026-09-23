@@ -8,9 +8,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from apps.members.models import Member
-from . import breadcrumbs
-from . import forms
-from . import menu
+
+from . import breadcrumbs, forms, menu
 
 logger = logging.getLogger(__name__)
 

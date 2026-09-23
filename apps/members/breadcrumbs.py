@@ -1,5 +1,6 @@
 from apps.commons.breadcrumbs import BreadCrumb
 
+
 def bc_members():
     return BreadCrumb("Miembros", 'member:homepage')
 

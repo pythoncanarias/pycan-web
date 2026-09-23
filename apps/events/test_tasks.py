@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 
+import os
 from datetime import datetime as Date
 from datetime import datetime as DateTime
 from decimal import Decimal
-import os
 
-from django.core.mail import EmailMessage
 import pytest
+from django.core.mail import EmailMessage
 
 from apps.events.models import Event
-from apps.tickets.models import TicketCategory
-from apps.tickets.models import Ticket
-from apps.tickets.models import Article
+from apps.tickets.models import Article, Ticket, TicketCategory
+
 from . import tasks
 
 

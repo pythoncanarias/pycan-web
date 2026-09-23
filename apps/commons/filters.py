@@ -1,7 +1,6 @@
 '''Remember to register new filters in apps/commons/templatetags/utils.py'''
 
 import datetime
-from typing import Union
 
 from markdown2 import markdown
 
@@ -41,7 +40,7 @@ def as_month(f, num_letters=0):
         return _months[n]
 
 
-def as_date(f: Union[datetime.date, datetime.datetime]) -> str:
+def as_date(f: datetime.date | datetime.datetime) -> str:
     """Fecha o timestamp en formato día/mes/año.
 
     Ver también: `as_short_date`.
@@ -57,7 +56,7 @@ def as_date(f: Union[datetime.date, datetime.datetime]) -> str:
     return str(f)
 
 
-def as_short_date(f: Union[datetime.date, datetime.datetime]) -> str:
+def as_short_date(f: datetime.date | datetime.datetime) -> str:
     """Fecha o timestamp en formato día/mes/año, omitiendo el
     año si es el mismo del año actual.
 

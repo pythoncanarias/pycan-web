@@ -29,5 +29,5 @@ urlpatterns = [
     # tags
     tie('v1/tags/', views.list_tags),
     # Quotes
-    path('v1/quotes/', views.random_quote, name='random_quote'),
-]
+    tie('v1/quotes/', views.random_quote),
+    ]

@@ -1,5 +1,6 @@
 from apps.commons.breadcrumbs import BreadCrumb
 
+
 def bc_about():
     return BreadCrumb("Asociación Python Canarias", 'about:index')
 

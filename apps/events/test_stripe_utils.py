@@ -1,5 +1,6 @@
-import stripe
 import pytest
+import stripe
+
 from . import stripe_utils
 
 

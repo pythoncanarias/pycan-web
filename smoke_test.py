@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 
-from datetime import datetime as DateTime
-from datetime import UTC
-from email.message import EmailMessage
-from pathlib import Path
 import copy
 import logging
 import smtplib
 import ssl
 import sys
+from datetime import UTC
+from datetime import datetime as DateTime
+from email.message import EmailMessage
+from pathlib import Path
 
 from prettyconf import config
+
 
 def green(text: str) -> str:
     return f"\u001b[32m{text}\u001b[0m"
