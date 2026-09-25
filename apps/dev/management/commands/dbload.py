@@ -23,14 +23,16 @@ def add_quotes():
         url='https://es.wikipedia.org/wiki/Albert_Einstein',
     )
     author.save()
-
-    quotes = (
-        'La imaginación es más importante que el conocimiento. '
-        'El conocimiento es limitado. '
-        'La imaginación rodea al mundo.',
-        'Todos somos muy ignorantes, lo que ocurre es que no todos '
-        'ignoramos las mismas cosas.',
-    )
+    quotes = [
+        (
+            'La imaginación es más importante que el conocimiento. '
+            'El conocimiento es limitado. '
+            'La imaginación rodea al mundo.'
+        ), (
+            'Todos somos muy ignorantes, lo que ocurre es que no todos '
+            'ignoramos las mismas cosas.'
+        ),
+        ]
     for quote_text in quotes:
         author.quote_set.create(text=quote_text)
 

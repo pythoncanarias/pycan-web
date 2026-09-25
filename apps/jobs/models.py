@@ -1,9 +1,9 @@
-import datetime
 import urllib
 from functools import partial
 
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 from apps.commons.filters import date_from_now
 from apps.organizations.models import Organization
@@ -36,13 +36,15 @@ WORK_MODES = [
 
 class ActiveJobOfferManager(models.Manager):
     def get_queryset(self):
-        today = datetime.date.today()
-        return super().get_queryset().filter(approved=True).filter(valid_until__gte=today)
+        today = timezone.now().date()
+        return (
+            super().get_queryset()
+            .filter(approved=True)
+            .filter(valid_until__gte=today)
+            )
 
 
 class JobOffer(models.Model):
-    objects = models.Manager()  # The default manager.
-    actives = ActiveJobOfferManager()  # Only the active jobs offer
 
     class Meta:
         db_table = "job_offer"
@@ -78,6 +80,9 @@ class JobOffer(models.Model):
     )
     approved = models.BooleanField("Aprobada", default=False)
 
+    objects = models.Manager()  # The default manager.
+    actives = ActiveJobOfferManager()  # Only the active jobs offer
+
     def __str__(self):
         if self.employer and self.employer.upper() != 'N/A':
             return f"{self.title} en {self.employer}"
@@ -85,7 +90,7 @@ class JobOffer(models.Model):
             return self.title
 
     def is_valid(self):
-        return self.approved and datetime.date.today() <= self.valid_until
+        return self.approved and timezone.now() <= self.valid_until
 
     def get_full_url(self):
         path = reverse('jobs:index') + f'#job{self.pk}'

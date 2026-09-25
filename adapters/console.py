@@ -3,6 +3,7 @@ from functools import partial
 import rich
 import rich.table
 
+
 def _colored(text, color='white'):
     return f'[{color}]{text}[/{color}]'
 

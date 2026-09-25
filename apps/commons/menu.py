@@ -22,8 +22,7 @@ class MenuSection:
         self.items = []
 
     def __iter__(self):
-        for item in self.items:
-            yield item
+        yield from self.items
 
     def add_menu_item(self, text, link):
         new_item = MenuItem(text, link, section=self)
@@ -42,8 +41,7 @@ class Menu:
         self.request = request
 
     def __iter__(self):
-        for section in self.sections.values():
-            yield section
+        yield from self.sections.values()
 
     def __getattr__(self, name):
         if name in self.sections:

@@ -85,6 +85,7 @@ alias mm := makemigrations
 
 # Buscar en ficheros Python
 fpy *args='':
+    @echo "Buscando {{ args }} en todos los ficheros Python"
     pss --py --ignore-dir .venv {{ args }}
 
 # Buscar en ficheros CSS

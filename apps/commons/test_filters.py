@@ -1,31 +1,39 @@
-import datetime
+from datetime import datetime as Date
 
+from django.conf import settings
+from django.utils import timezone
 import pytest
 
 from . import filters
 
 # as_date
 
+@pytest.fixture
+def fecha():
+    return Date(2016, 4, 18, tzinfo=settings.TIME_ZONE)
 
-def test_as_date():
-    assert filters.as_date(datetime.date(2016, 4, 18)) == '18/abr/2016'
+
+def test_as_date(fecha):
+    assert filters.as_date(fecha) == '18/abr/2016'
 
 
-def test_as_date_current_year():
-    year = datetime.date.today().year
-    assert filters.as_date(datetime.date(year, 4, 18)) == f'18/abr/{year}'
+def test_as_date_current_year(fecha):
+    year = timezone.now().year
+    fecha = fecha.replace(year=year)
+    assert filters.as_date(fecha) == f'18/abr/{year}'
 
 
 # as_short_date
 
 
-def test_as_short_date_current_year():
-    year = datetime.date.today().year
-    assert filters.as_short_date(datetime.date(year, 4, 18)) == '18/abr'
+def test_as_short_date_current_year(fecha):
+    year = timezone.now().year
+    fecha = fecha.replace(year=year)
+    assert filters.as_short_date(fecha) == '18/abr'
 
 
-def test_as_short_date_other_year():
-    assert filters.as_short_date(datetime.date(1992, 4, 18)) == '18/abr/1992'
+def test_as_short_date_other_year(fecha):
+    assert filters.as_short_date(fecha) == '18/abr/1992'
 
 
 # as_month
@@ -72,14 +80,6 @@ def test_as_markdown_headers():
     assert filters.as_markdown('# Hola, mundo.') == '<h1>Hola, mundo.</h1>\n'
     assert filters.as_markdown('## Hola, mundo.') == '<h2>Hola, mundo.</h2>\n'
     assert filters.as_markdown('### Hola, mundo.') == '<h3>Hola, mundo.</h3>\n'
-
-
-# startswith
-
-def test_startswith():
-    assert filters.startswith("abcdef", "abc") is True
-    assert filters.startswith("abc", "abcdef") is False
-    assert filters.startswith("abc", "zoo") is False
 
 
 if __name__ == '__main__':

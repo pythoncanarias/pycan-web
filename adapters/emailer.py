@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from email.message import EmailMessage
-from typing import Optional
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -15,8 +14,8 @@ def create_message(
         recipients: list,
         subject: str,
         template: str,
-        from_email: str = None,
-        attachments: Optional[list] = None,
+        from_email: str | None = None,
+        attachments: list | None = None,
         **kwargs,
         ) -> EmailMessage:
     assert len(recipients) > 0, "No se han indicado destinatarios"

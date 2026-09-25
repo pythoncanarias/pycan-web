@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 import os
-from datetime import datetime as Date
 from datetime import datetime as DateTime
 from decimal import Decimal
 
 import pytest
 from django.core.mail import EmailMessage
+from django.conf import settings
+from django.utils import timezone
 
 from apps.events.models import Event
 from apps.tickets.models import Article, Ticket, TicketCategory
@@ -22,7 +23,7 @@ def test_ticket():
         short_description='Event for tests',
         hashtag='test_event',
         active=True,
-        start_date=Date.today(),
+        start_date=timezone.now().date(),
         )
     category = TicketCategory(
         name='Article test category',
@@ -40,7 +41,10 @@ def test_ticket():
         customer_name="Tabitha",
         customer_surname="Smith",
         customer_email='boomboom@villiansunited.com',
-        sold_at=DateTime(2018, 10, 11, 22, 44, 00),
+        sold_at=DateTime(
+            2018, 10, 11, 22, 44, 00,
+            tzinfo=settings.TIMEZONE
+            ),
         keycode='18b0b618-7b9e-4857-9f01-39999424ee3f',
         )
     return ticket

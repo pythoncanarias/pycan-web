@@ -1,3 +1,6 @@
+from datetime import timedelta as TimeDelta
+
+
 class MEMBER_POSITION:
     PRESIDENT = 'PRE'
     VICEPRESIDENT = 'VPR'
@@ -40,7 +43,8 @@ class FEE_AMOUNT:
 
 
 # days for default membership period
-DEFAULT_MEMBERSHIP_PERIOD = 365
+DEFAULT_MEMBERSHIP_PERIOD = TimeDelta(days=365)
 
 # days por default position period
-DEFAULT_POSITION_PERIOD = 4 * 365
+# Initially 4 years for the position
+DEFAULT_POSITION_PERIOD = TimeDelta(days=4 * 365)

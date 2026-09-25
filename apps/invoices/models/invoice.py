@@ -68,11 +68,11 @@ class Invoice(models.Model):
     def path(self):
         return os.path.join(settings.MEDIA_ROOT, 'invoices', self.filename)
 
-    def filename_url(self):
-        media_root = settings.MEDIA_URL
-        invoices_uri = 'invoices'
-        filename = self.filename
-        return '/'.join([media_root, invoices_uri, filename]).replace('//', '/')
+    def filename_url(self) -> str:
+        result = f'{settings.MEDIA_URL}/invoices/{self.filename}'
+        if '//' in result:
+            result = result.replace('//', '/')
+        return result
 
     def save(self, *args, **kwargs):
         if not self.invoice_number:

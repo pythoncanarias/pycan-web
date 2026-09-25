@@ -1,5 +1,3 @@
-import datetime
-
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -61,7 +59,7 @@ class Member(models.Model):
         if last_membership is None:
             return False
         valid_until = last_membership.valid_until
-        return valid_until is None or datetime.date.today() <= valid_until
+        return valid_until is None or timezone.now() <= valid_until
 
 
 class PositionManager(models.Manager):
@@ -72,9 +70,14 @@ class PositionManager(models.Manager):
             .select_related('member__user')
             .exclude(until__lt=timezone.now())
             )
-        
+
 
 class Position(models.Model):
+
+    class Meta:
+        ordering = ('since', 'position', 'member')
+        verbose_name = 'Junta de gobierno'
+
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
     position = models.CharField(max_length=3, choices=MEMBER_POSITION.CHOICES)
     since = models.DateField()
@@ -86,10 +89,7 @@ class Position(models.Model):
     def save(self, *args, **kwargs):
         created = not self.id
         if self.until is None:
-            # set 4 years period for the position
-            self.until = self.since + datetime.timedelta(
-                days=DEFAULT_POSITION_PERIOD
-            )
+            self.until = self.since + DEFAULT_POSITION_PERIOD
         super().save(*args, **kwargs)
         if created:
             Position.objects.filter(position=self.position).exclude(
@@ -99,12 +99,9 @@ class Position(models.Model):
     def __str__(self):
         return f'{self.member.full_name} as {self.position}'
 
-    class Meta:
-        ordering = ('since', 'position', 'member')
-
     @property
     def active(self):
-        return self.until is None or datetime.date.today() <= self.until
+        return self.until is None or timezone.now() <= self.until
 
 
 class Membership(models.Model):
@@ -132,7 +129,7 @@ class Membership(models.Model):
 
     def save(self, *args, **kwargs):
         if self.valid_until is None:
-            self.valid_until = self.valid_from + datetime.timedelta(
-                days=DEFAULT_MEMBERSHIP_PERIOD
-            )
+            self.valid_until = (
+                self.valid_from + DEFAULT_MEMBERSHIP_PERIOD
+                )
         super().save(args, kwargs)

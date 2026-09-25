@@ -19,8 +19,7 @@ from apps.organizations.models import OrganizationRole
 from apps.schedule.models import Track
 from apps.speakers.models import Speaker
 from apps.tickets.models import Ticket
-
-from . import time_utils
+from apps.commons.filters import as_hour
 
 
 class Event(models.Model):
@@ -214,8 +213,8 @@ class Event(models.Model):
             return DateTime.combine(self.start_date, start_time)
 
     @property
-    def start_hour(self):
-        return time_utils.as_hour(self.start_datetime())
+    def start_hour(self) -> str:
+        return as_hour(self.start_datetime())
 
     def _scheduled_items_for_display(self, start=None, end=None):
         result = {"type": "scheduled_items", "tracks": []}
@@ -447,10 +446,7 @@ class Badge(models.Model):
             "badge_{ticket.number}.png"
         )
         if not os.path.exists(os.path.dirname(path)):
-            try:
-                os.makedirs(os.path.dirname(path))
-            except OSError:
-                raise
+            os.makedirs(os.path.dirname(path))
         img.save(path, quality=100)
         return img
 
@@ -519,46 +515,6 @@ class Refund(models.Model):
     @classmethod
     def exists(cls, event, ticket):
         return cls.objects.filter(event=event, ticket=ticket).count() > 0
-
-
-# Trade class (intermedite between WaitingList and Refund)
-
-
-# class Trade(models.Model):
-
-    # TERM_IN_HOURS = 3
-
-    # sell_code = models.UUIDField(default=uuid.uuid4, unique=True)
-    # buy_code = models.UUIDField(default=uuid.uuid4, unique=True)
-    # start_at = models.DateTimeField(default=time_utils.now)
-    # finish_at = models.DateTimeField(
-        # default=partial(time_utils.now_plus, hours=TERM_IN_HOURS)
-    # )
-    # fixed_at = models.DateTimeField(default=None, blank=True, null=True)
-    # finished = models.BooleanField(default=False)
-    # sucessful = models.BooleanField(default=False)
-
-    # @classmethod
-    # def load_active_trade(cls):
-        # qs = cls.objects.filter(finished=False)
-        # num_trades = qs.count()
-        # assert num_trades in (0, 1)
-        # return qs.first() if num_trades == 1 else None
-
-    # def finish(self, sucessful=False):
-        # if not self.finished:
-            # now = time_utils.now()
-            # self.finished = True
-            # self.finish_at = now
-            # if sucessful:
-                # self.sucessful = True
-                # self.fixed_at = now
-            # self.save()
-
-    # def is_due(self):
-        # if not self.finished and time_utils.now() > self.finish_at:
-            # self.finish(sucessful=False)
-        # return self.finished
 
 
 class Proposal(models.Model):

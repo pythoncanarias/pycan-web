@@ -1,5 +1,3 @@
-import logging
-
 from django import forms
 
 from .models import Proposal, Refund
@@ -115,7 +113,6 @@ class RefundForm(forms.Form):
     uuid = forms.CharField()
 
     def __init__(self, event, *args, **kwargs):
-        logging.error("Llamada al metodo __init__ de RefundForm")
         super().__init__(*args, **kwargs)
         self.event = event
 

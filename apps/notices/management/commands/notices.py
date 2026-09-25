@@ -57,8 +57,7 @@ class Command(BaseCommand):
 
     def do_list(self, *args, **options):
         num_rows = options.get('num_rows')
-        body = [
-            (
+        body = [(
                 notice.pk,
                 notice.member,
                 notice.kind,

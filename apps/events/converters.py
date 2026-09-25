@@ -14,7 +14,7 @@ class EventConverter:
 
     def to_url(self, value):
         if not isinstance(value, Event):
-            raise ValueError(
+            raise TypeError(
                 "Se necesita una instancia de la clase Event, pero"
                 " es una instancia de {value.__class__.__name__}."
             )

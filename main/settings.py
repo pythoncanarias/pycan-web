@@ -185,7 +185,7 @@ LOGIN_URL = '/members/login/'
 
 LANGUAGE_CODE = 'es-ES'
 
-TIME_ZONE = config('TIME_ZONE', default='UTC')
+TIME_ZONE = config('TIME_ZONE', default='Atlantic/Canary')
 
 USE_I18N = True
 

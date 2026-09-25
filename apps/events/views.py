@@ -163,13 +163,13 @@ def waiting_list(request, event):
 
 
 def refund(request, slug):
-    logging.error(f'refund(request, "{slug}") starts')
+    logger.error(f'refund(request, "{slug}") starts')
     event = models.Event.get_by_slug(slug)
-    logging.error(f"   request method is {request.method}")
+    logger.error(f"   request method is {request.method}")
     if request.method == "POST":
         form = forms.RefundForm(event, request.POST)
-        logging.error(f"   form.is_valid() is {form.is_valid()}")
-        logging.error(f"   form.errors is {form.errors}")
+        logger.error(f"   form.is_valid() is {form.is_valid()}")
+        logger.error(f"   form.errors is {form.errors}")
         if form.is_valid():
             ticket = form.ticket
             rf = models.Refund(ticket=ticket, event=event)
@@ -366,13 +366,12 @@ def find_tickets_by_email(event, email):
 
 def resend_ticket(request, event):
     form = forms.EmailForm(request.POST or None)
-    if request.method == "POST":
-        if form.is_valid():
-            email = form.cleaned_data["email"]
-            tickets = find_tickets_by_email(event, email)
-            for ticket in tickets:
-                tasks.send_ticket.delay(ticket.pk)
-            return redirect("events:resend_confirmation", slug=event.slug)
+    if request.method == "POST" and form.is_valid():
+        email = form.cleaned_data["email"]
+        tickets = find_tickets_by_email(event, email)
+        for ticket in tickets:
+            tasks.send_ticket.delay(ticket.pk)
+        return redirect("events:resend_confirmation", slug=event.slug)
     return render( request, "events/resend-ticket.html", {
         'titulo': 'Reenviar entrada',
         'subtitulo': str(event),
