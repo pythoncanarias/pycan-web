@@ -8,7 +8,7 @@ from apps.notices.tasks import (
     create_notice_message,
     task_send_notice,
 )
-from utils.console import as_table, cyan, green, red, yes_no
+from adapters.console import print, as_table, cyan, green, red, yes_no
 
 NOTICE_KIND = dict(getmembers(repository, isfunction))
 
@@ -57,16 +57,16 @@ class Command(BaseCommand):
 
     def do_list(self, *args, **options):
         num_rows = options.get('num_rows')
-        body = list(
+        body = [
             (
                 notice.pk,
                 notice.member,
                 notice.kind,
                 notice.reference_date,
                 yes_no(notice.status()),
-            )
-            for notice in Notice.objects.order_by('-created_at')[0:num_rows]
-        )
+            ) for notice in
+            Notice.objects.order_by('-created_at')[0:num_rows]
+            ]
         if body:
             headers = ['Msg.', 'Member', 'Notice', 'Ref. date', 'delivered']
             print(as_table(headers, body))

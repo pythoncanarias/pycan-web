@@ -12,6 +12,7 @@ from pathlib import Path
 
 from prettyconf import config
 
+logger = logging.getLogger(__name__)
 
 def green(text: str) -> str:
     return f"\u001b[32m{text}\u001b[0m"
@@ -59,8 +60,8 @@ def redis_is_ready():
         timestamp = DateTime.now(tz=UTC).strftime('%Y-%m-%dT%H:%M:%S.%fZ')
         rds.set('SmokeTest', timestamp)
         return True, 'Redis is working'
-    except Exception as err:
-        logging.exception(err)
+    except Exception:
+        logger.exception()
         return False, 'Redis is NOT working'
 
 
@@ -87,8 +88,8 @@ def email_is_working():
             result = server.send_message(msg)
             assert result == 1
         return True, 'Email is working'
-    except Exception as err:
-        logging.exception(err)
+    except Exception:
+        logger.exception()
         return False, 'Email is NOT working'
 
 

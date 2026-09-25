@@ -43,8 +43,6 @@ ALLOWED_HOSTS = config(
 )
 ALLOWED_HOSTS.append('beta.pythoncanarias.es')
 
-
-
 if DEBUG:
     # tricks to have debug toolbar when developing with docker
     local_ip = socket.gethostbyname(socket.gethostname())

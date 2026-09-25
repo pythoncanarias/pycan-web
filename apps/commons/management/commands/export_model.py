@@ -6,7 +6,7 @@ from django.apps import apps
 from django.core import serializers
 from django.core.management.base import BaseCommand
 
-from utils.console import cyan, green
+from adapters.console import print, cyan, green
 
 EXPORT_DIRECTORT = Path('exported')
 
