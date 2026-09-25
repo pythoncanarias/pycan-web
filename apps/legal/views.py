@@ -14,7 +14,7 @@ def legal_notice(request):
 
 def privacy_policy(request):
     return render(request, 'legal/privacy-policy.html', {
-        'titulo': "Política de privadidad",
+        'titulo': "Política de privacidad",
         'subtitulo': settings.ORGANIZATION_NAME,
         'breadcrumbs': breadcrumbs.bc_privacy_policy(),
         })
