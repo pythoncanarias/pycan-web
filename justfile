@@ -67,7 +67,7 @@ dbshell *args='default':
 # Ejecutar migraciones Django
 migrate $APP='': check
     python manage.py migrate {{APP}} --database default
-    python manage.py migrate {{APP}} --database test_default
+    # python manage.py migrate {{APP}} --database test_default
 
 
 # Mostrar migraciones Django
