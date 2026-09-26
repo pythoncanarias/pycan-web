@@ -65,6 +65,15 @@ def redis_is_ready():
         return False, 'Redis is NOT working'
 
 
+def queues_are_working():
+    import os
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'main.settings'
+    from apps.commons.tasks import send_ntfy_message
+
+    send_ntfy_message.delay('SmokeTest')
+    return True, 'Queued message by ntfy. Check in app.'
+
+
 def email_is_working():
     EMAIL_SERVER = config('AWS_SNS_SERVER')
     EMAIL_PORT = config('AWS_SNS_PORT', cast=int, default=587)
@@ -89,7 +98,7 @@ def email_is_working():
             assert result == 1
         return True, 'Email is working'
     except Exception:
-        logger.exception()
+        logger.exception("Email si not working")
         return False, 'Email is NOT working'
 
 
@@ -140,5 +149,7 @@ if __name__ == '__main__':
         SmokeCheck('File .env exists', file_exists_in_path, ".env", Path.cwd()),
         SmokeCheck('Redis is operational', redis_is_ready),
         SmokeCheck('Email is working', email_is_working),
+
+        SmokeCheck('Queues adn workers are ready', queues_are_working),
         ]
     main(ALL_CHECKS)

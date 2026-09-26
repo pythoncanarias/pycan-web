@@ -107,6 +107,7 @@ a.event-target:hover {
 
 .hero .blog-link:hover,.blog-link:focus,.blog-link:active {
   background-color: rgba(255, 255, 255, 0.12);
+  border: 2px solid red;
   }
 
 

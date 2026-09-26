@@ -1,6 +1,6 @@
 # Ejecutar comprobaciones del proyecto Django + Flake8 + Vulture
-check:
-    python manage.py check
+check *args='':
+    python manage.py check {{ args }}
     # python manage.py validate_templates # Esperar a Django 4.
     flake8 --count **/*.py
     ruff check .
