@@ -50,6 +50,7 @@ dev = [
     "icecream",
     "ipython>=9.17.1",
     "mypy>=2.3.1",
+    "pss>=1.45",
     "rope>=1.14.0",
     "ruff>=0.16.8",
     "vulture",
