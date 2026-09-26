@@ -101,7 +101,7 @@ class Position(models.Model):
 
     @property
     def active(self):
-        return self.until is None or timezone.now() <= self.until
+        return self.until is None or timezone.now().date() <= self.until
 
 
 class Membership(models.Model):
