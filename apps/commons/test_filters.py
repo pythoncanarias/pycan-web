@@ -1,6 +1,5 @@
 from datetime import datetime as Date
 
-from django.conf import settings
 from django.utils import timezone
 import pytest
 
@@ -10,7 +9,7 @@ from . import filters
 
 @pytest.fixture
 def fecha():
-    return Date(2016, 4, 18, tzinfo=settings.TIME_ZONE)
+    return Date(2016, 4, 18, tzinfo=timezone.get_default_timezone())
 
 
 def test_as_date(fecha):
@@ -33,7 +32,7 @@ def test_as_short_date_current_year(fecha):
 
 
 def test_as_short_date_other_year(fecha):
-    assert filters.as_short_date(fecha) == '18/abr/1992'
+    assert filters.as_short_date(fecha) == '18/abr/2016'
 
 
 # as_month

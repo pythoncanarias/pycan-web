@@ -6,7 +6,6 @@ from decimal import Decimal
 
 import pytest
 from django.core.mail import EmailMessage
-from django.conf import settings
 from django.utils import timezone
 
 from apps.events.models import Event
@@ -35,16 +34,14 @@ def test_ticket():
         price=Decimal('10.0'),
         stock=99,
         )
+    tz = timezone.get_default_timezone()
     ticket = Ticket(
         number=1,
         article=article,
         customer_name="Tabitha",
         customer_surname="Smith",
         customer_email='boomboom@villiansunited.com',
-        sold_at=DateTime(
-            2018, 10, 11, 22, 44, 00,
-            tzinfo=settings.TIMEZONE
-            ),
+        sold_at=DateTime(2018, 10, 11, 22, 44, 00, tzinfo=tz),
         keycode='18b0b618-7b9e-4857-9f01-39999424ee3f',
         )
     return ticket
