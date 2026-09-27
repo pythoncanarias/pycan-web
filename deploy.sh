@@ -4,9 +4,12 @@
 
 echo "$USER Empieza el despliegue"
 source .venv/bin/activate
+
 git pull
 uv sync
-uv run python manage.py migrate
-uv run python manage.py collectstatic --noinput --clear
-# supervisorctl restart pycan-rq
-supervisorctl restart pycan-web
+python manage.py migrate
+python manage.py collectstatic --noinput --clear
+python smoke-test.py
+python manage.py check --deploy
+
+sudo systemctl restart nginx supervisor

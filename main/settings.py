@@ -36,12 +36,14 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 300
 
 
-ALLOWED_HOSTS = config(
-    'ALLOWED_HOSTS',
-    cast=config.list,
-    default='localhost, 127.0.0.1',
-)
-ALLOWED_HOSTS.append('beta.pythoncanarias.es')
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'pythoncanarias.es',
+    'www.pythoncanarias.es',
+    'beta.pythoncanarias.es',
+    ]
+
 
 if DEBUG:
     # tricks to have debug toolbar when developing with docker
@@ -53,6 +55,8 @@ if DEBUG:
         '127.0.0.1',
         '0.0.0.0',
         'beta.pythoncanarias.es',
+        'www.pythoncanarias.es',
+        'pythoncanarias.es',
     ]
 
 # Application definition
