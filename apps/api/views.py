@@ -51,10 +51,9 @@ def api(func):
 @api
 def status(request):
     return {
-        "active":
-            True,
-        "version":
-            settings.CURRENT_API_VERSION,
+        "active": True,
+        "debug": settings.DEBUG,
+        "version": settings.CURRENT_API_VERSION,
         "entry_points": list(all_api_entrypoints()),
         }
 
