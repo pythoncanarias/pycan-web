@@ -54,9 +54,9 @@ def chk_redis_is_ready() -> Result:
         password=REDIS_PASSWORD,
         protocol=REDIS_PROTOCOL,
         )
-    if redis.ping() == 'PONG':
-        return Failure('Redis server is not working')
-    return Success('Redis server is working')
+    if rds.ping():
+        return Success('Redis server is working')
+    return Failure('Redis server is not working')
 
 
 def chk_queues_are_working() -> Result:
@@ -113,10 +113,11 @@ def run_checks(checks):
         print(f'▶ \033[1m{name}\033[0m:', end=' ', flush=True)
         if result := functor():
             passed += 1
-            print(result, OK)
+            print(green(result.value), OK)
         else:
-            print(result, ERROR)
+            print(red(result.error_message), ERROR)
     num_failed = num_checks - passed
+    print()
     if num_failed:
         print(f"{ERROR} Some tests ({num_failed}/{num_checks}) did NOT pass.")
     else:
