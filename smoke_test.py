@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
 
+from datetime import datetime as DateTime
+from datetime import UTC
+from email.message import EmailMessage
+from pathlib import Path
+from itertools import chain
+import argparse
 import copy
 import logging
 import smtplib
 import ssl
 import sys
-from datetime import UTC
-from datetime import datetime as DateTime
-from email.message import EmailMessage
-from pathlib import Path
 
 from prettyconf import config
 
-logger = logging.getLogger(__name__)
+from utils.results import Success, Failure, Result
+
+logging.basicConfig(filename='smoke_test.log', level=logging.DEBUG)
+logger = logging.getLogger('smoke_test')
 
 def green(text: str) -> str:
     return f"\u001b[32m{text}\u001b[0m"
@@ -25,60 +30,53 @@ OK = green("[OK ✓]")
 ERROR = red("[ERROR ✖]")
 
 
-def file_exists_in_path(filename, path):
-    """Checks file exists somewhere in the path.
-
-    If path is omited, it uses the current path.
+def chk_env_file_exists_in_path() -> Result:
+    """.env file exists somewhere in the path.
     """
-    ROOT = Path('/')
-    path = Path(path)
-    while True:
-        full_path = path / filename
+    filename = '.env'
+    base = Path.cwd()
+    for base_name in chain([base], base.parents):
+        full_path = base_name / filename
         if full_path.exists() and full_path.is_file():
-            return True, f'Found here: {full_path}'
-        if path == ROOT:
-            break
-        path = path.parent
-    return False, 'Not found!'
+            return Success(f'Found here: {full_path}')
+    return Failure('File .env not found!')
 
-
-def redis_is_ready():
-    """Check a REDIS server is listening in the indicated host.
-
-    Use `password` if suplied.
+ 
+def chk_redis_is_ready() -> Result:
+    """Redis server is listening in the indicated host/port.
     """
     import redis
     REDIS_SERVER = config('REDIS_SERVER', default='localhost')
     REDIS_PASSWORD = config('REDIS_PASSWORD', default='')
     REDIS_PROTOCOL = config('REDIS_PROTOCOL', default=2, cast=int)
-    try:
-        rds = redis.Redis(
-            host=REDIS_SERVER,
-            password=REDIS_PASSWORD,
-            protocol=REDIS_PROTOCOL,
-            )
-        timestamp = DateTime.now(tz=UTC).strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-        rds.set('SmokeTest', timestamp)
-        return True, 'Redis is working'
-    except Exception:
-        logger.exception()
-        return False, 'Redis is NOT working'
+    rds = redis.Redis(
+        host=REDIS_SERVER,
+        password=REDIS_PASSWORD,
+        protocol=REDIS_PROTOCOL,
+        )
+    if redis.ping() == 'PONG':
+        return Failure('Redis server is not working')
+    return Success('Redis server is working')
 
 
-def queues_are_working():
+def chk_queues_are_working() -> Result:
+    """Queues are defined and have workers assigned.
+    """
     import os
     os.environ['DJANGO_SETTINGS_MODULE'] = 'main.settings'
     from apps.commons.tasks import send_ntfy_message
 
     send_ntfy_message.delay('SmokeTest')
-    return True, 'Queued message by ntfy. Check in app.'
+    return Success('Queued message by ntfy. Check in app.')
 
 
-def email_is_working():
-    EMAIL_SERVER = config('AWS_SNS_SERVER')
-    EMAIL_PORT = config('AWS_SNS_PORT', cast=int, default=587)
-    EMAIL_USERNAME = config('AWS_SNS_USERNAME')
-    EMAIL_PASSWORD = config('AWS_SNS_PASSWORD')
+def chk_email_is_working():
+    """Email subsystem is working.
+    """
+    EMAIL_SERVER = config('SMTP_SERVER')
+    EMAIL_PORT = config('SMTP_PORT', cast=int, default=587)
+    EMAIL_USERNAME = config('SMTP_USERNAME')
+    EMAIL_PASSWORD = config('SMTP_PASSWORD')
     CONTACT_EMAIL = config('CONTACT_EMAIL')
     msg = EmailMessage()
     msg["to"] = 'euribates@gmail.com'
@@ -88,54 +86,36 @@ def email_is_working():
         "Prueba de envio de correo usando los parámetros"
         " de configuración de Python Canarias Web."
         )
-    try:
-        with smtplib.SMTP(EMAIL_SERVER, EMAIL_PORT) as server:
-            server.ehlo()  # Can be omitted
-            context = ssl.create_default_context()
-            server.starttls(context=context)
-            server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
-            result = server.send_message(msg)
-            assert result == 1
-        return True, 'Email is working'
-    except Exception:
-        logger.exception("Email si not working")
-        return False, 'Email is NOT working'
+    with smtplib.SMTP(EMAIL_SERVER, EMAIL_PORT) as server:
+        server.ehlo()  # Can be omitted
+        context = ssl.create_default_context()
+        server.starttls(context=context)
+        server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
+        result = server.send_message(msg)
+        assert result == 1
+        return Success('Email is working')
+    return Failure('Email is NOT working')
 
 
-class SmokeCheck:
-
-    def __init__(self, name, functor, *args, **kwargs):
-        self.name = name
-        self.functor = functor
-        self.args = copy.copy(args)
-        self.kwargs = copy.copy(kwargs)
-
-    def __str__(self):
-        return self.name
-
-    def __call__(self):
-        try:
-            status, message = self.functor(*self.args, **self.kwargs)
-        except Exception as err:
-            status = False
-            message = str(err)
-        return status, message
+def show_checks(checks):
+    print('Availbale checks:', end="\n\n")
+    width = max(len(check.__name__) for check in checks) + 1
+    print('-' * width, '-' * (80 - width - 1))
+    for check in checks:
+        print(f'{check.__name__:<{width}} {green(check.__doc__.strip())}')
 
 
-def main(all_checks):
-    num_checks = len(all_checks)
+def run_checks(checks):
+    num_checks = len(checks)
     passed = 0
-    for check in all_checks:
-        print(f'▶ \033[1m{check.name}\033[0m:', end=' ', flush=True)
-        try:
-            status, message = check()
-            if status:
-                passed += 1
-                print(message, OK)
-            else:
-                print(message, ERROR)
-        except Exception as err:
-            print(err, ERROR)
+    for functor in checks:
+        name = functor.__name__
+        print(f'▶ \033[1m{name}\033[0m:', end=' ', flush=True)
+        if result := functor():
+            passed += 1
+            print(result, OK)
+        else:
+            print(result, ERROR)
     num_failed = num_checks - passed
     if num_failed:
         print(f"{ERROR} Some tests ({num_failed}/{num_checks}) did NOT pass.")
@@ -146,10 +126,28 @@ def main(all_checks):
 
 if __name__ == '__main__':
     ALL_CHECKS = [
-        SmokeCheck('File .env exists', file_exists_in_path, ".env", Path.cwd()),
-        SmokeCheck('Redis is operational', redis_is_ready),
-        SmokeCheck('Email is working', email_is_working),
-
-        SmokeCheck('Queues adn workers are ready', queues_are_working),
+        chk_env_file_exists_in_path,
+        chk_redis_is_ready,
+        chk_email_is_working,
+        chk_queues_are_working,
         ]
-    main(ALL_CHECKS)
+    parser = argparse.ArgumentParser(
+        prog='SmokeTest',
+        description='Verificación de entorno',
+        )
+    parser.add_argument(
+        'check',
+        nargs='*',
+        choices=[_.__name__ for _ in ALL_CHECKS],
+        )
+    args = parser.parse_args()
+    selected_checks = set(args.check)
+    if not selected_checks:
+        show_checks(ALL_CHECKS)
+    elif selected_checks == {'all'}:
+        run_checks(ALL_CHECKS)
+    else:
+        run_checks({
+            _check for _check in ALL_CHECKS
+            if _check.__name__ in selected_checks
+            })
