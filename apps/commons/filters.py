@@ -8,6 +8,8 @@ from datetime import timedelta as TimeDelta
 from django.utils import timezone
 import pytz
 from markdown2 import markdown
+from django.conf import settings
+
 
 _MONTHS = [
     '',
@@ -113,3 +115,9 @@ def as_hour(dst: DateTime) -> str:
     if dst.tzinfo is not None and dst.tzinfo != pytz.utc:
         dst = pytz.utc.normalize(dst)
     return dst.strftime("%H:%M")
+
+
+def as_full_url(path: str, protocol='https') -> str:
+    """Devuelve el path (que debe ser absoluto) como una URL completa.
+    """
+    return f'{protocol}://{settings.DOMAIN}{path}'
