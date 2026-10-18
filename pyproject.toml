@@ -56,9 +56,6 @@ dev = [
     "vulture",
 ]
 
-[tool.pytest_env]
-env_files = [".env"]
-DJANGO_SETTINGS_MODULE = "main.settings"
 
 [tool.ruff]
 line-length = 74
@@ -67,6 +64,9 @@ line-length = 74
 ignore = ['I001', 'EXE001', 'UP031', 'UP032', 'RUF012', 'BLE001']
 
 [tool.pytest.ini-options]
+env_files = [
+    ".env"
+    ]
 testpaths = [
     "tests",
     ]

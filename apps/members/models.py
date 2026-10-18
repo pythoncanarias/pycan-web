@@ -1,3 +1,5 @@
+from datetime import date as Date
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -62,7 +64,7 @@ class Member(models.Model):
     def __str__(self):
         return self.full_name
 
-    def get_valid_until(self) -> None|Date:
+    def get_valid_until(self) -> None | Date:
         last_membership = self.membership_set.last()
         if last_membership is None:
             return None

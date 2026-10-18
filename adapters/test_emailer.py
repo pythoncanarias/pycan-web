@@ -38,3 +38,7 @@ def test_send_email_using_templates():
         matraka="Matraka rules!",
         )
     emailer.send_message(msg)
+
+
+if __name__ == '__main__':
+    pytest.main()

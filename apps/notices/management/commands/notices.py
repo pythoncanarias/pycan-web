@@ -8,7 +8,6 @@ from adapters.console import print, as_table, cyan, green, red, yes_no
 from apps.members.models import Member
 from apps.notices import repository
 from apps.notices.models import Notice, NoticeKind
-from apps.notices.models import NoticeKind
 from apps.notices.tasks import task_send_notice
 
 NOTICE_KIND = dict(getmembers(repository, isfunction))

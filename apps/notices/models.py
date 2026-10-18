@@ -60,18 +60,18 @@ class NoticeKind(models.Model):
 
         Es idempotente.
         """
-        if not kind.enabled:
-            kind.enabled = True
-            kind.save(update_fields='enabled', commit=True)
+        if not self.enabled:
+            self.enabled = True
+            self.save(update_fields='enabled', commit=True)
         
     def disable(self):
         """Desactiva la regla.
 
         Es idempotente.
         """
-        if kind.enabled:
-            kind.enabled = False
-            kind.save(update_fields='enabled', commit=True)
+        if self.enabled:
+            self.enabled = False
+            self.save(update_fields='enabled', commit=True)
 
     def enqueue_notice(self, member, reference_date):
         message_text = get_body(

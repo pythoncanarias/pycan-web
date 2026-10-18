@@ -26,13 +26,9 @@ Es decir, para todos los objetos de la clase ``Success``, se cumple que
 
 Igualmente, para todos los objetos de la clase ``Failure``, se cumple
 que :code:`is_success() is False`` y :code:``is_failure() is True``.
-
-.. _monadas:: https://es.wikipedia.org/wiki/M%C3%B3nada_(programaci%C3%B3n_funcional)
 """
 
-from typing import Union
-
-__all__ = ['Success', 'Failure', 'Result']
+__all__ = ['Failure', 'Result', 'Success']
 
 
 class Success:
@@ -190,4 +186,4 @@ class Failure:
             )
 
 
-Result = Union[Success, Failure]
+Result = Success | Failure

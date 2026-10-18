@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 
-from datetime import datetime as DateTime
-from datetime import UTC
 from email.message import EmailMessage
 from pathlib import Path
 from itertools import chain
 import argparse
-import copy
 import logging
 import smtplib
 import ssl
