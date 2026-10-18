@@ -42,6 +42,15 @@ class Member(models.Model):
         except (cls.DoesNotExist, cls.MultipleObjectsReturned):
             return None
 
+    @classmethod
+    def load_from_email(cls, email):
+        rq = cls.objects.select_related('user')
+        try:
+            member = rq.get(email=email)
+            return member
+        except (cls.DoesNotExist, cls.MultipleObjectsReturned):
+            return None
+
     @property
     def full_name(self):
         return self.user.first_name + ' ' + self.user.last_name
@@ -53,13 +62,16 @@ class Member(models.Model):
     def __str__(self):
         return self.full_name
 
-    @property
-    def active(self):
+    def get_valid_until(self) -> None|Date:
         last_membership = self.membership_set.last()
         if last_membership is None:
-            return False
-        valid_until = last_membership.valid_until
-        return valid_until is None or timezone.now() <= valid_until
+            return None
+        return last_membership.valid_until
+
+    @property
+    def active(self) -> bool:
+        valid_until = self.get_valid_until()
+        return valid_until and timezone.now().date() <= valid_until
 
 
 class PositionManager(models.Manager):
@@ -68,7 +80,7 @@ class PositionManager(models.Manager):
         return (
             super().get_queryset()
             .select_related('member__user')
-            .exclude(until__lt=timezone.now())
+            .exclude(until__lt=timezone.now().date())
             )
 
 

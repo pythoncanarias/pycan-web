@@ -15,16 +15,16 @@ from django.db.models import Max
 from django.utils import timezone
 
 from apps.members.models import Member
+from apps.members.models import Position
 
 logger = logging.getLogger(__name__)
 
 
 def autotest(days=0):
     logger.info("autotest starts")
-    DEVELOPERS = ['sdelquin', 'euribates']  # ToDo: Put this info in database
+    testers = [_.member for _ in Position.objects.actives()]
     hoy = timezone.now().date()
-    for username in DEVELOPERS:
-        member = Member.load_from_username(username)
+    for member in testers:
         yield hoy, member
 
 

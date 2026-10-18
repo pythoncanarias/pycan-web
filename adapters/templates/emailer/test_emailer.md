@@ -1,3 +1,5 @@
+## {{ subject }}
+
 Esta es una prueba de correo
 enviada usando el adaptador emailer
 a los siguientes correos.

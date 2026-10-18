@@ -7,18 +7,6 @@ from adapters.emailer import create_message, send_message
 from apps.notices.models import Notice
 
 
-def create_notice_message(id_notice: int):
-    notice = Notice.load_notice(id_notice)
-    return create_message(
-        [notice.member.email],
-        notice.kind.description,
-        notice.kind.template,
-        notice=notice,
-        kind=notice.kind,
-        member=notice.member,
-        user=notice.member.user,
-        )
-
 
 @job
 def task_send_notice(id_notice):
@@ -27,9 +15,16 @@ def task_send_notice(id_notice):
     if not notice.member.email:
         print("El usuario no tiene asignado email")
         return
-    msg = create_notice_message(id_notice)
     try:
-        result = send_message(msg)
+        msg = create_message(
+            [notice.member.email],
+            notice.kind.description,
+            body_text=notice.message_text,
+            notice=notice,
+            kind=notice.kind,
+            member=notice.member,
+            )
+        notice.reply_code = result = send_message(msg)
         if result:
             notice.send_at = timezone.now()
         else:

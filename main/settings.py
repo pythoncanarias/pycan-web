@@ -71,7 +71,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django_rq',
-    'colorfield',
     'leaflet',
     'import_export',
     'adapters.emailer',
@@ -358,20 +357,20 @@ RQ_QUEUES = {
 
 # Email
 CONTACT_EMAIL = config('CONTACT_EMAIL', default='info@pythoncanarias.es')
-AWS_SNS_SERVER = config('AWS_SNS_SERVER')
-AWS_SNS_PORT = config('AWS_SNS_PORT', cast=int, default=587)
-AWS_SNS_USERNAME = config('AWS_SNS_USERNAME')
-AWS_SNS_PASSWORD = config('AWS_SNS_PASSWORD')
+SMTP_SERVER = config('SMTP_SERVER')
+SMTP_PORT = config('SMTP_PORT', cast=int, default=587)
+SMTP_USERNAME = config('SMTP_USERNAME')
+SMTP_PASSWORD = config('SMTP_PASSWORD')
 
 MAILERS = {
     "default": {
         "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
         "OPTIONS": {
-            "host": AWS_SNS_SERVER,
-            "port": AWS_SNS_PORT,
+            "host": SMTP_SERVER,
+            "port": SMTP_PORT,
             "use_tls": True,
-            "username": AWS_SNS_USERNAME,
-            "password": AWS_SNS_PASSWORD,
+            "username": SMTP_USERNAME,
+            "password": SMTP_PASSWORD,
         },
     },
 }

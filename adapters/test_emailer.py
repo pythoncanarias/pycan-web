@@ -2,7 +2,6 @@
 
 import pytest
 from django.conf import settings
-from django.core.mail import send_mail
 
 from adapters import emailer
 
@@ -10,34 +9,32 @@ from adapters import emailer
 def test_create_message():
     msg = emailer.create_message(
         recipients=['euribates@gmail.com'],
-        subject='[PyCanWeb] test asapters.emailer',
+        subject='[PyCanWeb] test adapters.emailer',
         template='emailer/test_emailer.md',
-        from_email=settings.CONTACT_EMAIL,
         matraka="Matraka rules!",
         )
     assert msg.to == ['euribates@gmail.com']
     assert msg.from_email == settings.CONTACT_EMAIL
-    assert msg.subject == '[PyCanWeb] test asapters.emailer'
+    assert msg.subject == '[PyCanWeb] test adapters.emailer'
 
 
-@pytest.mark.slow
 def test_simple_send():
-    send_mail(
-        "Subject here",
-        "Here is the message.",
-        "info@pythoncanarias.es",
+    msg = emailer.create_message(
         ["euribates@gmail.com"],
+        "Subject here",
+        body_text="Hola, mundo\n",
+        from_email='info@pythoncanarias.es',
         )
 
+    emailer.send_message(msg)
 
-@pytest.mark.slow
-def test_send_email():
+
+def test_send_email_using_templates():
     msg = emailer.create_message(
-        recipients=['euribates@gmail.com'],
-        subject='[PyCanWeb] test asapters.emailer',
+        ['euribates@gmail.com'],
+        '[PyCanWeb] test asapters.emailer',
         template='emailer/test_emailer.md',
         from_email=settings.CONTACT_EMAIL,
         matraka="Matraka rules!",
         )
-    result = msg.send()
-    print('result:', result)
+    emailer.send_message(msg)

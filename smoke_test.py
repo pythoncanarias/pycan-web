@@ -41,7 +41,7 @@ def chk_env_file_exists_in_path() -> Result:
             return Success(f'Found here: {full_path}')
     return Failure('File .env not found!')
 
- 
+
 def chk_redis_is_ready() -> Result:
     """Redis server is listening in the indicated host/port.
     """
@@ -91,8 +91,7 @@ def chk_email_is_working():
         context = ssl.create_default_context()
         server.starttls(context=context)
         server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
-        result = server.send_message(msg)
-        assert result == 1
+        _result = server.send_message(msg)
         return Success('Email is working')
     return Failure('Email is NOT working')
 

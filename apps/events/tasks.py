@@ -15,7 +15,7 @@ def create_ticket_message(ticket):
     msg = create_message(
         [ticket.customer_email],
         f"Entrada para {event}",
-        'events/email/ticket_message.md',
+        template='events/email/ticket_message.md',
         attachments=[pdf_filename],
         ticket=ticket,
         article=ticket.article,
@@ -45,7 +45,7 @@ def create_proposal_acknowledge(id_proposal):
     msg = create_message(
         [proposal.email],
         f"Acuse de recibo de su propuesta para {proposal.event}",
-        "events/email/proposal_acknowledge.md",
+        template="events/email/proposal_acknowledge.md",
         event=proposal.event,
         proposal=proposal,
         )
@@ -64,7 +64,7 @@ def create_proposal_notification(proposal):
     msg = create_message(
         [settings.CONTACT_EMAIL],
         f"Nueva propuesta para {event}",
-        'events/email/proposal_notification.md',
+        template='events/email/proposal_notification.md',
         event=proposal.event,
         proposal=proposal,
         )

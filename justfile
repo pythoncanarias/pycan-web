@@ -83,6 +83,11 @@ makemigrations $APP='' *args='':
 
 alias mm := makemigrations
 
+# Buscar en todos los ficheros (excepto .env)
+find *args='':
+    @echo "Buscando {{ args }} en todos los ficheros Python"
+    pss --ignore-dir .venv {{ args }}
+
 # Buscar en ficheros Python
 fpy *args='':
     @echo "Buscando {{ args }} en todos los ficheros Python"

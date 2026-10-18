@@ -6,7 +6,6 @@ import uuid
 from datetime import datetime as DateTime
 from datetime import time as Time
 
-from colorfield.fields import ColorField
 from django.conf import settings
 from django.db import models
 from django.db.models import Max
@@ -376,17 +375,17 @@ class Badge(models.Model):
         default="0,0",
     )
     name_font_size = models.PositiveIntegerField(default=24)
-    name_color = ColorField(default="#FFFFFF")
+    name_color = models.CharField(max_length=25, default="#FFFFFF")
     number_coordinates = models.CharField(
         max_length=255, verbose_name="Ticket number coordinates", default="0,0"
     )
     number_font_size = models.PositiveIntegerField(default=24)
-    number_color = ColorField(default="#FFFFFF")
+    number_color = models.CharField(max_length=25, default="#FFFFFF")
     category_coordinates = models.CharField(
         max_length=255, verbose_name="Ticket category coordinates", default="0,0"
     )
     category_font_size = models.PositiveIntegerField(default=24)
-    category_color = ColorField(default="#FFFFFF")
+    category_color = models.CharField(max_length=25, default="#FFFFFF")
 
     def __str__(self):
         return f"Badge for {self.event.name}"

@@ -56,6 +56,10 @@ dev = [
     "vulture",
 ]
 
+[tool.pytest_env]
+env_files = [".env"]
+DJANGO_SETTINGS_MODULE = "main.settings"
+
 [tool.ruff]
 line-length = 74
 
