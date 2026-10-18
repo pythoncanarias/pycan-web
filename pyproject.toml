@@ -26,6 +26,7 @@ dependencies = [
     "pygal>=3.1.3",
     "pyqrcode==1.2.1",
     "pytest-django>=4.14.0",
+    "pytest-env>=1.8.1",
     "pytest-sugar>=1.1.1",
     "pytest>=9.1.1",
     "pytz",
@@ -63,19 +64,6 @@ line-length = 74
 
 [tool.ruff.lint]
 ignore = ['I001', 'EXE001', 'UP031', 'UP032', 'RUF012', 'BLE001']
-
-[tool.pytest.ini-options]
-env_files = [
-    ".env"
-    ]
-testpaths = [
-    "tests",
-    ]
-addopts = "--reuse-db --no-migrations --failed-first --debug --ds=main.settings"
-markers = [
-    "wip",   # Work in progress
-    "slow",  # marks tests as slow (deselect with '-m "not slow"')
-    ]
 
 [tool.mypy]
 plugins = "mypy_django_plugin.main"
