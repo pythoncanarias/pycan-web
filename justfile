@@ -49,8 +49,7 @@ versions:
 
 # Ejecutar los test pasados como paræmetro (Empezará por el último que haya fallado)
 test *args='.':
-    export DJANGO_SETTINGS_MODULE=main.settings
-    python3 -m pytest --failed-first -vv -x --log-cli-level=INFO --doctest-modules -m "not slow" {{ args }}
+    DJANGO_SETTINGS_MODULE=main.settings python3 -m pytest --failed-first -vv -x --log-cli-level=INFO --doctest-modules -m "not slow" {{ args }}
 
 # Muestra información del Harware / S.O. / Python / Django
 info:
