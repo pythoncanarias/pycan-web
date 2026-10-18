@@ -109,3 +109,7 @@ fjs *args='':
 # Arrancar workers para las tras clasess high, default y low
 workers:
     python3 manage.py rqworker high default low
+
+# Acceso al servidor remoto
+remote:
+    ssh jileon@bifrost
