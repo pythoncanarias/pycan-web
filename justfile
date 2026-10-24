@@ -113,3 +113,7 @@ workers:
 # Acceso al servidor remoto
 remote:
     ssh jileon@bifrost
+
+# Copiar los ficheros media del servidor localmente
+syncmedia:
+    rsync -r -a --progress jileon@bifrost:apps/www.pythoncanarias.es/media/ media/
