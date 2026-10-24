@@ -8,8 +8,6 @@ jobs:
     name: Deploy project
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Execute remote deploy commands
         uses: appleboy/ssh-action@master
         with:
