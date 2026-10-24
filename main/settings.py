@@ -403,3 +403,9 @@ else:
     }
 
 DOMAIN = config('DOMAIN', default='localhost')
+
+# Https and other security issues
+if DEBUG is False:
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_SSL_REDIRECT = True
+
