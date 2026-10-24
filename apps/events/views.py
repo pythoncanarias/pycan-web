@@ -35,7 +35,7 @@ def next(request):
                 })
         case 1:
             event = events.first()
-            return redirect("events:detail_event", slug=event.slug)
+            return redirect("events:detail_event", event=event)
         case _:
             return render(request, "events/list-events.html", {
                 "events": events.all(),
