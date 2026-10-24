@@ -32,6 +32,10 @@ class Speaker(models.Model):
         upload_to='speakers/speaker/',
         blank=True,
     )
+    is_abroad = models.BooleanField(
+        default=False,
+        help_text="El ponente es de fuera, necesita viajar",
+        )
 
     def __str__(self):
         return f'{self.name} {self.surname}'
