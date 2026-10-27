@@ -408,4 +408,4 @@ DOMAIN = config('DOMAIN', default='localhost')
 if DEBUG is False:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_SSL_REDIRECT = True
-
+    SECURE_HSTS_PRELOAD = True
