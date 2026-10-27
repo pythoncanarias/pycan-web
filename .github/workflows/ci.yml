@@ -8,13 +8,14 @@ jobs:
     name: Deploy project
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Just testing this is running
+        run: echo "Hello, world"
       - name: Execute remote deploy commands
         uses: appleboy/ssh-action@master
         with:
           host: pythoncanarias.es
           username: ${{ secrets.PRODUCTION_SSH_USERNAME }}
           key: ${{ secrets.PRODUCTION_SSH_KEY }}
-          script: cd ~/apps/www.pythoncanaries.es/ && ./deploy.sh
           passphrase: ${{ secrets.PASS_PHRASE }}
+          #script: cd ~/apps/www.pythoncanarias.es/ && ./deploy.sh
+          script: cd ~/apps/www.pythoncanarias.es/ && pwd
