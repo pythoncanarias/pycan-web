@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 
 from email.message import EmailMessage
-from pathlib import Path
 from itertools import chain
+from pathlib import Path
+from rq import Queue
 import argparse
 import logging
+import logging.handlers
+import os
+import rq
 import smtplib
 import ssl
 import sys
@@ -12,9 +16,25 @@ import sys
 from prettyconf import config
 
 from utils.results import Success, Failure, Result
+from apps.commons.tasks import send_ntfy_message
 
-logging.basicConfig(filename='smoke_test.log', level=logging.DEBUG)
-logger = logging.getLogger('smoke_test')
+def get_logger():
+    log_handler = logging.handlers.RotatingFileHandler(
+        filename='smoke_test.log',
+        maxBytes=33554432, # 32 MB
+        backupCount=8,
+        )
+    formatter = logging.Formatter(
+        '%(asctime)s program_name [%(process)d]: %(message)s',
+        '%b %d %H:%M:%S')
+    log_handler.setFormatter(formatter)
+    logger = logging.getLogger(__name__)
+    logger.addHandler(log_handler)
+    logger.setLevel(logging.DEBUG)
+    return logger
+
+
+logger = get_logger()
 
 def green(text: str) -> str:
     return f"\u001b[32m{text}\u001b[0m"
@@ -38,19 +58,22 @@ def chk_env_file_exists_in_path() -> Result:
             return Success(f'Found here: {full_path}')
     return Failure('File .env not found!')
 
-
-def chk_redis_is_ready() -> Result:
-    """Redis server is listening in the indicated host/port.
-    """
+def _get_redis_conn():
     import redis
     REDIS_SERVER = config('REDIS_SERVER', default='localhost')
     REDIS_PASSWORD = config('REDIS_PASSWORD', default='')
     REDIS_PROTOCOL = config('REDIS_PROTOCOL', default=2, cast=int)
-    rds = redis.Redis(
+    return redis.Redis(
         host=REDIS_SERVER,
         password=REDIS_PASSWORD,
         protocol=REDIS_PROTOCOL,
         )
+
+
+def chk_redis_is_ready() -> Result:
+    """Redis server is listening in the indicated host/port.
+    """
+    rds = _get_redis_conn()
     if rds.ping():
         return Success('Redis server is working')
     return Failure('Redis server is not working')
@@ -59,11 +82,10 @@ def chk_redis_is_ready() -> Result:
 def chk_queues_are_working() -> Result:
     """Queues are defined and have workers assigned.
     """
-    import os
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'main.settings'
-    from apps.commons.tasks import send_ntfy_message
 
-    send_ntfy_message.delay('SmokeTest')
+    rds = _get_redis_conn()
+    queue = Queue('default', connection=rds)
+    job = queue.enqueue(send_ntfy_message, 'SmokeTest')
     return Success('Queued message by ntfy. Check in app.')
 
 
@@ -135,7 +157,7 @@ if __name__ == '__main__':
     parser.add_argument(
         'check',
         nargs='*',
-        choices=[_.__name__ for _ in ALL_CHECKS],
+        choices=[_.__name__ for _ in ALL_CHECKS] + ['all'],
         )
     args = parser.parse_args()
     selected_checks = set(args.check)
