@@ -53,6 +53,7 @@ dev = [
     "ipython>=9.17.1",
     "mypy>=2.3.1",
     "pss>=1.45",
+    "pyrefly>=1.4.0",
     "rope>=1.14.0",
     "ruff>=0.16.8",
     "vulture",
@@ -71,3 +72,6 @@ plugins = "mypy_django_plugin.main"
 [tool.django-stubs]
 django_settings_module="main.settings"
 ignore_missing_model_attributes=true
+
+[tool.pyrefly]
+preset = "legacy"

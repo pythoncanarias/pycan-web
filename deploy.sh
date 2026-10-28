@@ -9,7 +9,7 @@ git pull
 uv sync
 python manage.py migrate
 python manage.py collectstatic --noinput --clear
-python smoke_test.py
 python manage.py check --deploy
+python smoke_test.py all
 
 sudo systemctl restart nginx supervisor

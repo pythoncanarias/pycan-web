@@ -72,9 +72,12 @@ class Member(models.Model):
 
     @property
     def active(self) -> bool:
+        """Verdadero si el miembro está activa a la fecha actual.
+        """
         valid_until = self.get_valid_until()
-        return valid_until and timezone.now().date() <= valid_until
-
+        if valid_until:
+            return timezone.now().date() <= valid_until
+        return False
 
 class PositionManager(models.Manager):
 

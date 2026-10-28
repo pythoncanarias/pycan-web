@@ -1,24 +1,25 @@
 #!/usr/bin/env python3
 
+from redis.client import Redis
+from logging import Logger
 from email.message import EmailMessage
 from itertools import chain
 from pathlib import Path
-from rq import Queue
 import argparse
 import logging
 import logging.handlers
-import os
-import rq
 import smtplib
 import ssl
 import sys
 
+import rq
 from prettyconf import config
 
 from utils.results import Success, Failure, Result
 from apps.commons.tasks import send_ntfy_message
 
-def get_logger():
+
+def get_logger() -> Logger:
     log_handler = logging.handlers.RotatingFileHandler(
         filename='smoke_test.log',
         maxBytes=33554432, # 32 MB
@@ -47,6 +48,18 @@ OK = green("[OK ✓]")
 ERROR = red("[ERROR ✖]")
 
 
+def _get_redis_conn() -> Redis:
+    import redis
+    REDIS_SERVER = config('REDIS_SERVER', default='localhost')
+    REDIS_PASSWORD = config('REDIS_PASSWORD', default='')
+    REDIS_PROTOCOL = config('REDIS_PROTOCOL', default=2, cast=int)
+    return redis.Redis(
+        host=REDIS_SERVER,
+        password=REDIS_PASSWORD,
+        protocol=REDIS_PROTOCOL,
+        )
+
+
 def chk_env_file_exists_in_path() -> Result:
     """.env file exists somewhere in the path.
     """
@@ -57,17 +70,6 @@ def chk_env_file_exists_in_path() -> Result:
         if full_path.exists() and full_path.is_file():
             return Success(f'Found here: {full_path}')
     return Failure('File .env not found!')
-
-def _get_redis_conn():
-    import redis
-    REDIS_SERVER = config('REDIS_SERVER', default='localhost')
-    REDIS_PASSWORD = config('REDIS_PASSWORD', default='')
-    REDIS_PROTOCOL = config('REDIS_PROTOCOL', default=2, cast=int)
-    return redis.Redis(
-        host=REDIS_SERVER,
-        password=REDIS_PASSWORD,
-        protocol=REDIS_PROTOCOL,
-        )
 
 
 def chk_redis_is_ready() -> Result:
@@ -82,14 +84,13 @@ def chk_redis_is_ready() -> Result:
 def chk_queues_are_working() -> Result:
     """Queues are defined and have workers assigned.
     """
-
     rds = _get_redis_conn()
-    queue = Queue('default', connection=rds)
-    job = queue.enqueue(send_ntfy_message, 'SmokeTest')
+    queue = rq.Queue('default', connection=rds)
+    _job = queue.enqueue(send_ntfy_message, 'SmokeTest')
     return Success('Queued message by ntfy. Check in app.')
 
 
-def chk_email_is_working():
+def chk_email_is_working() -> Result:
     """Email subsystem is working.
     """
     EMAIL_SERVER = config('SMTP_SERVER')
@@ -105,17 +106,20 @@ def chk_email_is_working():
         "Prueba de envio de correo usando los parámetros"
         " de configuración de Python Canarias Web."
         )
-    with smtplib.SMTP(EMAIL_SERVER, EMAIL_PORT) as server:
-        server.ehlo()  # Can be omitted
-        context = ssl.create_default_context()
-        server.starttls(context=context)
-        server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
-        _result = server.send_message(msg)
-        return Success('Email is working')
-    return Failure('Email is NOT working')
+    try:
+        with smtplib.SMTP(EMAIL_SERVER, EMAIL_PORT) as server:
+            server.ehlo()  # Can be omitted
+            context = ssl.create_default_context()
+            server.starttls(context=context)
+            server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
+            _result = server.send_message(msg)
+            return Success('Email is working')
+    except Exception:
+        logger.exception()
+        return Failure('Email is NOT working')
 
 
-def show_checks(checks):
+def show_checks(checks) -> None:
     print('Availbale checks:', end="\n\n")
     width = max(len(check.__name__) for check in checks) + 1
     print('-' * width, '-' * (80 - width - 1))
