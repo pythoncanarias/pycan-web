@@ -8,6 +8,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from apps.members.models import Member
+from apps.commons.forms import EstaSeguro
+from apps.obus import Bus
 
 from . import breadcrumbs, forms, menu
 
@@ -15,11 +17,11 @@ logger = logging.getLogger(__name__)
 
 
 @login_required
-def homepage(request: HttpRequest) -> HttpResponse:
+def index(request: HttpRequest) -> HttpResponse:
     """Show user profile and member information.
     """
     member = request.user.member
-    return render(request, "members/homepage.html", {
+    return render(request, "members/index.html", {
         'titulo': f"Perfil socio {member.full_name}",
         'breadcrumbs': breadcrumbs.bc_members(),
         'member': member,
@@ -31,12 +33,12 @@ def homepage(request: HttpRequest) -> HttpResponse:
 def member_login(request: HttpRequest) -> HttpResponse:
     """Allows a user to identify himself/herself with the system."""
     if request.user.is_authenticated:
-        return redirect(reverse('members:homepage'))
+        return redirect(reverse('members:index'))
     if request.method == 'POST':
         form = forms.LoginForm(request.POST)
         if form.is_valid():
             login(request, form.user)
-            return redirect(reverse("members:homepage"))
+            return redirect(reverse("members:index"))
         else:
             messages.error(request, "El formulario tiene errores")
     else:
@@ -74,7 +76,7 @@ def password_change(request):
         form = forms.PasswordChangeForm(request.POST, user=request.user)
         if form.is_valid():
             form.save(request)
-            return redirect(reverse('members:homepage'))
+            return redirect(reverse('members:index'))
         else:
             messages.error(request, "El formulario tiene errores")
     else:
@@ -93,7 +95,7 @@ def address_change(request):
         form = forms.ChangeAddressForm(request.POST, instance=member)
         if form.is_valid():
             form.save(request)
-            return redirect(reverse('members:homepage'))
+            return redirect(reverse('members:index'))
         else:
             num_errors = sum(len(err) for err in form.errors.values())
             messages.error(
@@ -107,4 +109,20 @@ def address_change(request):
         'breadcrumbs': breadcrumbs.bc_address_change(),
         'form': form,
         'menu': menu.main_menu(request),
+        })
+
+
+def check_email(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = EstaSeguro(request.POST)
+        if form.is_valid():
+            Bus(request).check_email(request.user)
+            # Enviar texto # TODO
+            return redirect('members:index')
+    else:
+        form = EstaSeguro(request.POST)
+    return render(request, 'members/check-email.html', {
+        'titulo': 'Prueba de envío de email / correo electrónico',
+        'breadcrumbs': breadcrumbs.bc_check_email(),
+        'form': form,
         })

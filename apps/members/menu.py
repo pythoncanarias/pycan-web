@@ -4,7 +4,7 @@ from apps.commons.menu import Menu
 def main_menu(request):
     return (Menu(request)
         .add_section('general', 'General')
-        .add_menu_item("Perfil de usuario/a", "members:homepage")
+        .add_menu_item("Perfil de usuario/a", "members:index")
         .add_menu_item("Permanencia", "members:membership")
         .finished()
         .add_section('ops', 'Operaciones')

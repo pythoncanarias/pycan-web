@@ -43,6 +43,8 @@
 {% block hero %}
 {% endblock hero %}
 
+{% include "includes/messages.html" %}
+
 <main class="container">
   <div class="titulo-subtitulo">
     {% if titulo %}
@@ -63,7 +65,6 @@
     {% comment %}{% endif %}{% endcomment %}
 {% endblock container %}
 
-{% include "includes/messages.html" %}
 
 {% block footer %}
   {% include "includes/footer.html" %}
