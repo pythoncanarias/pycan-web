@@ -19,7 +19,7 @@ dependencies = [
     "markuppy==1.18",
     "odfpy==1.4.1",
     "openpyxl",
-    "pillow>=12.3.0",
+    "pillow>=13.0.0",
     "prettyconf",
     "psycopg2>=2.9.13",
     "pydotplus>=2.0.2",
