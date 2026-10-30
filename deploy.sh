@@ -12,4 +12,7 @@ python manage.py collectstatic --noinput --clear
 python manage.py check --deploy
 python smoke_test.py all
 
-sudo systemctl restart nginx supervisor
+sudo systemctl stop nginx
+sudo systemctl stop supervisor
+sudo systemctl start supervisor
+sudo systemctl start nginx
