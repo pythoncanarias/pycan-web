@@ -49,7 +49,8 @@ versions:
 
 # Ejecutar los test pasados como paræmetro (Empezará por el último que haya fallado)
 test *args='.':
-    python3 -m pytest  {{ args }} -vv -x --log-cli-level=INFO --doctest-modules -m "not slow"
+    python3 -m pytest  {{ args }} -vv -x --log-cli-level=INFO \
+             --doctest-modules -m "not slow" --ignore=.venv
 
 # Muestra información del Harware / S.O. / Python / Django
 info:

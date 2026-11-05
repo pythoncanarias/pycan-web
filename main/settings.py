@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'apps.api',
     'apps.certificates',
     'apps.commons',
+    'apps.dashboard',
     'apps.dev',
     'apps.events',
     'apps.homepage',
@@ -94,7 +95,7 @@ INSTALLED_APPS = [
     'apps.schedule',
     'apps.speakers',
     'apps.tickets',
-]
+    ]
 
 if DEBUG:
     INSTALLED_APPS += [
