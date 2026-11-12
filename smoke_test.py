@@ -73,7 +73,7 @@ def chk_env_file_exists_in_path() -> Result:
 
 
 def chk_redis_is_ready() -> Result:
-    """Redis server is listening in the indicated host/port.
+    """Redis server listens in the indicated host/port.
     """
     rds = _get_redis_conn()
     if rds.ping():
