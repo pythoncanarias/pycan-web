@@ -62,7 +62,7 @@ class ProposalForm(forms.ModelForm):
         )
         self.event = event
 
-    def save(self):
+    def save(self, commit=True):
         proposal = super().save(commit=False)
         proposal.event = self.event
         proposal.save()

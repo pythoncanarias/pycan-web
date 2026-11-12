@@ -2,6 +2,7 @@ from datetime import date as Date
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import OuterRef, Subquery
 from django.utils import timezone
 
 from .constants import (
@@ -11,6 +12,27 @@ from .constants import (
     FEE_PAYMENT_TYPE,
     MEMBER_POSITION,
 )
+
+class MemberManager(models.Manager):
+
+    def get_queryset(self):
+        last_membership = (
+            Membership.objects
+            .filter(member=OuterRef("pk"))
+            .order_by('-valid_until')
+            )
+        return (
+            super().get_queryset()
+            .select_related('user')
+            .prefetch_related('membership_set')
+            .annotate(
+                valid_until=Subquery(last_membership.values('valid_until')[:1])
+                )
+            )
+
+    def actives(self):
+        now = timezone.now()
+        return self.get_queryset().filter(valid_until__lte=now)
 
 
 class Member(models.Model):
@@ -34,6 +56,8 @@ class Member(models.Model):
         unique=True,
         blank=False,
         )
+
+    objects = MemberManager()
 
     @classmethod
     def load_from_username(cls, username):
@@ -64,20 +88,15 @@ class Member(models.Model):
     def __str__(self):
         return self.full_name
 
-    def get_valid_until(self) -> None | Date:
-        last_membership = self.membership_set.last()
-        if last_membership is None:
-            return None
-        return last_membership.valid_until
-
     @property
     def active(self) -> bool:
         """Verdadero si el miembro está activa a la fecha actual.
         """
-        valid_until = self.get_valid_until()
-        if valid_until:
-            return timezone.now().date() <= valid_until
+        if self.valid_until:
+            now = timezone.now().date()
+            return now <= self.valid_until
         return False
+
 
 class PositionManager(models.Manager):
 

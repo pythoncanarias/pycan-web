@@ -8,10 +8,10 @@
 
   <link rel="icon" href="{% static 'commons/img/favicon.ico' %}">
 {% spaceless %}
-<title>{% block title %}
+<title>
 {% if titulo %}{{ titulo }}{% if subtitulo %} - {{ subtitulo }}{% endif %}
 {% else %}Falta título - {{ organization.name }}{% endif %}
-{% endblock title %}</title>
+</title>
 {% endspaceless %}
 
 {% block fonts %}
@@ -46,17 +46,21 @@
 {% include "includes/messages.html" %}
 
 <main class="container">
-  <div class="titulo-subtitulo">
-    {% if titulo %}
-      <h1 class="title is-3"> {{ titulo }} </h1>
-    {% endif %}
-    {% if subtitulo %}
-      <h2 class="subtitle is-5"> {{ subtitulo }} </h1>
-    {% endif %}
-  </div>
+
+  {% block title %}
+    <div class="titulo-subtitulo">
+      {% if titulo %}
+        <h1 class="title is-3"> {{ titulo }} </h1>
+      {% endif %}
+      {% if subtitulo %}
+        <h2 class="subtitle is-5"> {{ subtitulo }} </h1>
+      {% endif %}
+    </div>
+  {% endblock title %}
 
   {% block content %}
   {% endblock content %}
+
 </main>
 
     {% comment %}{% if menu %}{% endcomment %}
