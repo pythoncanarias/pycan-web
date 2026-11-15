@@ -1,0 +1,41 @@
+{% extends "members/base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+
+
+  <div class="block has-text-centered">
+
+  <h3 class="is-size-4 mb-5 mt-3">Verificar el correo
+    <code>{{ request.user.member.email }}</code>
+  </h3>
+
+  <form action="." method="POST" class="mb-4" accept-charset="utf-8">
+  {% csrf_token %}
+
+
+
+  <div class="field">
+    <div class="control">
+      {{ form.esta_seguro }}
+    <label class="label">{{ form.esta_seguro.label }}</label>
+    </div>
+    <p class="help is-success">Marque el checkbox para poder realizar la
+    prueba</p>
+  </div>
+
+
+    <input type="submit"
+      class="button is-warning mb-3"
+      role="button"
+      value="verificar email"
+      arial-label="verificar email"
+      name="ok">
+  </form>
+  </div>
+
+</div>
+
+{% endblock content %}

@@ -22,3 +22,13 @@ def bc_address_change() -> BreadCrumb:
         'member:address_change',
         )
 
+
+def bc_check_email() -> BreadCrumb:
+    return bc_members().step(
+        "Verificar email",
+        'member:check_email',
+        )
+
+
+
+

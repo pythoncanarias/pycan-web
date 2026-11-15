@@ -1,9 +1,14 @@
 from datetime import date as Date
+from datetime import timedelta as TimeDelta
+from calendar import isleap
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
+from django.db import transaction
+from django.db.models import OuterRef, Subquery
 from django.utils import timezone
 
+from utils.security import generate_pronunciable_password
 from .constants import (
     DEFAULT_MEMBERSHIP_PERIOD,
     DEFAULT_POSITION_PERIOD,
@@ -11,6 +16,30 @@ from .constants import (
     FEE_PAYMENT_TYPE,
     MEMBER_POSITION,
 )
+
+User = get_user_model()
+
+
+class MemberManager(models.Manager):
+
+    def get_queryset(self):
+        last_membership = (
+            Membership.objects
+            .filter(member=OuterRef("pk"))
+            .order_by('-valid_until')
+            )
+        return (
+            super().get_queryset()
+            .select_related('user')
+            .prefetch_related('membership_set')
+            .annotate(
+                valid_until=Subquery(last_membership.values('valid_until')[:1])
+                )
+            )
+
+    def actives(self):
+        now = timezone.now()
+        return self.get_queryset().filter(valid_until__gte=now)
 
 
 class Member(models.Model):
@@ -35,13 +64,14 @@ class Member(models.Model):
         blank=False,
         )
 
+    objects = MemberManager()
+
     @classmethod
     def load_from_username(cls, username):
-        rq = cls.objects.select_related('user')
         try:
-            member = rq.get(user__username=username)
+            member = cls.objects.get(user__username=username)
             return member
-        except (cls.DoesNotExist, cls.MultipleObjectsReturned):
+        except cls.DoesNotExist:
             return None
 
     @classmethod
@@ -64,16 +94,14 @@ class Member(models.Model):
     def __str__(self):
         return self.full_name
 
-    def get_valid_until(self) -> None | Date:
-        last_membership = self.membership_set.last()
-        if last_membership is None:
-            return None
-        return last_membership.valid_until
-
     @property
     def active(self) -> bool:
-        valid_until = self.get_valid_until()
-        return valid_until and timezone.now().date() <= valid_until
+        """Verdadero si el socio/a está activo/a a la fecha actual.
+        """
+        if self.valid_until:
+            now = timezone.now().date()
+            return now <= self.valid_until
+        return False
 
 
 class PositionManager(models.Manager):
@@ -141,9 +169,69 @@ class Membership(models.Model):
     class Meta:
         ordering = ('valid_from', 'member')
 
-    def save(self, *args, **kwargs):
+    def save(self):
         if self.valid_until is None:
             self.valid_until = (
                 self.valid_from + DEFAULT_MEMBERSHIP_PERIOD
                 )
-        super().save(args, kwargs)
+        super().save()
+
+
+def add_new_member(
+        first_name: str,
+        last_name: str,
+        email: str,
+        username: str,
+        address: str,
+        rest_address: str,
+        postal_code: str,
+        city: str,
+        phone: str,
+        payment_date: Date,
+        payment_reference: str,
+        ) -> tuple[Member, str]:
+    """Añadir un nuevo socio.
+
+    Implica varios pasos, ya que hay que crear el usuario vinculado
+    el socio, la entrada en la tabla Member y crear un primer pago
+    de ese socio para el periodo correspondiente.
+
+    Si todo va bien, devuelve el miembro (Instancia de Member) recien
+    creado, y la contraseña asignada i nicialmente.
+
+    Si se produce un error, no se realiza ningún cambio en la base de
+    datos, ya que la operación se realiza en un transacción atómica.
+    """
+    password = generate_pronunciable_password()
+    today = timezone.now().date()
+    valid_from = payment_date
+    delta = TimeDelta(days=366 if isleap(today.year) else 365)
+    valid_until = max(payment_date, today) + delta
+    with transaction.atomic():
+        user = User.objects.create_user(
+            username, email, password,
+            first_name=first_name,
+            last_name=last_name,
+            is_active=True,
+            date_joined=payment_date
+            )
+        member = Member(
+            user=user,
+            address=address,
+            rest_address=rest_address,
+            postal_code=postal_code,
+            city=city,
+            phone=phone,
+            email=email,
+            )
+        member.save()
+        _membership = Membership(
+            member=member,
+            valid_from=valid_from,
+            valid_until=valid_until,
+            fee_received_at=payment_date,
+            fee_amount=FEE_AMOUNT.GENERAL,
+            fee_payment_type=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE,
+            fee_payment_reference=payment_reference,
+            ).save()
+    return member, password

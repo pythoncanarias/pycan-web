@@ -1,0 +1,18 @@
+<label class="label">{{ field.label }}
+  {% if field.field.required %}<sup title="Obligatorio">*</sup>{% endif %}
+</label>
+ <div class="control">
+
+  {% with field.field.widget as widget %}{% spaceless %}
+   <input type="date"
+          name="{{ field.name }}"
+          {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+          {% for name, value in widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %} 
+          >
+  {% endspaceless %}  
+  {% endwith %}
+
+ {% if field.errors %}<ul class="errors">{% for error in field.errors %}
+   <li>{{ error }}</li>
+   {% endfor %}</ul>{% endif %}
+ </div>

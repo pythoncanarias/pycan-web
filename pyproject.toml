@@ -5,7 +5,7 @@ description = "Python Canarias Web Site"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "boto3>=1.43.100",
+    "boto3>=1.44.3",
     "django-colorfield==0.14.0",
     "django-debug-toolbar>=4.3.0",
     "django-extensions==4.1",
@@ -13,13 +13,13 @@ dependencies = [
     "django-leaflet==0.34.0",
     "django-redis==7.0.0",
     "django-rq==4.2.0",
-    "django==6.1.1",
-    "gunicorn>=26.2.0",
+    "django==6.1.3",
+    "gunicorn>=27.0.1",
     "markdown2==2.5.5",
     "markuppy==1.18",
     "odfpy==1.4.1",
     "openpyxl",
-    "pillow>=12.3.0",
+    "pillow>=13.0.0",
     "prettyconf",
     "psycopg2>=2.9.13",
     "pydotplus>=2.0.2",
@@ -53,8 +53,10 @@ dev = [
     "ipython>=9.17.1",
     "mypy>=2.3.1",
     "pss>=1.45",
+    "pyrefly>=1.4.0",
     "rope>=1.14.0",
-    "ruff>=0.16.8",
+    "ruff>=0.17.5",
+    "ty>=0.0.104",
     "vulture",
 ]
 
@@ -63,7 +65,15 @@ dev = [
 line-length = 74
 
 [tool.ruff.lint]
-ignore = ['I001', 'EXE001', 'UP031', 'UP032', 'RUF012', 'BLE001']
+ignore = [
+    'I001',
+    'EXE001',
+    'UP031',
+    'UP032',
+    'RUF012',
+    'BLE001',
+    'SIM102',
+    ]
 
 [tool.mypy]
 plugins = "mypy_django_plugin.main"
@@ -71,3 +81,6 @@ plugins = "mypy_django_plugin.main"
 [tool.django-stubs]
 django_settings_module="main.settings"
 ignore_missing_model_attributes=true
+
+[tool.pyrefly]
+preset = "legacy"

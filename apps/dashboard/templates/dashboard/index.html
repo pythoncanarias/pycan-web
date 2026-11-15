@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock title %}
+
+{% block hero %}
+<section class="hero welcome mb-3 mt-2">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Bienvenido al panel de control, {{ request.user }}.
+      </h1>
+      <h2 class="subtitle">
+        ¡Espero que estés teniendo un buen día!
+      </h2>
+    </div>
+  </div>
+</section>
+{% endblock hero %}
+
+{% block content %}
+
+<article class="panel">
+  <div class="panel-heading">
+    <h2 class="card-header-title is-primary">
+    Usuarios
+    </h2>
+  </div>
+  <div class="panel-block">
+
+    <div class="level">
+      <div class="box level-item has-text-centered">
+        <div>
+          <p class="subtitle">A punto<br>de renovar</p>
+          <p class="is-size-1">{{ total_renew_members}}</p>
+        </div>
+      </div>
+
+      <div class="box level-item has-text-centered">
+        <div>
+            <p class="subtitle">
+            <a href="{% url 'dashboard:active_members' %}">
+            Miembros<br>activos
+            </a>
+            </p>
+            <p class="is-size-1">{{ total_active_members}}</p>
+        </div>
+      </div>
+
+      <div class="box level-item has-text-centered">
+        <div>
+          <p class="is-size-1">
+          <i class="fa-solid fa-user-plus" style="color: rgb(116, 192, 252);"></i>
+
+          </p>
+          <p>
+          <a href="{% url 'dashboard:new_member' %}" role="button" class="button is-warning"
+            >
+            Nuevo socio
+          </a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</article>
+
+{% endblock content %}

@@ -3,7 +3,10 @@
 <div class="messages">
   {% for message in messages %}
    <div class="notification {{ message.tags|msgtag_to_bulmaclass }}">
-     <button class="delete"></button>
+     <button
+       class="delete"
+       onclick="this.parentElement.style.display='none'" >
+       </button>
      {{ message }}
    </div>
   {% endfor %}

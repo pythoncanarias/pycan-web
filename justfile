@@ -49,7 +49,8 @@ versions:
 
 # Ejecutar los test pasados como paræmetro (Empezará por el último que haya fallado)
 test *args='.':
-    python3 -m pytest  {{ args }} -vv -x --log-cli-level=INFO --doctest-modules -m "not slow"
+    python3 -m pytest  {{ args }} -v -x --log-cli-level=INFO \
+             --doctest-modules -m "not slow" --ignore=.venv
 
 # Muestra información del Harware / S.O. / Python / Django
 info:
@@ -86,7 +87,7 @@ alias mm := makemigrations
 # Buscar en todos los ficheros (excepto .env)
 find *args='':
     @echo "Buscando {{ args }} en todos los ficheros Python"
-    pss --ignore-dir .venv {{ args }}
+    pss --ignore-dir .venv/ {{ args }}
 
 # Buscar en ficheros Python
 fpy *args='':

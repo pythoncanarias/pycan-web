@@ -5,4 +5,4 @@
 
 source ~/.pyenv/versions/pycanweb/bin/activate
 cd $(dirname $0)
-exec python manage.py rqworker default low
+exec python manage.py rqworker high default low

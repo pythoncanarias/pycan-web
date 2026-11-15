@@ -1,20 +1,41 @@
 #!/usr/bin/env python3
 
+from redis.client import Redis
+from logging import Logger
 from email.message import EmailMessage
-from pathlib import Path
 from itertools import chain
+from pathlib import Path
 import argparse
 import logging
+import logging.handlers
 import smtplib
 import ssl
 import sys
 
+import rq
 from prettyconf import config
 
 from utils.results import Success, Failure, Result
+from apps.commons.tasks import send_ntfy_message
 
-logging.basicConfig(filename='smoke_test.log', level=logging.DEBUG)
-logger = logging.getLogger('smoke_test')
+
+def get_logger() -> Logger:
+    log_handler = logging.handlers.RotatingFileHandler(
+        filename='smoke_test.log',
+        maxBytes=33554432, # 32 MB
+        backupCount=8,
+        )
+    formatter = logging.Formatter(
+        '%(asctime)s program_name [%(process)d]: %(message)s',
+        '%b %d %H:%M:%S')
+    log_handler.setFormatter(formatter)
+    logger = logging.getLogger(__name__)
+    logger.addHandler(log_handler)
+    logger.setLevel(logging.DEBUG)
+    return logger
+
+
+logger = get_logger()
 
 def green(text: str) -> str:
     return f"\u001b[32m{text}\u001b[0m"
@@ -25,6 +46,18 @@ def red(text: str) -> str:
 
 OK = green("[OK ✓]")
 ERROR = red("[ERROR ✖]")
+
+
+def _get_redis_conn() -> Redis:
+    import redis
+    REDIS_SERVER = config('REDIS_SERVER', default='localhost')
+    REDIS_PASSWORD = config('REDIS_PASSWORD', default='')
+    REDIS_PROTOCOL = config('REDIS_PROTOCOL', default=2, cast=int)
+    return redis.Redis(
+        host=REDIS_SERVER,
+        password=REDIS_PASSWORD,
+        protocol=REDIS_PROTOCOL,
+        )
 
 
 def chk_env_file_exists_in_path() -> Result:
@@ -40,17 +73,9 @@ def chk_env_file_exists_in_path() -> Result:
 
 
 def chk_redis_is_ready() -> Result:
-    """Redis server is listening in the indicated host/port.
+    """Redis server listens in the indicated host/port.
     """
-    import redis
-    REDIS_SERVER = config('REDIS_SERVER', default='localhost')
-    REDIS_PASSWORD = config('REDIS_PASSWORD', default='')
-    REDIS_PROTOCOL = config('REDIS_PROTOCOL', default=2, cast=int)
-    rds = redis.Redis(
-        host=REDIS_SERVER,
-        password=REDIS_PASSWORD,
-        protocol=REDIS_PROTOCOL,
-        )
+    rds = _get_redis_conn()
     if rds.ping():
         return Success('Redis server is working')
     return Failure('Redis server is not working')
@@ -59,15 +84,13 @@ def chk_redis_is_ready() -> Result:
 def chk_queues_are_working() -> Result:
     """Queues are defined and have workers assigned.
     """
-    import os
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'main.settings'
-    from apps.commons.tasks import send_ntfy_message
-
-    send_ntfy_message.delay('SmokeTest')
+    rds = _get_redis_conn()
+    queue = rq.Queue('default', connection=rds)
+    _job = queue.enqueue(send_ntfy_message, 'SmokeTest')
     return Success('Queued message by ntfy. Check in app.')
 
 
-def chk_email_is_working():
+def chk_email_is_working() -> Result:
     """Email subsystem is working.
     """
     EMAIL_SERVER = config('SMTP_SERVER')
@@ -83,17 +106,20 @@ def chk_email_is_working():
         "Prueba de envio de correo usando los parámetros"
         " de configuración de Python Canarias Web."
         )
-    with smtplib.SMTP(EMAIL_SERVER, EMAIL_PORT) as server:
-        server.ehlo()  # Can be omitted
-        context = ssl.create_default_context()
-        server.starttls(context=context)
-        server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
-        _result = server.send_message(msg)
-        return Success('Email is working')
-    return Failure('Email is NOT working')
+    try:
+        with smtplib.SMTP(EMAIL_SERVER, EMAIL_PORT) as server:
+            server.ehlo()  # Can be omitted
+            context = ssl.create_default_context()
+            server.starttls(context=context)
+            server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
+            _result = server.send_message(msg)
+            return Success('Email is working')
+    except Exception:
+        logger.exception()
+        return Failure('Email is NOT working')
 
 
-def show_checks(checks):
+def show_checks(checks) -> None:
     print('Availbale checks:', end="\n\n")
     width = max(len(check.__name__) for check in checks) + 1
     print('-' * width, '-' * (80 - width - 1))
@@ -135,7 +161,7 @@ if __name__ == '__main__':
     parser.add_argument(
         'check',
         nargs='*',
-        choices=[_.__name__ for _ in ALL_CHECKS],
+        choices=[_.__name__ for _ in ALL_CHECKS] + ['all'],
         )
     args = parser.parse_args()
     selected_checks = set(args.check)

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id.</th>
+      <th>Nombre y apellidos</th>
+      <th>Username</th>
+      <th>Dirección</th>
+      <th>Fecha renovación</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for member in members %}
+    <tr>
+      <td>{{ member.pk }}</td>
+      <td>{{ member.full_name }}</td>
+      <td><code>{{ member.user.username }}</code></td>
+      <td>
+        {{ member.address }}
+        {% if member.rest_address %}<br>{{ member.rest_address }}{% endif %}
+        <br>{{ member.city }} CP {{ member.postal_code }}
+      </td>
+      <td>{{ member.valid_until }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock content %}

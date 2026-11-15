@@ -1,0 +1,9 @@
+<label class="label">{{ field.label }}
+  {% if field.field.required %}<sup title="Obligatorio">*</sup>{% endif %}
+</label>
+ <div class="control">
+ {{ field }}
+ {% if field.errors %}<ul class="errors">{% for error in field.errors %}
+   <li>{{ error }}</li>
+   {% endfor %}</ul>{% endif %}
+ </div>

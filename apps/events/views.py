@@ -319,10 +319,10 @@ def ticket_purchase(request, id_article):
         except Exception as err:
             logger.error("Error en el pago por stripe")
             logger.error(str(err))
-            messages.add_message(request, messages.ERROR, "Hello world.")
+            messages.add_message(request, messages.ERROR, str(err))
             from django.http import HttpResponse
 
-            return HttpResponse(f"Something goes wrong\n{err}")
+            return HttpResponse(f"Something went wrong\n{err}")
     else:
         return render(
             request,

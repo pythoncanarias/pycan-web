@@ -12,7 +12,7 @@ def now():
 
 
 def now_plus():
-    return timezone.now() + TimeDelta(houts=3)
+    return timezone.now() + TimeDelta(hours=3)
 
 
 class Migration(migrations.Migration):

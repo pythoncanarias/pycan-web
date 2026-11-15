@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Datos</h1>
+
+<table class="table">
+  {% for key,value in dict.items %}
+    <tr>
+      <th>{{ key }}</th>
+      <td>{{ value }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+{% endblock content %}

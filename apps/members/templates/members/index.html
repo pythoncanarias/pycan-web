@@ -1,22 +1,36 @@
 {% extends 'members/base.html' %}
 
 {% block content %}
-<div class="box">
+<div class="container"><div class="columns">
 
+ <div class="column">
   <nav class="panel" id="personal">
     <h3 class="panel-heading">
       Datos personales
     </h3>
     <div class="panel-block">
-      <table class="table table-striped">
+      <table class="table is-striped is-fullwidth">
         <tr> <th>Username</th> <td><code>{{ member.user.username }}</code></td> </tr>
         <tr> <th>Nombre</th> <td>{{ member.user.first_name }}</td> </tr>
         <tr> <th>Apellidos</th> <td>{{ member.user.last_name }}</td> </tr>
-        <tr> <th>Email</th> <td>{{ member.email }}</td> </tr>
+        <tr> <th>Email</th>
+          <td>
+          {{ member.email }}
+          <span class="is-pulled-right">
+          <a class="button is-warning" role="button"
+             href="{% url 'members:check_email' %}">
+            <i class="fa-solid fa-envelope-circle-check"></i>
+            &nbsp;
+            Probar</a>
+          </span>
+          </td>
+        </tr>
       </table>
     </div>
   </nav>
+ </div>
 
+ <div class="column">
   <nav class="panel" id="address">
     <h3 class="panel-heading">
       Socio/a: #{{ member.pk }}
@@ -45,8 +59,8 @@
         </tr>
       </table>
 
-      <p class="is-pulled-right">
-      <a role="button" class="button is-link"
+      <p style="width: 100%;">
+      <a role="button" class="button is-link is-pulled-right"
          href="{% url 'members:address_change' %}">
         <i class="fas fa-edit"></i> Actualizar datos
       </a>
@@ -54,6 +68,8 @@
 
     </div>
   </nav>
-</div>
+ </div>
+
+</div></div>
 
 {% endblock content %}

@@ -60,3 +60,12 @@ def active_members(days=0):
     for member in Member.objects.all():
         if member.active:
             yield today, member
+
+
+def new_member(days=0):
+    logger.info('new_members starts')
+    today = timezone.now().date()
+    for member in Member.objects.all():
+        if member.active:
+            yield today, member
+

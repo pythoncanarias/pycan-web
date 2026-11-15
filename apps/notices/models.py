@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 
 from adapters.emailer import get_body
@@ -63,7 +64,7 @@ class NoticeKind(models.Model):
         if not self.enabled:
             self.enabled = True
             self.save(update_fields='enabled', commit=True)
-        
+
     def disable(self):
         """Desactiva la regla.
 
@@ -73,13 +74,14 @@ class NoticeKind(models.Model):
             self.enabled = False
             self.save(update_fields='enabled', commit=True)
 
-    def enqueue_notice(self, member, reference_date):
+    def enqueue_notice(self, member, reference_date, **kwargs):
         message_text = get_body(
             [member.email],
             self.description,
             self.template,
             member=member,
             reference_date=reference_date,
+            **kwargs,
             )
         notice = Notice(
             kind=self,
@@ -152,3 +154,11 @@ class Notice(models.Model):
 
     def is_delivered(self) -> bool:
         return self.delivered_at is not None
+
+
+def send_notice_now(kind, member, **kwargs):
+    from apps.notices.tasks import task_send_notice
+    notice_kind = NoticeKind.load_notice_kind(kind)
+    today = timezone.now().date()
+    notice = notice_kind.enqueue_notice(member, today, **kwargs)
+    task_send_notice.delay(notice.pk)
