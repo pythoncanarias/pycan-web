@@ -7,6 +7,19 @@ from adapters.emailer import create_message, send_message
 from apps.notices.models import Notice
 
 
+def task_check_queue():
+    import subprocess
+    subprocess.run([
+        "notify-send",
+        "-u",
+        "normal",
+        "-t",
+        "3000",
+        "Testing async jobs",
+        "The queue is working"
+        ],
+        check=True,
+        )
 
 @job
 def task_send_notice(id_notice):
