@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from html import escape
-from functools import partial
+from functools import partialmethod
 
 from django.db.models import Model
 from django.contrib import messages
@@ -20,6 +20,10 @@ class BusBase:
 
     def message_user(self, level: str, msg: str):
         text = as_markdown(escape(msg))
+        if text[:3] == '<p>':
+            text = text[3:]
+        if text[-4:] == '</p>':
+            text = text[-4:]
         match level:
             case 'debug':
                 self.messages.debug(self.request, text)
@@ -35,6 +39,7 @@ class BusBase:
                 self.messages.error(self.request, text)
 
     def publish(self, level: str, item: Model, message: str, **kwargs):
+        from .models import Signal, SignalLevel
         if not isinstance(item, Model) and not hasattr(item, 'pk'):
             raise ValueError(
                 "Solo se pueden publicar en el bus"
@@ -48,17 +53,22 @@ class BusBase:
         user_feedback = kwargs.pop('user_feedback', True)
         if user_feedback:
             self.message_user(level, message)
-        from . import models
-        models.Signal.new(level, item, message, self.username, **kwargs)
+        Signal.new_signal(
+            item,
+            message,
+            SignalLevel.load_signal_level(level),
+            self.username,
+            **kwargs,
+            )
 
-    archive = partial(publish, 'archive')
-    debug = partial(publish, 'debug')
-    delete = partial(publish, 'delete')
-    error = partial(publish, 'error')
-    info = partial(publish, 'info')
-    insert = partial(publish, 'insert')
-    panic = partial(publish, 'panic')
-    test = partial(publish, 'test')
-    update = partial(publish, 'update')
-    warning = partial(publish, 'warning')
+    archive = partialmethod(publish, 'archive')
+    debug = partialmethod(publish, 'debug')
+    delete = partialmethod(publish, 'delete')
+    error = partialmethod(publish, 'error')
+    info = partialmethod(publish, 'info')
+    insert = partialmethod(publish, 'insert')
+    panic = partialmethod(publish, 'panic')
+    test = partialmethod(publish, 'test')
+    update = partialmethod(publish, 'update')
+    warning = partialmethod(publish, 'warning')
 

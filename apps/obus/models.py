@@ -47,6 +47,15 @@ class SignalLevel(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    @classmethod
+    def load_signal_level(cls, pk: str):
+        try:
+            result = cls.objects.get(pk=pk)
+            return result
+        except cls.DoesNotExist:
+            return None
+
+
     def to_json(self) -> str:
         """Devuelve una representación textual en formato json.
         """
@@ -140,7 +149,7 @@ class Signal(models.Model):
         return f'{self.class_name}[{self.subject}]: {self.level} {self.message}'
 
     @classmethod
-    def new_case(cls, item, message, level, username, **kwargs):
+    def new_signal(cls, item, message, level, username, **kwargs):
         _primary_key = json.dumps(item.pk)[:MAX_LENGTH_FOR_PRIMARY_KEY]
         _class_name = item.__class__.__name__[:MAX_LENGTH_FOR_CLASS_NAME]
         _message = message[:MAX_LENGTH_FOR_DESCRIPTION]

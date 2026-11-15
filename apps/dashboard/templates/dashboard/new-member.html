@@ -2,9 +2,40 @@
 
 {% block content %}
 
-<h1>new-membwe</h1>
+<form action="." method="POST" accept-charset="utf-8">
+{% csrf_token %}
 
+<div class="box columns is-multiline">
 
-{{ form }}
+  <div class="column is-half">
+    <h2 class="is-size-3">Datos personales</h2>
 
+    {% include "includes/control/char_field.html" with field=form.first_name %}
+    {% include "includes/control/char_field.html" with field=form.last_name %}
+    {% include "includes/control/char_field.html" with field=form.address %}
+    {% include "includes/control/char_field.html" with field=form.rest_address %}
+    {% include "includes/control/char_field.html" with field=form.postal_code %}
+    {% include "includes/control/char_field.html" with field=form.city %}
+  </div>
+
+  <div class="column is-half">
+    <h2 class="is-size-3">Datos identificativos</h2>
+    {% include "includes/control/char_field.html" with field=form.email %}
+    {% include "includes/control/char_field.html" with field=form.username %}
+    {% include "includes/control/char_field.html" with field=form.phone %}
+
+    <h2 class="is-size-3 pt-3">Datos del pago</h2>
+    {% include "includes/control/date_field.html" with field=form.payment_date %}
+    {% include "includes/control/char_field.html" with field=form.payment_reference %}
+  </div>
+
+  <div class="column is-full">
+    <p class="has-text-right">
+    <input type="submit" value="Dar de alta"
+        class="button is-warning"
+        name="pb_ok" id="pb_alta">
+    </p>
+</div>
+
+</form>
 {% endblock content %}

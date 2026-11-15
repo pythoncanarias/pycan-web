@@ -1,4 +1,4 @@
-from django.urls import path, register_converter
+from django.urls import path
 
 from . import views
 
@@ -11,4 +11,5 @@ def tie(ruta, vista, name=None):
 urlpatterns = [
     tie('', views.index),
     tie('members/new/', views.new_member),
+    tie('members/', views.active_members),
     ]

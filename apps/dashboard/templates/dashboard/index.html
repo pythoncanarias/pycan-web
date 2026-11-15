@@ -37,7 +37,11 @@
 
       <div class="box level-item has-text-centered">
         <div>
-            <p class="subtitle">Miembros<br>activos</p>
+            <p class="subtitle">
+            <a href="{% url 'dashboard:active_members' %}">
+            Miembros<br>activos
+            </a>
+            </p>
             <p class="is-size-1">{{ total_active_members}}</p>
         </div>
       </div>

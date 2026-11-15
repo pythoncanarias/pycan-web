@@ -11,3 +11,11 @@ def bc_new_member():
         'dashboard:new_member',
         )
 
+def bc_active_members():
+    return bc_dashboard().step(
+        "Miembros activos",
+        'dashboard:active_members',
+        )
+
+
+

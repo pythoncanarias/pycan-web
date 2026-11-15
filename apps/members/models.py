@@ -1,10 +1,14 @@
 from datetime import date as Date
+from datetime import timedelta as TimeDelta
+from calendar import isleap
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
+from django.db import transaction
 from django.db.models import OuterRef, Subquery
 from django.utils import timezone
 
+from utils.security import generate_pronunciable_password
 from .constants import (
     DEFAULT_MEMBERSHIP_PERIOD,
     DEFAULT_POSITION_PERIOD,
@@ -12,6 +16,9 @@ from .constants import (
     FEE_PAYMENT_TYPE,
     MEMBER_POSITION,
 )
+
+User = get_user_model()
+
 
 class MemberManager(models.Manager):
 
@@ -32,7 +39,7 @@ class MemberManager(models.Manager):
 
     def actives(self):
         now = timezone.now()
-        return self.get_queryset().filter(valid_until__lte=now)
+        return self.get_queryset().filter(valid_until__gte=now)
 
 
 class Member(models.Model):
@@ -61,11 +68,10 @@ class Member(models.Model):
 
     @classmethod
     def load_from_username(cls, username):
-        rq = cls.objects.select_related('user')
         try:
-            member = rq.get(user__username=username)
+            member = cls.objects.get(user__username=username)
             return member
-        except (cls.DoesNotExist, cls.MultipleObjectsReturned):
+        except cls.DoesNotExist:
             return None
 
     @classmethod
@@ -90,7 +96,7 @@ class Member(models.Model):
 
     @property
     def active(self) -> bool:
-        """Verdadero si el miembro está activa a la fecha actual.
+        """Verdadero si el socio/a está activo/a a la fecha actual.
         """
         if self.valid_until:
             now = timezone.now().date()
@@ -163,9 +169,69 @@ class Membership(models.Model):
     class Meta:
         ordering = ('valid_from', 'member')
 
-    def save(self, *args, **kwargs):
+    def save(self):
         if self.valid_until is None:
             self.valid_until = (
                 self.valid_from + DEFAULT_MEMBERSHIP_PERIOD
                 )
-        super().save(args, kwargs)
+        super().save()
+
+
+def add_new_member(
+        first_name: str,
+        last_name: str,
+        email: str,
+        username: str,
+        address: str,
+        rest_address: str,
+        postal_code: str,
+        city: str,
+        phone: str,
+        payment_date: Date,
+        payment_reference: str,
+        ) -> tuple[Member, str]:
+    """Añadir un nuevo socio.
+
+    Implica varios pasos, ya que hay que crear el usuario vinculado
+    el socio, la entrada en la tabla Member y crear un primer pago
+    de ese socio para el periodo correspondiente.
+
+    Si todo va bien, devuelve el miembro (Instancia de Member) recien
+    creado, y la contraseña asignada i nicialmente.
+
+    Si se produce un error, no se realiza ningún cambio en la base de
+    datos, ya que la operación se realiza en un transacción atómica.
+    """
+    password = generate_pronunciable_password()
+    today = timezone.now().date()
+    valid_from = payment_date
+    delta = TimeDelta(days=366 if isleap(today.year) else 365)
+    valid_until = max(payment_date, today) + delta
+    with transaction.atomic():
+        user = User.objects.create_user(
+            username, email, password,
+            first_name=first_name,
+            last_name=last_name,
+            is_active=True,
+            date_joined=payment_date
+            )
+        member = Member(
+            user=user,
+            address=address,
+            rest_address=rest_address,
+            postal_code=postal_code,
+            city=city,
+            phone=phone,
+            email=email,
+            )
+        member.save()
+        _membership = Membership(
+            member=member,
+            valid_from=valid_from,
+            valid_until=valid_until,
+            fee_received_at=payment_date,
+            fee_amount=FEE_AMOUNT.GENERAL,
+            fee_payment_type=FEE_PAYMENT_TYPE.BANK_TRANSFERENCE,
+            fee_payment_reference=payment_reference,
+            ).save()
+    return member, password
