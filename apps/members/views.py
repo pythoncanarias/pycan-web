@@ -25,6 +25,7 @@ def index(request: HttpRequest) -> HttpResponse:
         'titulo': f"Perfil socio {member.full_name}",
         'breadcrumbs': breadcrumbs.bc_members(),
         'member': member,
+        "membership": member.membership_set.all(),
         'menu': menu.main_menu(request),
         })
 
@@ -55,19 +56,6 @@ def member_logout(request: HttpRequest) -> HttpResponse:
     """Close the authenticated session and log out of the system."""
     logout(request)
     return redirect(reverse("homepage"))
-
-
-
-@login_required
-def membership(request: HttpRequest) -> HttpResponse:
-    member = request.user.member
-    return render(request, "members/membership.html", {
-        "titulo": "Socio {member.pk}: {member.full_name} - Datos de pertenencia",
-        'breadcrumbs': breadcrumbs.bc_membership(),
-        "member": member,
-        "membership": member.membership_set.all(),
-        'menu': menu.main_menu(request),
-        })
 
 
 @login_required
