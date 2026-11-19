@@ -1,73 +1,19 @@
 {% extends 'members/base.html' %}
+{% load utils %}
 
 {% block content %}
-<div class="container"><div class="columns">
+<div class="container"><div class="columns is-multiline">
 
- <div class="column">
-  <nav class="panel" id="personal">
-    <h3 class="panel-heading">
-      Datos personales
-    </h3>
-    <div class="panel-block">
-      <table class="table is-striped is-fullwidth">
-        <tr> <th>Username</th> <td><code>{{ member.user.username }}</code></td> </tr>
-        <tr> <th>Nombre</th> <td>{{ member.user.first_name }}</td> </tr>
-        <tr> <th>Apellidos</th> <td>{{ member.user.last_name }}</td> </tr>
-        <tr> <th>Email</th>
-          <td>
-          {{ member.email }}
-          <span class="is-pulled-right">
-          <a class="button is-warning" role="button"
-             href="{% url 'members:check_email' %}">
-            <i class="fa-solid fa-envelope-circle-check"></i>
-            &nbsp;
-            Probar</a>
-          </span>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </nav>
+ <div class="column is-5">
+   {% include "members/includes/personal.html" %}
  </div>
 
- <div class="column">
-  <nav class="panel" id="address">
-    <h3 class="panel-heading">
-      Socio/a: #{{ member.pk }}
-    </h3>
-    <div class="panel-block pb-vertical">
-      <table class="table table-striped">
-        <tr>
-          <th>Dirección</th>
-          <td>{{ member.address|default:"No disponible" }}
-            {% if member.rest_address|default:"No disponible" %}
-            <br>{{ member.rest_address }}
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <th>Código postal</th>
-          <td>{{ member.postal_code|default:"No disponible" }}</td>
-        </tr>
-        <tr>
-          <th>Ciudad</th>
-          <td>{{ member.city|default:"No disponible" }}</td>
-        </tr>
-        <tr>
-          <th>Teléfono</th>
-          <td>{{ member.phone|default:"No disponible" }}</td>
-        </tr>
-      </table>
+ <div class="column is-7">
+   {% include "members/includes/address.html" %}
+ </div>
 
-      <p style="width: 100%;">
-      <a role="button" class="button is-link is-pulled-right"
-         href="{% url 'members:address_change' %}">
-        <i class="fas fa-edit"></i> Actualizar datos
-      </a>
-      </p>
-
-    </div>
-  </nav>
+ <div class="column is-full">
+   {% include "members/includes/membership.html" %}
  </div>
 
 </div></div>

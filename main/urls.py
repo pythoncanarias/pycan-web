@@ -1,7 +1,11 @@
+from functools import partial
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.shortcuts import redirect
+from django.urls import include
+from django.urls import path
 
 from apps.homepage import views
 
@@ -19,7 +23,9 @@ urlpatterns = [
     path('members/', include('apps.members.urls', namespace='members')),
     path('jobs/', include('apps.jobs.urls', namespace='jobs')),
     path('learn/', include('apps.learn.urls', namespace='learn')),
-]
+    # Redirections
+    path('login/', partial(redirect, '/members/login')),
+    ]
 
 if settings.DEBUG:
     import debug_toolbar

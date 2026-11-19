@@ -1,0 +1,36 @@
+<section class="panel" id="address">
+  <h3 class="panel-heading"> Socio/a: #{{ member.pk }} </h3>
+  <div class="panel-block pb-vertical">
+    <table class="table table-striped">
+      <tr>
+        <th>Dirección</th>
+        <td>{{ member.address|default:"No disponible" }}
+          {% if member.rest_address|default:"No disponible" %}
+          <br>{{ member.rest_address }}
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <th>Código postal</th>
+        <td>{{ member.postal_code|default:"No disponible" }}</td>
+      </tr>
+      <tr>
+        <th>Ciudad</th>
+        <td>{{ member.city|default:"No disponible" }}</td>
+      </tr>
+      <tr>
+        <th>Teléfono</th>
+        <td>{{ member.phone|default:"No disponible" }}</td>
+      </tr>
+    </table>
+
+    <p style="width: 100%;">
+    <a role="button" class="button is-link is-pulled-right"
+       href="{% url 'members:address_change' %}">
+      <i class="fas fa-edit"></i> Actualizar datos
+    </a>
+    </p>
+
+  </div>
+</section>
+

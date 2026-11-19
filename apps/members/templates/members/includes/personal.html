@@ -1,0 +1,22 @@
+<section class="panel" id="personal">
+  <h3 class="panel-heading"> Datos personales </h3>
+  <div class="panel-block">
+    <table class="table is-striped is-fullwidth">
+      <tr> <th>Username</th> <td><code>{{ member.user.username }}</code></td> </tr>
+      <tr> <th>Nombre</th> <td>{{ member.user.first_name }}</td> </tr>
+      <tr> <th>Apellidos</th> <td>{{ member.user.last_name }}</td> </tr>
+      <tr> <th>Email</th>
+        <td>
+        {{ member.email }}
+        <span class="is-pulled-right">
+        <a class="button is-warning" role="button"
+           href="{% url 'members:check_email' %}">
+          <i class="fa-solid fa-envelope-circle-check"></i>
+          &nbsp;
+          Probar</a>
+        </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</section>

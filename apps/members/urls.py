@@ -11,7 +11,6 @@ def tie(ruta, vista, name=None):
 
 urlpatterns = [
     tie('', views.index),
-    tie("membership/", views.membership),
     tie("password/change/", views.password_change),
     tie("address/change/", views.address_change),
     tie("email/check/", views.check_email),
